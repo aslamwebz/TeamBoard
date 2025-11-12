@@ -2,22 +2,32 @@
 
 declare(strict_types=1);
 
+use App\Livewire\Billing\Index as Billing;
+use App\Livewire\Dashboard;
+use App\Livewire\Features\Index as Features;
+use App\Livewire\Home;
+use App\Livewire\Pricing\Index as Pricing;
+use App\Livewire\Projects\Index as Projects;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
+use App\Livewire\Tasks\Index as Tasks;
+use App\Livewire\Users\Index as Users;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', Home::class)->name('home');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('dashboard', Dashboard::class)->name('dashboard');
+    Route::get('projects', Projects::class)->name('projects');
+    Route::get('tasks', Tasks::class)->name('tasks');
+    Route::get('users', Users::class)->name('users');
+    Route::get('billing', Billing::class)->name('billing');
+    Route::get('features', Features::class)->name('features');
+    Route::get('pricing', Pricing::class)->name('pricing');
+});
 
 Route::middleware(['auth'])->group(function () {
-    Route::redirect('settings', 'settings/profile');
-
     Route::get('settings/profile', Profile::class)->name('settings.profile');
     Route::get('settings/password', Password::class)->name('settings.password');
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');

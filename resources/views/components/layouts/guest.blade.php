@@ -16,19 +16,9 @@
     @livewireStyles
     @filamentStyles
 </head>
-<body class="font-sans antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-white h-full">
-    <div class="flex h-full">
-        <!-- Sidebar -->
-        <x-layouts.app.sidebar />
-        
-        <!-- Main content -->
-        <div class="flex-1 overflow-y-auto">
-            <x-layouts.app.header />
-            
-            <main class="p-6">
-                {{ $slot }}
-            </main>
-        </div>
+<body class="font-sans antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+    <div>
+        {{ $slot }}
     </div>
 
     @livewireScripts
