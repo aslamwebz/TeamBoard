@@ -49,9 +49,9 @@
                         </svg>
                     </flux:button>
                     <flux:menu>
-                        <flux:menu.item>{{ __('View Details') }}</flux:menu.item>
-                        <flux:menu.item>{{ __('Edit') }}</flux:menu.item>
-                        <flux:menu.item class="text-red-600 dark:text-red-400">{{ __('Delete') }}</flux:menu.item>
+                        <flux:menu.item href="{{ route('projects') }}">{{ __('View Details') }}</flux:menu.item>
+                        <flux:menu.item href="#" @click.prevent="$dispatch('open-modal', 'edit-project')">{{ __('Edit') }}</flux:menu.item>
+                        <flux:menu.item class="text-red-600 dark:text-red-400" @click.prevent="$dispatch('open-modal', 'delete-project')">{{ __('Delete') }}</flux:menu.item>
                     </flux:menu>
                 </flux:dropdown>
             </div>
@@ -101,9 +101,9 @@
                         </svg>
                     </button>
                     <div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-zinc-800 dark:ring-white/10" role="menu" aria-orientation="vertical" tabindex="-1">
-                        <a href="#" class="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-700" role="menuitem">{{ __('View Details') }}</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-700" role="menuitem">{{ __('Edit') }}</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/30" role="menuitem">{{ __('Delete') }}</a>
+                        <a href="{{ route('projects') }}" class="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-700" role="menuitem">{{ __('View Details') }}</a>
+                        <button type="button" @click="$dispatch('open-modal', 'edit-project')" class="block w-full px-4 py-2 text-left text-sm text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-700" role="menuitem">{{ __('Edit') }}</button>
+                        <button type="button" @click="$dispatch('open-modal', 'delete-project')" class="block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/30" role="menuitem">{{ __('Delete') }}</button>
                     </div>
                 </div>
             </div>
@@ -153,9 +153,9 @@
                         </svg>
                     </flux:button>
                     <flux:menu>
-                        <flux:menu.item>{{ __('View Details') }}</flux:menu.item>
-                        <flux:menu.item>{{ __('Edit') }}</flux:menu.item>
-                        <flux:menu.item class="text-red-600 dark:text-red-400">{{ __('Delete') }}</flux:menu.item>
+                        <flux:menu.item href="{{ route('projects') }}">{{ __('View Details') }}</flux:menu.item>
+                        <flux:menu.item href="#" @click.prevent="$dispatch('open-modal', 'edit-project')">{{ __('Edit') }}</flux:menu.item>
+                        <flux:menu.item class="text-red-600 dark:text-red-400" @click.prevent="$dispatch('open-modal', 'delete-project')">{{ __('Delete') }}</flux:menu.item>
                     </flux:menu>
                 </flux:dropdown>
             </div>

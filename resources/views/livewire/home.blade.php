@@ -1,6 +1,32 @@
+<!-- Initialize Alpine.js state for dark mode -->
+<div x-data="{
+    darkMode: $persist(false).as('dark-mode'),
+    mobileMenuOpen: false,
+    init() {
+        // Set initial dark mode
+        if (this.darkMode) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        
+        // Watch for changes to dark mode
+        this.$watch('darkMode', value => {
+            if (value) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+    }
+}" x-init="init">
+
+<!-- Main Navigation -->
+<x-layouts.main-navbar />
+
 <div class="min-h-screen bg-gradient-to-b from-white to-zinc-50 dark:from-zinc-900 dark:to-zinc-800">
     <!-- Hero Section -->
-    <section class="container flex min-h-dvh flex-col items-center justify-center px-4 py-12 text-center">
+    <section class=" flex min-h-dvh flex-col items-center justify-center px-4 py-12 text-center">
         <div class="mx-auto max-w-3xl space-y-6">
             <h1 class="text-4xl font-bold text-foreground md:text-6xl">
                 Manage your projects <span class="text-blue-600">efficiently</span>
@@ -9,18 +35,18 @@
                 TeamBoard is a powerful project management platform that helps you organize, track, and collaborate on your projects with your team.
             </p>
             <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
-                <a href="{{ route('register') }}" class="inline-flex items-center justify-center rounded-lg bg-blue-600 px-6 py-3 text-white transition-colors hover:bg-blue-700 focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900">
-                    Get Started
+                <a href="{{ route('register') }}" wire:navigate class="inline-flex items-center justify-center rounded-lg bg-blue-600 px-6 py-3 text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900">
+                    {{ __('Get Started') }}
                 </a>
-                <a href="{{ route('login') }}" class="inline-flex items-center justify-center rounded-lg border border-zinc-300 px-6 py-3 text-foreground transition-colors hover:bg-zinc-100 focus:outline-hidden focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2 dark:border-zinc-700 dark:hover:bg-zinc-800 dark:focus:ring-offset-zinc-900">
-                    Sign In
+                <a href="{{ route('login') }}" wire:navigate class="inline-flex items-center justify-center rounded-lg border border-zinc-300 px-6 py-3 text-foreground transition-colors hover:bg-zinc-100 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2 dark:border-zinc-700 dark:hover:bg-zinc-800 dark:focus:ring-offset-zinc-900">
+                    {{ __('Sign In') }}
                 </a>
             </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section class="container px-4 py-16">
+    <section class=" px-4 py-16">
         <div class="mx-auto max-w-6xl">
             <div class="mb-16 text-center">
                 <h2 class="text-3xl font-bold text-foreground md:text-4xl">Powerful Features</h2>
@@ -74,7 +100,7 @@
 
     <!-- CTA Section -->
     <section class="bg-gradient-to-r from-blue-600 to-indigo-700 py-16">
-        <div class="container px-4">
+        <div class=" px-4">
             <div class="mx-auto max-w-4xl text-center">
                 <h2 class="text-3xl font-bold text-white md:text-4xl">
                     Ready to transform your project management?
@@ -83,7 +109,7 @@
                     Join thousands of teams already using TeamBoard to streamline their workflow.
                 </p>
                 <div class="mt-8">
-                    <a href="{{ route('register') }}" class="inline-flex items-center justify-center rounded-lg bg-white px-6 py-3 text-blue-600 transition-colors hover:bg-zinc-100 focus:outline-hidden focus:ring-2 focus:ring-white focus:ring-offset-2 dark:focus:ring-offset-zinc-900">
+                    <a href="{{ route('register') }}" wire:navigate class="inline-flex items-center justify-center rounded-lg bg-white px-6 py-3 text-blue-600 transition-colors hover:bg-zinc-100 focus:outline-hidden focus:ring-2 focus:ring-white focus:ring-offset-2 dark:focus:ring-offset-zinc-900">
                         Start Your Free Trial
                     </a>
                 </div>
