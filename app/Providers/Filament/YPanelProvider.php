@@ -25,8 +25,8 @@ class YPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
-            ->id('y')
-            ->path('y')
+            ->id('admin')
+            ->path('admin')
             ->login()
             ->colors([
                 'primary' => Color::Amber,
