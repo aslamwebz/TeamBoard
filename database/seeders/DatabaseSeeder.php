@@ -1,9 +1,8 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Models\Admin;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,9 +16,20 @@ final class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
+      
+        Admin::factory()->create([
             'name' => 'Test User',
-            'email' => 'test@example.com',
+            'email' => 'admin@admin.com',
         ]);
+
+        $tenant = \App\Models\Tenant::create(['id' => 'test']);
+        $tenant->domains()->create(['domain' => 'test.teamboard.test']);
+
+          User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'user@user.com',
+            'tenant_id' => $tenant->id,
+        ]);
+
     }
 }
