@@ -38,6 +38,7 @@ final class DatabaseSeeder extends Seeder
             ]);
 
             $this->call([
+                TeamSeeder::class,
                 ClientSeeder::class,
                 ProjectSeeder::class,
                 ReportSeeder::class,

@@ -28,6 +28,10 @@ use App\Livewire\Dashboard;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
+use App\Livewire\Teams\Index as TeamIndex;
+use App\Livewire\Teams\Create as TeamCreate;
+use App\Livewire\Teams\Edit as TeamEdit;
+use App\Livewire\Teams\Show as TeamShow;
 
 /*
  * |--------------------------------------------------------------------------
@@ -46,12 +50,8 @@ Route::middleware([
     InitializeTenancyBySubdomain::class,
     PreventAccessFromCentralDomains::class,
 ])->group(function () {
-    Route::get('/', function () {
-        return 'This is your multi-tenant application. The id of the current tenant is ' . tenant('id');
-    });
-
     Route::middleware(['auth', 'verified'])->group(function () {
-        Route::get('dashboard', Dashboard::class)->name('dashboard');
+        Route::get('/', Dashboard::class)->name('dashboard');
         Route::get('projects', Projects::class)->name('projects');
         Route::get('tasks', Tasks::class)->name('tasks');
         Route::get('users', Users::class)->name('users');
@@ -94,6 +94,12 @@ Route::middleware([
         Route::get('/reports/create', ReportCreate::class)->name('reports.create');
         Route::get('/reports/{report}/edit', ReportEdit::class)->name('reports.edit');
         Route::get('/reports/{report}', ReportShow::class)->name('reports.show');
+
+        // Teams routes
+        Route::get('/teams', TeamIndex::class)->name('teams.index');
+        Route::get('/teams/create', TeamCreate::class)->name('teams.create');
+        Route::get('/teams/{team}/edit', TeamEdit::class)->name('teams.edit');
+        Route::get('/teams/{team}', TeamShow::class)->name('teams.show');
     });
 
     Route::middleware(['auth'])->group(function () {

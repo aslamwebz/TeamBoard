@@ -15,7 +15,7 @@ class Show extends Component
 
     public function mount(Project $project)
     {
-        $this->project = $project->load(['client', 'invoices', 'tasks', 'users']);
+        $this->project = $project->load(['client', 'invoices', 'tasks', 'users', 'teams']);
     }
 
     public function render()

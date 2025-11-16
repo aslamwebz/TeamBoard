@@ -46,8 +46,13 @@ class Project extends Model
         return $this->belongsToMany(User::class, 'user_projects', 'project_id', 'user_id');
     }
 
-    public function invoices() : HasMany
+    public function invoices(): HasMany
     {
         return $this->hasMany(Invoice::class);
+    }
+
+    public function teams(): BelongsToMany
+    {
+        return $this->belongsToMany(Team::class, 'team_projects', 'project_id', 'team_id');
     }
 }
