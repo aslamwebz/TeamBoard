@@ -18,10 +18,10 @@ class ProjectSeeder extends Seeder
             'name' => 'Project POS',
             'description' => 'POS Machine Project',
             'status' => 'planning',
-            'start_date' => '2026-01-01',
-            'end_date' => '2026-12-31',
+            'due_date' => '2026-01-01',
         ]);
 
-        $project->clients()->attach(Client::first());
+        $project->client()->associate(Client::first());
+        $project->save();
     }
 }

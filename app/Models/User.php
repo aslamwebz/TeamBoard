@@ -53,7 +53,7 @@ final class User extends Authenticatable
      */
     public function projects(): BelongsToMany
     {
-        return $this->belongsToMany(Project::class);
+        return $this->belongsToMany(Project::class, 'user_projects', 'user_id', 'project_id');
     }
 
     /**
@@ -61,12 +61,12 @@ final class User extends Authenticatable
      */
     public function tasks(): BelongsToMany
     {
-        return $this->belongsToMany(Task::class);
+        return $this->belongsToMany(Task::class, 'user_tasks', 'user_id', 'task_id');
     }
 
     public function clients(): BelongsToMany
     {
-        return $this->belongsToMany(Client::class);
+        return $this->belongsToMany(Client::class, 'user_clients', 'user_id', 'client_id');
     }
 
     public function invoices(): BelongsToMany

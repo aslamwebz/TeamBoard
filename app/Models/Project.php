@@ -43,7 +43,7 @@ class Project extends Model
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'user_projects', 'project_id', 'user_id');
     }
 
     public function invoices() : HasMany

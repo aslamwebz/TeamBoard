@@ -88,27 +88,6 @@
                 </div>
             @endif
 
-            <!-- Project Statistics -->
-            <div class="mt-6 pt-6 border-t border-zinc-200 dark:border-zinc-700">
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="text-center">
-                        <div class="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{{ $project->tasks->count() }}</div>
-                        <div class="text-xs text-zinc-500 dark:text-zinc-400">{{ __('Tasks') }}</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{{ $project->users->count() }}</div>
-                        <div class="text-xs text-zinc-500 dark:text-zinc-400">{{ __('Team Members') }}</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{{ $project->client?->count() }}</div>
-                        <div class="text-xs text-zinc-500 dark:text-zinc-400">{{ __('Clients') }}</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{{ $project->invoices->count() }}</div>
-                        <div class="text-xs text-zinc-500 dark:text-zinc-400">{{ __('Invoices') }}</div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -141,19 +120,6 @@
                         {{ __('Users') }}
                         <span
                             class="bg-zinc-100 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300 px-2 py-0.5 rounded-full text-xs">{{ $project->users->count() }}</span>
-                    </div>
-                </button>
-                <button type="button" onclick="switchTab('clients')" id="clients-tab"
-                    class="tab-button py-4 px-1 border-b-2 font-medium text-sm border-transparent text-zinc-500 hover:text-zinc-700 hover:border-zinc-300 dark:text-zinc-400 dark:hover:text-zinc-300">
-                    <div class="flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                        {{ __('Clients') }}
-                        <span
-                            class="bg-zinc-100 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300 px-2 py-0.5 rounded-full text-xs">{{ $project->client?->count() }}</span>
                     </div>
                 </button>
                 <button type="button" onclick="switchTab('invoices')" id="invoices-tab"
