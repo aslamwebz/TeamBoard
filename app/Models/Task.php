@@ -25,6 +25,12 @@ class Task extends Model
         'due_date' => 'date',
     ];
 
+    // Define task statuses
+    public const STATUS_TODO = 'todo';
+    public const STATUS_IN_PROGRESS = 'in_progress';
+    public const STATUS_COMPLETED = 'completed';
+    public const STATUS_ON_HOLD = 'on_hold';
+
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);

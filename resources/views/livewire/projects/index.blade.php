@@ -70,6 +70,9 @@
                             </svg>
                         </flux:button>
                         <flux:menu>
+                            <a href="{{ route('projects.show', $project) }}" class="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-700">
+                                {{ __('View Details') }}
+                            </a>
                             <a href="{{ route('projects.edit', $project) }}" class="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-700">
                                 {{ __('Edit') }}
                             </a>

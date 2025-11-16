@@ -8,14 +8,14 @@ use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use App\Livewire\Tasks\Index as Tasks;
+use App\Livewire\Users\Create;
+use App\Livewire\Users\Edit;
+use App\Livewire\Users\Index;
 use App\Livewire\Users\Index as Users;
 use App\Livewire\Dashboard;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
-use App\Livewire\Users\Index;
-use App\Livewire\Users\Create;
-use App\Livewire\Users\Edit;
 
 /*
  * |--------------------------------------------------------------------------
@@ -46,15 +46,8 @@ Route::middleware([
         Route::get('billing', Billing::class)->name('billing');
         Route::get('features', Features::class)->name('features');
         Route::get('pricing', Pricing::class)->name('pricing');
-    });
 
-    Route::middleware(['auth'])->group(function () {
-        Route::get('settings/profile', Profile::class)->name('settings.profile');
-        Route::get('settings/password', Password::class)->name('settings.password');
-        Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
-    });
-
-         // User CRUD routes
+        // User CRUD routes
         Route::get('/users', Index::class)->name('users');
         Route::get('/users/create', Create::class)->name('users.create');
         Route::get('/users/{user}/edit', Edit::class)->name('users.edit');
@@ -63,6 +56,20 @@ Route::middleware([
         Route::get('/projects', \App\Livewire\Projects\Index::class)->name('projects');
         Route::get('/projects/create', \App\Livewire\Projects\Create::class)->name('projects.create');
         Route::get('/projects/{project}/edit', \App\Livewire\Projects\Edit::class)->name('projects.edit');
+        Route::get('/projects/{project}', \App\Livewire\Projects\Show::class)->name('projects.show');
+
+        // Task CRUD routes
+        Route::get('/tasks', \App\Livewire\Tasks\Index::class)->name('tasks');
+        Route::get('/tasks/create', \App\Livewire\Tasks\Create::class)->name('tasks.create');
+        Route::get('/tasks/{task}/edit', \App\Livewire\Tasks\Edit::class)->name('tasks.edit');
+        Route::get('/tasks/{task}', \App\Livewire\Tasks\Show::class)->name('tasks.show');
+    });
+
+    Route::middleware(['auth'])->group(function () {
+        Route::get('settings/profile', Profile::class)->name('settings.profile');
+        Route::get('settings/password', Password::class)->name('settings.password');
+        Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
+    });
 
     require __DIR__ . '/auth.php';
 });

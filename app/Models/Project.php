@@ -31,10 +31,6 @@ class Project extends Model
     public const STATUS_COMPLETED = 'completed';
     public const STATUS_ON_HOLD = 'on_hold';
 
-    public function tenant(): BelongsTo
-    {
-        return $this->belongsTo(Tenant::class);
-    }
 
     public function user(): BelongsTo
     {
