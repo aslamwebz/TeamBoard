@@ -3,9 +3,9 @@
 namespace App\Livewire\Clients;
 
 use App\Models\Client;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use Livewire\Component;
 use Livewire\WithPagination;
 
 #[Layout('components.layouts.app')]
@@ -16,6 +16,7 @@ class Index extends Component
 
     public $search = '';
     public $showDeleteModal = false;
+    public $confirmingDelete = false;
     public $clientToDeleteId;
 
     protected $queryString = ['search'];
@@ -23,10 +24,11 @@ class Index extends Component
     public function render()
     {
         $clients = Client::query()
-            ->where(function($query) {
-                $query->where('name', 'like', '%' . $this->search . '%')
-                      ->orWhere('email', 'like', '%' . $this->search . '%')
-                      ->orWhere('company_name', 'like', '%' . $this->search . '%');
+            ->where(function ($query) {
+                $query
+                    ->where('name', 'like', '%' . $this->search . '%')
+                    ->orWhere('email', 'like', '%' . $this->search . '%')
+                    ->orWhere('company_name', 'like', '%' . $this->search . '%');
             })
             ->orderBy('name')
             ->paginate(10);
