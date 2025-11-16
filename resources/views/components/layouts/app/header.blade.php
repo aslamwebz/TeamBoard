@@ -20,7 +20,7 @@
         });
     }
 }" x-init="init" class="sticky top-0 z-40 border-b border-zinc-200 bg-white/80 backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-900/80">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
             <!-- Mobile menu button -->
             <div class="flex lg:hidden">
@@ -43,15 +43,11 @@
             <div class="flex-shrink-0">
                 <a href="{{ route('dashboard') }}" class="flex items-center">
                     <x-application-logo class="h-8 w-auto" />
-                    <span class="ml-2 text-xl font-bold text-zinc-900 dark:text-white">{{ config('app.name') }}</span>
                 </a>
             </div>
 
             <!-- Desktop Navigation -->
             <nav class="hidden lg:ml-6 lg:flex lg:space-x-8">
-                <a href="{{ route('dashboard') }}" class="inline-flex items-center border-b-2 {{ request()->routeIs('dashboard') ? 'border-blue-500 text-zinc-900 dark:border-blue-400 dark:text-white' : 'border-transparent text-zinc-500 hover:border-zinc-300 hover:text-zinc-700 dark:text-zinc-300 dark:hover:border-zinc-600 dark:hover:text-white' }} px-1 pt-1 text-sm font-medium" wire:navigate>
-                    {{ __('Dashboard') }}
-                </a>
                 <a href="{{ route('projects') }}" class="inline-flex items-center border-b-2 {{ request()->routeIs('projects') ? 'border-blue-500 text-zinc-900 dark:border-blue-400 dark:text-white' : 'border-transparent text-zinc-500 hover:border-zinc-300 hover:text-zinc-700 dark:text-zinc-300 dark:hover:border-zinc-600 dark:hover:text-white' }} px-1 pt-1 text-sm font-medium" wire:navigate>
                     {{ __('Projects') }}
                 </a>
