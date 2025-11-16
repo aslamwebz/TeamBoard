@@ -13,6 +13,9 @@ use App\Livewire\Dashboard;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
+use App\Livewire\Users\Index;
+use App\Livewire\Users\Create;
+use App\Livewire\Users\Edit;
 
 /*
  * |--------------------------------------------------------------------------
@@ -50,6 +53,11 @@ Route::middleware([
         Route::get('settings/password', Password::class)->name('settings.password');
         Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
     });
+
+         // User CRUD routes
+        Route::get('/users', Index::class)->name('users');
+        Route::get('/users/create', Create::class)->name('users.create');
+        Route::get('/users/{user}/edit', Edit::class)->name('users.edit');
 
     require __DIR__ . '/auth.php';
 });

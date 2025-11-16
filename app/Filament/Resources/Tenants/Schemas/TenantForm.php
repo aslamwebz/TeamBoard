@@ -11,7 +11,7 @@ class TenantForm
     {
         return $schema
             ->components([
-                TextInput::make('data'),
+                TextInput::make('id'),
             ]);
     }
 }
