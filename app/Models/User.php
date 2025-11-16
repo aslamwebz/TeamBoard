@@ -4,9 +4,11 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class User extends Authenticatable
 {
@@ -49,7 +51,7 @@ final class User extends Authenticatable
     /**
      * The projects that belong to the user.
      */
-    public function projects()
+    public function projects(): BelongsToMany
     {
         return $this->belongsToMany(Project::class);
     }
@@ -57,17 +59,19 @@ final class User extends Authenticatable
     /**
      * The tasks that belong to the user.
      */
-    public function tasks()
+    public function tasks(): BelongsToMany
     {
         return $this->belongsToMany(Task::class);
     }
 
-    /**
-     * The clients that belong to the user.
-     */
-    public function clients()
+    public function clients(): BelongsToMany
     {
         return $this->belongsToMany(Client::class);
+    }
+
+    public function invoices(): BelongsToMany
+    {
+        return $this->belongsToMany(Invoice::class);
     }
 
     /**

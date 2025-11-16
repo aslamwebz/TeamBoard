@@ -17,7 +17,6 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->enum('status', ['planning', 'in_progress', 'completed', 'on_hold'])->default('planning');
             $table->date('due_date')->nullable();
-            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
 
         });

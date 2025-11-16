@@ -23,12 +23,12 @@ final class DatabaseSeeder extends Seeder
             'email' => 'admin@admin.com',
         ]);
 
-        if (DB::table('users')->exists()) {
-            DB::statement('DROP DATABASE tenanttest');
-        }
+        // if (DB::table('users')->exists()) {
+        //     DB::statement('DROP DATABASE tenantwebz');
+        // }
 
-        $tenant = \App\Models\Tenant::create(['id' => 'arlo']);
-        $tenant->domains()->create(['domain' => 'arlo']);
+        $tenant = \App\Models\Tenant::create(['id' => 'webz']);
+        $tenant->domains()->create(['domain' => 'webz']);
 
         $tenant->run(function () {
             User::factory()->create([
@@ -39,6 +39,7 @@ final class DatabaseSeeder extends Seeder
 
             $this->call([
                 ClientSeeder::class,
+                ProjectSeeder::class,
                 InvoiceSeeder::class,
                 ReportSeeder::class,
             ]);

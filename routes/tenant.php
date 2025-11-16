@@ -1,9 +1,21 @@
 <?php declare(strict_types=1);
 
 use App\Livewire\Billing\Index as Billing;
+use App\Livewire\Clients\Create as ClientCreate;
+use App\Livewire\Clients\Edit as ClientEdit;
+use App\Livewire\Clients\Index as ClientIndex;
+use App\Livewire\Clients\Show as ClientShow;
 use App\Livewire\Features\Index as Features;
+use App\Livewire\Invoices\Create as InvoiceCreate;
+use App\Livewire\Invoices\Edit as InvoiceEdit;
+use App\Livewire\Invoices\Index as InvoiceIndex;
+use App\Livewire\Invoices\Show as InvoiceShow;
 use App\Livewire\Pricing\Index as Pricing;
 use App\Livewire\Projects\Index as Projects;
+use App\Livewire\Reports\Create as ReportCreate;
+use App\Livewire\Reports\Edit as ReportEdit;
+use App\Livewire\Reports\Index as ReportIndex;
+use App\Livewire\Reports\Show as ReportShow;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -13,18 +25,6 @@ use App\Livewire\Users\Edit;
 use App\Livewire\Users\Index;
 use App\Livewire\Users\Index as Users;
 use App\Livewire\Dashboard;
-use App\Livewire\Clients\Create as ClientCreate;
-use App\Livewire\Clients\Edit as ClientEdit;
-use App\Livewire\Clients\Index as ClientIndex;
-use App\Livewire\Clients\Show as ClientShow;
-use App\Livewire\Invoices\Create as InvoiceCreate;
-use App\Livewire\Invoices\Edit as InvoiceEdit;
-use App\Livewire\Invoices\Index as InvoiceIndex;
-use App\Livewire\Invoices\Show as InvoiceShow;
-use App\Livewire\Reports\Create as ReportCreate;
-use App\Livewire\Reports\Edit as ReportEdit;
-use App\Livewire\Reports\Index as ReportIndex;
-use App\Livewire\Reports\Show as ReportShow;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -63,6 +63,7 @@ Route::middleware([
         Route::get('/users', Index::class)->name('users');
         Route::get('/users/create', Create::class)->name('users.create');
         Route::get('/users/{user}/edit', Edit::class)->name('users.edit');
+        Route::get('/users/{user}', \App\Livewire\Users\Show::class)->name('users.show');
 
         // Project CRUD routes
         Route::get('/projects', \App\Livewire\Projects\Index::class)->name('projects');
@@ -76,7 +77,7 @@ Route::middleware([
         Route::get('/tasks/{task}/edit', \App\Livewire\Tasks\Edit::class)->name('tasks.edit');
         Route::get('/tasks/{task}', \App\Livewire\Tasks\Show::class)->name('tasks.show');
 
-         // Clients routes
+        // Clients routes
         Route::get('/clients', ClientIndex::class)->name('clients.index');
         Route::get('/clients/create', ClientCreate::class)->name('clients.create');
         Route::get('/clients/{client}/edit', ClientEdit::class)->name('clients.edit');

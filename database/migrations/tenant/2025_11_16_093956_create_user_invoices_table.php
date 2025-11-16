@@ -7,18 +7,18 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::create('user_tasks', function (Blueprint $table) {
+        Schema::create('user_invoices', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('task_id')->constrained()->onDelete('cascade');
+            $table->foreignId('invoice_id')->constrained()->onDelete('cascade');
             $table->timestamps();
 
-            $table->unique(['user_id', 'task_id']);
+            $table->unique(['user_id', 'invoice_id']);
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('user_tasks');
+        Schema::dropIfExists('user_invoices');
     }
 };

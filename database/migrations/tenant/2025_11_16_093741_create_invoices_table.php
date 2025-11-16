@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('client_id')->constrained()->onDelete('cascade');
-            $table->foreignId('project_id')->nullable()->constrained()->nullOnDelete();
             $table->string('invoice_number')->unique();
             $table->date('issue_date');
             $table->date('due_date');
@@ -23,6 +21,9 @@ return new class extends Migration
             $table->decimal('total', 10, 2)->default(0);
             $table->enum('status', ['draft', 'sent', 'paid', 'overdue', 'cancelled'])->default('draft');
             $table->text('description')->nullable();
+            $table->foreignId('project_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('client_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('task_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }
