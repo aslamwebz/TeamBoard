@@ -6,6 +6,7 @@ use App\Models\Admin;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 final class DatabaseSeeder extends Seeder
 {
@@ -24,9 +25,12 @@ final class DatabaseSeeder extends Seeder
         $tenant = \App\Models\Tenant::create(['id' => 'test']);
         $tenant->domains()->create(['domain' => 'test']);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'user@user.com',
-        ]);
+        $tenant->run(function () {
+            User::factory()->create([
+                'name' => 'Test User',
+                'email' => 'user@user.com',
+                'password' => Hash::make('passowrd'),
+            ]);
+        });
     }
 }

@@ -59,5 +59,10 @@ Route::middleware([
         Route::get('/users/create', Create::class)->name('users.create');
         Route::get('/users/{user}/edit', Edit::class)->name('users.edit');
 
+        // Project CRUD routes
+        Route::get('/projects', \App\Livewire\Projects\Index::class)->name('projects');
+        Route::get('/projects/create', \App\Livewire\Projects\Create::class)->name('projects.create');
+        Route::get('/projects/{project}/edit', \App\Livewire\Projects\Edit::class)->name('projects.edit');
+
     require __DIR__ . '/auth.php';
 });

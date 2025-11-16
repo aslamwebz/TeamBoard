@@ -4,187 +4,188 @@
             <h1 class="text-3xl font-bold text-foreground">{{ __('Projects') }}</h1>
             <p class="text-muted-foreground">{{ __('Manage your team projects and milestones') }}</p>
         </div>
-        <button type="button" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900">
+        <a href="{{ route('projects.create') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
                 <path d="M5 12h14"></path>
                 <path d="M12 5v14"></path>
             </svg>
             {{ __('New Project') }}
-        </button>
+        </a>
     </div>
 
-    <!-- Filters -->
-    <div class="flex gap-2">
-        <button type="button" class="px-3 py-1.5 text-sm rounded-md border border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700">
-            {{ __('All') }}
-        </button>
-        <button type="button" class="px-3 py-1.5 text-sm rounded-md border border-yellow-200 bg-yellow-50 text-yellow-700 hover:bg-yellow-100 dark:border-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400 dark:hover:bg-yellow-900/50">
-            {{ __('Planning') }}
-        </button>
-        <button type="button" class="px-3 py-1.5 text-sm rounded-md border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 dark:border-blue-700 dark:bg-blue-900/30 dark:text-blue-400 dark:hover:bg-blue-900/50">
-            {{ __('In Progress') }}
-        </button>
-        <button type="button" class="px-3 py-1.5 text-sm rounded-md border border-green-200 bg-green-50 text-green-700 hover:bg-green-100 dark:border-green-700 dark:bg-green-900/30 dark:text-green-400 dark:hover:bg-green-900/50">
-            {{ __('Completed') }}
-        </button>
+    <!-- Search and Filters -->
+    <div class="flex flex-col sm:flex-row gap-4">
+        <div class="flex-1">
+            <input
+                type="text"
+                wire:model.live="search"
+                placeholder="{{ __('Search projects...') }}"
+                class="w-full px-3 py-2 border border-zinc-200 rounded-md dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
+            />
+        </div>
+        <div class="flex gap-2 flex-wrap">
+            <button wire:click="updateStatusFilter('')" type="button" class="px-3 py-1.5 text-sm rounded-md border {{ $statusFilter === '' ? 'border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' : 'border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700' }}">
+                {{ __('All') }}
+            </button>
+            <button wire:click="updateStatusFilter('planning')" type="button" class="px-3 py-1.5 text-sm rounded-md border {{ $statusFilter === 'planning' ? 'border-yellow-500 bg-yellow-50 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400' : 'border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700' }}">
+                {{ __('Planning') }}
+            </button>
+            <button wire:click="updateStatusFilter('in_progress')" type="button" class="px-3 py-1.5 text-sm rounded-md border {{ $statusFilter === 'in_progress' ? 'border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' : 'border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700' }}">
+                {{ __('In Progress') }}
+            </button>
+            <button wire:click="updateStatusFilter('completed')" type="button" class="px-3 py-1.5 text-sm rounded-md border {{ $statusFilter === 'completed' ? 'border-green-500 bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700' }}">
+                {{ __('Completed') }}
+            </button>
+            <button wire:click="updateStatusFilter('on_hold')" type="button" class="px-3 py-1.5 text-sm rounded-md border {{ $statusFilter === 'on_hold' ? 'border-red-500 bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-400' : 'border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700' }}">
+                {{ __('On Hold') }}
+            </button>
+        </div>
     </div>
 
     <!-- Projects Grid -->
     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <!-- Project 1 -->
-        <div class="relative overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800 hover:shadow-md transition-shadow">
-            <div class="flex items-start justify-between p-6 pb-2">
-                <div class="space-y-1">
-                    <h2 class="text-lg font-semibold text-foreground">{{ __('Website Redesign') }}</h2>
-                    <flux:badge class="bg-yellow-500/10 text-yellow-700 dark:text-yellow-400">
-                        {{ __('Planning') }}
-                    </flux:badge>
-                </div>
-                <flux:dropdown>
-                    <flux:button variant="ghost" >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
-                            <circle cx="12" cy="12" r="1"></circle>
-                            <circle cx="19" cy="12" r="1"></circle>
-                            <circle cx="5" cy="12" r="1"></circle>
-                        </svg>
-                    </flux:button>
-                    <flux:menu>
-                        <flux:menu.item href="{{ route('projects') }}">{{ __('View Details') }}</flux:menu.item>
-                        <flux:menu.item href="#" @click.prevent="$dispatch('open-modal', 'edit-project')">{{ __('Edit') }}</flux:menu.item>
-                        <flux:menu.item class="text-red-600 dark:text-red-400" @click.prevent="$dispatch('open-modal', 'delete-project')">{{ __('Delete') }}</flux:menu.item>
-                    </flux:menu>
-                </flux:dropdown>
-            </div>
-            <div class="p-6 pt-0">
-                <p class="mb-4 text-sm text-zinc-500 dark:text-zinc-400">{{ __('Complete overhaul of company website with modern design') }}</p>
-                <div class="flex items-center justify-between text-sm text-zinc-500 dark:text-zinc-400">
-                    <div class="flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
-                            <path d="M8 2v4"></path>
-                            <path d="M16 2v4"></path>
-                            <rect width="18" height="18" x="3" y="4" rx="2"></rect>
-                            <path d="M3 10h18"></path>
-                            <path d="M8 14h.01"></path>
-                            <path d="M12 14h.01"></path>
-                            <path d="M16 14h.01"></path>
-                        </svg>
-                        {{ __('2024-02-15') }}
+        @forelse($projects as $project)
+            <div class="relative overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800 hover:shadow-md transition-shadow">
+                <div class="flex items-start justify-between p-6 pb-2">
+                    <div class="space-y-1">
+                        <h2 class="text-lg font-semibold text-foreground">{{ $project->name }}</h2>
+                        @php
+                            $statusColors = [
+                                'planning' => 'bg-yellow-500/10 text-yellow-700 dark:text-yellow-400',
+                                'in_progress' => 'bg-blue-500/10 text-blue-700 dark:text-blue-400',
+                                'completed' => 'bg-green-500/10 text-green-700 dark:text-green-400',
+                                'on_hold' => 'bg-red-500/10 text-red-700 dark:text-red-400',
+                            ];
+                        @endphp
+                        <flux:badge class="{{ $statusColors[$project->status] ?? 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400' }}">
+                            {{ ucfirst(str_replace('_', ' ', $project->status)) }}
+                        </flux:badge>
                     </div>
-                    <div class="flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
-                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                            <circle cx="9" cy="7" r="4"/>
-                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                        </svg>
-                        5
+                    <flux:dropdown>
+                        <flux:button variant="ghost">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                                <circle cx="12" cy="12" r="1"></circle>
+                                <circle cx="19" cy="12" r="1"></circle>
+                                <circle cx="5" cy="12" r="1"></circle>
+                            </svg>
+                        </flux:button>
+                        <flux:menu>
+                            <a href="{{ route('projects.edit', $project) }}" class="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-700">
+                                {{ __('Edit') }}
+                            </a>
+                            <button type="button"
+                                    wire:click="deleteProject({{ $project->id }})"
+                                    class="block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/30">
+                                {{ __('Delete') }}
+                            </button>
+                        </flux:menu>
+                    </flux:dropdown>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="mb-4 text-sm text-zinc-500 dark:text-zinc-400">
+                        {{ Str::limit($project->description, 100) }}
+                    </p>
+                    <div class="flex items-center justify-between text-sm text-zinc-500 dark:text-zinc-400">
+                        <div class="flex items-center gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                                <path d="M8 2v4"></path>
+                                <path d="M16 2v4"></path>
+                                <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                                <path d="M3 10h18"></path>
+                                <path d="M8 14h.01"></path>
+                                <path d="M12 14h.01"></path>
+                                <path d="M16 14h.01"></path>
+                            </svg>
+                            {{ $project->due_date ? $project->due_date->format('Y-m-d') : __('No due date') }}
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                            {{ $project->tasks->count() }}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @empty
+            <div class="col-span-full text-center py-12">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto h-12 w-12 text-zinc-400">
+                    <path d="M5 22h14"></path>
+                    <path d="M5 2h14"></path>
+                    <path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"></path>
+                    <path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"></path>
+                </svg>
+                <h3 class="mt-2 text-sm font-medium text-zinc-900 dark:text-zinc-100">{{ __('No projects') }}</h3>
+                <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{{ __('Get started by creating a new project.') }}</p>
+                <div class="mt-6">
+                    <a href="{{ route('projects.create') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                            <path d="M5 12h14"></path>
+                            <path d="M12 5v14"></path>
+                        </svg>
+                        {{ __('New Project') }}
+                    </a>
+                </div>
+            </div>
+        @endforelse
+    </div>
 
-        <!-- Project 2 -->
-        <div class="relative overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800 hover:shadow-md transition-shadow">
-            <div class="flex items-start justify-between p-6 pb-2">
-                <div class="space-y-1">
-                    <h2 class="text-lg font-semibold text-foreground">{{ __('Mobile App Development') }}</h2>
-                    <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10 dark:bg-blue-900/30 dark:text-blue-400 dark:ring-blue-400/30">
-                        {{ __('In Progress') }}
-                    </span>
+    <!-- Pagination -->
+    <div class="mt-6">
+        {{ $projects->links() }}
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    @if($showDeleteModal)
+    <div class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full dark:bg-zinc-800">
+                <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                            <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                        </div>
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-zinc-200" id="modal-title">
+                                {{ __('Delete Project') }}
+                            </h3>
+                            <div class="mt-2">
+                                <p class="text-sm text-gray-500 dark:text-zinc-400">
+                                    {{ __('Are you sure you want to delete this project? This action cannot be undone.') }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="relative">
-                    <button type="button" class="flex items-center justify-center p-1 rounded-full text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-zinc-700 dark:hover:text-zinc-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
-                            <circle cx="12" cy="12" r="1"></circle>
-                            <circle cx="19" cy="12" r="1"></circle>
-                            <circle cx="5" cy="12" r="1"></circle>
-                        </svg>
+                <div class="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button"
+                            wire:click="confirmDelete"
+                            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
+                        {{ __('Delete') }}
                     </button>
-                    <div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-zinc-800 dark:ring-white/10" role="menu" aria-orientation="vertical" tabindex="-1">
-                        <a href="{{ route('projects') }}" class="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-700" role="menuitem">{{ __('View Details') }}</a>
-                        <button type="button" @click="$dispatch('open-modal', 'edit-project')" class="block w-full px-4 py-2 text-left text-sm text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-700" role="menuitem">{{ __('Edit') }}</button>
-                        <button type="button" @click="$dispatch('open-modal', 'delete-project')" class="block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/30" role="menuitem">{{ __('Delete') }}</button>
-                    </div>
-                </div>
-            </div>
-            <div class="p-6 pt-0">
-                <p class="mb-4 text-sm text-zinc-500 dark:text-zinc-400">{{ __('Native iOS and Android app for customer engagement') }}</p>
-                <div class="flex items-center justify-between text-sm text-zinc-500 dark:text-zinc-400">
-                    <div class="flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
-                            <path d="M8 2v4"></path>
-                            <path d="M16 2v4"></path>
-                            <rect width="18" height="18" x="3" y="4" rx="2"></rect>
-                            <path d="M3 10h18"></path>
-                            <path d="M8 14h.01"></path>
-                            <path d="M12 14h.01"></path>
-                            <path d="M16 14h.01"></path>
-                        </svg>
-                        {{ __('2024-03-20') }}
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
-                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                            <circle cx="9" cy="7" r="4"/>
-                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                        </svg>
-                        8
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Project 3 -->
-        <div class="relative overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800 hover:shadow-md transition-shadow">
-            <div class="flex items-start justify-between p-6 pb-2">
-                <div class="space-y-1">
-                    <h2 class="text-lg font-semibold text-foreground">{{ __('Marketing Campaign') }}</h2>
-                    <flux:badge class="bg-yellow-500/10 text-yellow-700 dark:text-yellow-400">
-                        {{ __('Planning') }}
-                    </flux:badge>
-                </div>
-                <flux:dropdown>
-                    <flux:button variant="ghost" >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
-                            <circle cx="12" cy="12" r="1"></circle>
-                            <circle cx="19" cy="12" r="1"></circle>
-                            <circle cx="5" cy="12" r="1"></circle>
-                        </svg>
-                    </flux:button>
-                    <flux:menu>
-                        <flux:menu.item href="{{ route('projects') }}">{{ __('View Details') }}</flux:menu.item>
-                        <flux:menu.item href="#" @click.prevent="$dispatch('open-modal', 'edit-project')">{{ __('Edit') }}</flux:menu.item>
-                        <flux:menu.item class="text-red-600 dark:text-red-400" @click.prevent="$dispatch('open-modal', 'delete-project')">{{ __('Delete') }}</flux:menu.item>
-                    </flux:menu>
-                </flux:dropdown>
-            </div>
-            <div class="p-6 pt-0">
-                <p class="mb-4 text-sm text-zinc-500 dark:text-zinc-400">{{ __('Q1 digital marketing campaign planning and execution') }}</p>
-                <div class="flex items-center justify-between text-sm text-zinc-500 dark:text-zinc-400">
-                    <div class="flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
-                            <path d="M8 2v4"></path>
-                            <path d="M16 2v4"></path>
-                            <rect width="18" height="18" x="3" y="4" rx="2"></rect>
-                            <path d="M3 10h18"></path>
-                            <path d="M8 14h.01"></path>
-                            <path d="M12 14h.01"></path>
-                            <path d="M16 14h.01"></path>
-                        </svg>
-                        {{ __('2024-02-28') }}
-                    </div>
-                    <div class="flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
-                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                            <circle cx="9" cy="7" r="4"/>
-                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                        </svg>
-                        4
-                    </div>
+                    <button type="button"
+                            wire:click="cancelDelete"
+                            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm dark:bg-zinc-600 dark:text-zinc-200 dark:border-zinc-600 dark:hover:bg-zinc-700">
+                        {{ __('Cancel') }}
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+    @endif
 </div>
+
+<script>
+document.addEventListener('livewire:initialized', () => {
+    Livewire.on('updateStatusFilter', (status) => {
+        @this.statusFilter = status;
+    });
+});
+</script>
