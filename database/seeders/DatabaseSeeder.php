@@ -6,6 +6,7 @@ use App\Models\Admin;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 final class DatabaseSeeder extends Seeder
@@ -22,8 +23,12 @@ final class DatabaseSeeder extends Seeder
             'email' => 'admin@admin.com',
         ]);
 
-        $tenant = \App\Models\Tenant::create(['id' => 'test']);
-        $tenant->domains()->create(['domain' => 'test']);
+        if (DB::table('users')->exists()) {
+            DB::statement('DROP DATABASE tenanttest');
+        }
+
+        $tenant = \App\Models\Tenant::create(['id' => 'arlo']);
+        $tenant->domains()->create(['domain' => 'arlo']);
 
         $tenant->run(function () {
             User::factory()->create([

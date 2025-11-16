@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Livewire\Users;
 
@@ -37,8 +35,9 @@ class Index extends Component
 
         if ($this->search) {
             $query->where(function ($q) {
-                $q->where('name', 'like', '%' . $this->search . '%')
-                  ->orWhere('email', 'like', '%' . $this->search . '%');
+                $q
+                    ->where('name', 'like', '%' . $this->search . '%')
+                    ->orWhere('email', 'like', '%' . $this->search . '%');
             });
         }
 
@@ -46,8 +45,10 @@ class Index extends Component
             // Add role filtering when role system is implemented
         }
 
-        $users = $query->orderBy('name', 'asc')
-                       ->paginate($this->perPage);
+        $users = $query
+            ->with(['projects', 'tasks', 'clients'])
+            ->orderBy('name', 'asc')
+            ->paginate($this->perPage);
 
         return view('livewire.users.index', [
             'users' => $users

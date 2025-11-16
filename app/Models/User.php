@@ -47,6 +47,30 @@ final class User extends Authenticatable
     }
 
     /**
+     * The projects that belong to the user.
+     */
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class);
+    }
+
+    /**
+     * The tasks that belong to the user.
+     */
+    public function tasks()
+    {
+        return $this->belongsToMany(Task::class);
+    }
+
+    /**
+     * The clients that belong to the user.
+     */
+    public function clients()
+    {
+        return $this->belongsToMany(Client::class);
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
