@@ -19,6 +19,7 @@ class Project extends Model
         'status',
         'due_date',
         'user_id',
+        'client_id',
     ];
 
     protected $casts = [
@@ -35,6 +36,11 @@ class Project extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function client(): BelongsTo
+    {
+        return $this->belongsTo(Client::class);
     }
 
     public function tasks(): HasMany

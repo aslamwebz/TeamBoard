@@ -27,6 +27,22 @@
                 {{ __('Users') }}
             </flux:navlist.item>
         </flux:navlist.group>
+
+        <!-- CRM & Finance Section -->
+        <flux:navlist.group label="CRM & Finance" class="grid mt-4">
+            <flux:navlist.item icon="user-group" href="{{ route('clients.index') }}" :current="request()->routeIs('clients*')"
+                wire:navigate.hover @mouseenter="preloadLink('{{ route('clients.index') }}')">
+                {{ __('Clients') }}
+            </flux:navlist.item>
+            <flux:navlist.item icon="document-currency-dollar" href="{{ route('invoices.index') }}" :current="request()->routeIs('invoices*')"
+                wire:navigate.hover @mouseenter="preloadLink('{{ route('invoices.index') }}')">
+                {{ __('Invoices') }}
+            </flux:navlist.item>
+            <flux:navlist.item icon="chart-bar" href="{{ route('reports.index') }}" :current="request()->routeIs('reports*')"
+                wire:navigate.hover @mouseenter="preloadLink('{{ route('reports.index') }}')">
+                {{ __('Reports') }}
+            </flux:navlist.item>
+        </flux:navlist.group>
     </flux:navlist>
 
     <flux:spacer />

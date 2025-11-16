@@ -13,6 +13,18 @@ use App\Livewire\Users\Edit;
 use App\Livewire\Users\Index;
 use App\Livewire\Users\Index as Users;
 use App\Livewire\Dashboard;
+use App\Livewire\Clients\Create as ClientCreate;
+use App\Livewire\Clients\Edit as ClientEdit;
+use App\Livewire\Clients\Index as ClientIndex;
+use App\Livewire\Clients\Show as ClientShow;
+use App\Livewire\Invoices\Create as InvoiceCreate;
+use App\Livewire\Invoices\Edit as InvoiceEdit;
+use App\Livewire\Invoices\Index as InvoiceIndex;
+use App\Livewire\Invoices\Show as InvoiceShow;
+use App\Livewire\Reports\Create as ReportCreate;
+use App\Livewire\Reports\Edit as ReportEdit;
+use App\Livewire\Reports\Index as ReportIndex;
+use App\Livewire\Reports\Show as ReportShow;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -63,6 +75,24 @@ Route::middleware([
         Route::get('/tasks/create', \App\Livewire\Tasks\Create::class)->name('tasks.create');
         Route::get('/tasks/{task}/edit', \App\Livewire\Tasks\Edit::class)->name('tasks.edit');
         Route::get('/tasks/{task}', \App\Livewire\Tasks\Show::class)->name('tasks.show');
+
+         // Clients routes
+        Route::get('/clients', ClientIndex::class)->name('clients.index');
+        Route::get('/clients/create', ClientCreate::class)->name('clients.create');
+        Route::get('/clients/{client}/edit', ClientEdit::class)->name('clients.edit');
+        Route::get('/clients/{client}', ClientShow::class)->name('clients.show');
+
+        // Invoices routes
+        Route::get('/invoices', InvoiceIndex::class)->name('invoices.index');
+        Route::get('/invoices/create', InvoiceCreate::class)->name('invoices.create');
+        Route::get('/invoices/{invoice}/edit', InvoiceEdit::class)->name('invoices.edit');
+        Route::get('/invoices/{invoice}', InvoiceShow::class)->name('invoices.show');
+
+        // Reports routes
+        Route::get('/reports', ReportIndex::class)->name('reports.index');
+        Route::get('/reports/create', ReportCreate::class)->name('reports.create');
+        Route::get('/reports/{report}/edit', ReportEdit::class)->name('reports.edit');
+        Route::get('/reports/{report}', ReportShow::class)->name('reports.show');
     });
 
     Route::middleware(['auth'])->group(function () {

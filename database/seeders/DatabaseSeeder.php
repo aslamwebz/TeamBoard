@@ -29,7 +29,13 @@ final class DatabaseSeeder extends Seeder
             User::factory()->create([
                 'name' => 'Test User',
                 'email' => 'user@user.com',
-                'password' => Hash::make('passowrd'),
+                'password' => Hash::make('password'),
+            ]);
+
+            $this->call([
+                ClientSeeder::class,
+                InvoiceSeeder::class,
+                ReportSeeder::class,
             ]);
         });
     }
