@@ -87,9 +87,10 @@
                 <div class="p-6">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-lg font-semibold text-foreground">Projects</h2>
-                        <flux:modal.trigger name="assign-project">
-                            <flux:button class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400">+ Assign Project</flux:button>
-                        </flux:modal.trigger>
+                        <button type="button" wire:click="$toggle('showAssignProjectModal')"
+                            class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400">
+                            + Assign Project
+                        </button>
                     </div>
 
                     @if ($team->projects->count() > 0)
@@ -183,9 +184,10 @@
                 <div class="p-6">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-lg font-semibold text-foreground">Team Tasks</h2>
-                        <flux:modal.trigger name="assign-task">
-                            <flux:button class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400">+ Assign Task</flux:button>
-                        </flux:modal.trigger>
+                        <button type="button" wire:click="$toggle('showAssignTaskModal')"
+                            class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400">
+                            + Assign Task
+                        </button>
                     </div>
 
                     @php
@@ -277,9 +279,10 @@
             <div class="bg-white dark:bg-zinc-800 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-lg font-semibold text-foreground">Clients</h3>
-                    <flux:modal.trigger name="assign-client">
-                        <flux:button class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400">+ Assign Client</flux:button>
-                    </flux:modal.trigger>
+                    <button type="button" wire:click="$toggle('showAssignClientModal')"
+                        class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400">
+                        + Assign Client
+                    </button>
                 </div>
 
                 @if ($team->clients->count() > 0)
@@ -331,9 +334,10 @@
         <div class="p-6">
             <div class="flex items-center justify-between mb-4">
                 <h2 class="text-lg font-semibold text-foreground">Team Members</h2>
-                <flux:modal.trigger name="assign-member">
-                    <flux:button class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400">+ Assign Member</flux:button>
-                </flux:modal.trigger>
+                <button type="button" wire:click="$toggle('showAssignMemberModal')"
+                    class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400">
+                    + Assign Member
+                </button>
             </div>
 
             @if ($team->users->count() > 0)
@@ -417,70 +421,31 @@
                     <h3 class="mt-2 text-sm font-medium text-foreground">No team members</h3>
                     <p class="mt-1 text-sm text-muted-foreground">Get started by adding team members.</p>
                     <div class="mt-6">
-                        <flux:modal.trigger name="assign-member">
-                            <flux:button class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                                <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                                Assign Member
-                            </flux:button>
-                        </flux:modal.trigger>
+                        <button type="button" wire:click="$toggle('showAssignMemberModal')"
+                            class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400">
+                            + Assign Member
+                        </button>
                     </div>
                 </div>
             @endif
         </div>
     </div>
 
-    <x-modal
-        name="assign-member"
-        showProperty="showAssignMemberModal"
-        selectedItemsProperty="selectedUsers"
-        title="Assign Team Member"
-        description="Select team members to assign to this team."
-        :items="$allUsers"
-        :onSubmit="'assignMembers'"
-        submitLabel="Assign Members"
-        cancelLabel="Cancel"
-        type="assign" />
+    <x-modal name="assign-member" showProperty="showAssignMemberModal" selectedItemsProperty="selectedUsers"
+        title="Assign Team Member" description="Select team members to assign to this team." :items="$allUsers"
+        :onSubmit="'assignMembers'" submitLabel="Assign Members" cancelLabel="Cancel" type="assign" />
 
-    <x-modal
-        name="assign-client"
-        showProperty="showAssignClientModal"
-        selectedItemsProperty="selectedClients"
-        title="Assign Client"
-        description="Select clients to assign to this team."
-        :items="$allClients"
-        :onSubmit="'assignClients'"
-        submitLabel="Assign Clients"
-        cancelLabel="Cancel"
-        type="assign" />
+    <x-modal name="assign-client" showProperty="showAssignClientModal" selectedItemsProperty="selectedClients"
+        title="Assign Client" description="Select clients to assign to this team." :items="$allClients" :onSubmit="'assignClients'"
+        submitLabel="Assign Clients" cancelLabel="Cancel" type="assign" />
 
 
 
-    <x-modal
-        name="assign-project"
-        showProperty="showAssignProjectModal"
-        selectedItemsProperty="selectedProjects"
-        title="Assign Project"
-        description="Select projects to assign to this team."
-        :items="$allProjects"
-        :onSubmit="'assignProjects'"
-        submitLabel="Assign Projects"
-        cancelLabel="Cancel"
-        type="assign" />
+    <x-modal name="assign-project" showProperty="showAssignProjectModal" selectedItemsProperty="selectedProjects"
+        title="Assign Project" description="Select projects to assign to this team." :items="$allProjects"
+        :onSubmit="'assignProjects'" submitLabel="Assign Projects" cancelLabel="Cancel" type="assign" />
 
-    <x-modal
-        name="assign-task"
-        showProperty="showAssignTaskModal"
-        selectedItemsProperty="selectedTasks"
-        title="Assign Task"
-        description="Select tasks to assign to team members."
-        :items="$allTasks"
-        :onSubmit="'assignTasks'"
-        submitLabel="Assign Tasks"
-        cancelLabel="Cancel"
-        type="assign" />
+    <x-modal name="assign-task" showProperty="showAssignTaskModal" selectedItemsProperty="selectedTasks"
+        title="Assign Task" description="Select tasks to assign to team members." :items="$allTasks" :onSubmit="'assignTasks'"
+        submitLabel="Assign Tasks" cancelLabel="Cancel" type="assign" />
 </div>

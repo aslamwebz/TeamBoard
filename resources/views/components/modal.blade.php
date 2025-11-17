@@ -13,7 +13,7 @@
 ])
 
 <flux:modal :name="$name" :wire:model="$showProperty" class="min-w-[32rem]">
-    
+
     <div class="space-y-6">
         <div>
             <flux:heading size="lg">{{ $title }}</flux:heading>
@@ -27,7 +27,7 @@
                 @foreach ($items as $item)
                     <label
                         class="flex items-center gap-3 p-3 border border-zinc-200 dark:border-zinc-700 rounded-lg cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-700/50">
-                        <input type="checkbox" :wire:model{{ sprintf("=\"%s\"", $selectedItemsProperty) }} :value="{{ $item->id }}"
+                        <input type="checkbox" wire:model="{{ $selectedItemsProperty }}" value="{{ $item->id }}"
                             class="rounded text-blue-600">
                         <div class="flex-1">
                             <h4 class="font-medium text-foreground">
@@ -56,7 +56,7 @@
 
         <div class="flex gap-2">
             <flux:spacer />
-            @if($onCancel)
+            @if ($onCancel)
                 <flux:modal.close>
                     <flux:button wire:click="{{ $onCancel }}" variant="ghost">{{ $cancelLabel }}</flux:button>
                 </flux:modal.close>

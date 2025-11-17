@@ -288,14 +288,14 @@
     <flux:modal name="task-details" wire:model="showTaskModal">
         <div class="space-y-6">
             <div>
-                <flux:heading size="lg">{{ $selectedTask->title }}</flux:heading>
+                <flux:heading size="lg">{{ $selectedTask?->title ?? 'Task Details' }}</flux:heading>
             </div>
 
             <div class="space-y-4">
                 <div>
                     <flux:subheading>{{ __('Description') }}</flux:subheading>
                     <flux:text class="mt-1 whitespace-pre-wrap">
-                        {{ $selectedTask->description ?: __('No description provided') }}
+                        {{ $selectedTask?->description ?: __('No description provided') }}
                     </flux:text>
                 </div>
 
@@ -310,29 +310,29 @@
                                 'on_hold' => 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
                             ];
                         @endphp
-                        <flux:badge class="{{ $statusColors[$selectedTask->status] ?? 'bg-zinc-100 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-300' }}">
-                            {{ ucfirst(str_replace('_', ' ', $selectedTask->status)) }}
+                        <flux:badge class="{{ $statusColors[$selectedTask?->status] ?? 'bg-zinc-100 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-300' }}">
+                            {{ $selectedTask?->status ? ucfirst(str_replace('_', ' ', $selectedTask?->status)) : 'N/A' }}
                         </flux:badge>
                     </div>
 
                     <div>
                         <flux:subheading>{{ __('Due Date') }}</flux:subheading>
                         <flux:text>
-                            {{ $selectedTask->due_date ? $selectedTask->due_date->format('M d, Y') : __('No due date') }}
+                            {{ $selectedTask?->due_date ? $selectedTask->due_date->format('M d, Y') : __('No due date') }}
                         </flux:text>
                     </div>
 
                     <div>
                         <flux:subheading>{{ __('Project') }}</flux:subheading>
                         <flux:text>
-                            {{ $selectedTask->project->name ?? __('No Project') }}
+                            {{ $selectedTask?->project->name ?? __('No Project') }}
                         </flux:text>
                     </div>
 
                     <div>
                         <flux:subheading>{{ __('Assigned To') }}</flux:subheading>
                         <flux:text>
-                            {{ $selectedTask->user->name ?? __('Unassigned') }}
+                            {{ $selectedTask?->user->name ?? __('Unassigned') }}
                         </flux:text>
                     </div>
                 </div>
@@ -343,7 +343,7 @@
                 <flux:modal.close>
                     <flux:button variant="ghost">{{ __('Close') }}</flux:button>
                 </flux:modal.close>
-                <a href="{{ route('tasks.edit', $selectedTask) }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                <a href="{{ $selectedTask ? route('tasks.edit', $selectedTask) : '#' }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
                     {{ __('Edit Task') }}
                 </a>
             </div>

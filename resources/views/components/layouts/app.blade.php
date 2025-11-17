@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,10 +16,11 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
     @filamentStyles
-    
+    @fluxAppearance
+
     <!-- Navigation Preloading -->
     @livewire('navigation-handler', key('navigation-handler'))
-    
+
     <style>
         /* Navigation loading indicator */
         .navigate-loading {
@@ -35,44 +37,52 @@
             z-index: 9999;
             transition: transform 0.3s ease-out;
         }
-        
+
         @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
-        
+
         .navigate-loading.active {
             transform: scaleX(1);
             transition: transform 10s cubic-bezier(0.1, 0.8, 0.2, 1);
         }
     </style>
 </head>
-<body class="font-sans antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-white h-full" 
-      x-data="{
-          isLoading: false,
-          preloaded: new Set(),
-          preloadLink(url) {
-              if (!this.preloaded.has(url)) {
-                  fetch(url, { 
-                      headers: { 'X-Livewire': 'true' },
-                      credentials: 'same-origin'
-                  });
-                  this.preloaded.add(url);
-              }
-          }
-      }"
-      @navigating.window="isLoading = true" 
-      @navigated.window="setTimeout(() => { isLoading = false }, 300)">
+
+<body class="font-sans antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-white h-full"
+    x-data="{
+        isLoading: false,
+        preloaded: new Set(),
+        preloadLink(url) {
+            if (!this.preloaded.has(url)) {
+                fetch(url, {
+                    headers: { 'X-Livewire': 'true' },
+                    credentials: 'same-origin'
+                });
+                this.preloaded.add(url);
+            }
+        }
+    }" @navigating.window="isLoading = true"
+    @navigated.window="setTimeout(() => { isLoading = false }, 300)">
     <div class="navigate-loading" :class="{ 'active': isLoading }"></div>
     <div class="flex h-full">
         <!-- Sidebar -->
         <x-layouts.app.sidebar />
-        
+
         <!-- Main content -->
         <div class="flex-1 overflow-y-auto">
             <x-layouts.app.header />
-            
+
             <main class="p-6">
                 {{ $slot }}
             </main>
@@ -81,5 +91,7 @@
 
     @livewireScripts
     @filamentScripts
+    @fluxScripts
 </body>
+
 </html>
