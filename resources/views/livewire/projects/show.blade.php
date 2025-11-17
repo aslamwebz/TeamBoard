@@ -1,4 +1,11 @@
 <div class="max-w-7xl mx-auto p-6">
+    @if (session()->has('success'))
+        <div
+            class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg dark:bg-green-900/30 dark:border-green-800 dark:text-green-400 mb-6">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <div class="mb-6">
         <a href="{{ route('projects') }}"
             class="inline-flex items-center text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200">
@@ -240,7 +247,7 @@
                         <p class="text-sm text-muted-foreground">{{ __('Manage project team members') }}</p>
                     </div>
                     <div class="flex gap-2">
-                        <button
+                        <button wire:click="showAssignUserModal = true"
                             class="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -289,7 +296,11 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <a href="{{ route('users.show', $user) }}"
-                                            class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">{{ __('View') }}</a>
+                                            class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 mr-3">{{ __('View') }}</a>
+                                        <button wire:click="removeUser({{ $user->id }})"
+                                            class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300">
+                                            {{ __('Remove') }}
+                                        </button>
                                     </td>
                                 </tr>
                             @empty
@@ -312,7 +323,7 @@
                         <p class="text-sm text-muted-foreground">{{ __('Manage project teams') }}</p>
                     </div>
                     <div class="flex gap-2">
-                        <button
+                        <button wire:click="showAssignTeamModal = true"
                             class="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -364,8 +375,12 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         <button
-                                            class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                            class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 mr-3">
                                             {{ __('View') }}
+                                        </button>
+                                        <button wire:click="removeTeam({{ $team->id }})"
+                                            class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300">
+                                            {{ __('Remove') }}
                                         </button>
                                     </td>
                                 </tr>
@@ -498,5 +513,31 @@
                 'hover:border-zinc-300', 'dark:text-zinc-400', 'dark:hover:text-zinc-300');
         }
     </script>
+
+    <x-modal
+        name="assign-user"
+        showProperty="showAssignUserModal"
+        selectedItemsProperty="selectedUsers"
+        title="Assign User to Project"
+        description="Select users to assign to this project."
+        :items="$availableUsers"
+        :onSubmit="'assignUsers'"
+        :onCancel="'cancelAssignUser'"
+        submitLabel="Assign Users"
+        cancelLabel="Cancel"
+        type="assign" />
+
+    <x-modal
+        name="assign-team"
+        showProperty="showAssignTeamModal"
+        selectedItemsProperty="selectedTeams"
+        title="Add Team to Project"
+        description="Select teams to assign to this project."
+        :items="$availableTeams"
+        :onSubmit="'assignTeams'"
+        :onCancel="'cancelAssignTeam'"
+        submitLabel="Add Teams"
+        cancelLabel="Cancel"
+        type="assign" />
 
 </div>

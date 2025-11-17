@@ -192,26 +192,20 @@
         @endif
 
         <!-- Delete Confirmation Modal -->
-        @if ($showDeleteModal)
-            <div class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-                <div class="bg-background rounded-lg shadow-lg max-w-md w-full p-6">
-                    <h3 class="text-lg font-medium text-foreground mb-2">Delete Team</h3>
-                    <p class="text-sm text-muted-foreground mb-6">Are you sure you want to delete this team? This
-                        action
-                        cannot be undone.</p>
-                    <div class="flex justify-end space-x-3">
-                        <button wire:click="cancelDelete"
-                            class="px-4 py-2 text-sm font-medium text-zinc-700 bg-zinc-100 rounded-md hover:bg-zinc-200 dark:bg-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-600">
-                            Cancel
-                        </button>
-                        <button wire:click="delete"
-                            class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700">
-                            Delete Team
-                        </button>
-                    </div>
+        <flux:modal name="delete-team" wire:model="showDeleteModal">
+            <div class="space-y-6">
+                <div>
+                    <flux:heading size="lg">Delete Team</flux:heading>
+                    <flux:text class="mt-2">Are you sure you want to delete this team? This action cannot be undone.</flux:text>
+                </div>
+
+                <div class="flex gap-2">
+                    <flux:spacer />
+                    <flux:button wire:click="cancelDelete" variant="ghost">Cancel</flux:button>
+                    <flux:button wire:click="delete" variant="danger">Delete Team</flux:button>
                 </div>
             </div>
-        @endif
+        </flux:modal>
     </div>
     <div class="mt-6">
         {{ $teams->links() }}

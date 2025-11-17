@@ -290,23 +290,18 @@
     </div>
 
     <!-- Delete Confirmation Modal -->
-    @if ($showDeleteModal)
-        <div class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-            <div class="bg-background rounded-lg shadow-lg max-w-md w-full p-6">
-                <h3 class="text-lg font-medium text-foreground mb-2">Delete Client</h3>
-                <p class="text-sm text-muted-foreground mb-6">Are you sure you want to delete this client? This action
-                    cannot be undone.</p>
-                <div class="flex justify-end space-x-3">
-                    <button wire:click="cancelDelete"
-                        class="px-4 py-2 border border-input rounded-lg text-foreground hover:bg-muted">
-                        Cancel
-                    </button>
-                    <button wire:click="confirmDelete"
-                        class="px-4 py-2 bg-destructive text-destructive-foreground rounded-lg hover:bg-destructive/90">
-                        Delete
-                    </button>
-                </div>
+    <flux:modal name="delete-client" wire:model="showDeleteModal">
+        <div class="space-y-6">
+            <div>
+                <flux:heading size="lg">Delete Client</flux:heading>
+                <flux:text class="mt-2">Are you sure you want to delete this client? This action cannot be undone.</flux:text>
+            </div>
+
+            <div class="flex gap-2">
+                <flux:spacer />
+                <flux:button wire:click="cancelDelete" variant="ghost">Cancel</flux:button>
+                <flux:button wire:click="confirmDelete" variant="danger">Delete</flux:button>
             </div>
         </div>
-    @endif
+    </flux:modal>
 </div>
