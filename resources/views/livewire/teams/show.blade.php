@@ -88,8 +88,13 @@
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-lg font-semibold text-foreground">Projects</h2>
                         <button type="button" wire:click="$toggle('showAssignProjectModal')"
-                            class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400">
-                            + Assign Project
+                            class="inline-flex items-center px-3 py-1.5 border border-blue-300 rounded-md text-sm font-medium text-blue-700 bg-white hover:bg-blue-50 dark:bg-zinc-700 dark:text-blue-400 dark:border-blue-600 dark:hover:bg-blue-900/20">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="h-4 w-4 mr-1">
+                                <path d="M12 5v14M5 12h14" />
+                            </svg>
+                            Assign Project
                         </button>
                     </div>
 
@@ -185,8 +190,13 @@
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-lg font-semibold text-foreground">Team Tasks</h2>
                         <button type="button" wire:click="$toggle('showAssignTaskModal')"
-                            class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400">
-                            + Assign Task
+                            class="inline-flex items-center px-3 py-1.5 border border-blue-300 rounded-md text-sm font-medium text-blue-700 bg-white hover:bg-blue-50 dark:bg-zinc-700 dark:text-blue-400 dark:border-blue-600 dark:hover:bg-blue-900/20">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="h-4 w-4 mr-1">
+                                <path d="M12 5v14M5 12h14" />
+                            </svg>
+                            Assign Task
                         </button>
                     </div>
 
@@ -280,8 +290,13 @@
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-lg font-semibold text-foreground">Clients</h3>
                     <button type="button" wire:click="$toggle('showAssignClientModal')"
-                        class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400">
-                        + Assign Client
+                        class="inline-flex items-center px-3 py-1.5 border border-blue-300 rounded-md text-sm font-medium text-blue-700 bg-white hover:bg-blue-50 dark:bg-zinc-700 dark:text-blue-400 dark:border-blue-600 dark:hover:bg-blue-900/20">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="h-4 w-4 mr-1">
+                            <path d="M12 5v14M5 12h14" />
+                        </svg>
+                        Assign Client
                     </button>
                 </div>
 
@@ -335,8 +350,13 @@
             <div class="flex items-center justify-between mb-4">
                 <h2 class="text-lg font-semibold text-foreground">Team Members</h2>
                 <button type="button" wire:click="$toggle('showAssignMemberModal')"
-                    class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400">
-                    + Assign Member
+                    class="inline-flex items-center px-3 py-1.5 border border-blue-300 rounded-md text-sm font-medium text-blue-700 bg-white hover:bg-blue-50 dark:bg-zinc-700 dark:text-blue-400 dark:border-blue-600 dark:hover:bg-blue-900/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="h-4 w-4 mr-1">
+                        <path d="M12 5v14M5 12h14" />
+                    </svg>
+                    Assign Member
                 </button>
             </div>
 
@@ -422,8 +442,13 @@
                     <p class="mt-1 text-sm text-muted-foreground">Get started by adding team members.</p>
                     <div class="mt-6">
                         <button type="button" wire:click="$toggle('showAssignMemberModal')"
-                            class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400">
-                            + Assign Member
+                            class="inline-flex items-center px-3 py-1.5 border border-blue-300 rounded-md text-sm font-medium text-blue-700 bg-white hover:bg-blue-50 dark:bg-zinc-700 dark:text-blue-400 dark:border-blue-600 dark:hover:bg-blue-900/20">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="h-4 w-4 mr-1">
+                                <path d="M12 5v14M5 12h14" />
+                            </svg>
+                            Assign Member
                         </button>
                     </div>
                 </div>
