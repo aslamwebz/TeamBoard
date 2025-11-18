@@ -18,10 +18,9 @@
     <div class="flex items-center gap-3">
         <flux:input wire:model.live="search" placeholder="{{ __('Search users') }}" class="max-w-xs" />
         <flux:select wire:model.live="role" class="max-w-xs">
-            <option value="all">{{ __('All Roles') }}</option>
-            <option value="admin">{{ __('Administrator') }}</option>
-            <option value="manager">{{ __('Manager') }}</option>
-            <option value="member">{{ __('Member') }}</option>
+            <option value="all">{{ __('All Users') }}</option>
+            <option value="with-permissions">{{ __('With Permissions') }}</option>
+            <option value="without-permissions">{{ __('Without Permissions') }}</option>
         </flux:select>
     </div>
 
@@ -45,7 +44,7 @@
                         </th>
                         <th
                             class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
-                            {{ __('Clients') }}
+                            {{ __('Permissions') }}
                         </th>
                         <th
                             class="px-6 py-3 text-right text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
@@ -100,7 +99,7 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-medium text-foreground">{{ $clientCount }}</div>
+                                <div class="text-sm font-medium text-foreground">{{ $user->permissions_count }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <flux:button wire:navigate href="/users/{{ $user->id }}" variant="outline"

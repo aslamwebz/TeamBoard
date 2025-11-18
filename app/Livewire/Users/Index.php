@@ -41,14 +41,23 @@ class Index extends Component
             });
         }
 
-        if ($this->role !== 'all') {
-            // Add role filtering when role system is implemented
+        if ($this->role === 'with-permissions') {
+            $query->whereHas('roles.permissions') // Users with roles that have permissions
+                  ->orWhereHas('permissions'); // Or users with direct permissions
+        } elseif ($this->role === 'without-permissions') {
+            $query->whereDoesntHave('roles.permissions') // Users without roles that have permissions
+                  ->whereDoesntHave('permissions'); // And without direct permissions
         }
 
         $users = $query
-            ->with(['projects', 'tasks', 'clients'])
+            ->with(['projects', 'tasks', 'clients', 'roles.permissions', 'permissions'])
             ->orderBy('name', 'asc')
             ->paginate($this->perPage);
+
+        // Pre-calculate permissions count for each user
+        foreach ($users as $user) {
+            $user->permissions_count = $user->getAllPermissions()->count();
+        }
 
         return view('livewire.users.index', [
             'users' => $users

@@ -12,14 +12,30 @@ use Livewire\Component;
 class Show extends Component
 {
     public User $user;
+    public string $activeTab = 'projects';
 
     public function mount(User $user)
     {
         $this->user = $user;
     }
 
+    public function changeTab($tab)
+    {
+        $this->activeTab = $tab;
+    }
+
     public function render()
     {
-        return view('livewire.users.show');
+        // Load related data to prevent lazy loading
+        $this->user->load(['roles.permissions', 'permissions']);
+
+        // Get all permissions for the user (direct + from roles)
+        $userPermissions = $this->user->getAllPermissions();
+        $userPermissionsCount = $userPermissions->count();
+
+        return view('livewire.users.show', [
+            'userPermissions' => $userPermissions,
+            'userPermissionsCount' => $userPermissionsCount
+        ]);
     }
 }
