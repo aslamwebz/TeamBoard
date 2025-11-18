@@ -42,6 +42,8 @@ final class DatabaseSeeder extends Seeder
                 ClientSeeder::class,
                 ProjectSeeder::class,
                 ReportSeeder::class,
+                // RolePermissionSeeder is for central (not tenant specific)
+                // Tenant role permissions are handled separately
             ]);
         });
     }

@@ -14,43 +14,71 @@
                 wire:navigate.hover @mouseenter="preloadLink('{{ route('dashboard') }}')">
                 {{ __('Dashboard') }}
             </flux:navlist.item>
-            <flux:navlist.item icon="folder" href="{{ route('projects') }}" :current="request()->routeIs('projects')"
-                wire:navigate.hover @mouseenter="preloadLink('{{ route('projects') }}')">
-                {{ __('Projects') }}
-            </flux:navlist.item>
+
+            <!-- Tasks - Available to all authenticated users -->
             <flux:navlist.item icon="list-bullet" href="{{ route('tasks') }}" :current="request()->routeIs('tasks')"
                 wire:navigate.hover @mouseenter="preloadLink('{{ route('tasks') }}')">
                 {{ __('Tasks') }}
             </flux:navlist.item>
-            <flux:navlist.item icon="users" href="{{ route('users') }}" :current="request()->routeIs('users')"
-                wire:navigate.hover @mouseenter="preloadLink('{{ route('users') }}')">
-                {{ __('Users') }}
+
+            <!-- Projects - Available to all authenticated users -->
+            <flux:navlist.item icon="folder" href="{{ route('projects') }}" :current="request()->routeIs('projects')"
+                wire:navigate.hover @mouseenter="preloadLink('{{ route('projects') }}')">
+                {{ __('Projects') }}
             </flux:navlist.item>
+
+            <!-- Teams - Available to all authenticated users -->
             <flux:navlist.item icon="user-group" href="{{ route('teams.index') }}"
                 :current="request()->routeIs('teams*')" wire:navigate.hover
                 @mouseenter="preloadLink('{{ route('teams.index') }}')">
                 {{ __('Teams') }}
             </flux:navlist.item>
+
+            <!-- Users - Only for users with user permissions -->
+            @can('view users')
+            <flux:navlist.item icon="users" href="{{ route('users') }}" :current="request()->routeIs('users')"
+                wire:navigate.hover @mouseenter="preloadLink('{{ route('users') }}')">
+                {{ __('Users') }}
+            </flux:navlist.item>
+            @endcan
+
+            <!-- Roles - Only for users with role permissions -->
+            @can('view roles')
+            <flux:navlist.item icon="shield-check" href="{{ route('roles.index') }}" :current="request()->routeIs('roles*')"
+                wire:navigate.hover @mouseenter="preloadLink('{{ route('roles.index') }}')">
+                {{ __('Roles') }}
+            </flux:navlist.item>
+            @endcan
         </flux:navlist.group>
 
-        <!-- CRM & Finance Section -->
+        <!-- CRM & Finance Section - Only for users with client/invoice permissions -->
+        @canany(['view clients', 'view invoices', 'view reports'])
         <flux:navlist.group label="CRM & Finance" class="grid mt-4">
+            @can('view clients')
             <flux:navlist.item icon="user-group" href="{{ route('clients.index') }}"
                 :current="request()->routeIs('clients*')" wire:navigate.hover
                 @mouseenter="preloadLink('{{ route('clients.index') }}')">
                 {{ __('Clients') }}
             </flux:navlist.item>
+            @endcan
+
+            @can('view invoices')
             <flux:navlist.item icon="document-currency-dollar" href="{{ route('invoices.index') }}"
                 :current="request()->routeIs('invoices*')" wire:navigate.hover
                 @mouseenter="preloadLink('{{ route('invoices.index') }}')">
                 {{ __('Invoices') }}
             </flux:navlist.item>
+            @endcan
+
+            @can('view reports')
             <flux:navlist.item icon="chart-bar" href="{{ route('reports.index') }}"
                 :current="request()->routeIs('reports*')" wire:navigate.hover
                 @mouseenter="preloadLink('{{ route('reports.index') }}')">
                 {{ __('Reports') }}
             </flux:navlist.item>
+            @endcan
         </flux:navlist.group>
+        @endcanany
     </flux:navlist>
 
     <flux:spacer />

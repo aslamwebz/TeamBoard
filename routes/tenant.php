@@ -100,6 +100,11 @@ Route::middleware([
         Route::get('/teams/create', TeamCreate::class)->name('teams.create');
         Route::get('/teams/{team}/edit', TeamEdit::class)->name('teams.edit');
         Route::get('/teams/{team}', TeamShow::class)->name('teams.show');
+
+        // Roles management routes
+        Route::get('/roles', \App\Livewire\Roles\Index::class)->name('roles.index');
+        Route::get('/roles/create', \App\Livewire\Roles\Form::class)->name('roles.create');
+        Route::get('/roles/{role}/edit', \App\Livewire\Roles\Form::class)->name('roles.edit')->where('role', '[0-9]+');
     });
 
     Route::middleware(['auth'])->group(function () {
