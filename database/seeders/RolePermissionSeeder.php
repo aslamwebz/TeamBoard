@@ -31,6 +31,12 @@ class RolePermissionSeeder extends Seeder
             'edit roles',
             'delete roles',
 
+            // Permission management
+            'view permissions',
+            'create permissions',
+            'edit permissions',
+            'delete permissions',
+
             // Team management
             'view teams',
             'create teams',
@@ -86,6 +92,11 @@ class RolePermissionSeeder extends Seeder
             'create users',
             'edit users',
             'view roles',
+            'create roles',
+            'edit roles',
+            'view permissions',
+            'create permissions',
+            'edit permissions',
             'view teams',
             'create teams',
             'edit teams',
