@@ -295,38 +295,82 @@
             @if($activeTab === 'permissions')
                 <div>
                     @if($userPermissions->count() > 0)
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-zinc-200 dark:divide-zinc-700">
-                                <thead class="bg-zinc-50 dark:bg-zinc-700">
-                                    <tr>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-300 uppercase tracking-wider">
-                                            Name
-                                        </th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-300 uppercase tracking-wider">
-                                            Guard
-                                        </th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-300 uppercase tracking-wider">
-                                            Created
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white dark:bg-zinc-800 divide-y divide-zinc-200 dark:divide-zinc-700">
-                                    @foreach($userPermissions as $permission)
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-foreground">
-                                                {{ $permission->name }}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-500 dark:text-zinc-400">
-                                                {{ $permission->guard_name }}
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-500 dark:text-zinc-400">
-                                                {{ $permission->created_at->format('M d, Y') }}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                        <!-- Group permissions by category -->
+                        @php
+                            $groupedPermissions = [];
+                            foreach($userPermissions as $permission) {
+                                // Extract the category from the permission name (before the first dot or first word)
+                                $parts = explode(' ', $permission->name);
+                                $category = 'Other'; // Default category
+
+                                // Determine category based on permission pattern
+                                if (strpos($permission->name, 'user') !== false) {
+                                    $category = 'User Management';
+                                } elseif (strpos($permission->name, 'role') !== false) {
+                                    $category = 'Role Management';
+                                } elseif (strpos($permission->name, 'team') !== false) {
+                                    $category = 'Team Management';
+                                } elseif (strpos($permission->name, 'project') !== false) {
+                                    $category = 'Project Management';
+                                } elseif (strpos($permission->name, 'task') !== false) {
+                                    $category = 'Task Management';
+                                } elseif (strpos($permission->name, 'client') !== false) {
+                                    $category = 'Client Management';
+                                } elseif (strpos($permission->name, 'invoice') !== false) {
+                                    $category = 'Invoice Management';
+                                } else {
+                                    // Try to get first part of permission name
+                                    $firstPart = $parts[0];
+                                    if (strpos($firstPart, '_') !== false) {
+                                        $firstPart = explode('_', $firstPart)[0];
+                                    }
+                                    $category = ucfirst($firstPart) . ' Management';
+                                }
+
+                                if (!isset($groupedPermissions[$category])) {
+                                    $groupedPermissions[$category] = [];
+                                }
+                                $groupedPermissions[$category][] = $permission;
+                            }
+                        @endphp
+
+                        @foreach($groupedPermissions as $category => $permissions)
+                            <div class="mb-6">
+                                <h3 class="text-lg font-medium text-foreground mb-3">{{ $category }}</h3>
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full divide-y divide-zinc-200 dark:divide-zinc-700">
+                                        <thead class="bg-zinc-50 dark:bg-zinc-700">
+                                            <tr>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-300 uppercase tracking-wider">
+                                                    Name
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-300 uppercase tracking-wider">
+                                                    Guard
+                                                </th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-300 uppercase tracking-wider">
+                                                    Created
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white dark:bg-zinc-800 divide-y divide-zinc-200 dark:divide-zinc-700">
+                                            @foreach($permissions as $permission)
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-foreground">
+                                                        {{ $permission->name }}
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-500 dark:text-zinc-400">
+                                                        {{ $permission->guard_name }}
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-500 dark:text-zinc-400">
+                                                        {{ $permission->created_at->format('M d, Y') }}
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        @endforeach
                     @else
                         <div class="text-center py-8">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -351,6 +395,14 @@
                     d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
             </svg>
             {{ __('Edit User') }}
+        </a>
+        <a href="{{ route('users') }}"
+            class="inline-flex items-center px-4 py-2 bg-zinc-200 text-zinc-800 rounded-md hover:bg-zinc-300 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2 dark:bg-zinc-600 dark:text-white dark:hover:bg-zinc-500 dark:focus:ring-zinc-500 dark:ring-offset-zinc-900">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            {{ __('Back to Users') }}
         </a>
     </div>
 </div>
