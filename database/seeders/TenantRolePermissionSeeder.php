@@ -60,6 +60,12 @@ class TenantRolePermissionSeeder extends Seeder
             'create invoices',
             'edit invoices',
             'delete invoices',
+
+            // Report management
+            'view reports',
+            'create reports',
+            'edit reports',
+            'delete reports',
         ];
 
         foreach ($permissions as $permission) {
@@ -95,6 +101,10 @@ class TenantRolePermissionSeeder extends Seeder
             'view invoices',
             'create invoices',
             'edit invoices',
+            'view reports',
+            'create reports',
+            'edit reports',
+            'delete reports',
         ]);
 
         // Standard user role gets basic permissions
@@ -104,6 +114,7 @@ class TenantRolePermissionSeeder extends Seeder
             'edit tasks',
             'view projects',
             'view teams',
+            'view reports',
         ]);
 
         // Create or update default users with roles

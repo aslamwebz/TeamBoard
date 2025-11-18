@@ -42,11 +42,11 @@
             </flux:navlist.item>
             @endcan
 
-            <!-- Roles - Only for users with role permissions -->
+            <!-- Roles & Permissions - Only for users with role permissions -->
             @can('view roles')
             <flux:navlist.item icon="shield-check" href="{{ route('roles.index') }}" :current="request()->routeIs('roles*')"
                 wire:navigate.hover @mouseenter="preloadLink('{{ route('roles.index') }}')">
-                {{ __('Roles') }}
+                {{ __('Roles & Permissions') }}
             </flux:navlist.item>
             @endcan
         </flux:navlist.group>

@@ -105,6 +105,10 @@ Route::middleware([
         Route::get('/roles', \App\Livewire\Roles\Index::class)->name('roles.index');
         Route::get('/roles/create', \App\Livewire\Roles\Form::class)->name('roles.create');
         Route::get('/roles/{role}/edit', \App\Livewire\Roles\Form::class)->name('roles.edit')->where('role', '[0-9]+');
+
+        // Permissions management routes
+        Route::get('/permissions/create', \App\Livewire\Permissions\Create::class)->name('permissions.create');
+        Route::get('/permissions/{permission}/edit', \App\Livewire\Permissions\Edit::class)->name('permissions.edit');
     });
 
     Route::middleware(['auth'])->group(function () {
