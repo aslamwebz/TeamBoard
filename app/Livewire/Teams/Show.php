@@ -38,7 +38,7 @@ class Show extends Component
 
     public function mount(Team $team)
     {
-        $this->team = $team->load(['users', 'projects', 'clients']);
+        $this->team = $team->load(['users.projects', 'projects', 'clients']);
         $this->allClients = Client::all();
         $this->allTasks = Task::all();
         $this->allProjects = Project::all();
@@ -74,7 +74,7 @@ class Show extends Component
         }
 
         $this->team->users()->attach($this->selectedUsers);
-        $this->team->load('users');
+        $this->team->load(['users.projects', 'projects', 'clients']);
         $this->selectedUsers = [];
         $this->showAssignMemberModal = false;
 
@@ -88,7 +88,7 @@ class Show extends Component
         }
 
         $this->team->clients()->attach($this->selectedClients);
-        $this->team->load('clients');
+        $this->team->load(['users.projects', 'projects', 'clients']);
         $this->selectedClients = [];
         $this->showAssignClientModal = false;
 
@@ -102,7 +102,7 @@ class Show extends Component
         }
 
         $this->team->projects()->attach($this->selectedProjects);
-        $this->team->load('projects');
+        $this->team->load(['users.projects', 'projects', 'clients']);
         $this->selectedProjects = [];
         $this->showAssignProjectModal = false;
 
@@ -135,7 +135,7 @@ class Show extends Component
     public function removeMember($userId)
     {
         $this->team->users()->detach($userId);
-        $this->team->load('users');
+        $this->team->load(['users.projects', 'projects', 'clients']);
 
         session()->flash('success', 'Team member removed successfully!');
     }
@@ -143,7 +143,7 @@ class Show extends Component
     public function removeClient($clientId)
     {
         $this->team->clients()->detach($clientId);
-        $this->team->load('clients');
+        $this->team->load(['users.projects', 'projects', 'clients']);
 
         session()->flash('success', 'Client removed successfully!');
     }
@@ -151,7 +151,7 @@ class Show extends Component
     public function removeProject($projectId)
     {
         $this->team->projects()->detach($projectId);
-        $this->team->load('projects');
+        $this->team->load(['users.projects', 'projects', 'clients']);
 
         session()->flash('success', 'Project removed successfully!');
     }
@@ -210,6 +210,9 @@ class Show extends Component
 
     public function render()
     {
+        // Ensure the team data is fully loaded with user projects
+        $this->team->loadMissing(['users.projects', 'projects', 'clients']);
+
         return view('livewire.teams.show', [
             'team' => $this->team
         ]);

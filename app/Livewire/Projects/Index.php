@@ -24,6 +24,7 @@ class Index extends Component
     public function render()
     {
         $projects = Project::query()
+            ->with(['client', 'tasks', 'users'])
             ->where('name', 'like', '%' . $this->search . '%')
             ->when($this->statusFilter, function ($query) {
                 $query->where('status', $this->statusFilter);
