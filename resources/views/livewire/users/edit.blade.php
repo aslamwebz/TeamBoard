@@ -142,8 +142,8 @@
                                     <div class="text-sm text-zinc-500 dark:text-zinc-400">{{ $client->email }}</div>
                                 </div>
                             </div>
-                            <flux:badge variant="{{ $client->status === 'active' ? 'success' : 'secondary' }}">
-                                {{ $client->status }}
+                            <flux:badge variant="secondary">
+                                Client
                             </flux:badge>
                         </div>
                     @endforeach
