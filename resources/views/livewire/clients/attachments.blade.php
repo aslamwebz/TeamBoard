@@ -2,7 +2,7 @@
     <div class="flex items-center justify-between">
         <flux:heading size="lg">{{ __('Attachments') }}</flux:heading>
         
-        <flux:button wire:click="uploadForm = true" variant="primary" class="flex items-center gap-2">
+        <flux:button wire:click="uploadForm = true" variant="solid" class="flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
                 <path d="M21.2 8.4c.4-.4.4-1 0-1.4l-7-7a1 1 0 0 0-1.4 0l-7 7c-.4.4-.4 1 0 1.4.4.4 1 .4 1.4 0L4 7.8V14a6 6 0 0 0 12 0V4.2l1.6 1.6c.4.4 1 .4 1.4 0z" />
                 <path d="M10 2v8.283a4 4 0 0 0 8 0V2" />
@@ -60,7 +60,7 @@
                 <flux:button type="button" variant="outline" wire:click="$set('uploadForm', false)">
                     {{ __('Cancel') }}
                 </flux:button>
-                <flux:button type="submit" variant="primary">
+                <flux:button type="submit" variant="solid">
                     {{ __('Upload Files') }}
                 </flux:button>
             </div>
@@ -188,7 +188,7 @@
             <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
                 {{ __('Get started by uploading a file.') }}</p>
             <div class="mt-6">
-                <flux:button wire:click="uploadForm = true" variant="primary">
+                <flux:button wire:click="uploadForm = true" variant="solid">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 mr-2">
                         <path d="M21.2 8.4c.4-.4.4-1 0-1.4l-7-7a1 1 0 0 0-1.4 0l-7 7c-.4.4-.4 1 0 1.4.4.4 1 .4 1.4 0L4 7.8V14a6 6 0 0 0 12 0V4.2l1.6 1.6c.4.4 1 .4 1.4 0z" />
                         <path d="M10 2v8.283a4 4 0 0 0 8 0V2" />

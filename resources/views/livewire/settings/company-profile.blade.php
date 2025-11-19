@@ -212,7 +212,7 @@
                 </div>
 
                 <div class="mt-6 flex justify-end">
-                    <flux:button type="submit" variant="primary">
+                    <flux:button type="submit" variant="solid">
                         {{ __('Save') }}
                     </flux:button>
                 </div>

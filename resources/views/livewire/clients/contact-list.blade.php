@@ -5,7 +5,7 @@
             <h2 class="text-lg font-semibold text-foreground">{{ __('Contacts') }}</h2>
             <p class="text-sm text-muted-foreground">{{ __('Manage contacts for :client', ['client' => $client->name ?? $client->company_name]) }}</p>
         </div>
-        <flux:button wire:click="$dispatch('open-modal', 'create-contact')" variant="primary" size="sm">
+        <flux:button wire:click="$dispatch('open-modal', 'create-contact')" variant="solid" size="sm">
             {{ __('Add Contact') }}
         </flux:button>
     </div>

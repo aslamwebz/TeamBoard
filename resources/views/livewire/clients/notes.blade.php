@@ -11,7 +11,7 @@
             </flux:field>
             
             <div class="flex justify-end">
-                <flux:button type="submit" variant="primary">
+                <flux:button type="submit" variant="solid">
                     {{ __('Save Notes') }}
                 </flux:button>
             </div>
