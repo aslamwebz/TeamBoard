@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\TenantHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -54,5 +55,29 @@ class Project extends Model
     public function teams(): BelongsToMany
     {
         return $this->belongsToMany(Team::class, 'team_projects', 'project_id', 'team_id');
+    }
+
+    /**
+     * Get the company name associated with this project
+     */
+    public function getCompanyName(): string
+    {
+        return TenantHelper::getCompanyName() ?? config('app.name', 'App Name');
+    }
+
+    /**
+     * Get the company address for this project
+     */
+    public function getCompanyAddress(): ?string
+    {
+        return TenantHelper::getCompanyAddress();
+    }
+
+    /**
+     * Get the default currency for this project
+     */
+    public function getDefaultCurrency(): string
+    {
+        return TenantHelper::getDefaultCurrency();
     }
 }

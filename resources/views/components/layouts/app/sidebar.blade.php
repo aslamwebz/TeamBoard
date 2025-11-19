@@ -121,7 +121,9 @@
                 <flux:menu.separator />
 
                 <flux:menu.radio.group>
-                    <flux:menu.item :href="route('settings.profile')" icon="cog">{{ __('Settings') }}
+                    <flux:menu.item :href="route('settings.profile')" icon="cog">{{ __('Personal Settings') }}
+                    </flux:menu.item>
+                    <flux:menu.item :href="route('settings.company-profile')" icon="building-office-2">{{ __('Company Profile') }}
                     </flux:menu.item>
                 </flux:menu.radio.group>
 
@@ -170,7 +172,9 @@
                 <flux:menu.separator />
 
                 <flux:menu.radio.group>
-                    <flux:menu.item :href="route('settings.profile')" icon="cog" wire:navigate>{{ __('Settings') }}
+                    <flux:menu.item :href="route('settings.profile')" icon="cog" wire:navigate>{{ __('Personal Settings') }}
+                    </flux:menu.item>
+                    <flux:menu.item :href="route('settings.company-profile')" icon="building-office-2" wire:navigate>{{ __('Company Profile') }}
                     </flux:menu.item>
                 </flux:menu.radio.group>
 

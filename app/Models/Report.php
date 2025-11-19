@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Helpers\TenantHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -41,5 +42,29 @@ class Report extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the company name for the report
+     */
+    public function getCompanyName(): string
+    {
+        return TenantHelper::getCompanyName() ?? config('app.name', 'App Name');
+    }
+
+    /**
+     * Get the company address for the report
+     */
+    public function getCompanyAddress(): ?string
+    {
+        return TenantHelper::getCompanyAddress();
+    }
+
+    /**
+     * Get the default currency for the report
+     */
+    public function getDefaultCurrency(): string
+    {
+        return TenantHelper::getDefaultCurrency();
     }
 }

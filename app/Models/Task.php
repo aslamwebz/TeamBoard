@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\TenantHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -30,7 +31,7 @@ class Task extends Model
     public const STATUS_COMPLETED = 'completed';
     public const STATUS_ON_HOLD = 'on_hold';
 
-    public function project(): BelongsTo    
+    public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
     }
@@ -38,5 +39,21 @@ class Task extends Model
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
-    }   
+    }
+
+    /**
+     * Get the company name associated with this task
+     */
+    public function getCompanyName(): string
+    {
+        return TenantHelper::getCompanyName() ?? config('app.name', 'App Name');
+    }
+
+    /**
+     * Get the default currency for this task
+     */
+    public function getDefaultCurrency(): string
+    {
+        return TenantHelper::getDefaultCurrency();
+    }
 }
