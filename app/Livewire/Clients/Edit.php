@@ -13,6 +13,7 @@ class Edit extends Component
 {
     public Client $client;
     public $clientId;
+    public $company_name = '';
     public $name = '';
     public $email = '';
     public $phone = '';
@@ -21,7 +22,6 @@ class Edit extends Component
     public $state = '';
     public $zip_code = '';
     public $country = '';
-    public $company_name = '';
     public $vat_number = '';
     public $logo = '';
     public $registration_number = '';
@@ -35,7 +35,8 @@ class Edit extends Component
     public $subscription_status = '';
 
     protected $rules = [
-        'name' => 'required|string|max:255',
+        'company_name' => 'required|string|max:255',
+        'name' => 'nullable|string|max:255',
         'email' => 'required|email|unique:clients,email',
         'phone' => 'nullable|string|max:20',
         'address' => 'nullable|string|max:500',
@@ -43,7 +44,6 @@ class Edit extends Component
         'state' => 'nullable|string|max:100',
         'zip_code' => 'nullable|string|max:20',
         'country' => 'nullable|string|max:100',
-        'company_name' => 'nullable|string|max:255|unique:clients,company_name',
         'vat_number' => 'nullable|string|max:50',
         'logo' => 'nullable|string|max:255',
         'registration_number' => 'nullable|string|max:100',
@@ -61,6 +61,7 @@ class Edit extends Component
     {
         $this->client = $client;
         $this->clientId = $client->id;
+        $this->company_name = $client->company_name;
         $this->name = $client->name;
         $this->email = $client->email;
         $this->phone = $client->phone;
@@ -69,7 +70,6 @@ class Edit extends Component
         $this->state = $client->state;
         $this->zip_code = $client->zip_code;
         $this->country = $client->country;
-        $this->company_name = $client->company_name;
         $this->vat_number = $client->vat_number;
         $this->logo = $client->logo;
         $this->registration_number = $client->registration_number;
@@ -86,7 +86,7 @@ class Edit extends Component
     public function updateClient()
     {
         $this->rules['email'] = 'required|email|unique:clients,email,' . $this->clientId;
-        $this->rules['company_name'] = 'nullable|string|max:255|unique:clients,company_name,' . $this->clientId;
+        $this->rules['company_name'] = 'required|string|max:255|unique:clients,company_name,' . $this->clientId;
         $validated = $this->validate();
 
         $client = Client::find($this->clientId);

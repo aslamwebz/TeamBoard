@@ -11,6 +11,7 @@ use Livewire\Attributes\Title;
 #[Title('Create Client')]
 class Create extends Component
 {
+    public $company_name = '';
     public $name = '';
     public $email = '';
     public $phone = '';
@@ -19,7 +20,6 @@ class Create extends Component
     public $state = '';
     public $zip_code = '';
     public $country = '';
-    public $company_name = '';
     public $vat_number = '';
     public $logo = '';
     public $registration_number = '';
@@ -33,7 +33,8 @@ class Create extends Component
     public $subscription_status = '';
 
     protected $rules = [
-        'name' => 'required|string|max:255',
+        'company_name' => 'required|string|max:255|unique:clients,company_name',
+        'name' => 'nullable|string|max:255',
         'email' => 'required|email|unique:clients,email',
         'phone' => 'nullable|string|max:20',
         'address' => 'nullable|string|max:500',
@@ -41,7 +42,6 @@ class Create extends Component
         'state' => 'nullable|string|max:100',
         'zip_code' => 'nullable|string|max:20',
         'country' => 'nullable|string|max:100',
-        'company_name' => 'nullable|string|max:255|unique:clients,company_name',
         'vat_number' => 'nullable|string|max:50',
         'logo' => 'nullable|string|max:255',
         'registration_number' => 'nullable|string|max:100',

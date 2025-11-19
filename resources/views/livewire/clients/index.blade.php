@@ -64,7 +64,7 @@
                         <tr>
                             <th
                                 class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
-                                Client
+                                Company
                             </th>
                             <th
                                 class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
@@ -111,9 +111,9 @@
                             <tr class="hover:bg-zinc-50 dark:hover:bg-zinc-700/50 transition-colors">
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div>
-                                        <div class="text-sm font-medium text-foreground">{{ $client->name }}</div>
-                                        @if ($client->company_name)
-                                            <div class="text-sm text-muted-foreground">{{ $client->company_name }}</div>
+                                        <div class="text-sm font-medium text-foreground">{{ $client->company_name }}</div>
+                                        @if ($client->name)
+                                            <div class="text-sm text-muted-foreground">{{ $client->name }}</div>
                                         @endif
                                     </div>
                                 </td>

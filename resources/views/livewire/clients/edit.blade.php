@@ -27,23 +27,23 @@
                         </h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <flux:field label="Contact Name *" for="name">
-                                    <input type="text" id="name" wire:model="name"
-                                        placeholder="Enter contact name"
+                                <flux:field label="Company Name *" for="company_name">
+                                    <input type="text" id="company_name" wire:model="company_name"
+                                        placeholder="Enter company name"
                                         class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
                                         required>
-                                    @error('name')
+                                    @error('company_name')
                                         <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                     @enderror
                                 </flux:field>
                             </div>
 
                             <div>
-                                <flux:field label="Company Name" for="company_name">
-                                    <input type="text" id="company_name" wire:model="company_name"
-                                        placeholder="Enter company name"
+                                <flux:field label="Contact Name" for="name">
+                                    <input type="text" id="name" wire:model="name"
+                                        placeholder="Enter contact name"
                                         class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                                    @error('company_name')
+                                    @error('name')
                                         <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                     @enderror
                                 </flux:field>
@@ -243,7 +243,7 @@
                                     class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"></textarea>
                                 @error('description')
                                     <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
-                                @enderror>
+                                @enderror
                             </flux:field>
                         </div>
                     </div>

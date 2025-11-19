@@ -31,7 +31,7 @@
                         <!-- Company Name -->
                         <div>
                             <label for="company_name" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-                                Company Name
+                                Company Name <span class="text-red-500">*</span>
                             </label>
                             <input type="text" id="company_name" wire:model="company_name" placeholder="Acme Corporation"
                                 class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('company_name') border-red-500 @enderror">
@@ -43,7 +43,7 @@
                         <!-- Contact Name -->
                         <div>
                             <label for="name" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-                                Contact Name <span class="text-red-500">*</span>
+                                Contact Name
                             </label>
                             <input type="text" id="name" wire:model="name" placeholder="John Doe"
                                 class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('name') border-red-500 @enderror">

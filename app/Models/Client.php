@@ -12,6 +12,7 @@ class Client extends Model
     use HasFactory;
 
     protected $fillable = [
+        'company_name',
         'name',
         'email',
         'phone',
@@ -20,7 +21,6 @@ class Client extends Model
         'state',
         'zip_code',
         'country',
-        'company_name',
         'vat_number',
         'logo',
         'registration_number',

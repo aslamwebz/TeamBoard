@@ -1,9 +1,9 @@
 <div class="space-y-6">
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-3xl font-bold text-foreground">{{ $client->name }}</h1>
-            @if ($client->company_name)
-                <p class="text-muted-foreground">{{ $client->company_name }}</p>
+            <h1 class="text-3xl font-bold text-foreground">{{ $client->company_name }}</h1>
+            @if ($client->name)
+                <p class="text-muted-foreground">{{ $client->name }}</p>
             @endif
         </div>
         <div class="flex gap-3">
@@ -111,8 +111,69 @@
 
                     <div class="space-y-4">
                         <div>
-                            <h3 class="text-sm font-medium text-muted-foreground">Contact Details</h3>
+                            <h3 class="text-sm font-medium text-muted-foreground">Company Information</h3>
                             <div class="mt-2 space-y-2">
+                                @if ($client->company_name)
+                                    <div class="flex items-center gap-2 text-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="h-4 w-4 text-zinc-500">
+                                            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+                                        </svg>
+                                        <span class="text-foreground">{{ $client->company_name }}</span>
+                                    </div>
+                                @endif
+                                @if ($client->industry)
+                                    <div class="flex items-center gap-2 text-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="h-4 w-4 text-zinc-500">
+                                            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+                                            <path d="M9 22V12h6v10"></path>
+                                        </svg>
+                                        <span class="text-foreground">{{ $client->industry }}</span>
+                                    </div>
+                                @endif
+                                @if ($client->website)
+                                    <div class="flex items-center gap-2 text-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="h-4 w-4 text-zinc-500">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <path d="M12 16v-4"></path>
+                                            <path d="M12 8h.01"></path>
+                                        </svg>
+                                        <a href="{{ $client->website }}" target="_blank"
+                                            class="text-blue-600 hover:text-blue-800 dark:text-blue-400">{{ $client->website }}</a>
+                                    </div>
+                                @endif
+                                @if ($client->description)
+                                    <div class="mt-2 text-sm text-foreground">
+                                        {{ $client->description }}
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-sm font-medium text-muted-foreground">Primary Contact</h3>
+                            <div class="mt-2 space-y-2">
+                                @if ($client->name)
+                                    <div class="flex items-center gap-2 text-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="h-4 w-4 text-zinc-500">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="9" cy="7" r="4"></circle>
+                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        </svg>
+                                        <span class="text-foreground">{{ $client->name }}</span>
+                                    </div>
+                                @endif
                                 @if ($client->email)
                                     <div class="flex items-center gap-2 text-sm">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
