@@ -5,8 +5,7 @@
                 <h1 class="text-3xl font-bold text-foreground">Clients</h1>
                 <p class="text-muted-foreground">Manage your clients and their projects</p>
             </div>
-            <a href="{{ route('clients.create') }}"
-                class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900">
+            <flux:button :href="route('clients.create')" class="flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="h-4 w-4">
@@ -14,7 +13,7 @@
                     <path d="M12 5v14"></path>
                 </svg>
                 Add Client
-            </a>
+            </flux:button>
         </div>
 
         <!-- Filters -->
@@ -178,18 +177,36 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <div class="flex items-center justify-end gap-2">
-                                        <a href="{{ route('clients.show', $client) }}"
-                                            class="inline-flex items-center px-3 py-1.5 border border-blue-300 rounded-md text-sm font-medium text-blue-700 bg-white hover:bg-blue-50 dark:bg-zinc-700 dark:text-blue-400 dark:border-blue-600 dark:hover:bg-blue-900/20">
+                                        <flux:button
+                                            variant="outline"
+                                            size="sm"
+                                            :href="route('clients.show', $client)">
                                             View
-                                        </a>
-                                        <a href="{{ route('clients.edit', $client) }}"
-                                            class="inline-flex items-center px-3 py-1.5 border border-zinc-300 rounded-md text-sm font-medium text-zinc-700 bg-white hover:bg-zinc-50 dark:bg-zinc-700 dark:text-zinc-300 dark:border-zinc-600 dark:hover:bg-zinc-600">
+                                        </flux:button>
+                                        <flux:button
+                                            variant="outline"
+                                            size="sm"
+                                            :href="route('clients.edit', $client)">
                                             Edit
-                                        </a>
-                                        <button type="button" wire:click="deleteClient({{ $client->id }})"
-                                            class="inline-flex items-center px-3 py-1.5 border border-red-300 rounded-md text-sm font-medium text-red-700 bg-white hover:bg-red-50 dark:bg-zinc-700 dark:text-red-400 dark:border-red-600 dark:hover:bg-red-900/20">
-                                            Delete
-                                        </button>
+                                        </flux:button>
+                                        <flux:tooltip content="Delete Client">
+                                            <flux:button
+                                                variant="outline"
+                                                size="sm"
+                                                color="red"
+                                                type="button"
+                                                wire:click="deleteClient({{ $client->id }})"
+                                                class="h-8 w-8 p-0"
+                                                title="Delete Client">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="h-4 w-4">
+                                                    <path d="M3 6h18"></path>
+                                                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                                                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                                                </svg>
+                                            </flux:button>
+                                        </flux:tooltip>
                                     </div>
                                 </td>
                             </tr>

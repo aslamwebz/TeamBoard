@@ -7,13 +7,30 @@
             @endif
         </div>
         <div class="flex gap-3">
-            <flux:button :href="route('clients.index')" variant="outline">
-                Back to Clients
-            </flux:button>
-            <flux:button :href="route('clients.edit', $client)">
-                Edit Client
-            </flux:button>
+            <a href="{{ route('clients.index') }}"
+                class="px-4 py-2 border border-zinc-200 rounded-lg text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-700">Back
+                to Clients</a>
+            <a href="{{ route('clients.edit', $client) }}"
+                class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Edit Client</a>
         </div>
+    </div>
+
+    <!-- CRM Section Navigation -->
+    <div class="border-b border-zinc-200 dark:border-zinc-700">
+        <nav class="-mb-px flex space-x-8">
+            <a href="#overview" class="border-blue-500 text-blue-600 dark:text-blue-400 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                Overview
+            </a>
+            <a href="#contacts" class="border-transparent text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300 hover:border-zinc-300 dark:hover:border-zinc-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                Contacts
+            </a>
+            <a href="#attachments" class="border-transparent text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300 hover:border-zinc-300 dark:hover:border-zinc-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                Attachments
+            </a>
+            <a href="#notes" class="border-transparent text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300 hover:border-zinc-300 dark:hover:border-zinc-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                Notes
+            </a>
+        </nav>
     </div>
 
     <!-- Client Overview Stats -->
@@ -140,8 +157,8 @@
                                 @if ($client->website)
                                     <div class="flex items-center gap-2 text-sm">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
                                             class="h-4 w-4 text-zinc-500">
                                             <circle cx="12" cy="12" r="10"></circle>
                                             <path d="M12 16v-4"></path>
@@ -165,8 +182,8 @@
                                 @if ($client->name)
                                     <div class="flex items-center gap-2 text-sm">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
                                             class="h-4 w-4 text-zinc-500">
                                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                             <circle cx="9" cy="7" r="4"></circle>
@@ -178,8 +195,8 @@
                                 @if ($client->email)
                                     <div class="flex items-center gap-2 text-sm">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
                                             class="h-4 w-4 text-zinc-500">
                                             <rect width="20" height="16" x="2" y="4" rx="2"></rect>
                                             <path d="m22 7-10 5L2 7"></path>
@@ -191,8 +208,8 @@
                                 @if ($client->phone)
                                     <div class="flex items-center gap-2 text-sm">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
                                             class="h-4 w-4 text-zinc-500">
                                             <path
                                                 d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
@@ -246,20 +263,13 @@
                 <div class="p-6">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-lg font-semibold text-foreground">Projects</h2>
-                        <div class="flex items-center gap-2">
-                            <flux:button
-                                variant="outline"
-                                size="sm"
-                                type="button"
-                                wire:click="$toggle('showAssignProjectModal')">
+                        <div class="flex items-center space-x-2">
+                            <button type="button" wire:click="$toggle('showAssignProjectModal')"
+                                class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400">
                                 + Assign Project
-                            </flux:button>
-                            <flux:button
-                                variant="outline"
-                                size="sm"
-                                :href="route('projects.create', ['client_id' => $client->id])">
-                                + Add Project
-                            </flux:button>
+                            </button>
+                            <a href="{{ route('projects.create') }}?client_id={{ $client->id }}"
+                                class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400">+ Add Project</a>
                         </div>
                     </div>
 
@@ -335,23 +345,6 @@
                                             {{ ucfirst(str_replace('_', ' ', $project->status)) }}
                                         </flux:badge>
                                     </div>
-                                    <div class="flex items-center gap-2">
-                                        <flux:tooltip content="Unassign Project" position="left">
-                                            <flux:button variant="outline" size="sm" color="red"
-                                                type="button" wire:click="unassignProject({{ $project->id }})"
-                                                class="h-8 w-8 p-0" title="Unassign Project">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="h-4 w-4">
-                                                    <line x1="18" y1="6" x2="6"
-                                                        y2="18"></line>
-                                                    <line x1="6" y1="6" x2="18"
-                                                        y2="18"></line>
-                                                </svg>
-                                            </flux:button>
-                                        </flux:tooltip>
-                                    </div>
                                 </div>
                             @endforeach
                         </div>
@@ -371,7 +364,8 @@
                             <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">This client doesn't have any
                                 projects yet.</p>
                             <div class="mt-4">
-                                <flux:button :href="route('projects.create', ['client_id' => $client->id])">
+                                <a href="{{ route('projects.create') }}?client_id={{ $client->id }}"
+                                    class="inline-flex items-center gap-2 px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
@@ -379,7 +373,7 @@
                                         <path d="M12 5v14"></path>
                                     </svg>
                                     Create First Project
-                                </flux:button>
+                                </a>
                             </div>
                         </div>
                     @endif
@@ -419,23 +413,26 @@
                                         'on_hold' => 'bg-red-500/10 text-red-700 dark:text-red-400',
                                     ];
                                 @endphp
-                                <div class="border border-zinc-200 dark:border-zinc-700 rounded-lg p-3">
-                                    <div class="flex items-center justify-between">
-                                        <div>
+                                <div
+                                    class="flex items-center justify-between p-3 border border-zinc-200 dark:border-zinc-700 rounded-lg">
+                                    <div class="flex-1">
+                                        <h4 class="font-medium text-foreground mb-1">
                                             <a href="{{ route('tasks.show', $task) }}"
-                                                class="font-medium text-foreground hover:text-blue-600 dark:hover:text-blue-400">
+                                                class="hover:text-blue-600 dark:hover:text-blue-400">
                                                 {{ $task->title }}
                                             </a>
-                                            <p class="text-sm text-zinc-500 dark:text-zinc-400">
-                                                {{ $task->project->name }}</p>
-                                        </div>
-                                        <div class="flex items-center gap-2">
-                                            <flux:badge
-                                                class="{{ $statusColors[$task->status] ?? 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400' }}">
-                                                {{ ucfirst(str_replace('_', ' ', $task->status)) }}
-                                            </flux:badge>
+                                        </h4>
+                                        <div class="flex items-center gap-3 text-sm text-zinc-500 dark:text-zinc-400">
+                                            <span>{{ $task->project->name }}</span>
+                                            @if ($task->due_date)
+                                                <span>Due: {{ $task->due_date->format('M d') }}</span>
+                                            @endif
                                         </div>
                                     </div>
+                                    <flux:badge
+                                        class="{{ $statusColors[$task->status] ?? 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400' }}">
+                                        {{ ucfirst(str_replace('_', ' ', $task->status)) }}
+                                    </flux:badge>
                                 </div>
                             @endforeach
                         </div>
@@ -444,66 +441,5 @@
             @endif
         </div>
     </div>
-
-    <!-- Notes Section -->
-    <div class="bg-white dark:bg-zinc-800 rounded-lg border border-zinc-200 dark:border-zinc-700">
-        <div class="p-6">
-            <h2 class="text-lg font-semibold text-foreground mb-4">Client Notes</h2>
-            <p class="text-foreground">{{ $client->notes ?? 'No notes for this client.' }}</p>
-        </div>
-    </div>
-
     <!-- Assign Project Modal -->
     <flux:modal name="assign-project" wire:model="showAssignProjectModal">
-        <div class="space-y-6">
-            <div>
-                <flux:heading size="lg">Assign Project to {{ $client->company_name }}</flux:heading>
-                <flux:text class="mt-2">Select an existing project to assign to this client.</flux:text>
-            </div>
-
-            <div class="space-y-4">
-                @if (count($availableProjects) > 0)
-                    <div>
-                        <flux:field label="Select Project" for="selectedProjectId">
-                            <select id="selectedProjectId" wire:model.live="selectedProjectId"
-                                class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                                <option value="">Choose a project...</option>
-                                @foreach ($availableProjects as $project)
-                                    <option value="{{ $project['id'] }}">{{ $project['name'] }}</option>
-                                @endforeach
-                            </select>
-                        </flux:field>
-                    </div>
-
-                    <div class="flex gap-2">
-                        <flux:spacer />
-                        <flux:button variant="ghost" wire:click="$toggle('showAssignProjectModal')">Cancel</flux:button>
-                        @if($selectedProjectId)
-                            <flux:button wire:click="assignProject">
-                                Assign Project
-                            </flux:button>
-                        @endif
-                    </div>
-                @else
-                    <div class="text-center py-8">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round"
-                            class="mx-auto h-12 w-12 text-zinc-400">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                        <h3 class="mt-2 text-sm font-medium text-zinc-900 dark:text-zinc-100">No projects available</h3>
-                        <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">There are no projects available to
-                            assign to this client.</p>
-                    </div>
-
-                    <div class="flex gap-2">
-                        <flux:spacer />
-                        <flux:button variant="ghost" wire:click="$toggle('showAssignProjectModal')">Close</flux:button>
-                    </div>
-                @endif
-            </div>
-        </div>
-    </flux:modal>
-</div>

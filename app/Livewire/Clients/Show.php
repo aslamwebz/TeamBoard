@@ -26,13 +26,19 @@ class Show extends Component
     public function loadAvailableProjects()
     {
         // Load projects that are not already assigned to this client
-        $this->availableProjects = Project::where(function($query) {
+        $projects = Project::where(function($query) {
                 $query->whereNull('client_id')
                       ->orWhere('client_id', '!=', $this->client->id);
             })
             ->orderBy('name')
-            ->get()
-            ->toArray();
+            ->get();
+
+        $this->availableProjects = $projects->map(function ($project) {
+            return [
+                'id' => $project->id,
+                'name' => $project->name,
+            ];
+        })->toArray();
     }
 
     public function assignProject()
@@ -48,9 +54,23 @@ class Show extends Component
                 $this->showAssignProjectModal = false;
                 $this->selectedProjectId = null;
 
-                // This should trigger a re-render with updated data
+                // Refresh the component to update the UI
                 $this->dispatch('$refresh');
             }
+        }
+    }
+
+    public function unassignProject($projectId)
+    {
+        $project = Project::find($projectId);
+        if ($project && $project->client_id == $this->client->id) {
+            $project->update(['client_id' => null]);
+
+            // Refresh the available projects list
+            $this->loadAvailableProjects();
+
+            // Refresh the component to update the UI
+            $this->dispatch('$refresh');
         }
     }
 

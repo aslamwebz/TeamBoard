@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
@@ -32,6 +33,11 @@ class Client extends Model
         'subscription_start_date',
         'subscription_end_date',
         'subscription_status',
+        'notes',
+        'billing_address',
+        'shipping_address',
+        'primary_contact_id',
+        'custom_fields',
     ];
 
     protected $casts = [
@@ -39,6 +45,8 @@ class Client extends Model
         'updated_at' => 'datetime',
         'subscription_start_date' => 'datetime',
         'subscription_end_date' => 'datetime',
+        'custom_fields' => 'array',
+        'notes' => 'string',
     ];
 
     public function projects(): HasMany
@@ -61,8 +69,19 @@ class Client extends Model
         return $this->hasMany(Contact::class);
     }
 
-    public function primaryContact()
+    public function primaryContact(): BelongsTo
     {
-        return $this->hasOne(Contact::class)->where('is_primary', true);
+        return $this->belongsTo(Contact::class, 'primary_contact_id');
+    }
+
+    public function attachments(): HasMany
+    {
+        return $this->hasMany(ClientAttachment::class);
+    }
+
+    public function allActivities()
+    {
+        // Get activities for all contacts of this client
+        return $this->hasManyThrough(ContactActivity::class, Contact::class);
     }
 }
