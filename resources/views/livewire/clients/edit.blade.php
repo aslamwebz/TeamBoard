@@ -27,9 +27,9 @@
                         </h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <flux:field label="Name *" for="name">
+                                <flux:field label="Contact Name *" for="name">
                                     <input type="text" id="name" wire:model="name"
-                                        placeholder="Enter client name"
+                                        placeholder="Enter contact name"
                                         class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
                                         required>
                                     @error('name')
@@ -66,7 +66,7 @@
                             <div>
                                 <flux:field label="Email *" for="email">
                                     <input type="email" id="email" wire:model="email"
-                                        placeholder="client@example.com"
+                                        placeholder="contact@company.com"
                                         class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
                                         required>
                                     @error('email')
@@ -168,15 +168,134 @@
                             </svg>
                             Business Information
                         </h3>
-                        <div>
-                            <flux:field label="VAT Number" for="vat_number">
-                                <input type="text" id="vat_number" wire:model="vat_number"
-                                    placeholder="US123456789"
-                                    class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                                @error('vat_number')
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <flux:field label="Industry" for="industry">
+                                    <input type="text" id="industry" wire:model="industry"
+                                        placeholder="Technology"
+                                        class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+                                    @error('industry')
+                                        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                                    @enderror
+                                </flux:field>
+                            </div>
+
+                            <div>
+                                <flux:field label="Website" for="website">
+                                    <input type="url" id="website" wire:model="website"
+                                        placeholder="https://company.com"
+                                        class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+                                    @error('website')
+                                        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                                    @enderror
+                                </flux:field>
+                            </div>
+
+                            <div>
+                                <flux:field label="Registration Number" for="registration_number">
+                                    <input type="text" id="registration_number" wire:model="registration_number"
+                                        placeholder="AB12345678"
+                                        class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+                                    @error('registration_number')
+                                        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                                    @enderror
+                                </flux:field>
+                            </div>
+
+                            <div>
+                                <flux:field label="Tax ID" for="tax_id">
+                                    <input type="text" id="tax_id" wire:model="tax_id"
+                                        placeholder="12-3456789"
+                                        class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+                                    @error('tax_id')
+                                        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                                    @enderror
+                                </flux:field>
+                            </div>
+
+                            <div>
+                                <flux:field label="VAT Number" for="vat_number">
+                                    <input type="text" id="vat_number" wire:model="vat_number"
+                                        placeholder="US123456789"
+                                        class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+                                    @error('vat_number')
+                                        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                                    @enderror
+                                </flux:field>
+                            </div>
+
+                            <div>
+                                <flux:field label="Billing Plan" for="billing_plan">
+                                    <input type="text" id="billing_plan" wire:model="billing_plan"
+                                        placeholder="Premium"
+                                        class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+                                    @error('billing_plan')
+                                        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                                    @enderror
+                                </flux:field>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <flux:field label="Description" for="description">
+                                <textarea id="description" wire:model="description" rows="3"
+                                    placeholder="Brief description of the company..."
+                                    class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"></textarea>
+                                @error('description')
                                     <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
-                                @enderror
+                                @enderror>
                             </flux:field>
+                        </div>
+                    </div>
+
+                    <!-- Subscription Information -->
+                    <div>
+                        <h3 class="text-base font-semibold text-foreground mb-4 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="h-5 w-5 text-blue-600">
+                                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                            </svg>
+                            Subscription Information
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <flux:field label="Status" for="subscription_status">
+                                    <select id="subscription_status" wire:model="subscription_status"
+                                        class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+                                        <option value="">Select Status</option>
+                                        <option value="active">Active</option>
+                                        <option value="trial">Trial</option>
+                                        <option value="suspended">Suspended</option>
+                                        <option value="cancelled">Cancelled</option>
+                                        <option value="expired">Expired</option>
+                                    </select>
+                                    @error('subscription_status')
+                                        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                                    @enderror
+                                </flux:field>
+                            </div>
+
+                            <div>
+                                <flux:field label="Start Date" for="subscription_start_date">
+                                    <input type="date" id="subscription_start_date" wire:model="subscription_start_date"
+                                        class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+                                    @error('subscription_start_date')
+                                        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                                    @enderror
+                                </flux:field>
+                            </div>
+
+                            <div>
+                                <flux:field label="End Date" for="subscription_end_date">
+                                    <input type="date" id="subscription_end_date" wire:model="subscription_end_date"
+                                        class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+                                    @error('subscription_end_date')
+                                        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                                    @enderror
+                                </flux:field>
+                            </div>
                         </div>
                     </div>
 

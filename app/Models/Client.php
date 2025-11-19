@@ -22,11 +22,23 @@ class Client extends Model
         'country',
         'company_name',
         'vat_number',
+        'logo',
+        'registration_number',
+        'tax_id',
+        'website',
+        'industry',
+        'description',
+        'billing_plan',
+        'subscription_start_date',
+        'subscription_end_date',
+        'subscription_status',
     ];
 
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'subscription_start_date' => 'datetime',
+        'subscription_end_date' => 'datetime',
     ];
 
     public function projects(): HasMany
@@ -42,5 +54,15 @@ class Client extends Model
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function contacts(): HasMany
+    {
+        return $this->hasMany(Contact::class);
+    }
+
+    public function primaryContact()
+    {
+        return $this->hasOne(Contact::class)->where('is_primary', true);
     }
 }

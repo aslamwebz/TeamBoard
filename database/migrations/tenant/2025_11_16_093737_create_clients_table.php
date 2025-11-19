@@ -23,7 +23,20 @@ return new class extends Migration
             $table->string('country')->nullable();
             $table->string('company_name')->nullable();
             $table->string('vat_number')->nullable();
+            $table->string('logo')->nullable();
+            $table->string('registration_number')->nullable();
+            $table->string('tax_id')->nullable();
+            $table->string('website')->nullable();
+            $table->string('industry')->nullable();
+            $table->text('description')->nullable();
+            $table->string('billing_plan')->nullable();
+            $table->timestamp('subscription_start_date')->nullable();
+            $table->timestamp('subscription_end_date')->nullable();
+            $table->string('subscription_status')->nullable();
             $table->timestamps();
+
+            // Unique constraint on company name
+            $table->unique('company_name');
         });
     }
 

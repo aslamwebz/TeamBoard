@@ -23,6 +23,16 @@ class Edit extends Component
     public $country = '';
     public $company_name = '';
     public $vat_number = '';
+    public $logo = '';
+    public $registration_number = '';
+    public $tax_id = '';
+    public $website = '';
+    public $industry = '';
+    public $description = '';
+    public $billing_plan = '';
+    public $subscription_start_date = '';
+    public $subscription_end_date = '';
+    public $subscription_status = '';
 
     protected $rules = [
         'name' => 'required|string|max:255',
@@ -33,8 +43,18 @@ class Edit extends Component
         'state' => 'nullable|string|max:100',
         'zip_code' => 'nullable|string|max:20',
         'country' => 'nullable|string|max:100',
-        'company_name' => 'nullable|string|max:255',
+        'company_name' => 'nullable|string|max:255|unique:clients,company_name',
         'vat_number' => 'nullable|string|max:50',
+        'logo' => 'nullable|string|max:255',
+        'registration_number' => 'nullable|string|max:100',
+        'tax_id' => 'nullable|string|max:50',
+        'website' => 'nullable|url|max:255',
+        'industry' => 'nullable|string|max:100',
+        'description' => 'nullable|string',
+        'billing_plan' => 'nullable|string|max:50',
+        'subscription_start_date' => 'nullable|date',
+        'subscription_end_date' => 'nullable|date',
+        'subscription_status' => 'nullable|string|max:50',
     ];
 
     public function mount(Client $client)
@@ -51,11 +71,22 @@ class Edit extends Component
         $this->country = $client->country;
         $this->company_name = $client->company_name;
         $this->vat_number = $client->vat_number;
+        $this->logo = $client->logo;
+        $this->registration_number = $client->registration_number;
+        $this->tax_id = $client->tax_id;
+        $this->website = $client->website;
+        $this->industry = $client->industry;
+        $this->description = $client->description;
+        $this->billing_plan = $client->billing_plan;
+        $this->subscription_start_date = $client->subscription_start_date ? $client->subscription_start_date->format('Y-m-d') : '';
+        $this->subscription_end_date = $client->subscription_end_date ? $client->subscription_end_date->format('Y-m-d') : '';
+        $this->subscription_status = $client->subscription_status;
     }
 
     public function updateClient()
     {
         $this->rules['email'] = 'required|email|unique:clients,email,' . $this->clientId;
+        $this->rules['company_name'] = 'nullable|string|max:255|unique:clients,company_name,' . $this->clientId;
         $validated = $this->validate();
 
         $client = Client::find($this->clientId);

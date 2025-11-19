@@ -21,6 +21,16 @@ class Create extends Component
     public $country = '';
     public $company_name = '';
     public $vat_number = '';
+    public $logo = '';
+    public $registration_number = '';
+    public $tax_id = '';
+    public $website = '';
+    public $industry = '';
+    public $description = '';
+    public $billing_plan = '';
+    public $subscription_start_date = '';
+    public $subscription_end_date = '';
+    public $subscription_status = '';
 
     protected $rules = [
         'name' => 'required|string|max:255',
@@ -31,8 +41,18 @@ class Create extends Component
         'state' => 'nullable|string|max:100',
         'zip_code' => 'nullable|string|max:20',
         'country' => 'nullable|string|max:100',
-        'company_name' => 'nullable|string|max:255',
+        'company_name' => 'nullable|string|max:255|unique:clients,company_name',
         'vat_number' => 'nullable|string|max:50',
+        'logo' => 'nullable|string|max:255',
+        'registration_number' => 'nullable|string|max:100',
+        'tax_id' => 'nullable|string|max:50',
+        'website' => 'nullable|url|max:255',
+        'industry' => 'nullable|string|max:100',
+        'description' => 'nullable|string',
+        'billing_plan' => 'nullable|string|max:50',
+        'subscription_start_date' => 'nullable|date',
+        'subscription_end_date' => 'nullable|date',
+        'subscription_status' => 'nullable|string|max:50',
     ];
 
     public function createClient()

@@ -16,7 +16,6 @@ class Index extends Component
 
     public $search = '';
     public $showDeleteModal = false;
-    public $confirmingDelete = false;
     public $clientToDeleteId;
 
     protected $queryString = ['search'];
