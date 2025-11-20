@@ -177,7 +177,7 @@
             <flux:button variant="outline" type="button" wire:click="$dispatch('close-modal', 'edit-contact')">
                 {{ __('Cancel') }}
             </flux:button>
-            <flux:button type="submit" variant="solid">
+            <flux:button type="submit" variant="primary">
                 {{ __('Update Contact') }}
             </flux:button>
         </div>

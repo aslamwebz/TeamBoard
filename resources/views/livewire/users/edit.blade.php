@@ -158,7 +158,7 @@
             <flux:button type="button" wire:navigate href="/users" variant="outline">
                 {{ __('Cancel') }}
             </flux:button>
-            <flux:button type="submit" variant="solid" wire:loading.attr="disabled">
+            <flux:button type="submit" variant="primary" wire:loading.attr="disabled">
                 <span wire:loading.remove>{{ __('Update User') }}</span>
                 <span wire:loading>{{ __('Updating...') }}</span>
             </flux:button>

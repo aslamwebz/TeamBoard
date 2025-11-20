@@ -3,6 +3,7 @@
 namespace App\Livewire\Projects;
 
 use App\Models\Project;
+use App\Models\ProjectPhase;
 use App\Models\Team;
 use App\Models\User;
 use App\Traits\ModalTrait;
@@ -19,16 +20,29 @@ class Show extends Component
     public Project $project;
     public $showAssignUserModal = false;
     public $showAssignTeamModal = false;
+    public $showAssignPhaseModal = false;
+    public $showAssignMilestoneModal = false;
     public $selectedUsers = [];
     public $selectedTeams = [];
+    public $selectedPhases = [];
+    public $selectedMilestones = [];
     public $availableUsers = [];
     public $availableTeams = [];
-    
-    
+    public $availablePhases = [];
+    public $availableMilestones = [];
 
     public function mount(Project $project)
     {
-        $this->project = $project->load(['client', 'invoices', 'tasks', 'users', 'teams']);
+        $this->project = $project->load([
+            'client',
+            'invoices',
+            'tasks',
+            'users',
+            'teams',
+            'phases',
+            'milestones',
+            'phases.tasks' // Load tasks for each phase
+        ]);
     }
 
     public function getAvailableUsersProperty()

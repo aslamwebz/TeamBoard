@@ -42,6 +42,16 @@ class Project extends Model
         return $this->hasMany(Task::class);
     }
 
+    public function phases(): HasMany
+    {
+        return $this->hasMany(ProjectPhase::class)->orderBy('order');
+    }
+
+    public function milestones(): HasMany
+    {
+        return $this->hasMany(Milestone::class)->orderBy('order');
+    }
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'user_projects', 'project_id', 'user_id');
@@ -79,5 +89,32 @@ class Project extends Model
     public function getDefaultCurrency(): string
     {
         return TenantHelper::getDefaultCurrency();
+    }
+
+    /**
+     * Get the project completion percentage based on phases
+     */
+    public function getCompletionPercentage(): int
+    {
+        $phases = $this->phases;
+        if ($phases->count() === 0) {
+            // If no phases, calculate based on tasks
+            $tasks = $this->tasks;
+            if ($tasks->count() === 0) {
+                return 0;
+            }
+
+            $completedTasks = $tasks->filter(function ($task) {
+                return $task->status === Task::STATUS_COMPLETED;
+            });
+
+            return (int) round(($completedTasks->count() / $tasks->count()) * 100);
+        }
+
+        $completedPhases = $phases->filter(function ($phase) {
+            return $phase->status === ProjectPhase::STATUS_COMPLETED;
+        });
+
+        return (int) round(($completedPhases->count() / $phases->count()) * 100);
     }
 }

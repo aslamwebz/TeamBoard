@@ -45,7 +45,7 @@ class Index extends Component
                 ->when($this->statusFilter, function ($query) {
                     $query->where('status', $this->statusFilter);
                 })
-                ->with(['project', 'user']) // Eager load relationships
+                ->with(['project', 'user', 'phase']) // Eager load relationships
                 ->paginate(10);
             // Only refresh for board when needed
             if ($this->search || $this->statusFilter) {
@@ -71,7 +71,7 @@ class Index extends Component
             $query->where('status', $this->statusFilter);
         }
 
-        $tasks = $query->with('project', 'user')
+        $tasks = $query->with(['project', 'user', 'phase'])
             ->orderBy('status')
             ->orderBy('created_at')
             ->get();
@@ -130,7 +130,7 @@ class Index extends Component
     public function openTaskDetails($taskId)
     {
         $this->selectedTaskId = $taskId;
-        $this->selectedTask = Task::with('project', 'user')->find($taskId);
+        $this->selectedTask = Task::with(['project', 'user', 'phase'])->find($taskId);
         $this->showTaskModal = true;
     }
 

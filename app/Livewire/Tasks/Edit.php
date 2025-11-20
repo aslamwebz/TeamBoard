@@ -3,6 +3,7 @@
 namespace App\Livewire\Tasks;
 
 use App\Models\Project;
+use App\Models\ProjectPhase;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -20,9 +21,11 @@ class Edit extends Component
     public $status;
     public $due_date;
     public $project_id;
+    public $project_phase_id;
     public $user_id;
 
     public $projects = [];
+    public $phases = [];
     public $users = [];
 
     protected $rules = [
@@ -31,6 +34,7 @@ class Edit extends Component
         'status' => 'required|in:todo,in_progress,completed,on_hold',
         'due_date' => 'nullable|date',
         'project_id' => 'nullable|exists:projects,id',
+        'project_phase_id' => 'nullable|exists:project_phases,id',
         'user_id' => 'nullable|exists:users,id',
     ];
 
@@ -42,21 +46,30 @@ class Edit extends Component
         $this->status = $task->status;
         $this->due_date = $task->due_date;
         $this->project_id = $task->project_id;
+        $this->project_phase_id = $task->project_phase_id;
         $this->user_id = $task->user_id;
-        
+
         $this->projects = Project::all();
+        $this->phases = ProjectPhase::where('project_id', $task->project_id)->get();
         $this->users = User::all();
     }
 
     public function updateTask()
     {
         $validatedData = $this->validate();
-        
+
         $this->task->update($validatedData);
 
         session()->flash('message', 'Task updated successfully.');
 
         return redirect()->route('tasks');
+    }
+
+    public function updatedProjectId()
+    {
+        // When project changes, reload the phases
+        $this->phases = ProjectPhase::where('project_id', $this->project_id)->get();
+        $this->project_phase_id = null; // Reset phase selection
     }
 
     public function render()

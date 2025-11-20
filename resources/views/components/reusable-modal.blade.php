@@ -52,7 +52,7 @@
                 <flux:button variant="ghost">{{ $cancelLabel }}</flux:button>
             </flux:modal.close>
             @if($onSubmit)
-                <flux:button wire:click="{{ $onSubmit }}" variant="solid">
+                <flux:button wire:click="{{ $onSubmit }}" variant="primary">
                     {{ $submitLabel }}
                 </flux:button>
             @endif

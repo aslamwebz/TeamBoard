@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Models\Task;
 use App\Models\Tenant;
+use App\Observers\TaskObserver;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
@@ -35,6 +37,9 @@ final class AppServiceProvider extends ServiceProvider
         $this->configureUrls();
         $this->configureVite();
         $this->shareCompanySettings();
+
+        // Register model observers
+        Task::observe(TaskObserver::class);
     }
 
     /**

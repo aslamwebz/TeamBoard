@@ -15,7 +15,7 @@ class Show extends Component
 
     public function mount(Task $task)
     {
-        $this->task = $task;
+        $this->task = $task->load(['project', 'user', 'phase']);
     }
 
     public function render()

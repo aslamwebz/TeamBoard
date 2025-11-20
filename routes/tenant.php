@@ -110,6 +110,18 @@ Route::middleware([
         Route::get('/permissions', \App\Livewire\Permissions\Index::class)->name('permissions.index');
         Route::get('/permissions/create', \App\Livewire\Permissions\Create::class)->name('permissions.create');
         Route::get('/permissions/{permission}/edit', \App\Livewire\Permissions\Edit::class)->name('permissions.edit');
+
+        // Phases routes
+        Route::get('/projects/{project}/phases', \App\Livewire\Projects\Phases\Index::class)->name('phases.index');
+        Route::get('/projects/{project}/phases/create', \App\Livewire\Projects\Phases\Create::class)->name('phases.create');
+        Route::get('/projects/{project}/phases/{phase}', \App\Livewire\Projects\Phases\Show::class)->name('phases.show');
+        Route::get('/projects/{project}/phases/{phase}/edit', \App\Livewire\Projects\Phases\Edit::class)->name('phases.edit');
+
+        // Milestones routes
+        Route::get('/projects/{project}/milestones', \App\Livewire\Projects\Milestones\Index::class)->name('milestones.index');
+        Route::get('/projects/{project}/milestones/create', \App\Livewire\Projects\Milestones\Create::class)->name('milestones.create');
+        Route::get('/projects/{project}/milestones/{milestone}', \App\Livewire\Projects\Milestones\Show::class)->name('milestones.show');
+        Route::get('/projects/{project}/milestones/{milestone}/edit', \App\Livewire\Projects\Milestones\Edit::class)->name('milestones.edit');
     });
 
     Route::middleware(['auth'])->group(function () {

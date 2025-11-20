@@ -19,11 +19,10 @@
         <p class="text-muted-foreground">{{ $project->description }}</p>
     </div>
 
-
     <!-- Project Details -->
     <div class="bg-white dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-zinc-700 mt-8">
         <div class="p-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
                 <!-- Project Status -->
                 <div class="space-y-2">
                     <h3 class="text-sm font-medium text-zinc-500 dark:text-zinc-400">{{ __('Status') }}</h3>
@@ -36,6 +35,17 @@
                             @elseif ($project->status === 'on_hold') bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300 @endif">
                             {{ ucfirst(str_replace('_', ' ', $project->status)) }}
                         </span>
+                    </div>
+                </div>
+
+                <!-- Completion Percentage -->
+                <div class="space-y-2">
+                    <h3 class="text-sm font-medium text-zinc-500 dark:text-zinc-400">{{ __('Completion') }}</h3>
+                    <div class="flex items-center gap-2">
+                        <div class="w-full bg-zinc-200 dark:bg-zinc-700 rounded-full h-2">
+                            <div class="bg-blue-600 h-2 rounded-full" style="width: {{ $project->getCompletionPercentage() }}%"></div>
+                        </div>
+                        <span class="text-sm text-zinc-900 dark:text-zinc-100">{{ $project->getCompletionPercentage() }}%</span>
                     </div>
                 </div>
 
@@ -103,6 +113,17 @@
         <!-- Tab Navigation -->
         <div class="border-b border-zinc-200 dark:border-zinc-700">
             <nav class="flex space-x-8 px-6" aria-label="Tabs">
+                <button type="button" onclick="switchTab('gantt')" id="gantt-tab"
+                    class="tab-button py-4 px-1 border-b-2 font-medium text-sm border-transparent text-zinc-500 hover:text-zinc-700 hover:border-zinc-300 dark:text-zinc-400 dark:hover:text-zinc-300">
+                    <div class="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                        {{ __('Gantt Chart') }}
+                    </div>
+                </button>
                 <button type="button" onclick="switchTab('tasks')" id="tasks-tab"
                     class="tab-button active py-4 px-1 border-b-2 font-medium text-sm border-blue-500 text-blue-600 dark:text-blue-400">
                     <div class="flex items-center gap-2">
@@ -114,6 +135,32 @@
                         {{ __('Tasks') }}
                         <span
                             class="bg-zinc-100 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300 px-2 py-0.5 rounded-full text-xs">{{ $project->tasks->count() }}</span>
+                    </div>
+                </button>
+                <button type="button" onclick="switchTab('phases')" id="phases-tab"
+                    class="tab-button py-4 px-1 border-b-2 font-medium text-sm border-transparent text-zinc-500 hover:text-zinc-700 hover:border-zinc-300 dark:text-zinc-400 dark:hover:text-zinc-300">
+                    <div class="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                        </svg>
+                        {{ __('Phases') }}
+                        <span
+                            class="bg-zinc-100 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300 px-2 py-0.5 rounded-full text-xs">{{ $project->phases->count() }}</span>
+                    </div>
+                </button>
+                <button type="button" onclick="switchTab('milestones')" id="milestones-tab"
+                    class="tab-button py-4 px-1 border-b-2 font-medium text-sm border-transparent text-zinc-500 hover:text-zinc-700 hover:border-zinc-300 dark:text-zinc-400 dark:hover:text-zinc-300">
+                    <div class="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                        </svg>
+                        {{ __('Milestones') }}
+                        <span
+                            class="bg-zinc-100 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300 px-2 py-0.5 rounded-full text-xs">{{ $project->milestones->count() }}</span>
                     </div>
                 </button>
                 <button type="button" onclick="switchTab('users')" id="users-tab"
@@ -160,6 +207,101 @@
 
         <!-- Tab Content -->
         <div class="p-6">
+            <!-- Gantt Chart Tab -->
+            <div id="gantt-content" class="tab-content hidden">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h2 class="text-xl font-semibold text-foreground">{{ __('Gantt Chart') }}</h2>
+                        <p class="text-sm text-muted-foreground">{{ __('Visual timeline of project phases, milestones, and tasks') }}</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white dark:bg-zinc-800 rounded-lg border border-zinc-200 dark:border-zinc-700 p-4">
+                    <div class="overflow-x-auto">
+                        <div class="min-w-full">
+                            <div class="flex border-b border-zinc-200 dark:border-zinc-700 py-2">
+                                <div class="w-1/4 text-sm font-medium text-foreground">Item</div>
+                                <div class="w-1/4 text-sm font-medium text-foreground">Start Date</div>
+                                <div class="w-1/4 text-sm font-medium text-foreground">End Date</div>
+                                <div class="w-1/4 text-sm font-medium text-foreground">Status</div>
+                            </div>
+                            
+                            <!-- Phases -->
+                            @foreach($project->phases as $phase)
+                                <div class="flex border-b border-zinc-100 dark:border-zinc-800 py-3">
+                                    <div class="w-1/4">
+                                        <div class="font-medium text-foreground">{{ $phase->name }}</div>
+                                        <div class="text-xs text-muted-foreground">{{ $phase->getCompletionPercentage() }}% completed</div>
+                                    </div>
+                                    <div class="w-1/4 text-sm text-foreground">{{ $phase->start_date ? $phase->start_date->format('M d, Y') : 'N/A' }}</div>
+                                    <div class="w-1/4 text-sm text-foreground">{{ $phase->end_date ? $phase->end_date->format('M d, Y') : 'N/A' }}</div>
+                                    <div class="w-1/4">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                                            @if ($phase->status === 'not_started') bg-zinc-100 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-300
+                                            @elseif ($phase->status === 'in_progress') bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300
+                                            @elseif ($phase->status === 'completed') bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300
+                                            @elseif ($phase->status === 'on_hold') bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300 @endif">
+                                            {{ ucfirst(str_replace('_', ' ', $phase->status)) }}
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Phase tasks -->
+                                @foreach($phase->tasks as $task)
+                                    <div class="flex border-b border-zinc-100 dark:border-zinc-800 py-2 pl-6">
+                                        <div class="w-1/4">
+                                            <div class="font-medium text-muted-foreground text-sm">• {{ $task->title }}</div>
+                                        </div>
+                                        <div class="w-1/4 text-sm text-muted-foreground">{{ $task->due_date ? $task->due_date->format('M d, Y') : 'N/A' }}</div>
+                                        <div class="w-1/4 text-sm text-muted-foreground">N/A</div>
+                                        <div class="w-1/4">
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium
+                                                @if ($task->status === 'todo') bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300
+                                                @elseif ($task->status === 'in_progress') bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300
+                                                @elseif ($task->status === 'completed') bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300
+                                                @elseif ($task->status === 'on_hold') bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300 @endif">
+                                                {{ ucfirst(str_replace('_', ' ', $task->status)) }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endforeach
+                            
+                            <!-- Phases without tasks -->
+                            @foreach($project->phases as $phase)
+                                @if($phase->tasks->count() === 0)
+                                    <div class="flex border-b border-zinc-100 dark:border-zinc-800 py-2 pl-6 text-sm text-muted-foreground">
+                                        No tasks in this phase
+                                    </div>
+                                @endif
+                            @endforeach
+                            
+                            <!-- Milestones without phases -->
+                            @foreach($project->milestones as $milestone)
+                                @if(!$milestone->project_phase_id)
+                                    <div class="flex border-b border-zinc-100 dark:border-zinc-800 py-3">
+                                        <div class="w-1/4">
+                                            <div class="font-medium text-foreground">★ {{ $milestone->name }}</div>
+                                        </div>
+                                        <div class="w-1/4 text-sm text-foreground">{{ $milestone->due_date ? $milestone->due_date->format('M d, Y') : 'N/A' }}</div>
+                                        <div class="w-1/4 text-sm text-foreground">N/A</div>
+                                        <div class="w-1/4">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                                                @if ($milestone->status === 'not_started') bg-zinc-100 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-300
+                                                @elseif ($milestone->status === 'in_progress') bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300
+                                                @elseif ($milestone->status === 'completed') bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300
+                                                @elseif ($milestone->status === 'on_hold') bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300 @endif">
+                                                {{ ucfirst(str_replace('_', ' ', $milestone->status)) }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Tasks Tab -->
             <div id="tasks-content" class="tab-content">
                 <div class="flex items-center justify-between mb-6">
@@ -189,10 +331,16 @@
                                     {{ __('Title') }}</th>
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                                    {{ __('Phase') }}</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
                                     {{ __('Status') }}</th>
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
                                     {{ __('Due Date') }}</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                                    {{ __('Dependencies') }}</th>
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
                                     {{ __('Actions') }}</th>
@@ -204,6 +352,13 @@
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm font-medium text-zinc-900 dark:text-zinc-100">
                                             {{ $task->title }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        @if($task->phase)
+                                            <span class="text-sm text-zinc-500 dark:text-zinc-400">{{ $task->phase->name }}</span>
+                                        @else
+                                            <span class="text-sm text-zinc-500 dark:text-zinc-400">No Phase</span>
+                                        @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         @php
@@ -222,6 +377,13 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-500 dark:text-zinc-400">
                                         {{ $task->due_date ? $task->due_date->format('Y-m-d') : __('No due date') }}
                                     </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-500 dark:text-zinc-400">
+                                        @if($task->hasDependencies())
+                                            <span>{{ count($task->dependencies) }} dependencies</span>
+                                        @else
+                                            <span class="text-gray-500">No dependencies</span>
+                                        @endif
+                                    </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <a href="{{ route('tasks.show', $task) }}"
                                             class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">{{ __('View') }}</a>
@@ -229,9 +391,210 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4"
+                                    <td colspan="6"
                                         class="px-6 py-8 text-center text-sm text-zinc-500 dark:text-zinc-400">
                                         {{ __('No tasks found') }}</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Phases Tab -->
+            <div id="phases-content" class="tab-content hidden">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h2 class="text-xl font-semibold text-foreground">{{ __('Project Phases') }}</h2>
+                        <p class="text-sm text-muted-foreground">{{ __('Manage project phases and their progress') }}</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="{{ route('phases.index', ['project' => $project->id]) }}"
+                            class="inline-flex items-center gap-2 px-3 py-1.5 text-sm border border-zinc-300 rounded-lg hover:bg-zinc-50 dark:border-zinc-600 dark:text-zinc-300 dark:hover:bg-zinc-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+                            </svg>
+                            {{ __('View All') }}
+                        </a>
+                        <a href="{{ route('phases.create', ['project' => $project->id]) }}"
+                            class="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3">
+                                <path d="M5 12h14"></path>
+                                <path d="M12 5v14"></path>
+                            </svg>
+                            {{ __('Create Phase') }}
+                        </a>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-zinc-50 dark:bg-zinc-900/50">
+                            <tr>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                                    {{ __('Name') }}</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                                    {{ __('Status') }}</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                                    {{ __('Start Date') }}</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                                    {{ __('End Date') }}</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                                    {{ __('Progress') }}</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                                    {{ __('Actions') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white dark:bg-zinc-800 divide-y divide-zinc-200 dark:divide-zinc-700">
+                            @forelse($project->phases as $phase)
+                                <tr class="hover:bg-zinc-50 dark:hover:bg-zinc-900/50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm font-medium text-zinc-900 dark:text-zinc-100">
+                                            {{ $phase->name }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        @php
+                                            $phaseStatusColors = [
+                                                'not_started' => 'bg-gray-500/10 text-gray-700 dark:text-gray-400',
+                                                'in_progress' => 'bg-blue-500/10 text-blue-700 dark:text-blue-400',
+                                                'completed' => 'bg-green-500/10 text-green-700 dark:text-green-400',
+                                                'on_hold' => 'bg-red-500/10 text-red-700 dark:text-red-400',
+                                            ];
+                                        @endphp
+                                        <flux:badge
+                                            class="{{ $phaseStatusColors[$phase->status] ?? 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400' }}">
+                                            {{ ucfirst(str_replace('_', ' ', $phase->status)) }}
+                                        </flux:badge>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-500 dark:text-zinc-400">
+                                        {{ $phase->start_date ? $phase->start_date->format('Y-m-d') : __('No date') }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-500 dark:text-zinc-400">
+                                        {{ $phase->end_date ? $phase->end_date->format('Y-m-d') : __('No date') }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="w-full bg-zinc-200 dark:bg-zinc-700 rounded-full h-2">
+                                            <div class="bg-blue-600 h-2 rounded-full" style="width: {{ $phase->getCompletionPercentage() }}%"></div>
+                                        </div>
+                                        <div class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">{{ $phase->getCompletionPercentage() }}%</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <a href="{{ route('phases.edit', ['project' => $project->id, 'phase' => $phase->id]) }}"
+                                            class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">{{ __('Edit') }}</a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6"
+                                        class="px-6 py-8 text-center text-sm text-zinc-500 dark:text-zinc-400">
+                                        {{ __('No phases found') }}</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Milestones Tab -->
+            <div id="milestones-content" class="tab-content hidden">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h2 class="text-xl font-semibold text-foreground">{{ __('Project Milestones') }}</h2>
+                        <p class="text-sm text-muted-foreground">{{ __('Track important project achievements and deadlines') }}</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="{{ route('milestones.index', ['project' => $project->id]) }}"
+                            class="inline-flex items-center gap-2 px-3 py-1.5 text-sm border border-zinc-300 rounded-lg hover:bg-zinc-50 dark:border-zinc-600 dark:text-zinc-300 dark:hover:bg-zinc-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+                            </svg>
+                            {{ __('View All') }}
+                        </a>
+                        <a href="{{ route('milestones.create', ['project' => $project->id]) }}"
+                            class="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3">
+                                <path d="M5 12h14"></path>
+                                <path d="M12 5v14"></path>
+                            </svg>
+                            {{ __('Create Milestone') }}
+                        </a>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-zinc-50 dark:bg-zinc-900/50">
+                            <tr>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                                    {{ __('Name') }}</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                                    {{ __('Phase') }}</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                                    {{ __('Status') }}</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                                    {{ __('Due Date') }}</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                                    {{ __('Actions') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white dark:bg-zinc-800 divide-y divide-zinc-200 dark:divide-zinc-700">
+                            @forelse($project->milestones as $milestone)
+                                <tr class="hover:bg-zinc-50 dark:hover:bg-zinc-900/50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm font-medium text-zinc-900 dark:text-zinc-100">
+                                            {{ $milestone->name }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        @if($milestone->phase)
+                                            <span class="text-sm text-zinc-500 dark:text-zinc-400">{{ $milestone->phase->name }}</span>
+                                        @else
+                                            <span class="text-sm text-zinc-500 dark:text-zinc-400">No Phase</span>
+                                        @endif
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        @php
+                                            $milestoneStatusColors = [
+                                                'not_started' => 'bg-gray-500/10 text-gray-700 dark:text-gray-400',
+                                                'in_progress' => 'bg-blue-500/10 text-blue-700 dark:text-blue-400',
+                                                'completed' => 'bg-green-500/10 text-green-700 dark:text-green-400',
+                                                'on_hold' => 'bg-red-500/10 text-red-700 dark:text-red-400',
+                                            ];
+                                        @endphp
+                                        <flux:badge
+                                            class="{{ $milestoneStatusColors[$milestone->status] ?? 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400' }}">
+                                            {{ ucfirst(str_replace('_', ' ', $milestone->status)) }}
+                                        </flux:badge>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-500 dark:text-zinc-400">
+                                        {{ $milestone->due_date ? $milestone->due_date->format('Y-m-d') : __('No due date') }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <a href="{{ route('milestones.edit', ['project' => $project->id, 'milestone' => $milestone->id]) }}"
+                                            class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">{{ __('Edit') }}</a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5"
+                                        class="px-6 py-8 text-center text-sm text-zinc-500 dark:text-zinc-400">
+                                        {{ __('No milestones found') }}</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -373,7 +736,7 @@
                                             {{ $team->users->count() }} {{ __('members') }}
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <button
                                             class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 mr-3">
                                             {{ __('View') }}

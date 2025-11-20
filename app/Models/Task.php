@@ -18,11 +18,15 @@ class Task extends Model
         'status',
         'due_date',
         'project_id',
+        'project_phase_id',
         'user_id',
+        'dependencies',
+        'order',
     ];
 
     protected $casts = [
         'due_date' => 'date',
+        'dependencies' => 'array',
     ];
 
     // Define task statuses
@@ -36,9 +40,94 @@ class Task extends Model
         return $this->belongsTo(Project::class);
     }
 
+    public function phase(): BelongsTo
+    {
+        return $this->belongsTo(ProjectPhase::class, 'project_phase_id');
+    }
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
+    }
+
+    /**
+     * Get the dependent tasks for this task
+     */
+    public function getDependentTasks()
+    {
+        return $this->whereIn('id', $this->dependencies ?? []);
+    }
+
+    /**
+     * Check if this task has any dependencies
+     */
+    public function hasDependencies(): bool
+    {
+        return !empty($this->dependencies) && count($this->dependencies) > 0;
+    }
+
+    /**
+     * Check if all dependencies are completed
+     */
+    public function areDependenciesCompleted(): bool
+    {
+        if (!$this->hasDependencies()) {
+            return true; // No dependencies means it can be started
+        }
+
+        $dependencyTasks = self::whereIn('id', $this->dependencies)->get();
+
+        foreach ($dependencyTasks as $dependencyTask) {
+            if ($dependencyTask->status !== self::STATUS_COMPLETED) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Get tasks that depend on this task
+     */
+    public function getTaskDependents()
+    {
+        return self::whereJsonContains('dependencies', $this->id)->get();
+    }
+
+    /**
+     * Add a dependency to this task
+     */
+    public function addDependency($taskId)
+    {
+        $dependencies = $this->dependencies ?? [];
+        if (!in_array($taskId, $dependencies)) {
+            $dependencies[] = $taskId;
+            $this->update(['dependencies' => $dependencies]);
+        }
+    }
+
+    /**
+     * Remove a dependency from this task
+     */
+    public function removeDependency($taskId)
+    {
+        $dependencies = $this->dependencies ?? [];
+        $dependencies = array_filter($dependencies, function($id) use ($taskId) {
+            return $id != $taskId;
+        });
+        $this->update(['dependencies' => array_values($dependencies)]);
+    }
+
+    /**
+     * Get all potential dependencies for this task (tasks in the same project that are not this task)
+     */
+    public function getPotentialDependencies()
+    {
+        return self::where('project_id', $this->project_id)
+                    ->where('id', '!=', $this->id)
+                    ->orderBy('order')
+                    ->orderBy('created_at')
+                    ->get();
     }
 
     /**

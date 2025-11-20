@@ -5,7 +5,7 @@
             <h1 class="text-3xl font-bold text-foreground">{{ __('Contacts') }}</h1>
             <p class="text-muted-foreground">{{ __('Manage contacts for :client', ['client' => $client->name ?? $client->company_name]) }}</p>
         </div>
-        <flux:button wire:click="$dispatch('open-modal', 'create-contact')" variant="solid">
+        <flux:button wire:click="$dispatch('open-modal', 'create-contact')" variant="primary">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 mr-2">
                 <path d="M5 12h14"></path>
                 <path d="M12 5v14"></path>
@@ -144,9 +144,9 @@
                                 <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
                                     {{ __('Get started by creating a new contact.') }}</p>
                                 <div class="mt-6">
-                                    <flux:button 
-                                        wire:click="$dispatch('open-modal', 'create-contact')" 
-                                        variant="solid">
+                                    <flux:button
+                                        wire:click="$dispatch('open-modal', 'create-contact')"
+                                        variant="primary">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 mr-2">
                                             <path d="M5 12h14"></path>
                                             <path d="M12 5v14"></path>
