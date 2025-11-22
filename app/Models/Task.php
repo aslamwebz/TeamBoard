@@ -131,6 +131,21 @@ class Task extends Model
     }
 
     /**
+     * Get discussions related to this task
+     */
+    public function discussions()
+    {
+        return $this->hasManyThrough(
+            \App\Models\Discussion::class,
+            \App\Models\Project::class,
+            'id', // Foreign key on projects table
+            'type_id', // Foreign key on discussions table
+            'project_id', // Local key on tasks table
+            'id' // Local key on projects table
+        )->where('discussions.type', 'task');
+    }
+
+    /**
      * Get the company name associated with this task
      */
     public function getCompanyName(): string

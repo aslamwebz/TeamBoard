@@ -34,6 +34,17 @@
                 {{ __('Teams') }}
             </flux:navlist.item>
 
+            <!-- Discussions - Available to all authenticated users -->
+            <flux:navlist.item icon="chat-bubble-left-right" href="{{ route('discussions.index') }}" :current="request()->routeIs('discussions*')"
+                wire:navigate.hover @mouseenter="preloadLink('{{ route('discussions.index') }}')">
+                {{ __('Discussions') }}
+            </flux:navlist.item>
+
+            <!-- Files/Documents - Available to all authenticated users -->
+            <flux:navlist.item icon="folder-open" href="{{ route('files.index') }}" :current="request()->routeIs('files*')"
+                wire:navigate.hover @mouseenter="preloadLink('{{ route('files.index') }}')">
+                {{ __('Files') }}
+            </flux:navlist.item>
         </flux:navlist.group>
 
         <!-- Users section - Only for users with user/role/permission permissions -->

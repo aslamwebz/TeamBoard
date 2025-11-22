@@ -41,6 +41,7 @@ class Show extends Component
             'teams',
             'phases',
             'milestones',
+            'discussions', // Load discussions for the project
             'phases.tasks' // Load tasks for each phase
         ]);
     }

@@ -122,6 +122,16 @@ Route::middleware([
         Route::get('/projects/{project}/milestones/create', \App\Livewire\Projects\Milestones\Create::class)->name('milestones.create');
         Route::get('/projects/{project}/milestones/{milestone}', \App\Livewire\Projects\Milestones\Show::class)->name('milestones.show');
         Route::get('/projects/{project}/milestones/{milestone}/edit', \App\Livewire\Projects\Milestones\Edit::class)->name('milestones.edit');
+
+        // Discussions routes
+        Route::get('/discussions', \App\Livewire\Discussions\Index::class)->name('discussions.index');
+        Route::get('/discussions/create', \App\Livewire\Discussions\Create::class)->name('discussions.create');
+        Route::get('/discussions/{discussion}', \App\Livewire\Discussions\Show::class)->name('discussions.show');
+        Route::get('/discussions/{discussion}/edit', \App\Livewire\Discussions\Edit::class)->name('discussions.edit');
+
+        // Files routes
+        Route::get('/files', \App\Livewire\Files\Index::class)->name('files.index');
+        Route::get('/files/upload', \App\Livewire\Files\Upload::class)->name('files.upload');
     });
 
     Route::middleware(['auth'])->group(function () {

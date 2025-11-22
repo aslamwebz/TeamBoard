@@ -43,9 +43,11 @@
                     <h3 class="text-sm font-medium text-zinc-500 dark:text-zinc-400">{{ __('Completion') }}</h3>
                     <div class="flex items-center gap-2">
                         <div class="w-full bg-zinc-200 dark:bg-zinc-700 rounded-full h-2">
-                            <div class="bg-blue-600 h-2 rounded-full" style="width: {{ $project->getCompletionPercentage() }}%"></div>
+                            <div class="bg-blue-600 h-2 rounded-full"
+                                style="width: {{ $project->getCompletionPercentage() }}%"></div>
                         </div>
-                        <span class="text-sm text-zinc-900 dark:text-zinc-100">{{ $project->getCompletionPercentage() }}%</span>
+                        <span
+                            class="text-sm text-zinc-900 dark:text-zinc-100">{{ $project->getCompletionPercentage() }}%</span>
                     </div>
                 </div>
 
@@ -202,6 +204,19 @@
                             class="bg-zinc-100 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300 px-2 py-0.5 rounded-full text-xs">{{ $project->invoices->count() }}</span>
                     </div>
                 </button>
+                <button type="button" onclick="switchTab('discussions')" id="discussions-tab"
+                    class="tab-button py-4 px-1 border-b-2 font-medium text-sm border-transparent text-zinc-500 hover:text-zinc-700 hover:border-zinc-300 dark:text-zinc-400 dark:hover:text-zinc-300">
+                    <div class="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                        </svg>
+                        {{ __('Discussions') }}
+                        <span
+                            class="bg-zinc-100 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300 px-2 py-0.5 rounded-full text-xs">{{ $project->discussions->count() }}</span>
+                    </div>
+                </button>
             </nav>
         </div>
 
@@ -212,10 +227,11 @@
                 <div class="flex items-center justify-between mb-6">
                     <div>
                         <h2 class="text-xl font-semibold text-foreground">{{ __('Gantt Chart') }}</h2>
-                        <p class="text-sm text-muted-foreground">{{ __('Visual timeline of project phases, milestones, and tasks') }}</p>
+                        <p class="text-sm text-muted-foreground">
+                            {{ __('Visual timeline of project phases, milestones, and tasks') }}</p>
                     </div>
                 </div>
-                
+
                 <div class="bg-white dark:bg-zinc-800 rounded-lg border border-zinc-200 dark:border-zinc-700 p-4">
                     <div class="overflow-x-auto">
                         <div class="min-w-full">
@@ -225,18 +241,22 @@
                                 <div class="w-1/4 text-sm font-medium text-foreground">End Date</div>
                                 <div class="w-1/4 text-sm font-medium text-foreground">Status</div>
                             </div>
-                            
+
                             <!-- Phases -->
-                            @foreach($project->phases as $phase)
+                            @foreach ($project->phases as $phase)
                                 <div class="flex border-b border-zinc-100 dark:border-zinc-800 py-3">
                                     <div class="w-1/4">
                                         <div class="font-medium text-foreground">{{ $phase->name }}</div>
-                                        <div class="text-xs text-muted-foreground">{{ $phase->getCompletionPercentage() }}% completed</div>
+                                        <div class="text-xs text-muted-foreground">
+                                            {{ $phase->getCompletionPercentage() }}% completed</div>
                                     </div>
-                                    <div class="w-1/4 text-sm text-foreground">{{ $phase->start_date ? $phase->start_date->format('M d, Y') : 'N/A' }}</div>
-                                    <div class="w-1/4 text-sm text-foreground">{{ $phase->end_date ? $phase->end_date->format('M d, Y') : 'N/A' }}</div>
+                                    <div class="w-1/4 text-sm text-foreground">
+                                        {{ $phase->start_date ? $phase->start_date->format('M d, Y') : 'N/A' }}</div>
+                                    <div class="w-1/4 text-sm text-foreground">
+                                        {{ $phase->end_date ? $phase->end_date->format('M d, Y') : 'N/A' }}</div>
                                     <div class="w-1/4">
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
                                             @if ($phase->status === 'not_started') bg-zinc-100 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-300
                                             @elseif ($phase->status === 'in_progress') bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300
                                             @elseif ($phase->status === 'completed') bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300
@@ -245,17 +265,20 @@
                                         </span>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Phase tasks -->
-                                @foreach($phase->tasks as $task)
+                                @foreach ($phase->tasks as $task)
                                     <div class="flex border-b border-zinc-100 dark:border-zinc-800 py-2 pl-6">
                                         <div class="w-1/4">
-                                            <div class="font-medium text-muted-foreground text-sm">• {{ $task->title }}</div>
+                                            <div class="font-medium text-muted-foreground text-sm">•
+                                                {{ $task->title }}</div>
                                         </div>
-                                        <div class="w-1/4 text-sm text-muted-foreground">{{ $task->due_date ? $task->due_date->format('M d, Y') : 'N/A' }}</div>
+                                        <div class="w-1/4 text-sm text-muted-foreground">
+                                            {{ $task->due_date ? $task->due_date->format('M d, Y') : 'N/A' }}</div>
                                         <div class="w-1/4 text-sm text-muted-foreground">N/A</div>
                                         <div class="w-1/4">
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium
+                                            <span
+                                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium
                                                 @if ($task->status === 'todo') bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300
                                                 @elseif ($task->status === 'in_progress') bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300
                                                 @elseif ($task->status === 'completed') bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300
@@ -266,27 +289,31 @@
                                     </div>
                                 @endforeach
                             @endforeach
-                            
+
                             <!-- Phases without tasks -->
-                            @foreach($project->phases as $phase)
-                                @if($phase->tasks->count() === 0)
-                                    <div class="flex border-b border-zinc-100 dark:border-zinc-800 py-2 pl-6 text-sm text-muted-foreground">
+                            @foreach ($project->phases as $phase)
+                                @if ($phase->tasks->count() === 0)
+                                    <div
+                                        class="flex border-b border-zinc-100 dark:border-zinc-800 py-2 pl-6 text-sm text-muted-foreground">
                                         No tasks in this phase
                                     </div>
                                 @endif
                             @endforeach
-                            
+
                             <!-- Milestones without phases -->
-                            @foreach($project->milestones as $milestone)
-                                @if(!$milestone->project_phase_id)
+                            @foreach ($project->milestones as $milestone)
+                                @if (!$milestone->project_phase_id)
                                     <div class="flex border-b border-zinc-100 dark:border-zinc-800 py-3">
                                         <div class="w-1/4">
                                             <div class="font-medium text-foreground">★ {{ $milestone->name }}</div>
                                         </div>
-                                        <div class="w-1/4 text-sm text-foreground">{{ $milestone->due_date ? $milestone->due_date->format('M d, Y') : 'N/A' }}</div>
+                                        <div class="w-1/4 text-sm text-foreground">
+                                            {{ $milestone->due_date ? $milestone->due_date->format('M d, Y') : 'N/A' }}
+                                        </div>
                                         <div class="w-1/4 text-sm text-foreground">N/A</div>
                                         <div class="w-1/4">
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                                            <span
+                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
                                                 @if ($milestone->status === 'not_started') bg-zinc-100 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-300
                                                 @elseif ($milestone->status === 'in_progress') bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300
                                                 @elseif ($milestone->status === 'completed') bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300
@@ -354,8 +381,9 @@
                                             {{ $task->title }}</div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        @if($task->phase)
-                                            <span class="text-sm text-zinc-500 dark:text-zinc-400">{{ $task->phase->name }}</span>
+                                        @if ($task->phase)
+                                            <span
+                                                class="text-sm text-zinc-500 dark:text-zinc-400">{{ $task->phase->name }}</span>
                                         @else
                                             <span class="text-sm text-zinc-500 dark:text-zinc-400">No Phase</span>
                                         @endif
@@ -378,7 +406,7 @@
                                         {{ $task->due_date ? $task->due_date->format('Y-m-d') : __('No due date') }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-500 dark:text-zinc-400">
-                                        @if($task->hasDependencies())
+                                        @if ($task->hasDependencies())
                                             <span>{{ count($task->dependencies) }} dependencies</span>
                                         @else
                                             <span class="text-gray-500">No dependencies</span>
@@ -406,7 +434,8 @@
                 <div class="flex items-center justify-between mb-6">
                     <div>
                         <h2 class="text-xl font-semibold text-foreground">{{ __('Project Phases') }}</h2>
-                        <p class="text-sm text-muted-foreground">{{ __('Manage project phases and their progress') }}</p>
+                        <p class="text-sm text-muted-foreground">{{ __('Manage project phases and their progress') }}
+                        </p>
                     </div>
                     <div class="flex gap-2">
                         <a href="{{ route('phases.index', ['project' => $project->id]) }}"
@@ -483,9 +512,11 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="w-full bg-zinc-200 dark:bg-zinc-700 rounded-full h-2">
-                                            <div class="bg-blue-600 h-2 rounded-full" style="width: {{ $phase->getCompletionPercentage() }}%"></div>
+                                            <div class="bg-blue-600 h-2 rounded-full"
+                                                style="width: {{ $phase->getCompletionPercentage() }}%"></div>
                                         </div>
-                                        <div class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">{{ $phase->getCompletionPercentage() }}%</div>
+                                        <div class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
+                                            {{ $phase->getCompletionPercentage() }}%</div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <a href="{{ route('phases.edit', ['project' => $project->id, 'phase' => $phase->id]) }}"
@@ -509,7 +540,8 @@
                 <div class="flex items-center justify-between mb-6">
                     <div>
                         <h2 class="text-xl font-semibold text-foreground">{{ __('Project Milestones') }}</h2>
-                        <p class="text-sm text-muted-foreground">{{ __('Track important project achievements and deadlines') }}</p>
+                        <p class="text-sm text-muted-foreground">
+                            {{ __('Track important project achievements and deadlines') }}</p>
                     </div>
                     <div class="flex gap-2">
                         <a href="{{ route('milestones.index', ['project' => $project->id]) }}"
@@ -562,8 +594,9 @@
                                             {{ $milestone->name }}</div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        @if($milestone->phase)
-                                            <span class="text-sm text-zinc-500 dark:text-zinc-400">{{ $milestone->phase->name }}</span>
+                                        @if ($milestone->phase)
+                                            <span
+                                                class="text-sm text-zinc-500 dark:text-zinc-400">{{ $milestone->phase->name }}</span>
                                         @else
                                             <span class="text-sm text-zinc-500 dark:text-zinc-400">No Phase</span>
                                         @endif
@@ -849,6 +882,125 @@
                     </table>
                 </div>
             </div>
+
+            <!-- Discussions Tab -->
+            <div id="discussions-content" class="tab-content hidden">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h2 class="text-xl font-semibold text-foreground">{{ __('Project Discussions') }}</h2>
+                        <p class="text-sm text-muted-foreground">
+                            {{ __('Collaborate with your team through discussions') }}</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="{{ route('discussions.index', ['type' => 'project', 'typeId' => $project->id]) }}"
+                            class="inline-flex items-center gap-2 px-3 py-1.5 text-sm border border-zinc-300 rounded-lg hover:bg-zinc-50 dark:border-zinc-600 dark:text-zinc-300 dark:hover:bg-zinc-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+                            </svg>
+                            {{ __('View All') }}
+                        </a>
+                        <a href="{{ route('discussions.create', ['type' => 'project', 'type_id' => $project->id]) }}"
+                            class="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3">
+                                <path d="M5 12h14"></path>
+                                <path d="M12 5v14"></path>
+                            </svg>
+                            {{ __('Start Discussion') }}
+                        </a>
+                    </div>
+                </div>
+
+                @php
+                    $projectDiscussions = $project->discussions()->latest()->limit(5)->get();
+                @endphp
+
+                @if ($projectDiscussions->count() > 0)
+                    <div class="space-y-4">
+                        @foreach ($projectDiscussions as $discussion)
+                            <div
+                                class="border border-zinc-200 dark:border-zinc-700 rounded-lg p-4 hover:bg-zinc-50 dark:hover:bg-zinc-800/50">
+                                <div class="flex justify-between items-start">
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <h3 class="font-medium text-foreground">
+                                                <a href="{{ route('discussions.show', $discussion) }}"
+                                                    class="hover:text-blue-600 dark:hover:text-blue-400">
+                                                    {{ Str::limit($discussion->title, 60) }}
+                                                </a>
+                                            </h3>
+                                        </div>
+
+                                        <p class="text-sm text-muted-foreground mb-2 line-clamp-2">
+                                            {{ Str::limit(strip_tags($discussion->content), 120) }}
+                                        </p>
+
+                                        <div class="flex items-center justify-between text-xs text-muted-foreground">
+                                            <div class="flex items-center gap-2">
+                                                <div class="flex items-center gap-1">
+                                                    <img src="{{ $discussion->user->profile_photo_url ?? 'https://ui-avatars.com/api/?name=' . urlencode($discussion->user->name) }}"
+                                                        alt="{{ $discussion->user->name }}"
+                                                        class="w-4 h-4 rounded-full">
+                                                    <span>{{ $discussion->user->name }}</span>
+                                                </div>
+                                                <span>{{ $discussion->created_at->diffForHumans() }}</span>
+                                                <span>{{ $discussion->getCommentCount() }} comments</span>
+                                            </div>
+
+                                            @if ($discussion->attachments->count() > 0)
+                                                <div class="flex items-center gap-1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12"
+                                                        height="12" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round" class="h-3 w-3">
+                                                        <path
+                                                            d="M21.2 8.4c.4-.4.4-1 0-1.4l-7-7a1 1 0 0 0-1.4 0L3 9.8V14a1 1 0 0 0 1 1h4.2l9.8-9.8c.4-.4 1-.4 1.4 0s.4 1 0 1.4L9.6 19.2H5a1 1 0 0 1-1-1v-4.2L13.8 5.2l4.8 4.8 1.4-1.4-4.8-4.8z" />
+                                                    </svg>
+                                                    {{ $discussion->attachments->count() }} attachment(s)
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    @if ($project->discussions()->count() > 5)
+                        <div class="mt-4 text-center">
+                            <a href="{{ route('discussions.index', ['type' => 'project', 'typeId' => $project->id]) }}"
+                                class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                                View all {{ $project->discussions()->count() }} discussions
+                            </a>
+                        </div>
+                    @endif
+                @else
+                    <div class="text-center py-12">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-zinc-400"
+                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                        </svg>
+                        <h3 class="mt-2 text-sm font-medium text-foreground">No discussions yet</h3>
+                        <p class="mt-1 text-sm text-muted-foreground">Get started by creating a new discussion.</p>
+                        <div class="mt-6">
+                            <a href="{{ route('discussions.create', ['type' => 'project', 'type_id' => $project->id]) }}"
+                                class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                </svg>
+                                Start Discussion
+                            </a>
+                        </div>
+                    </div>
+                @endif
+            </div>
+
         </div>
     </div>
 
@@ -877,30 +1029,12 @@
         }
     </script>
 
-    <x-modal
-        name="assign-user"
-        showProperty="showAssignUserModal"
-        selectedItemsProperty="selectedUsers"
-        title="Assign User to Project"
-        description="Select users to assign to this project."
-        :items="$availableUsers"
-        :onSubmit="'assignUsers'"
-        :onCancel="'cancelAssignUser'"
-        submitLabel="Assign Users"
-        cancelLabel="Cancel"
-        type="assign" />
+    <x-modal name="assign-user" showProperty="showAssignUserModal" selectedItemsProperty="selectedUsers"
+        title="Assign User to Project" description="Select users to assign to this project." :items="$availableUsers"
+        :onSubmit="'assignUsers'" :onCancel="'cancelAssignUser'" submitLabel="Assign Users" cancelLabel="Cancel" type="assign" />
 
-    <x-modal
-        name="assign-team"
-        showProperty="showAssignTeamModal"
-        selectedItemsProperty="selectedTeams"
-        title="Add Team to Project"
-        description="Select teams to assign to this project."
-        :items="$availableTeams"
-        :onSubmit="'assignTeams'"
-        :onCancel="'cancelAssignTeam'"
-        submitLabel="Add Teams"
-        cancelLabel="Cancel"
-        type="assign" />
+    <x-modal name="assign-team" showProperty="showAssignTeamModal" selectedItemsProperty="selectedTeams"
+        title="Add Team to Project" description="Select teams to assign to this project." :items="$availableTeams"
+        :onSubmit="'assignTeams'" :onCancel="'cancelAssignTeam'" submitLabel="Add Teams" cancelLabel="Cancel" type="assign" />
 
 </div>

@@ -117,4 +117,30 @@ class Project extends Model
 
         return (int) round(($completedPhases->count() / $phases->count()) * 100);
     }
+
+    /**
+     * Get discussions related to this project
+     */
+    public function projectDiscussions()
+    {
+        return $this->hasMany(\App\Models\Discussion::class, 'project_id');
+    }
+
+    /**
+     * Get all discussions associated with this project's entities
+     */
+    public function getAllDiscussions()
+    {
+        // Get discussions directly associated with this project
+        $projectDiscussions = $this->projectDiscussions;
+
+        // Get discussions associated with tasks in this project
+        $taskIds = $this->tasks()->pluck('id');
+        $taskDiscussions = \App\Models\Discussion::where('type', 'task')
+            ->whereIn('type_id', $taskIds)
+            ->get();
+
+        // Combine all discussions
+        return $projectDiscussions->concat($taskDiscussions);
+    }
 }

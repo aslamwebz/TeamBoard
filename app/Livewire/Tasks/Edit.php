@@ -40,7 +40,7 @@ class Edit extends Component
 
     public function mount(Task $task)
     {
-        $this->task = $task;
+        $this->task = $task->load('project');
         $this->title = $task->title;
         $this->description = $task->description;
         $this->status = $task->status;
@@ -54,6 +54,13 @@ class Edit extends Component
         $this->users = User::all();
     }
 
+    public function updatedProjectId()
+    {
+        // When project changes, reload the phases
+        $this->phases = ProjectPhase::where('project_id', $this->project_id)->get();
+        $this->project_phase_id = null; // Reset phase selection
+    }
+
     public function updateTask()
     {
         $validatedData = $this->validate();
@@ -63,13 +70,6 @@ class Edit extends Component
         session()->flash('message', 'Task updated successfully.');
 
         return redirect()->route('tasks');
-    }
-
-    public function updatedProjectId()
-    {
-        // When project changes, reload the phases
-        $this->phases = ProjectPhase::where('project_id', $this->project_id)->get();
-        $this->project_phase_id = null; // Reset phase selection
     }
 
     public function render()
