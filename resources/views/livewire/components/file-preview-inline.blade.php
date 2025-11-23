@@ -1,7 +1,9 @@
 <div class="file-preview inline-block">
     @if($attachment->isImage())
         <!-- Image preview -->
-        <div class="relative group">
+        <div class="relative group"
+             onclick="window.open('{{ route('tenant.file.preview.page', ['filename' => $attachment->filename]) }}', '_blank')"
+             style="cursor: pointer;">
             <img
                 src="{{ $attachment->getUrl() }}"
                 alt="{{ $attachment->original_name }}"
@@ -10,7 +12,7 @@
                     @elseif($size === 'large') w-24 h-24
                     @else w-16 h-16
                     @endif
-                    object-cover rounded cursor-pointer hover:opacity-80 transition-opacity"
+                    object-cover rounded hover:opacity-80 transition-opacity"
             >
             <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white h-6 w-6">
@@ -20,7 +22,9 @@
         </div>
     @elseif($attachment->mime_type === 'application/pdf')
         <!-- PDF preview -->
-        <div class="relative group">
+        <div class="relative group"
+             onclick="window.open('{{ route('tenant.file.preview.page', ['filename' => $attachment->filename]) }}', '_blank')"
+             style="cursor: pointer;">
             <div class="
                 bg-red-100 dark:bg-red-900/30
                 border border-red-200 dark:border-red-800
@@ -29,7 +33,7 @@
                 @elseif($size === 'large') w-24 h-24
                 @else w-16 h-16
                 @endif
-                cursor-pointer hover:bg-red-200/50 dark:hover:bg-red-900/50 transition-colors"
+                hover:bg-red-200/50 dark:hover:bg-red-900/50 transition-colors"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500 h-5 w-5">
                     <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
@@ -48,7 +52,9 @@
         </div>
     @else
         <!-- Generic file preview -->
-        <div class="relative group">
+        <div class="relative group"
+             onclick="window.open('{{ route('tenant.file.preview.page', ['filename' => $attachment->filename]) }}', '_blank')"
+             style="cursor: pointer;">
             <div class="
                 bg-gray-100 dark:bg-gray-800/50
                 border border-gray-200 dark:border-gray-700
@@ -57,7 +63,7 @@
                 @elseif($size === 'large') w-24 h-24
                 @else w-16 h-16
                 @endif
-                cursor-pointer hover:bg-gray-200/50 dark:hover:bg-gray-800/70 transition-colors"
+                hover:bg-gray-200/50 dark:hover:bg-gray-800/70 transition-colors"
             >
                 @if(Str::contains($attachment->mime_type, 'word'))
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-500 h-5 w-5">

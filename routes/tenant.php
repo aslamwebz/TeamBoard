@@ -151,5 +151,10 @@ Route::middleware([
          ->name('tenant.file.preview')
          ->middleware(['auth']);
 
+    // File preview page route - separate page for preview
+    Route::get('/files/preview-page/{filename}', [\App\Http\Controllers\FilePreviewPageController::class, 'show'])
+         ->name('tenant.file.preview.page')
+         ->middleware(['auth']);
+
     require __DIR__ . '/auth.php';
 });

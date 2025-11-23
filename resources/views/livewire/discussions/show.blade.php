@@ -98,8 +98,8 @@
                                     <p class="text-xs font-medium text-foreground truncate" title="{{ $attachment->original_name }}">{{ $attachment->original_name }}</p>
                                     <p class="text-xs text-muted-foreground">{{ $attachment->getFormattedSize() }}</p>
                                 </div>
-                                <a href="{{ $attachment->getPreviewUrl() }}" class="mt-2 text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
-                                    Download
+                                <a href="{{ route('tenant.file.preview.page', ['filename' => $attachment->filename]) }}" target="_blank" class="mt-2 text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                                    Preview
                                 </a>
                             </div>
                         @endforeach
@@ -189,8 +189,8 @@
                                                     @include('livewire.components.file-preview-inline', ['attachment' => $attachment, 'size' => 'small'])
                                                     <div class="mt-1 text-center w-full">
                                                         <span class="truncate block">{{ $attachment->original_name }}</span>
-                                                        <a href="{{ $attachment->getPreviewUrl() }}" class="mt-1 text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
-                                                            Download
+                                                        <a href="{{ route('tenant.file.preview.page', ['filename' => $attachment->filename]) }}" target="_blank" class="mt-1 text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                                                            Preview
                                                         </a>
                                                     </div>
                                                 </div>
@@ -347,11 +347,9 @@
                                     <p class="text-sm font-medium text-foreground truncate">{{ $attachment->original_name }}</p>
                                     <p class="text-xs text-muted-foreground">{{ $attachment->getFormattedSize() }}</p>
                                 </div>
-                                <a href="{{ $attachment->getPreviewUrl() }}" class="ml-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                                <a href="{{ route('tenant.file.preview.page', ['filename' => $attachment->filename]) }}" target="_blank" class="ml-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3">
-                                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path>
-                                        <polyline points="7 10 12 15 17 10"></polyline>
-                                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                                        <eye class="lucide lucide-eye h-3 w-3"/>
                                     </svg>
                                 </a>
                             </div>
@@ -384,4 +382,7 @@
             </div>
         </div>
     </div>
+
+    <!-- File Preview Modal - using the LaravelFileViewer package -->
+    <livewire:components.file-preview-modal />
 </div>
