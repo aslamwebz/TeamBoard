@@ -28,6 +28,10 @@
                 @error('files')
                     <div class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</div>
                 @enderror
+
+                @error('*')
+                    <div class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

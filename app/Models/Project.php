@@ -127,6 +127,14 @@ class Project extends Model
     }
 
     /**
+     * Alias for projectDiscussions for backward compatibility
+     */
+    public function discussions()
+    {
+        return $this->projectDiscussions();
+    }
+
+    /**
      * Get all discussions associated with this project's entities
      */
     public function getAllDiscussions()

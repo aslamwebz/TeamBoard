@@ -53,12 +53,27 @@ class Upload extends Component
     public function uploadFiles()
     {
         try {
-            // Validate the request with the same rules as defined in the class
-            $validatedData = $this->validate();
+            // Validate the non-file fields first
+            $this->validate([
+                'type' => 'required|in:project,task,discussion,client,general',
+                'typeId' => 'nullable|integer',  // Make optional for general files
+                'projectId' => 'nullable|integer',
+            ]);
+
+
+
+
+            // Validate files only if they exist to avoid temporary file issues
+            if (!empty($this->files)) {
+                $this->validate([
+                    'files.*' => 'file|max:10240|mimes:jpeg,png,gif,webp,svg,pdf,doc,docx,xls,xlsx,ppt,pptx,txt,csv,zip,rar,7z'
+                ]);
+            }
 
             if (empty($this->files)) {
                 throw new \Exception('No files selected for upload.');
             }
+
 
             $fileUploadService = new \App\Services\FileUploadService();
             $discussionId = null;
@@ -232,6 +247,7 @@ class Upload extends Component
 
     public function updatedFiles()
     {
-        $this->validateOnly('files.*');
+        // Don't validate files immediately to prevent temporary file metadata issues
+        // Validation will happen during upload
     }
 }

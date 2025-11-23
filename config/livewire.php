@@ -110,10 +110,10 @@ return [
      * |
      */
     'temporary_file_upload' => [
-        'disk' => null,  // Example: 'local', 's3'...
-        'rules' => null,  // Example: ['file', 'mimes:png,jpg,pdf']
-        'directory' => null,  // Example: 'tmp'
-        'middleware' => null,  // Example: 'throttle:5,1' // Max 5 attempts per minute
+        'disk' => 'livewire-tmp',
+        'rules' => ['file', 'max:10240', 'mimes:jpeg,png,gif,webp,svg,pdf,doc,docx,xls,xlsx,ppt,pptx,txt,csv,zip,rar,7z'],
+        'directory' => null,
+        'middleware' => null,
         'preview_mimes' => [  // Supported file types for preview
             'png',
             'gif',
