@@ -54,7 +54,17 @@ class DiscussionAttachment extends Model
      */
     public function getUrl(): string
     {
-        return asset('storage/discussions/' . $this->filename);
+        // Use the tenant-specific route to serve the file directly
+        return route('tenant.file.download', ['filename' => $this->filename]);
+    }
+
+    /**
+     * Get the preview URL for this attachment (opens in a preview page with tools)
+     */
+    public function getPreviewUrl(): string
+    {
+        // Use the tenant-specific route to preview the file with tools
+        return route('tenant.file.preview', ['filename' => $this->filename]);
     }
 
     /**

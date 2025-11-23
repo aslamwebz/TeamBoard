@@ -50,6 +50,14 @@ class Comment extends Model
     }
 
     /**
+     * Get all attachments for this comment
+     */
+    public function getAttachments()
+    {
+        return $this->attachments()->with('user')->get();
+    }
+
+    /**
      * Check if this comment has any replies
      */
     public function hasReplies(): bool

@@ -7,6 +7,7 @@ use App\Models\FileAttachment;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use Livewire\Attributes\Computed;
 use Livewire\WithPagination;
 
 #[Layout('components.layouts.app')]
@@ -19,6 +20,8 @@ class Index extends Component
     public $type = ''; // image, document, etc.
     public $sortBy = 'created_at'; // created_at, name, size
     public $sortDirection = 'desc';
+    public $showPreviewModal = false;
+    public $previewFileId = null;
 
     public function render()
     {
@@ -56,5 +59,26 @@ class Index extends Component
         return view('livewire.files.index', [
             'files' => $files
         ]);
+    }
+
+    public function openPreview($fileId)
+    {
+        $this->previewFileId = $fileId;
+        $this->showPreviewModal = true;
+    }
+
+    public function closePreview()
+    {
+        $this->showPreviewModal = false;
+        $this->previewFileId = null;
+    }
+
+    #[Computed]
+    public function previewFile()
+    {
+        if ($this->previewFileId) {
+            return DiscussionAttachment::with(['user', 'discussion', 'comment'])->find($this->previewFileId);
+        }
+        return null;
     }
 }

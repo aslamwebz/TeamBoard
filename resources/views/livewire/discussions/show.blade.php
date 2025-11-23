@@ -90,28 +90,15 @@
             @if($discussion->attachments->count() > 0)
                 <div class="bg-white dark:bg-zinc-800 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6 mb-6">
                     <h2 class="text-xl font-semibold text-foreground mb-4">Discussion Attachments</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                         @foreach($discussion->attachments as $attachment)
-                            <div class="flex items-center p-3 bg-zinc-50 dark:bg-zinc-700/50 rounded-lg">
-                                <div class="mr-3">
-                                    @if($attachment->isImage())
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-blue-500">
-                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                                            <path d="M21 15l-5-5L5 21"></path>
-                                        </svg>
-                                    @else
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-gray-500">
-                                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
-                                            <polyline points="14 2 14 8 20 8"></polyline>
-                                        </svg>
-                                    @endif
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                    <p class="text-sm font-medium text-foreground truncate">{{ $attachment->original_name }}</p>
+                            <div class="flex flex-col items-center p-3 bg-zinc-50 dark:bg-zinc-700/50 rounded-lg">
+                                @include('livewire.components.file-preview-inline', ['attachment' => $attachment, 'size' => 'small'])
+                                <div class="mt-2 text-center w-full">
+                                    <p class="text-xs font-medium text-foreground truncate" title="{{ $attachment->original_name }}">{{ $attachment->original_name }}</p>
                                     <p class="text-xs text-muted-foreground">{{ $attachment->getFormattedSize() }}</p>
                                 </div>
-                                <a href="{{ $attachment->getUrl() }}" class="ml-2 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                                <a href="{{ $attachment->getPreviewUrl() }}" class="mt-2 text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
                                     Download
                                 </a>
                             </div>
@@ -196,25 +183,16 @@
                                 <!-- Comment Attachments -->
                                 @if($comment->attachments->count() > 0)
                                     <div class="mt-3 ml-4 pl-4 border-l-2 border-zinc-200 dark:border-zinc-600">
-                                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+                                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
                                             @foreach($comment->attachments as $attachment)
-                                                <div class="flex items-center p-2 bg-white dark:bg-zinc-800 rounded text-xs shadow-sm">
-                                                    @if($attachment->isImage())
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-blue-500 mr-2">
-                                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                                                            <path d="M21 15l-5-5L5 21"></path>
-                                                        </svg>
-                                                    @else
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-gray-500 mr-2">
-                                                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
-                                                            <polyline points="14 2 14 8 20 8"></polyline>
-                                                        </svg>
-                                                    @endif
-                                                    <span class="truncate">{{ $attachment->original_name }}</span>
-                                                    <a href="{{ $attachment->getUrl() }}" class="ml-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
-                                                        Download
-                                                    </a>
+                                                <div class="flex flex-col items-center p-2 bg-white dark:bg-zinc-800 rounded text-xs shadow-sm">
+                                                    @include('livewire.components.file-preview-inline', ['attachment' => $attachment, 'size' => 'small'])
+                                                    <div class="mt-1 text-center w-full">
+                                                        <span class="truncate block">{{ $attachment->original_name }}</span>
+                                                        <a href="{{ $attachment->getPreviewUrl() }}" class="mt-1 text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                                                            Download
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -363,24 +341,13 @@
                         @foreach($allAttachments as $attachment)
                             <div class="flex items-center p-2 bg-zinc-50 dark:bg-zinc-700/30 rounded">
                                 <div class="mr-2 flex-shrink-0">
-                                    @if($attachment->isImage())
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-blue-500">
-                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                                            <path d="M21 15l-5-5L5 21"></path>
-                                        </svg>
-                                    @else
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-gray-500">
-                                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
-                                            <polyline points="14 2 14 8 20 8"></polyline>
-                                        </svg>
-                                    @endif
+                                    @include('livewire.components.file-preview-inline', ['attachment' => $attachment, 'size' => 'small'])
                                 </div>
                                 <div class="flex-1 min-w-0">
                                     <p class="text-sm font-medium text-foreground truncate">{{ $attachment->original_name }}</p>
                                     <p class="text-xs text-muted-foreground">{{ $attachment->getFormattedSize() }}</p>
                                 </div>
-                                <a href="{{ $attachment->getUrl() }}" class="ml-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                                <a href="{{ $attachment->getPreviewUrl() }}" class="ml-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3">
                                         <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path>
                                         <polyline points="7 10 12 15 17 10"></polyline>

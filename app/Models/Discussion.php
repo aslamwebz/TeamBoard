@@ -97,6 +97,14 @@ class Discussion extends Model
     }
 
     /**
+     * Get all attachments for this discussion
+     */
+    public function getAttachments()
+    {
+        return $this->attachments()->with('user')->get();
+    }
+
+    /**
      * Get the project this discussion belongs to
      */
     public function project(): BelongsTo

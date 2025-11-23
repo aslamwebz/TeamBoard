@@ -141,5 +141,15 @@ Route::middleware([
         Route::get('settings/company-profile', \App\Livewire\Settings\CompanyProfile::class)->name('settings.company-profile');
     });
 
+    // File serving route for tenant - needs to be inside the tenant group with proper middleware
+    Route::get('/files/discussions/{filename}', [\App\Http\Controllers\TenantFileController::class, 'download'])
+         ->name('tenant.file.download')
+         ->middleware(['auth']);
+
+    // File preview route - shows the file with preview and download tools
+    Route::get('/files/preview/{filename}', [\App\Http\Controllers\FilePreviewController::class, 'preview'])
+         ->name('tenant.file.preview')
+         ->middleware(['auth']);
+
     require __DIR__ . '/auth.php';
 });
