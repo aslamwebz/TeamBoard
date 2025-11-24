@@ -1,22 +1,21 @@
 <?php
 
-namespace App\Livewire\Notifications;
+namespace App\Livewire\NotificationList;
 
 use App\Models\Notification;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class Index extends Component
+class NotificationList extends Component
 {
     use WithPagination;
 
-    public $activeTab = 'all'; // 'all', 'read', 'unread'
-    public $perPage = 15;
+    public string $activeTab = 'all';  // 'all', 'read', 'unread'
+    public int $perPage = 15;
 
-    public function mount()
-    {
-        //
-    }
+    public $listeners = [
+        'switchTab' => 'switchTab'
+    ];
 
     public function getUnreadCountProperty()
     {
@@ -29,10 +28,10 @@ class Index extends Component
 
         switch ($this->activeTab) {
             case 'unread':
-                $query = $query->unread();
+                $query = $query->whereNull('read_at');
                 break;
             case 'read':
-                $query = $query->read();
+                $query = $query->whereNotNull('read_at');
                 break;
         }
 
@@ -56,6 +55,11 @@ class Index extends Component
         $this->dispatch('notificationRead');
     }
 
+    public function switchTab($tab)
+    {
+        $this->activeTab = $tab;
+    }
+
     public function markAllAsRead()
     {
         auth()->user()->notifications()->unread()->update(['read_at' => now()]);
@@ -66,7 +70,7 @@ class Index extends Component
 
     public function render()
     {
-        return view('livewire.notifications.index', [
+        return view('livewire.notificationlist.notification-list', [
             'notifications' => $this->getNotificationsProperty(),
             'unreadCount' => $this->getUnreadCountProperty(),
         ]);

@@ -28,8 +28,6 @@ class Create extends Component
     {
         $validatedData = $this->validate();
 
-        $validatedData['user_id'] = Auth::id();
-
         Project::create($validatedData);
 
         session()->flash('message', 'Project created successfully.');

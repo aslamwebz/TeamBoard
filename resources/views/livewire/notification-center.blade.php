@@ -28,8 +28,8 @@
             <div class="flex items-center justify-between p-3 border-b border-zinc-200 dark:border-zinc-700">
                 <h3 class="text-lg font-medium text-foreground">Notifications</h3>
                 @if($this->getUnreadCountProperty() > 0)
-                    <button 
-                        wire:click="markAllAsRead" 
+                    <button
+                        wire:click="markAllAsRead"
                         class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
                     >
                         Mark all as read
@@ -37,21 +37,13 @@
                 @endif
             </div>
 
-            <!-- Tabs -->
-            <div class="flex border-b border-zinc-200 dark:border-zinc-700">
-                <button 
-                    wire:click="$set('activeTab', 'all')" 
-                    class="flex-1 py-2 text-sm font-medium {{ $activeTab === 'all' ? 'text-foreground border-b-2 border-blue-500' : 'text-muted-foreground hover:text-foreground' }}"
-                >
-                    All ({{ $this->getNotificationsProperty()->count() }})
-                </button>
-                <button 
-                    wire:click="$set('activeTab', 'unread')" 
-                    class="flex-1 py-2 text-sm font-medium {{ $activeTab === 'unread' ? 'text-foreground border-b-2 border-blue-500' : 'text-muted-foreground hover:text-foreground' }}"
-                >
-                    Unread ({{ $this->getUnreadCountProperty() }})
-                </button>
+            <!-- Display notification count -->
+            @if($this->getNotificationsProperty()->count() > 0)
+            <div class="px-3 py-2 text-sm text-muted-foreground border-b border-zinc-200 dark:border-zinc-700">
+                Showing {{ $this->getNotificationsProperty()->count() }} recent notifications
             </div>
+            @endif
+
 
             <!-- Notifications List -->
             <div>

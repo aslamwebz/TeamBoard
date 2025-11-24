@@ -15,6 +15,18 @@
                 {{ __('Dashboard') }}
             </flux:navlist.item>
 
+            <!-- Notifications -->
+            <flux:navlist.item icon="bell-alert" href="{{ route('notifications.index') }}" :current="request()->routeIs('notifications*')"
+                wire:navigate.hover @mouseenter="preloadLink('{{ route('notifications.index') }}')">
+                {{ __('Notifications') }}
+                @php
+                    $unreadCount = auth()->user()?->notifications()->unread()->count() ?? 0;
+                @endphp
+                @if($unreadCount > 0)
+                    <flux:badge slot="badge" variant="danger">{{ $unreadCount }}</flux:badge>
+                @endif
+            </flux:navlist.item>
+
             <!-- Tasks - Available to all authenticated users -->
             <flux:navlist.item icon="list-bullet" href="{{ route('tasks') }}" :current="request()->routeIs('tasks')"
                 wire:navigate.hover @mouseenter="preloadLink('{{ route('tasks') }}')">

@@ -9,7 +9,6 @@ use Livewire\Component;
 class NotificationCenter extends Component
 {
     public $showDropdown = false;
-    public $activeTab = 'all'; // 'all', 'read', 'unread'
     public $previewFileId = null;
 
     public function mount()
@@ -38,18 +37,8 @@ class NotificationCenter extends Component
 
     public function getNotificationsProperty()
     {
-        $query = auth()->user()->notifications();
-
-        switch ($this->activeTab) {
-            case 'unread':
-                $query = $query->unread();
-                break;
-            case 'read':
-                $query = $query->read();
-                break;
-        }
-
-        return $query->latest()->limit(10)->get();
+        // Always return the most recent 10 notifications for the quick preview dropdown
+        return auth()->user()->notifications()->latest()->limit(10)->get();
     }
 
     public function markAsRead($notificationId)

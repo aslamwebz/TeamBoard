@@ -32,6 +32,11 @@ use App\Livewire\Teams\Index as TeamIndex;
 use App\Livewire\Teams\Create as TeamCreate;
 use App\Livewire\Teams\Edit as TeamEdit;
 use App\Livewire\Teams\Show as TeamShow;
+use App\Livewire\NotificationList\NotificationList;
+use App\Livewire\Projects\Show as ProjectShow;
+use App\Livewire\Tasks\Show as TaskShow;
+use App\Livewire\Users\Show as UserShow;
+
 
 /*
  * |--------------------------------------------------------------------------
@@ -63,19 +68,19 @@ Route::middleware([
         Route::get('/users', Index::class)->name('users');
         Route::get('/users/create', Create::class)->name('users.create');
         Route::get('/users/{user}/edit', Edit::class)->name('users.edit');
-        Route::get('/users/{user}', \App\Livewire\Users\Show::class)->name('users.show');
+        Route::get('/users/{user}', UserShow::class)->name('users.show');
 
         // Project CRUD routes
-        Route::get('/projects', \App\Livewire\Projects\Index::class)->name('projects');
-        Route::get('/projects/create', \App\Livewire\Projects\Create::class)->name('projects.create');
-        Route::get('/projects/{project}/edit', \App\Livewire\Projects\Edit::class)->name('projects.edit');
-        Route::get('/projects/{project}', \App\Livewire\Projects\Show::class)->name('projects.show');
+        Route::get('/projects', Index::class)->name('projects');
+        Route::get('/projects/create', Create::class)->name('projects.create');
+        Route::get('/projects/{project}/edit', Edit::class)->name('projects.edit');
+        Route::get('/projects/{project}', ProjectShow::class)->name('projects.show');
 
         // Task CRUD routes
-        Route::get('/tasks', \App\Livewire\Tasks\Index::class)->name('tasks');
-        Route::get('/tasks/create', \App\Livewire\Tasks\Create::class)->name('tasks.create');
-        Route::get('/tasks/{task}/edit', \App\Livewire\Tasks\Edit::class)->name('tasks.edit');
-        Route::get('/tasks/{task}', \App\Livewire\Tasks\Show::class)->name('tasks.show');
+        Route::get('/tasks', Index::class)->name('tasks');
+        Route::get('/tasks/create', Create::class)->name('tasks.create');
+        Route::get('/tasks/{task}/edit', Edit::class)->name('tasks.edit');
+        Route::get('/tasks/{task}', TaskShow::class)->name('tasks.show');
 
         // Clients routes
         Route::get('/clients', ClientIndex::class)->name('clients.index');
@@ -157,7 +162,7 @@ Route::middleware([
          ->middleware(['auth']);
 
     // Notifications route - separate page for all notifications
-    Route::get('/notifications', [\App\Livewire\Notifications\Index::class, '__invoke'])
+    Route::get('/notifications', NotificationList::class)
          ->name('notifications.index')
          ->middleware(['auth']);
 
