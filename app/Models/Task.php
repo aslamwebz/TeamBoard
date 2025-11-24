@@ -50,6 +50,11 @@ class Task extends Model
         return $this->belongsToMany(User::class);
     }
 
+    public function vendor(): BelongsTo
+    {
+        return $this->belongsTo(Vendor::class);
+    }
+
     /**
      * Get the dependent tasks for this task
      */

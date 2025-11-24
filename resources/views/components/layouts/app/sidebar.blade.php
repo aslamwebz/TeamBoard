@@ -85,16 +85,25 @@
         </flux:navlist.group>
         @endcanany
 
-        <!-- CRM & Finance Section - Only for users with client/invoice permissions -->
-        @canany(['view clients', 'view invoices', 'view reports'])
-        <flux:navlist.group label="CRM & Finance" class="grid mt-4">
-            @can('view clients')
+        <!-- Business Operations Section - Available to all users -->
+        <flux:navlist.group label="Business Operations" class="grid mt-4">
+            <flux:navlist.item icon="building-office" href="{{ route('vendors') }}"
+                :current="request()->routeIs('vendors*')" wire:navigate.hover
+                @mouseenter="preloadLink('{{ route('vendors') }}')">
+                {{ __('Vendors') }}
+            </flux:navlist.item>
+
+            <flux:navlist.item icon="clipboard-document-list" href="{{ route('purchase-orders') }}"
+                :current="request()->routeIs('purchase-orders*')" wire:navigate.hover
+                @mouseenter="preloadLink('{{ route('purchase-orders') }}')">
+                {{ __('Purchase Orders') }}
+            </flux:navlist.item>
+
             <flux:navlist.item icon="user-group" href="{{ route('clients.index') }}"
                 :current="request()->routeIs('clients*')" wire:navigate.hover
                 @mouseenter="preloadLink('{{ route('clients.index') }}')">
                 {{ __('Clients') }}
             </flux:navlist.item>
-            @endcan
 
             @can('view invoices')
             <flux:navlist.item icon="document-currency-dollar" href="{{ route('invoices.index') }}"
@@ -112,7 +121,6 @@
             </flux:navlist.item>
             @endcan
         </flux:navlist.group>
-        @endcanany
     </flux:navlist>
 
     <flux:spacer />

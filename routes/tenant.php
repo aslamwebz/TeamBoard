@@ -11,7 +11,7 @@ use App\Livewire\Invoices\Edit as InvoiceEdit;
 use App\Livewire\Invoices\Index as InvoiceIndex;
 use App\Livewire\Invoices\Show as InvoiceShow;
 use App\Livewire\Pricing\Index as Pricing;
-use App\Livewire\Projects\Index as Projects;
+use App\Livewire\Projects\Index as ProjectIndex;
 use App\Livewire\Reports\Create as ReportCreate;
 use App\Livewire\Reports\Edit as ReportEdit;
 use App\Livewire\Reports\Index as ReportIndex;
@@ -36,6 +36,19 @@ use App\Livewire\NotificationList\NotificationList;
 use App\Livewire\Projects\Show as ProjectShow;
 use App\Livewire\Tasks\Show as TaskShow;
 use App\Livewire\Users\Show as UserShow;
+use App\Livewire\Vendors\Index as VendorIndex;
+use App\Livewire\Vendors\Create as VendorCreate;
+use App\Livewire\Vendors\Edit as VendorEdit;
+use App\Livewire\Vendors\Show as VendorShow;
+use App\Livewire\Vendors\VendorContacts;
+use App\Livewire\Vendors\VendorServices;
+use App\Livewire\Vendors\VendorInvoices;
+use App\Livewire\Vendors\VendorProjects;
+use App\Livewire\Vendors\VendorTasks;
+use App\Livewire\PurchaseOrders\Index as PurchaseOrderIndex;
+use App\Livewire\PurchaseOrders\Create as PurchaseOrderCreate;
+use App\Livewire\PurchaseOrders\Edit as PurchaseOrderEdit;
+use App\Livewire\PurchaseOrders\Show as PurchaseOrderShow;
 
 
 /*
@@ -57,7 +70,6 @@ Route::middleware([
 ])->group(function () {
     Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', Dashboard::class)->name('dashboard');
-        Route::get('projects', Projects::class)->name('projects');
         Route::get('tasks', Tasks::class)->name('tasks');
         Route::get('users', Users::class)->name('users');
         Route::get('billing', Billing::class)->name('billing');
@@ -71,7 +83,7 @@ Route::middleware([
         Route::get('/users/{user}', UserShow::class)->name('users.show');
 
         // Project CRUD routes
-        Route::get('/projects', Index::class)->name('projects');
+        Route::get('/projects', ProjectIndex::class)->name('projects');
         Route::get('/projects/create', Create::class)->name('projects.create');
         Route::get('/projects/{project}/edit', Edit::class)->name('projects.edit');
         Route::get('/projects/{project}', ProjectShow::class)->name('projects.show');
@@ -137,6 +149,25 @@ Route::middleware([
         // Files routes
         Route::get('/files', \App\Livewire\Files\Index::class)->name('files.index');
         Route::get('/files/upload', \App\Livewire\Files\Upload::class)->name('files.upload');
+
+        // Vendors routes
+        Route::get('/vendors', VendorIndex::class)->name('vendors');
+        Route::get('/vendors/create', VendorCreate::class)->name('vendors.create');
+        Route::get('/vendors/{vendor}/edit', VendorEdit::class)->name('vendors.edit');
+        Route::get('/vendors/{vendor}', VendorShow::class)->name('vendors.show');
+
+        // Vendor relationship routes
+        Route::get('/vendors/{vendor}/contacts', VendorContacts::class)->name('vendor.contacts');
+        Route::get('/vendors/{vendor}/services', VendorServices::class)->name('vendor.services');
+        Route::get('/vendors/{vendor}/invoices', VendorInvoices::class)->name('vendor.invoices');
+        Route::get('/vendors/{vendor}/projects', VendorProjects::class)->name('vendor.projects');
+        Route::get('/vendors/{vendor}/tasks', VendorTasks::class)->name('vendor.tasks');
+
+        // Purchase Orders routes
+        Route::get('/purchase-orders', PurchaseOrderIndex::class)->name('purchase-orders');
+        Route::get('/purchase-orders/create', PurchaseOrderCreate::class)->name('purchase-orders.create');
+        Route::get('/purchase-orders/{purchase_order}/edit', PurchaseOrderEdit::class)->name('purchase-orders.edit');
+        Route::get('/purchase-orders/{purchase_order}', PurchaseOrderShow::class)->name('purchase-orders.show');
     });
 
     Route::middleware(['auth'])->group(function () {

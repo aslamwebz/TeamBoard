@@ -66,6 +66,11 @@ class Project extends Model
         return $this->belongsToMany(Team::class, 'team_projects', 'project_id', 'team_id');
     }
 
+    public function vendor(): BelongsTo
+    {
+        return $this->belongsTo(Vendor::class);
+    }
+
     /**
      * Get the company name associated with this project
      */
