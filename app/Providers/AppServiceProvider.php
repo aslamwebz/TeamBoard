@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Events\TaskAssignedNotification;
+use App\Listeners\SendNotificationListener;
 use App\Models\Task;
 use App\Models\Tenant;
 use App\Observers\TaskObserver;
+use App\Services\NotificationService;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
@@ -23,7 +27,10 @@ final class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Bind the NotificationService
+        $this->app->singleton(NotificationService::class, function ($app) {
+            return new NotificationService();
+        });
     }
 
     /**
@@ -40,6 +47,16 @@ final class AppServiceProvider extends ServiceProvider
 
         // Register model observers
         Task::observe(TaskObserver::class);
+
+        // Register event listeners for notifications
+        Event::listen([
+            \App\Events\TaskAssignedNotification::class,
+            \App\Events\NewInvoiceNotification::class,
+            \App\Events\ProjectUpdatedNotification::class,
+            \App\Events\MentionedInCommentNotification::class,
+            \App\Events\ClientAddedNotification::class,
+            \App\Events\PaymentFailedNotification::class,
+        ], \App\Listeners\SendNotificationListener::class);
     }
 
     /**

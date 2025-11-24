@@ -156,5 +156,10 @@ Route::middleware([
          ->name('tenant.file.preview.page')
          ->middleware(['auth']);
 
+    // Notifications route - separate page for all notifications
+    Route::get('/notifications', [\App\Livewire\Notifications\Index::class, '__invoke'])
+         ->name('notifications.index')
+         ->middleware(['auth']);
+
     require __DIR__ . '/auth.php';
 });

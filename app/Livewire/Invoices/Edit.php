@@ -65,7 +65,13 @@ class Edit extends Component
 
         $invoice = Invoice::find($this->invoiceId);
         if ($invoice) {
+            $oldStatus = $invoice->status;
             $invoice->update($validated);
+
+            // If invoice status changed to 'sent', notify the user who updated it
+            if ($oldStatus !== $validated['status'] && $validated['status'] === 'sent') {
+                \App\Events\NewInvoiceNotification::dispatch($invoice, auth()->user());
+            }
         }
 
         return $this->redirectRoute('invoices.index', navigate: true);

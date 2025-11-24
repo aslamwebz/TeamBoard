@@ -49,7 +49,15 @@ class Create extends Component
         $validatedData = $this->validate();
         $validatedData['user_id'] = Auth::id();
 
-        Task::create($validatedData);
+        $task = Task::create($validatedData);
+
+        // If the task is assigned to a specific user (different from the creator), send a notification
+        if ($this->user_id && $this->user_id != Auth::id()) {
+            $assignedUser = User::find($this->user_id);
+            $assigner = Auth::user();
+
+            \App\Events\TaskAssignedNotification::dispatch($task, $assignedUser, $assigner);
+        }
 
         session()->flash('message', 'Task created successfully.');
 

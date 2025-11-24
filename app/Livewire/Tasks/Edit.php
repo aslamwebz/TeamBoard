@@ -63,9 +63,18 @@ class Edit extends Component
 
     public function updateTask()
     {
+        $oldUserId = $this->task->user_id;
         $validatedData = $this->validate();
 
         $this->task->update($validatedData);
+
+        // If the task assignment changed (different user from before), send a notification
+        if ($this->user_id && $this->user_id != $oldUserId) {
+            $assignedUser = User::find($this->user_id);
+            $assigner = Auth::user();
+
+            \App\Events\TaskAssignedNotification::dispatch($this->task, $assignedUser, $assigner);
+        }
 
         session()->flash('message', 'Task updated successfully.');
 

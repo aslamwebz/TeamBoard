@@ -59,7 +59,10 @@ class Create extends Component
     {
         $validated = $this->validate();
 
-        Client::create($validated);
+        $client = Client::create($validated);
+
+        // Dispatch notification when client is added
+        \App\Events\ClientAddedNotification::dispatch($client, auth()->user());
 
         return $this->redirectRoute('clients.index', navigate: true);
     }

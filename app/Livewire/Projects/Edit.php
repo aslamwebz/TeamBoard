@@ -40,6 +40,9 @@ class Edit extends Component
 
         $this->project->update($validatedData);
 
+        // Dispatch notification when project is updated
+        \App\Events\ProjectUpdatedNotification::dispatch($this->project, Auth::user());
+
         session()->flash('message', 'Project updated successfully.');
 
         return redirect()->route('projects');

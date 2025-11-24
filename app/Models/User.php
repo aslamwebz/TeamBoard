@@ -81,6 +81,14 @@ final class User extends Authenticatable
     }
 
     /**
+     * Get all notifications for the user.
+     */
+    public function notifications()
+    {
+        return $this->hasMany(\App\Models\Notification::class);
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>

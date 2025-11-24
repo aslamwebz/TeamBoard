@@ -51,7 +51,10 @@ class Create extends Component
         // Calculate total
         $validated['total'] = $validated['amount'] + $validated['tax'];
 
-        Invoice::create($validated);
+        $invoice = Invoice::create($validated);
+
+        // Notify the user who created the invoice
+        \App\Events\NewInvoiceNotification::dispatch($invoice, auth()->user());
 
         return $this->redirectRoute('invoices.index', navigate: true);
     }

@@ -39,7 +39,7 @@ class FilePreviewPageController extends Controller
         \Log::info("Serving file with URL: " . $fileUrl);
 
         // Use the LaravelFileViewer package to get the appropriate preview
-        $previewView = LaravelFileViewer::show(
+        $previewView = \Vish4395\LaravelFileViewer\LaravelFileViewer::show(
             $attachment->original_name,
             $filePath,
             $fileUrl,
