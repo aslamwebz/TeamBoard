@@ -123,6 +123,16 @@ class Project extends Model
     }
 
     /**
+     * Get the workers assigned to this project through timesheets
+     */
+    public function workers()
+    {
+        return $this->belongsToMany(WorkerProfile::class, 'timesheets', 'project_id', 'worker_profile_id')
+                    ->withPivot('total_hours', 'entry_type')
+                    ->withTimestamps();
+    }
+
+    /**
      * Get discussions related to this project
      */
     public function projectDiscussions()

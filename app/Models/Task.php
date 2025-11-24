@@ -165,4 +165,14 @@ class Task extends Model
     {
         return TenantHelper::getDefaultCurrency();
     }
+
+    /**
+     * Get the worker assigned to this task through timesheets
+     */
+    public function worker()
+    {
+        return $this->belongsToMany(WorkerProfile::class, 'timesheets', 'task_id', 'worker_profile_id')
+                    ->withPivot('hours_worked', 'entry_type', 'date')
+                    ->withTimestamps();
+    }
 }

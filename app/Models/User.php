@@ -50,6 +50,14 @@ final class User extends Authenticatable
     }
 
     /**
+     * Check if the user has a worker profile
+     */
+    public function hasWorkerProfile(): bool
+    {
+        return $this->workerProfile()->exists();
+    }
+
+    /**
      * The projects that belong to the user.
      */
     public function projects(): BelongsToMany
@@ -86,6 +94,14 @@ final class User extends Authenticatable
     public function notifications()
     {
         return $this->hasMany(\App\Models\Notification::class);
+    }
+
+    /**
+     * Get the worker profile for the user.
+     */
+    public function workerProfile()
+    {
+        return $this->hasOne(WorkerProfile::class);
     }
 
     /**

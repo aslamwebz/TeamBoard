@@ -45,6 +45,12 @@ use App\Livewire\Vendors\VendorServices;
 use App\Livewire\Vendors\VendorInvoices;
 use App\Livewire\Vendors\VendorProjects;
 use App\Livewire\Vendors\VendorTasks;
+use App\Livewire\Workers\Index as WorkerIndex;
+use App\Livewire\Workers\Show as WorkerShow;
+use App\Livewire\Workers\Edit as WorkerEdit;
+use App\Livewire\Workers\WorkerSkills;
+use App\Livewire\Workers\WorkerCertifications;
+use App\Livewire\Workers\Timesheets;
 use App\Livewire\PurchaseOrders\Index as PurchaseOrderIndex;
 use App\Livewire\PurchaseOrders\Create as PurchaseOrderCreate;
 use App\Livewire\PurchaseOrders\Edit as PurchaseOrderEdit;
@@ -168,6 +174,16 @@ Route::middleware([
         Route::get('/purchase-orders/create', PurchaseOrderCreate::class)->name('purchase-orders.create');
         Route::get('/purchase-orders/{purchase_order}/edit', PurchaseOrderEdit::class)->name('purchase-orders.edit');
         Route::get('/purchase-orders/{purchase_order}', PurchaseOrderShow::class)->name('purchase-orders.show');
+
+        // Worker Management routes
+        Route::get('/workers', WorkerIndex::class)->name('workers');
+        Route::get('/workers/{workerProfile}', WorkerShow::class)->name('workers.show');
+        Route::get('/workers/{workerProfile}/edit', WorkerEdit::class)->name('workers.edit');
+
+        // Worker relationship routes
+        Route::get('/workers/{workerId}/skills', WorkerSkills::class)->name('worker.skills');
+        Route::get('/workers/{workerId}/certifications', WorkerCertifications::class)->name('worker.certifications');
+        Route::get('/workers/{workerId}/timesheets', Timesheets::class)->name('worker.timesheets');
     });
 
     Route::middleware(['auth'])->group(function () {
