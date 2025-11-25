@@ -16,7 +16,7 @@ class TimesheetSeeder extends Seeder
     public function run(): void
     {
         $workers = WorkerProfile::all();
-        $projects = Project::all();
+        $projects = Project::with('tasks')->get();
 
         if ($workers->isEmpty() || $projects->isEmpty()) {
             $this->command->warn('Workers or Projects not found. Please run WorkerProfileSeeder and ProjectSeeder first.');

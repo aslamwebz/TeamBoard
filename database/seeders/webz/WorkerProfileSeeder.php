@@ -13,7 +13,7 @@ class WorkerProfileSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = User::all();
+        $users = User::with('workerProfile')->get();
 
         if ($users->isEmpty()) {
             $this->command->warn('No users found. Please run UserSeeder first.');

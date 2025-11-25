@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Helpers\TenantHelper;
+use App\Models\MonthlyReport;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -66,5 +67,13 @@ class Report extends Model
     public function getDefaultCurrency(): string
     {
         return TenantHelper::getDefaultCurrency();
+    }
+
+    /**
+     * Get the monthly reports for this report template.
+     */
+    public function monthlyReports()
+    {
+        return $this->hasMany(MonthlyReport::class);
     }
 }
