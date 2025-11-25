@@ -25,9 +25,22 @@ class ReportSeeder extends Seeder
         ];
 
         foreach ($reports as $report) {
+            // Get a valid user_id - try to get first user, create a dummy user if none exist
+            $userId = \App\Models\User::first()?->id ?? \App\Models\User::create([
+                'name' => 'Default User',
+                'email' => 'default@webz.com',
+                'password' => bcrypt('password'),
+                'email_verified_at' => now(),
+            ])->id;
+
             \App\Models\Report::updateOrCreate(
-                ['name' => $report['name']],
-                $report
+                ['title' => $report['name']], // Use 'title' field instead of 'name'
+                [
+                    'title' => $report['name'],
+                    'report_type' => $report['type'],
+                    'description' => $report['description'],
+                    'user_id' => $userId, // Assign to an existing user
+                ]
             );
         }
     }
