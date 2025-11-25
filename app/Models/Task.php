@@ -49,6 +49,14 @@ class Task extends Model
         return $this->belongsToMany(User::class, 'user_tasks', 'task_id', 'user_id');
     }
 
+    /**
+     * Get the primary user assigned to this task
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function vendor(): BelongsTo
     {
         return $this->belongsTo(Vendor::class);

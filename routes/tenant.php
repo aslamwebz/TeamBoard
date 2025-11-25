@@ -1,61 +1,63 @@
 <?php declare(strict_types=1);
 
-use App\Livewire\Billing\Index as Billing;
-use App\Livewire\Clients\Create as ClientCreate;
-use App\Livewire\Clients\Edit as ClientEdit;
-use App\Livewire\Clients\Index as ClientIndex;
-use App\Livewire\Clients\Show as ClientShow;
-use App\Livewire\Features\Index as Features;
-use App\Livewire\Invoices\Create as InvoiceCreate;
-use App\Livewire\Invoices\Edit as InvoiceEdit;
-use App\Livewire\Invoices\Index as InvoiceIndex;
-use App\Livewire\Invoices\Show as InvoiceShow;
-use App\Livewire\Pricing\Index as Pricing;
-use App\Livewire\Projects\Index as ProjectIndex;
-use App\Livewire\Reports\Create as ReportCreate;
-use App\Livewire\Reports\Edit as ReportEdit;
-use App\Livewire\Reports\Index as ReportIndex;
-use App\Livewire\Reports\Show as ReportShow;
+use App\Livewire\Billing\BillingIndex;
+use App\Livewire\Clients\ClientCreate;
+use App\Livewire\Clients\ClientEdit;
+use App\Livewire\Clients\ClientIndex;
+use App\Livewire\Clients\ClientShow;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
-use App\Livewire\Tasks\Index as Tasks;
-use App\Livewire\Users\Create;
-use App\Livewire\Users\Edit;
-use App\Livewire\Users\Index;
-use App\Livewire\Users\Index as Users;
+use App\Livewire\Tasks\TaskIndex;
+use App\Livewire\Tasks\TaskCreate;
+use App\Livewire\Tasks\TaskEdit;
+use App\Livewire\Users\UserIndex;
 use App\Livewire\Dashboard;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
-use App\Livewire\Teams\Index as TeamIndex;
-use App\Livewire\Teams\Create as TeamCreate;
-use App\Livewire\Teams\Edit as TeamEdit;
-use App\Livewire\Teams\Show as TeamShow;
+use App\Livewire\Teams\TeamIndex;
+use App\Livewire\Teams\TeamCreate;
+use App\Livewire\Teams\TeamEdit;
+use App\Livewire\Teams\TeamShow;
 use App\Livewire\NotificationList\NotificationList;
-use App\Livewire\Projects\Show as ProjectShow;
-use App\Livewire\Tasks\Show as TaskShow;
-use App\Livewire\Users\Show as UserShow;
-use App\Livewire\Vendors\Index as VendorIndex;
-use App\Livewire\Vendors\Create as VendorCreate;
-use App\Livewire\Vendors\Edit as VendorEdit;
-use App\Livewire\Vendors\Show as VendorShow;
+use App\Livewire\Vendors\VendorIndex;
+use App\Livewire\Vendors\VendorCreate;
+use App\Livewire\Vendors\VendorEdit;
 use App\Livewire\Vendors\VendorContacts;
 use App\Livewire\Vendors\VendorServices;
 use App\Livewire\Vendors\VendorInvoices;
 use App\Livewire\Vendors\VendorProjects;
 use App\Livewire\Vendors\VendorTasks;
-use App\Livewire\Workers\Index as WorkerIndex;
-use App\Livewire\Workers\Show as WorkerShow;
-use App\Livewire\Workers\Edit as WorkerEdit;
+use App\Livewire\Workers\WorkerIndex;
+use App\Livewire\Workers\WorkerShow;
+use App\Livewire\Workers\WorkerEdit;
 use App\Livewire\Workers\WorkerSkills;
 use App\Livewire\Workers\WorkerCertifications;
 use App\Livewire\Workers\Timesheets;
-use App\Livewire\PurchaseOrders\Index as PurchaseOrderIndex;
-use App\Livewire\PurchaseOrders\Create as PurchaseOrderCreate;
-use App\Livewire\PurchaseOrders\Edit as PurchaseOrderEdit;
-use App\Livewire\PurchaseOrders\Show as PurchaseOrderShow;
-
+use App\Livewire\PurchaseOrders\PurchaseOrderIndex;
+use App\Livewire\PurchaseOrders\PurchaseOrderCreate;
+use App\Livewire\PurchaseOrders\PurchaseOrderEdit;
+use App\Livewire\PurchaseOrders\PurchaseOrderShow;
+use App\Livewire\Features\FeatureIndex;
+use App\Livewire\Pricing\PricingIndex;
+use App\Livewire\Projects\ProjectIndex;
+use App\Livewire\Projects\ProjectCreate;
+use App\Livewire\Projects\ProjectEdit;
+use App\Livewire\Projects\ProjectShow;
+use App\Livewire\Tasks\TaskShow;
+use App\Livewire\Users\UserCreate;
+use App\Livewire\Users\UserEdit;
+use App\Livewire\Users\UserShow;
+use App\Livewire\Invoices\InvoiceIndex;
+use App\Livewire\Invoices\InvoiceCreate;
+use App\Livewire\Invoices\InvoiceEdit;
+use App\Livewire\Invoices\InvoiceShow;
+use App\Livewire\Reports\ReportIndex;
+use App\Livewire\Reports\ReportCreate;
+use App\Livewire\Reports\ReportEdit;
+use App\Livewire\Reports\ReportShow;
+use App\Livewire\Vendors\VendorShow;
 
 /*
  * |--------------------------------------------------------------------------
@@ -76,28 +78,28 @@ Route::middleware([
 ])->group(function () {
     Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', Dashboard::class)->name('dashboard');
-        Route::get('tasks', Tasks::class)->name('tasks');
-        Route::get('users', Users::class)->name('users');
-        Route::get('billing', Billing::class)->name('billing');
-        Route::get('features', Features::class)->name('features');
-        Route::get('pricing', Pricing::class)->name('pricing');
+        Route::get('tasks', TaskIndex::class)->name('tasks');
+        Route::get('users', UserIndex::class)->name('users');
+        Route::get('billing', BillingIndex::class)->name('billing');
+        Route::get('features', FeatureIndex::class)->name('features');
+        Route::get('pricing', PricingIndex::class)->name('pricing');
 
         // User CRUD routes
-        Route::get('/users', Index::class)->name('users');
-        Route::get('/users/create', Create::class)->name('users.create');
-        Route::get('/users/{user}/edit', Edit::class)->name('users.edit');
+        Route::get('/users', UserIndex::class)->name('users');
+        Route::get('/users/create', UserCreate::class)->name('users.create');
+        Route::get('/users/{user}/edit', UserEdit::class)->name('users.edit');
         Route::get('/users/{user}', UserShow::class)->name('users.show');
 
         // Project CRUD routes
         Route::get('/projects', ProjectIndex::class)->name('projects');
-        Route::get('/projects/create', Create::class)->name('projects.create');
-        Route::get('/projects/{project}/edit', Edit::class)->name('projects.edit');
+        Route::get('/projects/create', ProjectCreate::class)->name('projects.create');
+        Route::get('/projects/{project}/edit', ProjectEdit::class)->name('projects.edit');
         Route::get('/projects/{project}', ProjectShow::class)->name('projects.show');
 
         // Task CRUD routes
-        Route::get('/tasks', Index::class)->name('tasks');
-        Route::get('/tasks/create', Create::class)->name('tasks.create');
-        Route::get('/tasks/{task}/edit', Edit::class)->name('tasks.edit');
+        Route::get('/tasks', TaskIndex::class)->name('tasks');
+        Route::get('/tasks/create', TaskCreate::class)->name('tasks.create');
+        Route::get('/tasks/{task}/edit', TaskEdit::class)->name('tasks.edit');
         Route::get('/tasks/{task}', TaskShow::class)->name('tasks.show');
 
         // Clients routes
@@ -125,35 +127,35 @@ Route::middleware([
         Route::get('/teams/{team}', TeamShow::class)->name('teams.show');
 
         // Roles management routes
-        Route::get('/roles', \App\Livewire\Roles\Index::class)->name('roles.index');
+        Route::get('/roles', \App\Livewire\Roles\RoleIndex::class)->name('roles.index');
         Route::get('/roles/create', \App\Livewire\Roles\Form::class)->name('roles.create');
         Route::get('/roles/{role}/edit', \App\Livewire\Roles\Form::class)->name('roles.edit')->where('role', '[0-9]+');
 
         // Permissions management routes
-        Route::get('/permissions', \App\Livewire\Permissions\Index::class)->name('permissions.index');
-        Route::get('/permissions/create', \App\Livewire\Permissions\Create::class)->name('permissions.create');
-        Route::get('/permissions/{permission}/edit', \App\Livewire\Permissions\Edit::class)->name('permissions.edit');
+        Route::get('/permissions', \App\Livewire\Permissions\PermissionIndex::class)->name('permissions.index');
+        Route::get('/permissions/create', \App\Livewire\Permissions\PermissionCreate::class)->name('permissions.create');
+        Route::get('/permissions/{permission}/edit', \App\Livewire\Permissions\PermissionEdit::class)->name('permissions.edit');
 
         // Phases routes
-        Route::get('/projects/{project}/phases', \App\Livewire\Projects\Phases\Index::class)->name('phases.index');
-        Route::get('/projects/{project}/phases/create', \App\Livewire\Projects\Phases\Create::class)->name('phases.create');
-        Route::get('/projects/{project}/phases/{phase}', \App\Livewire\Projects\Phases\Show::class)->name('phases.show');
-        Route::get('/projects/{project}/phases/{phase}/edit', \App\Livewire\Projects\Phases\Edit::class)->name('phases.edit');
+        Route::get('/projects/{project}/phases', \App\Livewire\Projects\Phases\PhaseIndex::class)->name('phases.index');
+        Route::get('/projects/{project}/phases/create', \App\Livewire\Projects\Phases\PhaseCreate::class)->name('phases.create');
+        Route::get('/projects/{project}/phases/{phase}', \App\Livewire\Projects\Phases\PhaseShow::class)->name('phases.show');
+        Route::get('/projects/{project}/phases/{phase}/edit', \App\Livewire\Projects\Phases\PhaseEdit::class)->name('phases.edit');
 
         // Milestones routes
-        Route::get('/projects/{project}/milestones', \App\Livewire\Projects\Milestones\Index::class)->name('milestones.index');
-        Route::get('/projects/{project}/milestones/create', \App\Livewire\Projects\Milestones\Create::class)->name('milestones.create');
-        Route::get('/projects/{project}/milestones/{milestone}', \App\Livewire\Projects\Milestones\Show::class)->name('milestones.show');
-        Route::get('/projects/{project}/milestones/{milestone}/edit', \App\Livewire\Projects\Milestones\Edit::class)->name('milestones.edit');
+        Route::get('/projects/{project}/milestones', \App\Livewire\Projects\Milestones\MilestoneIndex::class)->name('milestones.index');
+        Route::get('/projects/{project}/milestones/create', \App\Livewire\Projects\Milestones\MilestoneCreate::class)->name('milestones.create');
+        Route::get('/projects/{project}/milestones/{milestone}', \App\Livewire\Projects\Milestones\MilestoneShow::class)->name('milestones.show');
+        Route::get('/projects/{project}/milestones/{milestone}/edit', \App\Livewire\Projects\Milestones\MilestoneEdit::class)->name('milestones.edit');
 
         // Discussions routes
-        Route::get('/discussions', \App\Livewire\Discussions\Index::class)->name('discussions.index');
-        Route::get('/discussions/create', \App\Livewire\Discussions\Create::class)->name('discussions.create');
-        Route::get('/discussions/{discussion}', \App\Livewire\Discussions\Show::class)->name('discussions.show');
-        Route::get('/discussions/{discussion}/edit', \App\Livewire\Discussions\Edit::class)->name('discussions.edit');
+        Route::get('/discussions', \App\Livewire\Discussions\DiscussionIndex::class)->name('discussions.index');
+        Route::get('/discussions/create', \App\Livewire\Discussions\DiscussionCreate::class)->name('discussions.create');
+        Route::get('/discussions/{discussion}', \App\Livewire\Discussions\DiscussionShow::class)->name('discussions.show');
+        Route::get('/discussions/{discussion}/edit', \App\Livewire\Discussions\DiscussionEdit::class)->name('discussions.edit');
 
         // Files routes
-        Route::get('/files', \App\Livewire\Files\Index::class)->name('files.index');
+        Route::get('/files', \App\Livewire\Files\FilesIndex::class)->name('files.index');
         Route::get('/files/upload', \App\Livewire\Files\Upload::class)->name('files.upload');
 
         // Vendors routes

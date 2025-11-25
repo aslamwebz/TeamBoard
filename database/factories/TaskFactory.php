@@ -19,6 +19,7 @@ class TaskFactory extends Factory
             'status' => fake()->randomElement(['todo', 'in_progress', 'completed', 'on_hold']),
             'due_date' => fake()->optional()->date('+2 weeks'),
             'project_id' => Project::factory(),
+            'user_id' => fake()->optional(0.2)->numberBetween(1, 10), // 20% chance of having a user assigned
         ];
     }
 }
