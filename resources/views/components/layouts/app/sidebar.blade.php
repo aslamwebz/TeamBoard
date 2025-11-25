@@ -1,100 +1,134 @@
 <flux:sidebar sticky stashable class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
     <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
-    <a href="{{ route('dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
-        <x-app-logo />
-    </a>
+    <!-- Logo -->
+    <div class="flex-shrink-0 mb-4">
+        <a href="{{ route('dashboard') }}" class="flex items-center">
+            <x-application-logo class="h-8 w-auto" />
+        </a>
+    </div>
 
     <flux:navlist variant="outline">
-        <flux:navlist.group :heading="__('Platform')" class="grid">
-            <flux:navlist.item 
-                icon="home" 
-                href="{{ route('dashboard') }}" 
-                :current="request()->routeIs('dashboard')"
-                wire:navigate.hover
-                @mouseenter="preloadLink('{{ route('dashboard') }}')">
+        <flux:navlist.group class="grid">
+            <flux:navlist.item icon="home" href="{{ route('dashboard') }}" :current="request()->routeIs('dashboard')"
+                wire:navigate.hover @mouseenter="preloadLink('{{ route('dashboard') }}')">
                 {{ __('Dashboard') }}
             </flux:navlist.item>
-            <flux:navlist.item 
-                icon="folder" 
-                href="{{ route('projects') }}" 
-                :current="request()->routeIs('projects')"
-                wire:navigate.hover
-                @mouseenter="preloadLink('{{ route('projects') }}')">
-                {{ __('Projects') }}
+
+            <!-- Notifications -->
+            <flux:navlist.item icon="bell-alert" href="{{ route('notifications.index') }}" :current="request()->routeIs('notifications*')"
+                wire:navigate.hover @mouseenter="preloadLink('{{ route('notifications.index') }}')">
+                {{ __('Notifications') }}
+                @php
+                    $unreadCount = auth()->user()?->notifications()->unread()->count() ?? 0;
+                @endphp
+                @if($unreadCount > 0)
+                    <flux:badge slot="badge" variant="danger">{{ $unreadCount }}</flux:badge>
+                @endif
             </flux:navlist.item>
-            <flux:navlist.item 
-                icon="list-bullet" 
-                href="{{ route('tasks') }}" 
-                :current="request()->routeIs('tasks')"
-                wire:navigate.hover
-                @mouseenter="preloadLink('{{ route('tasks') }}')">
+
+            <!-- Tasks - Available to all authenticated users -->
+            <flux:navlist.item icon="list-bullet" href="{{ route('tasks') }}" :current="request()->routeIs('tasks')"
+                wire:navigate.hover @mouseenter="preloadLink('{{ route('tasks') }}')">
                 {{ __('Tasks') }}
             </flux:navlist.item>
-            <flux:navlist.item 
-                icon="users" 
-                href="{{ route('users') }}" 
-                :current="request()->routeIs('users')"
-                wire:navigate.hover
-                @mouseenter="preloadLink('{{ route('users') }}')">
+
+            <!-- Projects - Available to all authenticated users -->
+            <flux:navlist.item icon="folder" href="{{ route('projects') }}" :current="request()->routeIs('projects')"
+                wire:navigate.hover @mouseenter="preloadLink('{{ route('projects') }}')">
+                {{ __('Projects') }}
+            </flux:navlist.item>
+
+            <!-- Teams - Available to all authenticated users -->
+            <flux:navlist.item icon="user-group" href="{{ route('teams.index') }}"
+                :current="request()->routeIs('teams*')" wire:navigate.hover
+                @mouseenter="preloadLink('{{ route('teams.index') }}')">
+                {{ __('Teams') }}
+            </flux:navlist.item>
+
+            <!-- Discussions - Available to all authenticated users -->
+            <flux:navlist.item icon="chat-bubble-left-right" href="{{ route('discussions.index') }}" :current="request()->routeIs('discussions*')"
+                wire:navigate.hover @mouseenter="preloadLink('{{ route('discussions.index') }}')">
+                {{ __('Discussions') }}
+            </flux:navlist.item>
+
+            <!-- Files/Documents - Available to all authenticated users -->
+            <flux:navlist.item icon="folder-open" href="{{ route('files.index') }}" :current="request()->routeIs('files*')"
+                wire:navigate.hover @mouseenter="preloadLink('{{ route('files.index') }}')">
+                {{ __('Files') }}
+            </flux:navlist.item>
+        </flux:navlist.group>
+
+        <!-- Users section - Only for users with user/role/permission permissions -->
+        @canany(['view users', 'view roles', 'view permissions'])
+        <flux:navlist.group label="Users" class="grid mt-4">
+            @can('view users')
+            <flux:navlist.item icon="user" href="{{ route('users') }}" :current="request()->routeIs('users')"
+                wire:navigate.hover @mouseenter="preloadLink('{{ route('users') }}')">
                 {{ __('Users') }}
             </flux:navlist.item>
-            <flux:navlist.item 
-                icon="credit-card" 
-                href="{{ route('billing') }}" 
-                :current="request()->routeIs('billing')"
-                wire:navigate.hover
-                @mouseenter="preloadLink('{{ route('billing') }}')">
-                {{ __('Billing') }}
+            @endcan
+
+            @can('view roles')
+            <flux:navlist.item icon="shield-check" href="{{ route('roles.index') }}" :current="request()->routeIs('roles*')"
+                wire:navigate.hover @mouseenter="preloadLink('{{ route('roles.index') }}')">
+                {{ __('Roles') }}
             </flux:navlist.item>
-            <flux:navlist.item 
-                icon="chart-bar" 
-                href="{{ route('features') }}" 
-                :current="request()->routeIs('features')"
-                wire:navigate.hover
-                @mouseenter="preloadLink('{{ route('features') }}')">
-                {{ __('Features') }}
+            @endcan
+
+            @can('view permissions')
+            <flux:navlist.item icon="key" href="{{ route('permissions.index') }}" :current="request()->routeIs('permissions*')"
+                wire:navigate.hover @mouseenter="preloadLink('{{ route('permissions.index') }}')">
+                {{ __('Permissions') }}
             </flux:navlist.item>
-            <flux:navlist.item 
-                icon="receipt-percent" 
-                href="{{ route('pricing') }}"
-                :current="request()->routeIs('pricing')" 
-                wire:navigate.hover
-                @mouseenter="preloadLink('{{ route('pricing') }}')">
-                {{ __('Pricing') }}
+            @endcan
+        </flux:navlist.group>
+        @endcanany
+
+        <!-- Business Operations Section - Available to all users -->
+        <flux:navlist.group label="Business Operations" class="grid mt-4">
+            <flux:navlist.item icon="building-office" href="{{ route('vendors') }}"
+                :current="request()->routeIs('vendors*')" wire:navigate.hover
+                @mouseenter="preloadLink('{{ route('vendors') }}')">
+                {{ __('Vendors') }}
             </flux:navlist.item>
+
+            <flux:navlist.item icon="clipboard-document-list" href="{{ route('purchase-orders') }}"
+                :current="request()->routeIs('purchase-orders*')" wire:navigate.hover
+                @mouseenter="preloadLink('{{ route('purchase-orders') }}')">
+                {{ __('Purchase Orders') }}
+            </flux:navlist.item>
+
+            <flux:navlist.item icon="user-group" href="{{ route('clients.index') }}"
+                :current="request()->routeIs('clients*')" wire:navigate.hover
+                @mouseenter="preloadLink('{{ route('clients.index') }}')">
+                {{ __('Clients') }}
+            </flux:navlist.item>
+
+            @can('view invoices')
+            <flux:navlist.item icon="document-currency-dollar" href="{{ route('invoices.index') }}"
+                :current="request()->routeIs('invoices*')" wire:navigate.hover
+                @mouseenter="preloadLink('{{ route('invoices.index') }}')">
+                {{ __('Invoices') }}
+            </flux:navlist.item>
+            @endcan
+
+            @can('view reports')
+            <flux:navlist.item icon="chart-bar" href="{{ route('reports.index') }}"
+                :current="request()->routeIs('reports*')" wire:navigate.hover
+                @mouseenter="preloadLink('{{ route('reports.index') }}')">
+                {{ __('Reports') }}
+            </flux:navlist.item>
+            @endcan
         </flux:navlist.group>
     </flux:navlist>
 
     <flux:spacer />
 
-    <flux:navlist variant="outline">
-        <flux:navlist.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
-            {{ __('Repository') }}
-        </flux:navlist.item>
-
-        <flux:navlist.item icon="book-open-text" href="https://laravel.com/docs/starter-kits#livewire" target="_blank">
-            {{ __('Documentation') }}
-        </flux:navlist.item>
-    </flux:navlist>
-
     @auth
         <!-- Desktop User Menu -->
-        <flux:dropdown class="hidden lg:block" position="bottom" align="start">
-
-        </flux:dropdown>
-    @endauth
-</flux:sidebar>
-
-<!-- Mobile User Menu -->
-@auth
-    <flux:header class="lg:hidden">
-        <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
-
-        <flux:spacer />
-
-        <flux:dropdown position="top" align="end">
-            <flux:profile :initials="auth()->user()->initials()" icon-trailing="chevron-down" />
+        <flux:dropdown class="hidden lg:block" position="top" align="start">
+            <flux:profile :initials="auth()->user()->initials()" icon-trailing="chevron-down" class="w-full" />
 
             <flux:menu>
                 <flux:menu.radio.group>
@@ -118,7 +152,9 @@
                 <flux:menu.separator />
 
                 <flux:menu.radio.group>
-                    <flux:menu.item :href="route('settings.profile')" icon="cog" wire:navigate>{{ __('Settings') }}
+                    <flux:menu.item :href="route('settings.profile')" icon="cog">{{ __('Personal Settings') }}
+                    </flux:menu.item>
+                    <flux:menu.item :href="route('settings.company-profile')" icon="building-office-2">{{ __('Company Profile') }}
                     </flux:menu.item>
                 </flux:menu.radio.group>
 
@@ -126,11 +162,11 @@
 
                 <form method="POST" action="{{ route('logout') }}" class="w-full">
                     @csrf
-                    <flux:menu.item as="button" type="submit" icon="arrow-right-start-on-rectangle" class="w-full">
+                    <flux:menu.item as="button" type="submit" icon="arrow-right-start-on-rectangle" class="w-full justify-start">
                         {{ __('Log Out') }}
                     </flux:menu.item>
                 </form>
             </flux:menu>
         </flux:dropdown>
-    </flux:header>
-@endauth
+    @endauth
+</flux:sidebar>
