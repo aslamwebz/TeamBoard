@@ -3,6 +3,13 @@
 namespace App\Models;
 
 use App\Helpers\TenantHelper;
+use App\Models\Task;
+use App\Models\Project;
+use App\Models\Client;
+use App\Models\User;
+use App\Models\InvoiceLineItem;
+use App\Models\Payment;
+use App\Models\PaymentMethod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -59,6 +66,30 @@ class Invoice extends Model
     public function task(): BelongsTo
     {
         return $this->belongsTo(Task::class);
+    }
+
+    /**
+     * Get the payment method for this invoice (if payment record exists).
+     */
+    public function paymentMethod()
+    {
+        return $this->belongsTo(PaymentMethod::class, 'payment_method');
+    }
+
+    /**
+     * Get the line items for this invoice.
+     */
+    public function lineItems()
+    {
+        return $this->hasMany(InvoiceLineItem::class, 'invoice_id');
+    }
+
+    /**
+     * Get the payments for this invoice.
+     */
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
     }
 
     /**

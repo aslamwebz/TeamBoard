@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Vendor;
+use App\Models\Project;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -43,7 +45,7 @@ class VendorInvoice extends Model
     }
 
     /**
-     * Get the project this vendor invoice is associated with.
+     * Get the project this invoice is associated with.
      */
     public function project(): BelongsTo
     {

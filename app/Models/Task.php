@@ -19,7 +19,6 @@ class Task extends Model
         'due_date',
         'project_id',
         'project_phase_id',
-        'user_id',
         'dependencies',
         'order',
     ];
@@ -47,7 +46,7 @@ class Task extends Model
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'user_tasks', 'task_id', 'user_id');
     }
 
     public function vendor(): BelongsTo

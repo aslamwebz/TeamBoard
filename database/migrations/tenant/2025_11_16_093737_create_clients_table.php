@@ -33,6 +33,7 @@ return new class extends Migration
             $table->timestamp('subscription_start_date')->nullable();
             $table->timestamp('subscription_end_date')->nullable();
             $table->string('subscription_status')->nullable();
+            $table->string('tax_vat_number')->nullable();
             $table->timestamps();
 
             // Unique constraint on company name

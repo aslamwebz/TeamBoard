@@ -1,11 +1,11 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\webz;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-use App\Models\User;
 
 class TenantRolePermissionSeeder extends Seeder
 {
@@ -24,43 +24,36 @@ class TenantRolePermissionSeeder extends Seeder
             'create users',
             'edit users',
             'delete users',
-
             // Role management
             'view roles',
             'create roles',
             'edit roles',
             'delete roles',
-
             // Team management
             'view teams',
             'create teams',
             'edit teams',
             'delete teams',
-
             // Project management
             'view projects',
             'create projects',
             'edit projects',
             'delete projects',
-
             // Task management
             'view tasks',
             'create tasks',
             'edit tasks',
             'delete tasks',
-
             // Client management
             'view clients',
             'create clients',
             'edit clients',
             'delete clients',
-
             // Invoice management
             'view invoices',
             'create invoices',
             'edit invoices',
             'delete invoices',
-
             // Report management
             'view reports',
             'create reports',

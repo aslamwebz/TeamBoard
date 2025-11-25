@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\PurchaseOrder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -34,11 +35,11 @@ class PurchaseOrderItem extends Model
      */
     public function purchaseOrder(): BelongsTo
     {
-        return $this->belongsTo(PurchaseOrder::class);
+        return $this->belongsTo(PurchaseOrder::class, 'purchase_order_id');
     }
 
     /**
-     * Check if this item has been fully received.
+     * Check if this item is fully received.
      */
     public function isFullyReceived(): bool
     {
@@ -46,7 +47,7 @@ class PurchaseOrderItem extends Model
     }
 
     /**
-     * Check if this item has been partially received.
+     * Check if this item is partially received.
      */
     public function isPartiallyReceived(): bool
     {
@@ -54,10 +55,18 @@ class PurchaseOrderItem extends Model
     }
 
     /**
-     * Check if this item has not been received yet.
+     * Check if this item hasn't been received yet.
      */
     public function isNotReceived(): bool
     {
         return $this->received_quantity === 0;
+    }
+
+    /**
+     * Calculate the remaining quantity to be received.
+     */
+    public function remainingQuantity(): int
+    {
+        return max(0, $this->quantity - $this->received_quantity);
     }
 }

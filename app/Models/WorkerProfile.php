@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\User;
+use App\Models\Skill;
+use App\Models\Certification;
+use App\Models\Timesheet;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class WorkerProfile extends Model
 {
@@ -35,13 +38,13 @@ class WorkerProfile extends Model
     ];
 
     protected $casts = [
-        'hourly_rate' => 'decimal:2',
         'hire_date' => 'date',
+        'hourly_rate' => 'decimal:2',
         'availability' => 'array',
     ];
 
     /**
-     * Get the user that owns the worker profile.
+     * Get the user associated with this worker profile.
      */
     public function user(): BelongsTo
     {
@@ -49,7 +52,15 @@ class WorkerProfile extends Model
     }
 
     /**
-     * Get the skills for this worker.
+     * Get the manager for this worker.
+     */
+    public function manager(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'manager_id');
+    }
+
+    /**
+     * Get the skills associated with this worker profile.
      */
     public function skills(): BelongsToMany
     {
@@ -59,88 +70,20 @@ class WorkerProfile extends Model
     }
 
     /**
-     * Get the certifications for this worker.
+     * Get the certifications associated with this worker profile.
      */
     public function certifications(): BelongsToMany
     {
         return $this->belongsToMany(Certification::class, 'worker_certifications')
-                    ->withPivot('date_obtained', 'expiry_date', 'attachment_path', 'status', 'notes')
+                    ->withPivot('date_obtained', 'expiry_date', 'status', 'notes', 'attachment_path')
                     ->withTimestamps();
     }
 
     /**
      * Get the timesheets for this worker.
      */
-    public function timesheets(): HasMany
+    public function timesheets()
     {
         return $this->hasMany(Timesheet::class);
-    }
-
-    /**
-     * Get the projects assigned to this worker through timesheets.
-     */
-    public function projects(): BelongsToMany
-    {
-        return $this->belongsToMany(Project::class, 'timesheets');
-    }
-
-    /**
-     * Get the tasks assigned to this worker through timesheets.
-     */
-    public function tasks(): BelongsToMany
-    {
-        return $this->belongsToMany(Task::class, 'timesheets');
-    }
-
-    /**
-     * Check if the worker is currently active.
-     */
-    public function isActive(): bool
-    {
-        return $this->status === 'active';
-    }
-
-    /**
-     * Check if the worker is on leave.
-     */
-    public function isOnLeave(): bool
-    {
-        return $this->status === 'on_leave';
-    }
-
-    /**
-     * Calculate total hours worked for a given period.
-     */
-    public function getTotalHoursWorked($startDate = null, $endDate = null): float
-    {
-        $query = $this->timesheets()->where('entry_type', 'regular');
-        
-        if ($startDate) {
-            $query->where('date', '>=', $startDate);
-        }
-        
-        if ($endDate) {
-            $query->where('date', '<=', $endDate);
-        }
-        
-        return $query->sum('hours_worked');
-    }
-
-    /**
-     * Calculate total overtime hours for a given period.
-     */
-    public function getTotalOvertimeHours($startDate = null, $endDate = null): float
-    {
-        $query = $this->timesheets()->where('entry_type', 'overtime');
-        
-        if ($startDate) {
-            $query->where('date', '>=', $startDate);
-        }
-        
-        if ($endDate) {
-            $query->where('date', '<=', $endDate);
-        }
-        
-        return $query->sum('hours_worked');
     }
 }

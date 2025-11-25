@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\WorkerProfile;
+use App\Models\Project;
+use App\Models\Task;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -25,13 +29,13 @@ class Timesheet extends Model
     ];
 
     protected $casts = [
-        'hours_worked' => 'decimal:2',
         'date' => 'date',
+        'hours_worked' => 'decimal:2',
         'approved_at' => 'datetime',
     ];
 
     /**
-     * Get the worker profile that owns the timesheet entry.
+     * Get the worker profile associated with this timesheet.
      */
     public function workerProfile(): BelongsTo
     {
@@ -84,21 +88,5 @@ class Timesheet extends Model
     public function isRejected(): bool
     {
         return $this->status === 'rejected';
-    }
-
-    /**
-     * Check if the hours are overtime.
-     */
-    public function isOvertime(): bool
-    {
-        return $this->entry_type === 'overtime';
-    }
-
-    /**
-     * Check if the entry is a leave type (vacation, sick, etc.).
-     */
-    public function isLeave(): bool
-    {
-        return in_array($this->entry_type, ['vacation', 'sick_leave', 'holiday']);
     }
 }

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Admin;
+use App\Models\Tenant;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -16,34 +17,13 @@ final class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
 
-        Admin::factory()->create([
-            'name' => 'Test User',
-            'email' => 'admin@admin.com',
-        ]);
-
-        // if (DB::table('users')->exists()) {
-        //     DB::statement('DROP DATABASE tenantwebz');
-        // }
-
-        $tenant = \App\Models\Tenant::create(['id' => 'webz']);
+        $tenant = Tenant::create(['id' => 'webz']);
         $tenant->domains()->create(['domain' => 'webz']);
 
         $tenant->run(function () {
-            User::factory()->create([
-                'name' => 'Test User',
-                'email' => 'user@user.com',
-                'password' => Hash::make('password'),
-            ]);
-
             $this->call([
-                TeamSeeder::class,
-                ClientSeeder::class,
-                ProjectSeeder::class,
-                ReportSeeder::class,
-                TenantRolePermissionSeeder::class,
-                
+                WebzSeeder::class,
             ]);
         });
     }

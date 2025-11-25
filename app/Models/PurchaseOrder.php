@@ -2,9 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Vendor;
+use App\Models\Project;
+use App\Models\Task;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class PurchaseOrder extends Model
 {
@@ -24,11 +29,13 @@ class PurchaseOrder extends Model
         'delivery_address',
         'shipping_method',
         'payment_terms',
+        'created_by',
+        'approved_by',
         'approved_at',
         'sent_at',
         'received_at',
-        'created_by',
-        'approved_by',
+        'project_id',
+        'task_id',
     ];
 
     protected $casts = [
@@ -38,41 +45,19 @@ class PurchaseOrder extends Model
         'subtotal' => 'decimal:2',
         'tax_amount' => 'decimal:2',
         'total_amount' => 'decimal:2',
+        'created_by' => 'integer',
+        'approved_by' => 'integer',
         'approved_at' => 'datetime',
         'sent_at' => 'datetime',
         'received_at' => 'datetime',
     ];
 
     /**
-     * Get the vendor that this purchase order belongs to.
+     * Get the vendor for this purchase order.
      */
     public function vendor(): BelongsTo
     {
         return $this->belongsTo(Vendor::class);
-    }
-
-    /**
-     * Get the user who created this purchase order.
-     */
-    public function creator(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
-
-    /**
-     * Get the user who approved this purchase order.
-     */
-    public function approver(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'approved_by');
-    }
-
-    /**
-     * Get the items for this purchase order.
-     */
-    public function items(): HasMany
-    {
-        return $this->hasMany(PurchaseOrderItem::class);
     }
 
     /**
@@ -92,11 +77,35 @@ class PurchaseOrder extends Model
     }
 
     /**
+     * Get the creator of this purchase order.
+     */
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    /**
+     * Get the approver of this purchase order.
+     */
+    public function approver(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'approved_by');
+    }
+
+    /**
+     * Get the items for this purchase order.
+     */
+    public function items(): HasMany
+    {
+        return $this->hasMany(PurchaseOrderItem::class);
+    }
+
+    /**
      * Check if the purchase order is approved.
      */
     public function isApproved(): bool
     {
-        return in_array($this->status, ['approved', 'sent', 'partially_received', 'received', 'closed']);
+        return in_array($this->status, ['approved', 'sent', 'partially_received', 'received']);
     }
 
     /**
