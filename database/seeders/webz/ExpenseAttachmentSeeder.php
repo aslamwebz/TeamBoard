@@ -23,12 +23,12 @@ class ExpenseAttachmentSeeder extends Seeder
             // Create 1-2 attachments per expense
             for ($i = 0; $i < rand(1, 2); $i++) {
                 $expense->attachments()->create([
-                    'file_name' => fake()->word() . '_' . fake()->fileExtension,
+                    'filename' => fake()->word() . '_' . fake()->fileExtension,
+                    'original_name' => fake()->word() . '_' . fake()->fileExtension,
                     'file_path' => 'expenses/' . fake()->uuid . '.' . fake()->fileExtension,
-                    'file_size' => fake()->randomNumber(6),
+                    'size' => fake()->randomNumber(6),
                     'mime_type' => fake()->randomElement(['image/jpeg', 'image/png', 'application/pdf', 'text/plain']),
-                    'uploaded_by' => 1,  // Assuming user ID 1
-                    'upload_date' => fake()->dateTimeBetween($expense->expense_date, 'now'),
+                    'description' => fake()->sentence(),
                 ]);
             }
         }

@@ -41,7 +41,9 @@ use Database\Seeders\webz\CertificationSeeder;
 use Database\Seeders\webz\TimesheetSeeder;
 use Database\Seeders\webz\WorkerSkillSeeder;
 use Database\Seeders\webz\WorkerCertificationSeeder;
+use Database\Seeders\webz\ExpensePaymentSeeder;
 use Illuminate\Database\Seeder;
+
 
 class WebzSeeder extends Seeder
 {
@@ -90,6 +92,7 @@ class WebzSeeder extends Seeder
             ExpenseSeeder::class,
             ExpenseAttachmentSeeder::class,
             PaymentMethodSeeder::class,
+            ExpensePaymentSeeder::class,
             PaymentRecordSeeder::class,
 
             // Reporting

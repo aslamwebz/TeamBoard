@@ -15,16 +15,22 @@ class ExpenseFactory extends Factory
         $expenseDate = fake()->dateTimeBetween('-6 months', 'now');
 
         return [
-            'vendor_id' => Vendor::factory(),
-            'name' => fake()->words(3, true),
-            'category' => fake()->randomElement(['travel', 'office', 'software', 'consulting', 'utilities', 'rent', 'marketing', 'training', 'equipment', 'meals']),
+            'expense_category_id' => null, // Will be set via relationship in seeder
+            'project_id' => null, // Will be set via relationship in seeder
+            'vendor_id' => null, // Will be set via relationship in seeder
+            'user_id' => null, // Will be set via relationship in seeder
+            'title' => fake()->words(3, true),
             'description' => fake()->sentence(),
             'amount' => fake()->randomFloat(2, 50, 5000),
+            'currency' => 'USD',
             'expense_date' => $expenseDate,
-            'expense_type' => fake()->randomElement(['travel', 'office', 'software', 'consulting', 'utilities', 'rent', 'marketing', 'training', 'equipment', 'meals']),
-            'status' => fake()->randomElement(['draft', 'pending_approval', 'approved', 'paid', 'rejected']),
-            'receipt_url' => fake()->optional()->url(),
+            'status' => fake()->randomElement(['pending', 'approved', 'rejected', 'paid', 'cancelled']),
+            'payment_method' => fake()->optional()->randomElement(['cash', 'credit_card', 'debit_card', 'bank_transfer', 'check', 'paypal', 'other']),
             'notes' => fake()->optional()->sentence(),
+            'receipt_path' => null, // Will be set via relationship in seeder
+            'approver_id' => null, // Will be set via relationship in seeder
+            'approved_at' => null, // Will be set via relationship in seeder
+            'custom_fields' => null,
         ];
     }
 }

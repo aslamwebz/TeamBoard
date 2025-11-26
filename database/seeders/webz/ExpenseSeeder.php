@@ -3,6 +3,9 @@
 namespace Database\Seeders\webz;
 
 use App\Models\Expense;
+use App\Models\ExpenseCategory;
+use App\Models\Project;
+use App\Models\User;
 use App\Models\Vendor;
 use Illuminate\Database\Seeder;
 
@@ -14,9 +17,17 @@ class ExpenseSeeder extends Seeder
     public function run(): void
     {
         $vendors = Vendor::all();
+        $categories = ExpenseCategory::all();
+        $projects = Project::all();
+        $users = User::all();
 
         if ($vendors->isEmpty()) {
             $this->command->warn('No vendors found. Please run VendorSeeder first.');
+            return;
+        }
+
+        if ($categories->isEmpty()) {
+            $this->command->warn('No expense categories found. Please run ExpenseCategorySeeder first.');
             return;
         }
 
@@ -36,17 +47,21 @@ class ExpenseSeeder extends Seeder
         for ($i = 0; $i < 50; $i++) {
             $expenseType = $expenseTypes[array_rand($expenseTypes)];
             $vendor = $vendors->random();
+            $category = $categories->random();
+            $user = $users->isNotEmpty() ? $users->random() : null;
+            $project = $projects->isNotEmpty() ? $projects->random() : null;
 
             Expense::factory()->create([
+                'expense_category_id' => $category->id,
+                'project_id' => $project ? $project->id : null,
                 'vendor_id' => $vendor->id,
-                'name' => $expenseType[0],
-                'category' => $expenseType[1],
+                'user_id' => $user ? $user->id : null,
+                'title' => $expenseType[0],
                 'description' => $expenseType[2],
                 'amount' => fake()->randomFloat(2, 50, 2000),
                 'expense_date' => fake()->dateTimeBetween('-6 months', 'now'),
-                'expense_type' => fake()->randomElement(['travel', 'office', 'software', 'consulting', 'utilities', 'rent', 'marketing', 'training', 'equipment', 'meals']),
-                'status' => fake()->randomElement(['draft', 'pending_approval', 'approved', 'paid', 'rejected']),
-                'receipt_url' => fake()->url(),
+                'status' => fake()->randomElement(['pending', 'approved', 'rejected', 'paid', 'cancelled']),
+                'payment_method' => fake()->optional()->randomElement(['cash', 'credit_card', 'debit_card', 'bank_transfer', 'check', 'paypal', 'other']),
                 'notes' => fake()->sentence(),
             ]);
         }

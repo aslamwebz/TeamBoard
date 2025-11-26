@@ -18,8 +18,10 @@ final class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        $tenant = Tenant::create(['id' => 'webz']);
-        $tenant->domains()->create(['domain' => 'webz']);
+        // $tenant = Tenant::create(['id' => 'webz']);
+        // $tenant->domains()->create(['domain' => 'webz']);
+
+        $tenant = Tenant::first();
 
         $tenant->run(function () {
             $this->call([

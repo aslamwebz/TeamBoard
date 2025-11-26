@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
             $table->foreignId('expense_category_id')->nullable()->constrained('expense_categories')->onDelete('set null');
             $table->foreignId('project_id')->nullable()->constrained('projects')->onDelete('set null');
             $table->foreignId('vendor_id')->nullable()->constrained('vendors')->onDelete('set null');

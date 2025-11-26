@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('invoice_id')->nullable()->constrained('invoices')->onDelete('set null');
-            $table->foreignId('expense_id')->nullable()->constrained('expenses')->onDelete('set null');
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
             $table->decimal('amount', 10, 2); // Amount paid
             $table->string('payment_method')->nullable(); // e.g., credit_card, bank_transfer, check, paypal
