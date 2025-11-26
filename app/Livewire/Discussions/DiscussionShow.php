@@ -33,7 +33,7 @@ class DiscussionShow extends Component
         'replyContent' => 'required|string',
     ];
 
-    public function mount(Discussion $discussion)
+    public function mount(Discussion $discussion): void
     {
         $this->discussion = $discussion->load([
             'user',
@@ -57,7 +57,7 @@ class DiscussionShow extends Component
         $this->loadRelatedDiscussions();
     }
 
-    public function addComment()
+    public function addComment(): void
     {
         $this->validateOnly('newComment');
 
@@ -108,19 +108,19 @@ class DiscussionShow extends Component
         $this->discussion->load(['user', 'comments.user', 'comments.replies.user', 'attachments']);
     }
 
-    public function startReply($commentId)
+    public function startReply($commentId): void
     {
         $this->replyingTo = $commentId;
         $this->replyContent = '';
     }
 
-    public function cancelReply()
+    public function cancelReply(): void
     {
         $this->replyingTo = null;
         $this->replyContent = '';
     }
 
-    public function replyToComment()
+    public function replyToComment(): void
     {
         $this->validateOnly('replyContent');
 
@@ -161,7 +161,7 @@ class DiscussionShow extends Component
         $this->discussion->load(['user', 'comments.user', 'comments.replies.user', 'attachments']);
     }
 
-    private function processAttachment($file, $discussionId, $commentId = null)
+    private function processAttachment($file, $discussionId, $commentId = null): void
     {
         $fileUploadService = new FileUploadService();
         $fileUploadService->upload($file, Auth::id(), $discussionId, $commentId);
@@ -170,7 +170,7 @@ class DiscussionShow extends Component
     /**
      * Load all attachments (from discussion and its comments)
      */
-    protected function loadAllAttachments()
+    protected function loadAllAttachments(): void
     {
         // Get attachments for this discussion
         $discussionAttachments = $this->discussion->attachments;
@@ -189,7 +189,7 @@ class DiscussionShow extends Component
     /**
      * Load related discussions
      */
-    protected function loadRelatedDiscussions()
+    protected function loadRelatedDiscussions(): void
     {
         // Find related discussions based on the same project
         $this->relatedDiscussions = Discussion::where('project_id', $this->discussion->project_id)
@@ -217,7 +217,7 @@ class DiscussionShow extends Component
         return $mentionedUsers->toArray();
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         $typeColors = [
             'project' => 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
@@ -230,7 +230,7 @@ class DiscussionShow extends Component
         ]);
     }
 
-    public function updatedAttachments()
+    public function updatedAttachments(): void
     {
         // Validate each attachment as it's added
         $this->validateOnly('attachments.*');

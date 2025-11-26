@@ -3,6 +3,8 @@
 namespace App\Livewire\Teams;
 
 use App\Models\Team;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -21,7 +23,7 @@ class TeamEdit extends Component
         'description' => 'nullable|string|max:1000',
     ];
 
-    public function mount(Team $team)
+    public function mount(Team $team) : void
     {
         $this->team = $team;
         $this->teamId = $team->id;
@@ -29,7 +31,7 @@ class TeamEdit extends Component
         $this->description = $team->description;
     }
 
-    public function updateTeam()
+    public function updateTeam() : RedirectResponse
     {
         $validated = $this->validate();
 
@@ -40,7 +42,7 @@ class TeamEdit extends Component
         return redirect()->route('teams.index');
     }
 
-    public function render()
+    public function render() : View
     {
         return view('livewire.teams.team-edit');
     }

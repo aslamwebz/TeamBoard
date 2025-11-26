@@ -20,7 +20,7 @@ class FilesIndex extends Component
     public $type = ''; // image, document, etc.
     public $sortBy = 'created_at'; // created_at, name, size
     public $sortDirection = 'desc';
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         // Get all attachments across different attachment tables
         // Initially, we'll just use the DiscussionAttachment table since FileAttachment might not be fully implemented yet

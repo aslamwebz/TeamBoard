@@ -17,7 +17,7 @@ class NotificationList extends Component
         'switchTab' => 'switchTab'
     ];
 
-    public function getUnreadCountProperty()
+    public function getUnreadCountProperty(): int
     {
         return auth()->user()->notifications()->unread()->count();
     }
@@ -43,7 +43,7 @@ class NotificationList extends Component
         return $this->getNotificationsQueryProperty()->paginate($this->perPage);
     }
 
-    public function markAsRead($notificationId)
+    public function markAsRead($notificationId): void
     {
         $notification = auth()->user()->notifications()->find($notificationId);
 
@@ -55,12 +55,12 @@ class NotificationList extends Component
         $this->dispatch('notificationRead');
     }
 
-    public function switchTab($tab)
+    public function switchTab($tab): void
     {
         $this->activeTab = $tab;
     }
 
-    public function markAllAsRead()
+    public function markAllAsRead(): void
     {
         auth()->user()->notifications()->unread()->update(['read_at' => now()]);
 
@@ -68,7 +68,7 @@ class NotificationList extends Component
         $this->dispatch('notificationsMarkedAsRead');
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         return view('livewire.notificationlist.notification-list', [
             'notifications' => $this->getNotificationsProperty(),

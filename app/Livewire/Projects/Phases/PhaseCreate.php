@@ -29,12 +29,12 @@ class PhaseCreate extends Component
         'order' => 'required|integer|min:0',
     ];
 
-    public function mount(Project $project)
+    public function mount(Project $project): void
     {
         $this->project = $project;
     }
 
-    public function createPhase()
+    public function createPhase(): \Illuminate\Http\RedirectResponse
     {
         $this->validate();
 
@@ -52,7 +52,7 @@ class PhaseCreate extends Component
         return redirect()->route('projects.show', $this->project);
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         return view('livewire.projects.phases.create');
     }

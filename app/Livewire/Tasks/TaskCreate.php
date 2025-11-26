@@ -6,6 +6,8 @@ use App\Models\Project;
 use App\Models\ProjectPhase;
 use App\Models\Task;
 use App\Models\User;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
@@ -37,14 +39,14 @@ class TaskCreate extends Component
         'user_id' => 'nullable|exists:users,id',
     ];
 
-    public function mount()
+    public function mount() : void
     {
         $this->projects = Project::all();
         $this->phases = collect(); // Empty initially
         $this->users = User::all();
     }
 
-    public function createTask()
+    public function createTask() : RedirectResponse
     {
         $validatedData = $this->validate();
         $validatedData['user_id'] = Auth::id();
@@ -64,7 +66,7 @@ class TaskCreate extends Component
         return redirect()->route('tasks');
     }
 
-    public function updatedProjectId()
+    public function updatedProjectId() : void
     {
         // When project changes, reload the phases
         if ($this->project_id) {
@@ -76,7 +78,7 @@ class TaskCreate extends Component
         }
     }
 
-    public function render()
+    public function render() : View
     {
         return view('livewire.tasks.task-create');
     }

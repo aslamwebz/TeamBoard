@@ -41,13 +41,13 @@ class Timesheets extends Component
         'notes' => 'nullable|string',
     ];
 
-    public function mount($workerId)
+    public function mount($workerId): void
     {
         $this->workerId = $workerId;
         $this->date = now()->format('Y-m-d');
     }
 
-    public function addTimesheet()
+    public function addTimesheet(): void
     {
         $this->validate();
 
@@ -65,11 +65,11 @@ class Timesheets extends Component
 
         $this->reset(['date', 'hours_worked', 'activity_description', 'entry_type', 'project_id', 'task_id', 'notes']);
         $this->date = now()->format('Y-m-d');
-        
+
         session()->flash('message', 'Timesheet entry added successfully.');
     }
 
-    public function deleteTimesheet($timesheetId)
+    public function deleteTimesheet($timesheetId): void
     {
         $timesheet = Timesheet::find($timesheetId);
         if ($timesheet && $timesheet->worker_profile_id == $this->workerId) {
@@ -78,7 +78,7 @@ class Timesheets extends Component
         }
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         $query = Timesheet::where('worker_profile_id', $this->workerId)
                          ->with(['project', 'task']);
@@ -105,10 +105,10 @@ class Timesheets extends Component
         }
 
         $timesheets = $query->orderBy('date', 'desc')->paginate(10);
-        
+
         $projects = Project::orderBy('name')->get();
         $tasks = Task::orderBy('title')->get();
-        
+
         // Calculate totals
         $totalRegularHours = $query->where('entry_type', 'regular')->sum('hours_worked');
         $totalOvertimeHours = $query->where('entry_type', 'overtime')->sum('hours_worked');

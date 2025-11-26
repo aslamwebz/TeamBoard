@@ -6,6 +6,7 @@ namespace App\Livewire\Contacts;
 
 use App\Models\Client;
 use App\Models\Contact;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -20,12 +21,12 @@ class ContactIndex extends Component
 
     protected $queryString = ['search'];
 
-    public function mount(Client $client)
+    public function mount(Client $client) : void
     {
         $this->client = $client;
     }
 
-    public function render()
+    public function render() : View
     {
         $contacts = $this->client->contacts()
             ->where(function($query) {
@@ -43,22 +44,22 @@ class ContactIndex extends Component
         ]);
     }
 
-    public function deleteContact($id)
+    public function deleteContact($id) : void
     {
         $this->contactToDeleteId = $id;
         $this->showDeleteModal = true;
     }
 
-    public function confirmDelete()
+    public function confirmDelete() : void
     {
         $contact = Contact::find($this->contactToDeleteId);
-        
+
         if ($contact && $contact->client->id === $this->client->id) {
             // If this was the primary contact, update the client
             if ($contact->is_primary) {
                 $this->client->update(['primary_contact_id' => null]);
             }
-            
+
             $contact->delete();
         }
 
@@ -66,22 +67,22 @@ class ContactIndex extends Component
         $this->contactToDeleteId = null;
     }
 
-    public function cancelDelete()
+    public function cancelDelete() : void
     {
         $this->showDeleteModal = false;
         $this->contactToDeleteId = null;
     }
-    
-    public function makePrimary($contactId)
+
+    public function makePrimary($contactId) : void
     {
         $contact = $this->client->contacts()->findOrFail($contactId);
-        
+
         // Set all other contacts to not primary
         $this->client->contacts()->update(['is_primary' => false]);
-        
+
         // Set this contact as primary
         $contact->update(['is_primary' => true]);
-        
+
         // Update client's primary contact
         $this->client->update(['primary_contact_id' => $contactId]);
     }

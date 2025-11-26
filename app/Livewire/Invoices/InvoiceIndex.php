@@ -3,6 +3,7 @@
 namespace App\Livewire\Invoices;
 
 use App\Models\Invoice;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -23,7 +24,7 @@ class InvoiceIndex extends Component
 
     protected $queryString = ['search', 'status_filter', 'client_filter', 'per_page'];
 
-    public function render()
+    public function render() : View
     {
         $invoices = Invoice::query()
             ->where(function ($query) {
@@ -51,13 +52,13 @@ class InvoiceIndex extends Component
         ]);
     }
 
-    public function deleteInvoice($id)
+    public function deleteInvoice($id) : void
     {
         $this->invoiceToDeleteId = $id;
         $this->confirmingDelete = true;
     }
 
-    public function confirmDelete()
+    public function confirmDelete() : void
     {
         $invoice = Invoice::find($this->invoiceToDeleteId);
         if ($invoice) {
@@ -68,7 +69,7 @@ class InvoiceIndex extends Component
         $this->invoiceToDeleteId = null;
     }
 
-    public function cancelDelete()
+    public function cancelDelete() : void
     {
         $this->confirmingDelete = false;
         $this->invoiceToDeleteId = null;

@@ -3,6 +3,8 @@
 namespace App\Livewire\Vendors;
 
 use App\Models\Vendor;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
 
 class VendorEdit extends Component
@@ -43,7 +45,7 @@ class VendorEdit extends Component
         'credit_limit' => 'nullable|numeric|min:0',
     ];
 
-    public function mount(Vendor $vendor)
+    public function mount(Vendor $vendor) : void
     {
         $this->vendor = $vendor;
         $this->fill([
@@ -65,7 +67,7 @@ class VendorEdit extends Component
         ]);
     }
 
-    public function update()
+    public function update() : RedirectResponse
     {
         $this->validate();
 
@@ -90,7 +92,7 @@ class VendorEdit extends Component
         return redirect()->route('vendors.show', $this->vendor->id)->with('message', 'Vendor updated successfully.');
     }
 
-    public function render()
+    public function render() : View
     {
         return view('livewire.vendors.vendor-edit');
     }

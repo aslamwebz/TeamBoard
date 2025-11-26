@@ -17,12 +17,12 @@ class WorkerIndex extends Component
 
     protected $queryString = ['search', 'status', 'department'];
 
-    public function updatingSearch()
+    public function updatingSearch(): void
     {
         $this->resetPage();
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         $query = WorkerProfile::with(['user']);
 

@@ -7,6 +7,7 @@ use App\Models\ProjectPhase;
 use App\Models\Team;
 use App\Models\User;
 use App\Traits\ModalTrait;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -31,7 +32,7 @@ class ProjectShow extends Component
     public $availablePhases = [];
     public $availableMilestones = [];
 
-    public function mount(Project $project)
+    public function mount(Project $project) : void
     {
         $this->project = $project->load([
             'client',
@@ -56,7 +57,7 @@ class ProjectShow extends Component
         return Team::whereNotIn('id', $this->project->teams->pluck('id'))->get();
     }
 
-    public function assignUsers()
+    public function assignUsers() : void
     {
         if (empty($this->selectedUsers)) {
             return;
@@ -70,7 +71,7 @@ class ProjectShow extends Component
         session()->flash('success', 'Users assigned successfully!');
     }
 
-    public function assignTeams()
+    public function assignTeams() : void
     {
         if (empty($this->selectedTeams)) {
             return;
@@ -84,33 +85,33 @@ class ProjectShow extends Component
         session()->flash('success', 'Teams assigned successfully!');
     }
 
-    public function cancelAssignUser()
+    public function cancelAssignUser() : void
     {
         $this->selectedUsers = [];
         $this->showAssignUserModal = false;
     }
 
-    public function cancelAssignTeam()
+    public function cancelAssignTeam() : void
     {
         $this->selectedTeams = [];
         $this->showAssignTeamModal = false;
     }
 
-    public function updatedShowAssignUserModal($value)
+    public function updatedShowAssignUserModal($value) : void
     {
         if (!$value) {
             $this->selectedUsers = [];
         }
     }
 
-    public function updatedShowAssignTeamModal($value)
+    public function updatedShowAssignTeamModal($value) : void
     {
         if (!$value) {
             $this->selectedTeams = [];
         }
     }
 
-    public function removeUser($userId)
+    public function removeUser($userId) : void
     {
         $this->project->users()->detach($userId);
         $this->project->load('users');
@@ -118,7 +119,7 @@ class ProjectShow extends Component
         session()->flash('success', 'User removed successfully!');
     }
 
-    public function removeTeam($teamId)
+    public function removeTeam($teamId) : void
     {
         $this->project->teams()->detach($teamId);
         $this->project->load('teams');
@@ -126,7 +127,7 @@ class ProjectShow extends Component
         session()->flash('success', 'Team removed successfully!');
     }
 
-    public function render()
+    public function render() : View
     {
         return view('livewire.projects.project-show', [
             'project' => $this->project,

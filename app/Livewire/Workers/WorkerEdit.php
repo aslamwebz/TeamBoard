@@ -51,7 +51,7 @@ class WorkerEdit extends Component
         'phone' => 'nullable|string|max:20',
     ];
 
-    public function mount(WorkerProfile $workerProfile)
+    public function mount(WorkerProfile $workerProfile): void
     {
         $this->workerProfile = $workerProfile;
         $this->fill([
@@ -77,7 +77,7 @@ class WorkerEdit extends Component
         ]);
     }
 
-    public function update()
+    public function update(): \Illuminate\Http\RedirectResponse
     {
         $this->validate();
 
@@ -105,7 +105,7 @@ class WorkerEdit extends Component
         return redirect()->route('workers.show', $this->workerProfile->id)->with('message', 'Worker profile updated successfully.');
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         $users = User::orderBy('name')->get();
         return view('livewire.workers.worker-edit', [

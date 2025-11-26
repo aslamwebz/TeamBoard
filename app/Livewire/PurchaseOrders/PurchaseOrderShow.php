@@ -9,12 +9,12 @@ class PurchaseOrderShow extends Component
 {
     public PurchaseOrder $purchaseOrder;
 
-    public function mount(PurchaseOrder $purchaseOrder)
+    public function mount(PurchaseOrder $purchaseOrder): void
     {
         $this->purchaseOrder = $purchaseOrder->load(['vendor', 'creator', 'approver', 'items']);
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         return view('livewire.purchase-orders.purchase-order-show');
     }

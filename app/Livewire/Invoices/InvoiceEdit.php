@@ -5,6 +5,8 @@ namespace App\Livewire\Invoices;
 use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\Project;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -39,7 +41,7 @@ class InvoiceEdit extends Component
         'description' => 'nullable|string|max:500',
     ];
 
-    public function mount(Invoice $invoice)
+    public function mount(Invoice $invoice) : void
     {
         $this->invoice = $invoice;
         $this->invoiceId = $invoice->id;
@@ -55,7 +57,7 @@ class InvoiceEdit extends Component
         $this->description = $invoice->description;
     }
 
-    public function updateInvoice()
+    public function updateInvoice() : RedirectResponse
     {
         $this->rules['invoice_number'] = 'required|string|unique:invoices,invoice_number,' . $this->invoiceId;
         $validated = $this->validate();
@@ -77,12 +79,12 @@ class InvoiceEdit extends Component
         return $this->redirectRoute('invoices.index', navigate: true);
     }
 
-    public function calculateTotal()
+    public function calculateTotal() : void
     {
         $this->total = (float) $this->amount + (float) $this->tax;
     }
 
-    public function render()
+    public function render() : View
     {
         $clients = Client::all();
         $projects = Project::all();

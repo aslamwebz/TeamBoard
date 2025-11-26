@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Roles;
 
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Spatie\Permission\Models\Role;
@@ -15,12 +16,12 @@ class RoleIndex extends Component
 
     protected $paginationTheme = 'tailwind';
 
-    public function updatingSearch()
+    public function updatingSearch() : void
     {
         $this->resetPage();
     }
 
-    public function deleteRole($roleId)
+    public function deleteRole($roleId) : void
     {
         $role = Role::findOrFail($roleId);
 
@@ -34,7 +35,7 @@ class RoleIndex extends Component
         $this->dispatch('success', 'Role deleted successfully.');
     }
 
-    public function render()
+    public function render() : View
     {
         $roles = Role::where('name', 'like', '%' . $this->search . '%')
             ->with('permissions')

@@ -15,7 +15,7 @@ class FilePreviewModal extends Component
         'closeFilePreview' => 'closePreview'
     ];
 
-    public function openPreview($fileId)
+    public function openPreview($fileId): void
     {
         $file = DiscussionAttachment::find($fileId);
         if ($file) {
@@ -24,13 +24,13 @@ class FilePreviewModal extends Component
         }
     }
 
-    public function closePreview()
+    public function closePreview(): void
     {
         $this->showPreviewModal = false;
         $this->file = null;
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         // This component now opens the preview page in a new tab, so no need to render anything
         return view('livewire.components.file-preview-modal');

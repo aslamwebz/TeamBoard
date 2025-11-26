@@ -20,12 +20,12 @@ class ContactList extends Component
 
     protected $queryString = ['search'];
 
-    public function mount(Client $client)
+    public function mount(Client $client): void
     {
         $this->client = $client;
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         $contacts = $this->client->contacts()
             ->where(function($query) {
@@ -43,7 +43,7 @@ class ContactList extends Component
         ]);
     }
 
-    public function deleteContact($id)
+    public function deleteContact($id): void
     {
         $contact = Contact::find($id);
 
@@ -57,7 +57,7 @@ class ContactList extends Component
         }
     }
 
-    public function makePrimary($contactId)
+    public function makePrimary($contactId): void
     {
         $contact = $this->client->contacts()->findOrFail($contactId);
 

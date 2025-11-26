@@ -42,7 +42,7 @@ class CompanyProfile extends Component
         'logo' => 'nullable|image|max:2048', // 2MB Max
     ];
 
-    public function mount()
+    public function mount(): void
     {
         $tenant = Tenant::current();
         if ($tenant) {
@@ -63,13 +63,13 @@ class CompanyProfile extends Component
         }
     }
 
-    public function updatedLogo()
+    public function updatedLogo(): void
     {
         $this->validateOnly('logo');
         $this->logoPreview = $this->logo->temporaryUrl();
     }
 
-    public function save()
+    public function save(): void
     {
         $validatedData = $this->validate();
 
@@ -99,7 +99,7 @@ class CompanyProfile extends Component
         session()->flash('message', 'Company profile updated successfully.');
     }
 
-    public function removeLogo()
+    public function removeLogo(): void
     {
         $tenant = Tenant::current();
         if ($tenant && $tenant->logo) {
@@ -111,12 +111,12 @@ class CompanyProfile extends Component
         }
     }
 
-    public function isFieldInvalid($field)
+    public function isFieldInvalid($field): bool
     {
         return $this->getErrorBag()->has($field);
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         return view('livewire.settings.company-profile');
     }

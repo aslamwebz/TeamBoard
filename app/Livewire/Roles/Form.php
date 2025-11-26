@@ -13,7 +13,7 @@ class Form extends Component
     public array $permissions = [];
     public $allPermissions;
 
-    public function mount($role = null)
+    public function mount($role = null): void
     {
         $this->allPermissions = Permission::all();
 
@@ -39,7 +39,7 @@ class Form extends Component
 
     }
 
-    public function getGroupedPermissionsProperty()
+    public function getGroupedPermissionsProperty(): array
     {
         $permissions = $this->allPermissions;
 
@@ -97,7 +97,7 @@ class Form extends Component
     }
 
 
-    public function save()
+    public function save(): \Illuminate\Http\RedirectResponse
     {
         $validated = $this->validate([
             'name' => $this->role ? 'required|string|max:255|unique:roles,name,' . $this->role->id : 'required|string|max:255|unique:roles,name',
@@ -117,7 +117,7 @@ class Form extends Component
         return redirect()->route('roles.index');
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         return view('livewire.roles.role-form');
     }

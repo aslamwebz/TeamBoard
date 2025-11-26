@@ -6,6 +6,8 @@ use App\Models\Client;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 #[Layout('components.layouts.app')]
 #[Title('Create Client')]
@@ -55,19 +57,19 @@ class ClientCreate extends Component
         'subscription_status' => 'nullable|string|max:50',
     ];
 
-    public function createClient()
+    public function createClient() : RedirectResponse
     {
         $validated = $this->validate();
 
         $client = Client::create($validated);
 
         // Dispatch notification when client is added
-        \App\Events\ClientAddedNotification::dispatch($client, auth()->user());
+        \App\Events\ClientAddedNotification::dispatch($client, auth()->user()); 
 
-        return $this->redirectRoute('clients.index', navigate: true);
+        return redirect()->route('clients.index');
     }
 
-    public function render()
+    public function render() : View
     {
         return view('livewire.clients.client-create');
     }

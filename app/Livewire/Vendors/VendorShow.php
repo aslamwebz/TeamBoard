@@ -9,12 +9,12 @@ class VendorShow extends Component
 {
     public Vendor $vendor;
 
-    public function mount(Vendor $vendor)
+    public function mount(Vendor $vendor): void
     {
         $this->vendor = $vendor->load(['contacts', 'services', 'invoices']);
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         return view('livewire.vendors.vendor-show');
     }

@@ -3,6 +3,7 @@
 namespace App\Livewire\Projects;
 
 use App\Models\Project;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -21,7 +22,7 @@ class ProjectIndex extends Component
 
     protected $queryString = ['search', 'statusFilter'];
 
-    public function render()
+    public function render() : View
     {
         $projects = Project::query()
             ->with(['client', 'tasks', 'users'])
@@ -36,13 +37,13 @@ class ProjectIndex extends Component
         ]);
     }
 
-    public function deleteProject($id)
+    public function deleteProject($id) : void
     {
         $this->projectToDeleteId = $id;
         $this->showDeleteModal = true;
     }
 
-    public function confirmDelete()
+    public function confirmDelete() : void
     {
         $project = Project::find($this->projectToDeleteId);
         if ($project) {
@@ -53,13 +54,13 @@ class ProjectIndex extends Component
         $this->projectToDeleteId = null;
     }
 
-    public function cancelDelete()
+    public function cancelDelete() : void
     {
         $this->showDeleteModal = false;
         $this->projectToDeleteId = null;
     }
 
-    public function updateStatusFilter($status)
+    public function updateStatusFilter($status) : void
     {
         $this->statusFilter = $status;
         $this->resetPage();

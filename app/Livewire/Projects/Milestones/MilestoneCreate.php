@@ -30,12 +30,12 @@ class MilestoneCreate extends Component
         'order' => 'required|integer|min:0',
     ];
 
-    public function mount(Project $project)
+    public function mount(Project $project): void
     {
         $this->project = $project;
     }
 
-    public function createMilestone()
+    public function createMilestone(): \Illuminate\Http\RedirectResponse
     {
         $this->validate();
 
@@ -53,7 +53,7 @@ class MilestoneCreate extends Component
         return redirect()->route('projects.show', $this->project);
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         $phases = $this->project->phases;
         return view('livewire.projects.milestones.milestone-create', compact('phases'));

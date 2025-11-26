@@ -3,6 +3,8 @@
 namespace App\Livewire\Reports;
 
 use App\Models\Report;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -22,10 +24,10 @@ class ReportCreate extends Component
         'report_type' => 'required|in:financial,project,invoice,client',
     ];
 
-    public function createReport()
+    public function createReport() : RedirectResponse
     {
         $validated = $this->validate();
-        
+
         $validated['user_id'] = auth()->id();
         $validated['status'] = Report::STATUS_GENERATED;
         $validated['generated_at'] = now();
@@ -72,7 +74,7 @@ class ReportCreate extends Component
         return $this->redirectRoute('reports.index', navigate: true);
     }
 
-    public function render()
+    public function render() : View
     {
         return view('livewire.reports.report-create');
     }

@@ -10,7 +10,7 @@ class NavigationHandler extends Component
     /**
      * Preload the given URL when hovering over a navigation item
      */
-    public function navigatingTo($url)
+    public function navigatingTo($url): bool
     {
         // This method is called when hovering over a navigation item
         // The actual preloading is handled by the wire:navigate.hover directive
@@ -20,7 +20,7 @@ class NavigationHandler extends Component
     /**
      * Get all navigation routes for preloading
      */
-    public function getNavigationRoutes()
+    public function getNavigationRoutes(): array
     {
         return [
             route('dashboard'),
@@ -33,7 +33,7 @@ class NavigationHandler extends Component
         ];
     }
 
-    public function render()
+    public function render(): \Stringable
     {
         return <<<'blade'
             <div>

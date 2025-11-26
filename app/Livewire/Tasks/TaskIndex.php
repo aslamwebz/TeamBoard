@@ -3,6 +3,7 @@
 namespace App\Livewire\Tasks;
 
 use App\Models\Task;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -28,12 +29,12 @@ class TaskIndex extends Component
 
     protected $queryString = ['search', 'statusFilter', 'viewMode'];
 
-    public function mount()
+    public function mount() : void
     {
         $this->refreshTasksByStatus();
     }
 
-    public function render()
+    public function render() : View
     {
         // Always provide both datasets to the view to prevent issues
         if ($this->viewMode === 'board') {
@@ -70,7 +71,7 @@ class TaskIndex extends Component
         };
     }
 
-    public function refreshTasksByStatus()
+    public function refreshTasksByStatus(): void
     {
         $query = Task::query();
 
@@ -102,13 +103,13 @@ class TaskIndex extends Component
         $this->tasksByStatus = $groupedTasks;
     }
 
-    public function deleteTask($id)
+    public function deleteTask($id): void
     {
         $this->taskToDeleteId = $id;
         $this->showDeleteModal = true;
     }
 
-    public function confirmDelete()
+    public function confirmDelete(): void
     {
         $task = Task::find($this->taskToDeleteId);
         if ($task) {
@@ -120,32 +121,32 @@ class TaskIndex extends Component
         $this->refreshTasksByStatus();
     }
 
-    public function cancelDelete()
+    public function cancelDelete(): void
     {
         $this->showDeleteModal = false;
         $this->taskToDeleteId = null;
     }
 
-    public function updateStatusFilter($status)
+    public function updateStatusFilter($status): void
     {
         $this->statusFilter = $status;
         $this->resetPage();
     }
 
-    public function switchViewMode($mode)
+    public function switchViewMode($mode): void
     {
         $this->viewMode = $mode;
         $this->resetPage();
     }
 
-    public function openTaskDetails($taskId)
+    public function openTaskDetails($taskId): void
     {
         $this->selectedTaskId = $taskId;
         $this->selectedTask = Task::with(['project', 'users', 'phase'])->find($taskId);
         $this->showTaskModal = true;
     }
 
-    public function updateTaskStatus($taskId, $newStatus)
+    public function updateTaskStatus($taskId, $newStatus): void
     {
         $task = Task::find($taskId);
         if ($task) {
@@ -154,7 +155,7 @@ class TaskIndex extends Component
         $this->refreshTasksByStatus();
     }
 
-    public function closeTaskModal()
+    public function closeTaskModal(): void
     {
         $this->showTaskModal = false;
         $this->selectedTaskId = null;

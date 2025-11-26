@@ -17,17 +17,17 @@ class VendorInvoices extends Component
 
     protected $queryString = ['search', 'status'];
 
-    public function mount($vendorId)
+    public function mount($vendorId): void
     {
         $this->vendorId = $vendorId;
     }
 
-    public function updatingSearch()
+    public function updatingSearch(): void
     {
         $this->resetPage();
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         $query = VendorInvoice::where('vendor_id', $this->vendorId);
 

@@ -13,27 +13,27 @@ class WorkerSkills extends Component
     public $proficiency = [];
     public $notes = [];
 
-    public function mount($workerId)
+    public function mount($workerId): void
     {
         $this->workerId = $workerId;
         $this->loadSkills();
     }
 
-    public function loadSkills()
+    public function loadSkills(): void
     {
         $worker = WorkerProfile::with('skills')->find($this->workerId);
         $this->selectedSkills = $worker->skills->pluck('id')->toArray();
-        
+
         foreach ($worker->skills as $skill) {
             $this->proficiency[$skill->id] = $skill->pivot->proficiency_level;
             $this->notes[$skill->id] = $skill->pivot->notes ?? '';
         }
     }
 
-    public function updateSkills()
+    public function updateSkills(): void
     {
         $worker = WorkerProfile::find($this->workerId);
-        
+
         // Prepare skills with their pivot data
         $skillsData = [];
         foreach ($this->selectedSkills as $skillId) {
@@ -42,26 +42,26 @@ class WorkerSkills extends Component
                 'notes' => $this->notes[$skillId] ?? '',
             ];
         }
-        
+
         // Sync the skills with pivot data
         $worker->skills()->sync($skillsData);
-        
+
         $this->dispatch('skills-updated');
         session()->flash('message', 'Skills updated successfully.');
     }
 
-    public function removeSkill($skillId)
+    public function removeSkill($skillId): void
     {
         $worker = WorkerProfile::find($this->workerId);
         $worker->skills()->detach($skillId);
         $this->loadSkills();
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         $worker = WorkerProfile::with('skills', 'skills.workerSkills')->find($this->workerId);
         $allSkills = Skill::orderBy('name')->get();
-        
+
         return view('livewire.workers.worker-skills', [
             'worker' => $worker,
             'allSkills' => $allSkills,

@@ -3,6 +3,8 @@
 namespace App\Livewire\Vendors;
 
 use App\Models\Vendor;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
 
 class VendorCreate extends Component
@@ -41,7 +43,7 @@ class VendorCreate extends Component
         'credit_limit' => 'nullable|numeric|min:0',
     ];
 
-    public function save()
+    public function save() : RedirectResponse
     {
         $this->validate();
 
@@ -66,7 +68,7 @@ class VendorCreate extends Component
         return redirect()->route('vendors.show', $vendor->id)->with('message', 'Vendor created successfully.');
     }
 
-    public function render()
+    public function render() : View
     {
         return view('livewire.vendors.vendor-create');
     }

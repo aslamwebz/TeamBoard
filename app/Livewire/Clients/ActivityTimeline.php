@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace App\Livewire\Clients;
 
 use App\Models\Client;
-use App\Models\ContactActivity;
 use Livewire\Component;
+use Illuminate\Contracts\View\View;
 
 class ActivityTimeline extends Component
 {
     public Client $client;
     public $activities = [];
 
-    public function mount(Client $client)
+    public function mount(Client $client) : void
     {
         $this->client = $client;
         $this->activities = $client->allActivities()
@@ -22,7 +22,7 @@ class ActivityTimeline extends Component
             ->get();
     }
 
-    public function render()
+    public function render() : View
     {
         return view('livewire.clients.activity-timeline');
     }

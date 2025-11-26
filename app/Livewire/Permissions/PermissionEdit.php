@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Permissions;
 
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
 use Spatie\Permission\Models\Permission;
 
@@ -11,14 +13,14 @@ class PermissionEdit extends Component
     public $name;
     public $guard_name;
 
-    public function mount(Permission $permission)
+    public function mount(Permission $permission) : void
     {
         $this->permission = $permission;
         $this->name = $permission->name;
         $this->guard_name = $permission->guard_name;
     }
 
-    public function save()
+    public function save() : RedirectResponse
     {
         $validated = $this->validate([
             'name' => 'required|string|max:255|unique:permissions,name,' . $this->permission->id,
@@ -31,7 +33,7 @@ class PermissionEdit extends Component
         return redirect()->route('roles.index');
     }
 
-    public function render()
+    public function render() : View
     {
         return view('livewire.permissions.permission-edit');
     }

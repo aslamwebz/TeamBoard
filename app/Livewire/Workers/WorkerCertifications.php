@@ -29,13 +29,13 @@ class WorkerCertifications extends Component
         'notes' => 'nullable|string',
     ];
 
-    public function mount($workerId)
+    public function mount($workerId): void
     {
         $this->workerId = $workerId;
         $this->date_obtained = now()->format('Y-m-d');
     }
 
-    public function addCertification()
+    public function addCertification(): void
     {
         $this->validate();
 
@@ -58,23 +58,23 @@ class WorkerCertifications extends Component
         ]);
 
         $this->reset(['certification_id', 'date_obtained', 'expiry_date', 'attachment', 'status', 'notes']);
-        
+
         session()->flash('message', 'Certification added successfully.');
     }
 
-    public function removeCertification($certificationId)
+    public function removeCertification($certificationId): void
     {
         $worker = WorkerProfile::find($this->workerId);
         $worker->certifications()->detach($certificationId);
-        
+
         session()->flash('message', 'Certification removed successfully.');
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         $worker = WorkerProfile::with('certifications')->find($this->workerId);
         $allCertifications = Certification::orderBy('name')->get();
-        
+
         return view('livewire.workers.worker-certifications', [
             'worker' => $worker,
             'allCertifications' => $allCertifications,

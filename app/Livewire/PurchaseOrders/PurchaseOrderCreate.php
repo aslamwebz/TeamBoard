@@ -4,6 +4,8 @@ namespace App\Livewire\PurchaseOrders;
 
 use App\Models\PurchaseOrder;
 use App\Models\Vendor;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
 
 class PurchaseOrderCreate extends Component
@@ -38,13 +40,13 @@ class PurchaseOrderCreate extends Component
         'payment_terms' => 'nullable|string|max:100',
     ];
 
-    public function mount()
+    public function mount() : void
     {
         $this->order_date = now()->format('Y-m-d');
         $this->po_number = 'PO-' . now()->format('Ymd') . '-' . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT);
     }
 
-    public function save()
+    public function save() : RedirectResponse
     {
         $this->validate();
 
@@ -68,7 +70,7 @@ class PurchaseOrderCreate extends Component
         return redirect()->route('purchase-orders.show', $purchaseOrder->id)->with('message', 'Purchase Order created successfully.');
     }
 
-    public function render()
+    public function render() : View
     {
         $vendors = Vendor::orderBy('name')->get();
         return view('livewire.purchase-orders.purchase-order-create', [

@@ -6,6 +6,8 @@ use App\Models\Project;
 use App\Models\ProjectPhase;
 use App\Models\Task;
 use App\Models\User;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
@@ -38,7 +40,7 @@ class TaskEdit extends Component
         'user_id' => 'nullable|exists:users,id',
     ];
 
-    public function mount(Task $task)
+    public function mount(Task $task) : void
     {
         $this->task = $task->load('project');
         $this->title = $task->title;
@@ -54,14 +56,14 @@ class TaskEdit extends Component
         $this->users = User::all();
     }
 
-    public function updatedProjectId()
+    public function updatedProjectId() : void
     {
         // When project changes, reload the phases
         $this->phases = ProjectPhase::where('project_id', $this->project_id)->get();
         $this->project_phase_id = null; // Reset phase selection
     }
 
-    public function updateTask()
+    public function updateTask() : RedirectResponse
     {
         $oldUserId = $this->task->user_id;
         $validatedData = $this->validate();
@@ -81,7 +83,7 @@ class TaskEdit extends Component
         return redirect()->route('tasks');
     }
 
-    public function render()
+    public function render() : View
     {
         return view('livewire.tasks.task-edit');
     }

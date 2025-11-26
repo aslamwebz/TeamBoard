@@ -34,7 +34,7 @@ class Upload extends Component
         'projectId' => 'nullable|integer',
     ];
 
-    public function mount()
+    public function mount(): void
     {
         // Set default values if passed via query parameters
         if (request()->has('type')) {
@@ -50,7 +50,7 @@ class Upload extends Component
         $this->loadData();
     }
 
-    public function uploadFiles()
+    public function uploadFiles(): \Illuminate\Http\RedirectResponse
     {
         try {
             // Validate the non-file fields first
@@ -204,13 +204,13 @@ class Upload extends Component
         }
     }
 
-    public function updatedType()
+    public function updatedType(): void
     {
         $this->typeId = null;
         $this->loadData();
     }
 
-    protected function loadData()
+    protected function loadData(): void
     {
         $this->projects = [];
         $this->tasks = [];
@@ -232,7 +232,7 @@ class Upload extends Component
         }
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         return view('livewire.files.upload', [
             'projects' => Project::orderBy('name')->get(),
@@ -245,7 +245,7 @@ class Upload extends Component
         ]);
     }
 
-    public function updatedFiles()
+    public function updatedFiles(): void
     {
         // Don't validate files immediately to prevent temporary file metadata issues
         // Validation will happen during upload

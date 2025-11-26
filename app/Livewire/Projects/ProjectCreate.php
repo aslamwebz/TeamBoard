@@ -3,6 +3,8 @@
 namespace App\Livewire\Projects;
 
 use App\Models\Project;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
@@ -24,7 +26,7 @@ class ProjectCreate extends Component
         'due_date' => 'nullable|date',
     ];
 
-    public function createProject()
+    public function createProject() : RedirectResponse
     {
         $validatedData = $this->validate();
 
@@ -35,7 +37,7 @@ class ProjectCreate extends Component
         return redirect()->route('projects');
     }
 
-    public function render()
+    public function render() : View
     {
         return view('livewire.projects.project-create');
     }

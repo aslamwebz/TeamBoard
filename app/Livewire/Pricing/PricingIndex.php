@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class PricingIndex extends Component
 {
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         return view('livewire.pricing.pricing-index');
     }

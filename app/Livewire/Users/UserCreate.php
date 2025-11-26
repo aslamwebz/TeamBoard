@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire\Users;
 
 use App\Models\User;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
@@ -27,7 +28,7 @@ class UserCreate extends Component
         ];
     }
 
-    public function save()
+    public function save() : \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
     {
         $this->processing = true;
 
@@ -44,7 +45,7 @@ class UserCreate extends Component
         return $this->redirect('/users', navigate: true);
     }
 
-    public function render()
+    public function render() : View
     {
         return view('livewire.users.user-create');
     }

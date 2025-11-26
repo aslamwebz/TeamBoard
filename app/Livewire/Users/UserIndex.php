@@ -3,6 +3,7 @@
 namespace App\Livewire\Users;
 
 use App\Models\User;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -20,7 +21,7 @@ class UserIndex extends Component
         'perPage' => ['except' => 10],
     ];
 
-    public function deleteUser($userId)
+    public function deleteUser($userId): void
     {
         $user = User::find($userId);
         if ($user) {
@@ -29,7 +30,7 @@ class UserIndex extends Component
         }
     }
 
-    public function render()
+    public function render() : View
     {
         $query = User::query();
 
@@ -56,7 +57,7 @@ class UserIndex extends Component
 
         // Pre-calculate permissions count for each user
         foreach ($users as $user) {
-            $user->permissions_count = $user->getAllPermissions()->count();
+            $user->setAttribute('permissions_count', $user->getAllPermissions()->count());
         }
 
         return view('livewire.users.user-index', [

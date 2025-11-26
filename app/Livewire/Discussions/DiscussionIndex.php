@@ -24,7 +24,7 @@ class DiscussionIndex extends Component
     
     protected $queryString = ['type', 'typeId', 'search', 'sortBy'];
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         $query = Discussion::with(['user', 'comments', 'attachments'])
             ->where('title', 'like', '%' . $this->search . '%')
@@ -56,12 +56,12 @@ class DiscussionIndex extends Component
         return view('livewire.discussions.discussion-index', compact('discussions'));
     }
 
-    public function createDiscussion($type = null, $typeId = null)
+    public function createDiscussion($type = null, $typeId = null): \Illuminate\Http\RedirectResponse
     {
         if ($type && $typeId) {
             return redirect()->route('discussions.create', ['type' => $type, 'type_id' => $typeId]);
         }
-        
+
         return redirect()->route('discussions.create');
     }
 }

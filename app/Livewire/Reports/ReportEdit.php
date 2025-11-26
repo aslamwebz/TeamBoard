@@ -3,6 +3,8 @@
 namespace App\Livewire\Reports;
 
 use App\Models\Report;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -26,7 +28,7 @@ class ReportEdit extends Component
         'status' => 'required|in:draft,generated,archived',
     ];
 
-    public function mount(Report $report)
+    public function mount(Report $report) : void
     {
         $this->report = $report;
         $this->reportId = $report->id;
@@ -37,7 +39,7 @@ class ReportEdit extends Component
         $this->data = $report->data ?? [];
     }
 
-    public function updateReport()
+    public function updateReport() : RedirectResponse
     {
         $validated = $this->validate();
 
@@ -49,7 +51,7 @@ class ReportEdit extends Component
         return $this->redirectRoute('reports.index', navigate: true);
     }
 
-    public function render()
+    public function render() : View
     {
         return view('livewire.reports.report-edit');
     }

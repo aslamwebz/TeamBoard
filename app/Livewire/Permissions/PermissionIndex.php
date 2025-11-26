@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Permissions;
 
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Spatie\Permission\Models\Permission;
@@ -16,34 +17,34 @@ class PermissionIndex extends Component
 
     protected $paginationTheme = 'tailwind';
 
-    public function updatingSearch()
+    public function updatingSearch() : void
     {
         $this->resetPage();
     }
 
-    public function updatingPage()
+    public function updatingPage() : void
     {
         $this->resetPage();
     }
 
 
-    public function mount()
+    public function mount() : void
     {
         $this->page = request()->query('page', 1);
     }
 
-    public function updatedPage()
+    public function updatedPage() : void
     {
         // This will be called when the page property changes
         // The render method will be called automatically
     }
 
-    public function gotoPage($page)
+    public function gotoPage($page) : void
     {
         $this->page = $page;
     }
 
-    public function deletePermission($permissionId)
+    public function deletePermission($permissionId) : void
     {
         $permission = Permission::findOrFail($permissionId);
 
@@ -57,7 +58,7 @@ class PermissionIndex extends Component
         $this->dispatch('success', 'Permission deleted successfully.');
     }
 
-    public function render()
+    public function render() : View
     {
         // Get all permissions matching the search term
         $allPermissions = Permission::where('name', 'like', '%' . $this->search . '%')

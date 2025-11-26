@@ -6,6 +6,7 @@ use App\Models\Client;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class UserEdit extends Component
@@ -29,7 +30,7 @@ class UserEdit extends Component
         ];
     }
 
-    public function mount(User $user)
+    public function mount(User $user) : void
     {
         $this->user = $user;
         $this->name = $user->name;
@@ -46,7 +47,7 @@ class UserEdit extends Component
         $this->selectedClients = $user->clients()->pluck('client_id')->toArray();
     }
 
-    public function updateUser()
+    public function updateUser() : \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
     {
         $this->processing = true;
 
@@ -72,7 +73,7 @@ class UserEdit extends Component
         return $this->redirect('/users', navigate: true);
     }
 
-    public function render()
+    public function render() : View
     {
         return view('livewire.users.user-edit');
     }

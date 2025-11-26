@@ -6,6 +6,8 @@ use App\Models\Client;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 #[Layout('components.layouts.app')]
 #[Title('Edit Client')]
@@ -57,7 +59,7 @@ class ClientEdit extends Component
         'subscription_status' => 'nullable|string|max:50',
     ];
 
-    public function mount(Client $client)
+    public function mount(Client $client) : void
     {
         $this->client = $client;
         $this->clientId = $client->id;
@@ -83,7 +85,7 @@ class ClientEdit extends Component
         $this->subscription_status = $client->subscription_status;
     }
 
-    public function updateClient()
+    public function updateClient() : RedirectResponse
     {
         $this->rules['email'] = 'required|email|unique:clients,email,' . $this->clientId;
         $this->rules['company_name'] = 'required|string|max:255|unique:clients,company_name,' . $this->clientId;
@@ -94,10 +96,10 @@ class ClientEdit extends Component
             $client->update($validated);
         }
 
-        return $this->redirectRoute('clients.client-index', navigate: true);
+        return redirect()->route('clients.index');
     }
 
-    public function render()
+    public function render() : View
     {
         return view('livewire.clients.client-edit');
     }

@@ -3,6 +3,7 @@
 namespace App\Livewire\Teams;
 
 use App\Models\Team;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -21,7 +22,7 @@ class TeamIndex extends Component
 
     protected $queryString = ['search'];
 
-    public function render()
+    public function render() : View
     {
         $teams = Team::query()
             ->where(function ($query) {
@@ -38,14 +39,14 @@ class TeamIndex extends Component
         ]);
     }
 
-    public function confirmDelete($teamId)
+    public function confirmDelete($teamId) : void
     {
         $this->teamToDeleteId = $teamId;
         $this->confirmingDelete = true;
         $this->showDeleteModal = true;
     }
 
-    public function delete()
+    public function delete() : void
     {
         $team = Team::findOrFail($this->teamToDeleteId);
         $team->delete();
@@ -57,7 +58,7 @@ class TeamIndex extends Component
         session()->flash('message', 'Team deleted successfully.');
     }
 
-    public function cancelDelete()
+    public function cancelDelete() : void
     {
         $this->showDeleteModal = false;
         $this->confirmingDelete = false;

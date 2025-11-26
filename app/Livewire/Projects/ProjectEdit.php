@@ -3,6 +3,8 @@
 namespace App\Livewire\Projects;
 
 use App\Models\Project;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
@@ -25,7 +27,7 @@ class ProjectEdit extends Component
         'due_date' => 'nullable|date',
     ];
 
-    public function mount(Project $project)
+    public function mount(Project $project) : void
     {
         $this->project = $project;
         $this->name = $project->name;
@@ -34,7 +36,7 @@ class ProjectEdit extends Component
         $this->due_date = $project->due_date;
     }
 
-    public function updateProject()
+    public function updateProject() : RedirectResponse
     {
         $validatedData = $this->validate();
 
@@ -48,7 +50,7 @@ class ProjectEdit extends Component
         return redirect()->route('projects');
     }
 
-    public function render()
+    public function render() : View
     {
         return view('livewire.projects.project-edit');
     }

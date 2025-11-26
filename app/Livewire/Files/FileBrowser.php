@@ -33,19 +33,19 @@ class FileBrowser extends Component
         'attachFile' => 'attachFile'
     ];
 
-    public function mount()
+    public function mount(): void
     {
         $this->loadFiles();
     }
 
-    public function loadFiles()
+    public function loadFiles(): void
     {
         // For now, we'll load from the discussions directory
         // In a real implementation, this would load from the database
         $this->files = DiscussionAttachment::orderBy('created_at', 'desc')->get();
     }
 
-    public function updatedFiles()
+    public function updatedFiles(): void
     {
         foreach ($this->files as $file) {
             $this->validateOnly('files.*', [
@@ -54,7 +54,7 @@ class FileBrowser extends Component
         }
     }
 
-    public function uploadFiles($discussionId = null, $commentId = null, $userId)
+    public function uploadFiles($discussionId = null, $commentId = null, $userId): void
     {
         $this->validate([
             'files.*' => 'file|max:10240'
@@ -68,20 +68,20 @@ class FileBrowser extends Component
 
         $this->files = [];
         $this->loadFiles(); // Refresh the file list
-        
+
         $this->dispatch('filesUploaded');
     }
 
     public function downloadFile($fileId)
     {
         $attachment = DiscussionAttachment::find($fileId);
-        
+
         if (!$attachment) {
             return;
         }
 
         $filePath = storage_path('app/discussions/' . $attachment->filename);
-        
+
         if (!file_exists($filePath)) {
             return;
         }
@@ -89,10 +89,10 @@ class FileBrowser extends Component
         return response()->download($filePath, $attachment->original_name);
     }
 
-    public function deleteFile($fileId)
+    public function deleteFile($fileId): void
     {
         $attachment = DiscussionAttachment::find($fileId);
-        
+
         if ($attachment) {
             $fileUploadService = new \App\Services\FileUploadService();
             $fileUploadService->deleteAttachment($attachment);
@@ -100,30 +100,30 @@ class FileBrowser extends Component
         }
     }
 
-    public function openModal()
+    public function openModal(): void
     {
         $this->showModal = true;
         $this->loadFiles();
     }
 
-    public function closeModal()
+    public function closeModal(): void
     {
         $this->showModal = false;
         $this->files = [];
     }
 
-    public function attachFile($fileId)
+    public function attachFile($fileId): void
     {
         $this->selectedFiles[] = $fileId;
     }
 
-    public function removeSelectedFile($index)
+    public function removeSelectedFile($index): void
     {
         unset($this->selectedFiles[$index]);
         $this->selectedFiles = array_values($this->selectedFiles);
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         return view('livewire.files.file-browser');
     }

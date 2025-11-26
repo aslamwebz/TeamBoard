@@ -5,6 +5,8 @@ namespace App\Livewire\Invoices;
 use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\Project;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -37,14 +39,14 @@ class InvoiceCreate extends Component
         'description' => 'nullable|string|max:500',
     ];
 
-    public function mount()
+    public function mount() : void
     {
         $this->invoice_number = 'INV-' . date('Y') . '-' . str_pad(mt_rand(1, 9999), 4, '0', STR_PAD_LEFT);
         $this->issue_date = now()->format('Y-m-d');
         $this->due_date = now()->addDays(30)->format('Y-m-d');
     }
 
-    public function createInvoice()
+    public function createInvoice() : RedirectResponse
     {
         $validated = $this->validate();
 
@@ -59,12 +61,12 @@ class InvoiceCreate extends Component
         return $this->redirectRoute('invoices.index', navigate: true);
     }
 
-    public function calculateTotal()
+    public function calculateTotal() : void
     {
         $this->total = (float)$this->amount + (float)$this->tax;
     }
 
-    public function render()
+    public function render() : View
     {
         $clients = Client::all();
         $projects = Project::all();

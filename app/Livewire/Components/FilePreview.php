@@ -13,17 +13,17 @@ class FilePreview extends Component
     public bool $showPreview = false;
     public bool $showModal = false;
 
-    public function mount(DiscussionAttachment $file)
+    public function mount(DiscussionAttachment $file): void
     {
         $this->file = $file;
     }
 
-    public function openPreview()
+    public function openPreview(): void
     {
         $this->showModal = true;
     }
 
-    public function closePreview()
+    public function closePreview(): void
     {
         $this->showModal = false;
     }
@@ -45,7 +45,7 @@ class FilePreview extends Component
         return in_array($this->file->mime_type, $previewableTypes);
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         return view('livewire.components.file-preview');
     }

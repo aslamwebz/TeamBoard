@@ -28,7 +28,7 @@ class PhaseEdit extends Component
         'order' => 'required|integer|min:0',
     ];
 
-    public function mount(ProjectPhase $phase)
+    public function mount(ProjectPhase $phase): void
     {
         $this->phase = $phase;
         $this->name = $phase->name;
@@ -39,7 +39,7 @@ class PhaseEdit extends Component
         $this->order = $phase->order;
     }
 
-    public function updatePhase()
+    public function updatePhase(): \Illuminate\Http\RedirectResponse
     {
         $this->validate();
 
@@ -57,7 +57,7 @@ class PhaseEdit extends Component
         return redirect()->route('projects.show', $this->phase->project);
     }
 
-    public function deletePhase()
+    public function deletePhase(): \Illuminate\Http\RedirectResponse
     {
         $project = $this->phase->project;
         $this->phase->delete();
@@ -67,7 +67,7 @@ class PhaseEdit extends Component
         return redirect()->route('projects.show', $project);
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         return view('livewire.projects.phases.edit');
     }

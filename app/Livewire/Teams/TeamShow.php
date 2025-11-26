@@ -8,6 +8,7 @@ use App\Models\Task;
 use App\Models\Team;
 use App\Models\User;
 use App\Traits\ModalTrait;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -36,7 +37,7 @@ class TeamShow extends Component
     public $allProjects = [];
     public $allUsers = [];
 
-    public function mount(Team $team)
+    public function mount(Team $team) : void
     {
         $this->team = $team->load(['users.projects.client', 'users.projects.tasks', 'users.projects.tasks.project', 'projects.client', 'projects.tasks', 'projects.tasks.project', 'clients']);
         $this->allClients = Client::all();
@@ -67,7 +68,7 @@ class TeamShow extends Component
         return Task::whereIn('project_id', $teamProjectIds)->get();
     }
 
-    public function assignMembers()
+    public function assignMembers() : void
     {
         if (empty($this->selectedUsers)) {
             return;
@@ -81,7 +82,7 @@ class TeamShow extends Component
         session()->flash('success', 'Team members assigned successfully!');
     }
 
-    public function assignClients()
+    public function assignClients() : void
     {
         if (empty($this->selectedClients)) {
             return;
@@ -95,7 +96,7 @@ class TeamShow extends Component
         session()->flash('success', 'Clients assigned successfully!');
     }
 
-    public function assignProjects()
+    public function assignProjects() : void
     {
         if (empty($this->selectedProjects)) {
             return;
@@ -109,7 +110,7 @@ class TeamShow extends Component
         session()->flash('success', 'Projects assigned successfully!');
     }
 
-    public function assignTasks()
+    public function assignTasks() : void
     {
         if (empty($this->selectedTasks)) {
             return;
@@ -132,7 +133,7 @@ class TeamShow extends Component
         session()->flash('success', 'Tasks assigned successfully!');
     }
 
-    public function removeMember($userId)
+    public function removeMember($userId) : void
     {
         $this->team->users()->detach($userId);
         $this->team->load(['users.projects.client', 'users.projects.tasks.project', 'projects.client', 'projects.tasks.project', 'clients']);
@@ -140,7 +141,7 @@ class TeamShow extends Component
         session()->flash('success', 'Team member removed successfully!');
     }
 
-    public function removeClient($clientId)
+    public function removeClient($clientId) : void
     {
         $this->team->clients()->detach($clientId);
         $this->team->load(['users.projects.client', 'users.projects.tasks.project', 'projects.client', 'projects.tasks.project', 'clients']);
@@ -148,7 +149,7 @@ class TeamShow extends Component
         session()->flash('success', 'Client removed successfully!');
     }
 
-    public function removeProject($projectId)
+    public function removeProject($projectId) : void
     {
         $this->team->projects()->detach($projectId);
         $this->team->load(['users.projects.client', 'users.projects.tasks.project', 'projects.client', 'projects.tasks.project', 'clients']);
@@ -156,59 +157,59 @@ class TeamShow extends Component
         session()->flash('success', 'Project removed successfully!');
     }
 
-    public function cancelAssignMember()
+    public function cancelAssignMember() : void
     {
         $this->selectedUsers = [];
         $this->showAssignMemberModal = false;
     }
 
-    public function cancelAssignClient()
+    public function cancelAssignClient() : void
     {
         $this->selectedClients = [];
         $this->showAssignClientModal = false;
     }
 
-    public function cancelAssignProject()
+    public function cancelAssignProject() : void
     {
         $this->selectedProjects = [];
         $this->showAssignProjectModal = false;
     }
 
-    public function cancelAssignTask()
+    public function cancelAssignTask() : void
     {
         $this->selectedTasks = [];
         $this->showAssignTaskModal = false;
     }
 
-    public function updatedShowAssignMemberModal($value)
+    public function updatedShowAssignMemberModal($value) : void
     {
         if (!$value) {
             $this->selectedUsers = [];
         }
     }
 
-    public function updatedShowAssignClientModal($value)
+    public function updatedShowAssignClientModal($value) : void
     {
         if (!$value) {
             $this->selectedClients = [];
         }
     }
 
-    public function updatedShowAssignProjectModal($value)
+    public function updatedShowAssignProjectModal($value) : void
     {
         if (!$value) {
             $this->selectedProjects = [];
         }
     }
 
-    public function updatedShowAssignTaskModal($value)
+    public function updatedShowAssignTaskModal($value) : void
     {
         if (!$value) {
             $this->selectedTasks = [];
         }
     }
 
-    public function render()
+    public function render() : View
     {
         // Ensure all relationships are properly loaded with nested relationships
         $this->team->loadMissing([

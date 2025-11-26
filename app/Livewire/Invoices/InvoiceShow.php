@@ -13,12 +13,12 @@ class InvoiceShow extends Component
 {
     public Invoice $invoice;
 
-    public function mount(Invoice $invoice)
+    public function mount(Invoice $invoice): void
     {
         $this->invoice = $invoice;
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         return view('livewire.invoices.invoice-show');
     }

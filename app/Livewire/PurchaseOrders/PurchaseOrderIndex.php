@@ -3,6 +3,7 @@
 namespace App\Livewire\PurchaseOrders;
 
 use App\Models\PurchaseOrder;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -16,12 +17,12 @@ class PurchaseOrderIndex extends Component
 
     protected $queryString = ['search', 'status'];
 
-    public function updatingSearch()
+    public function updatingSearch() : void
     {
         $this->resetPage();
     }
 
-    public function render()
+    public function render() : View
     {
         $query = PurchaseOrder::with(['vendor', 'creator']);
 

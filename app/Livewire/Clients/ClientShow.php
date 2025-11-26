@@ -4,6 +4,7 @@ namespace App\Livewire\Clients;
 
 use App\Models\Client;
 use App\Models\Project;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -17,13 +18,13 @@ class ClientShow extends Component
     public $selectedProjectId = null;
     public $availableProjects = [];
 
-    public function mount(Client $client)
+    public function mount(Client $client) : void
     {
         $this->client = $client;
         $this->loadAvailableProjects();
     }
 
-    public function loadAvailableProjects()
+    public function loadAvailableProjects() : void
     {
         // Load projects that are not already assigned to this client
         $projects = Project::where(function ($query) {
@@ -42,7 +43,7 @@ class ClientShow extends Component
         })->toArray();
     }
 
-    public function assignProject()
+    public function assignProject() : void
     {
         if ($this->selectedProjectId) {
             $project = Project::find($this->selectedProjectId);
@@ -61,7 +62,7 @@ class ClientShow extends Component
         }
     }
 
-    public function unassignProject($projectId)
+    public function unassignProject($projectId) : void
     {
         $project = Project::find($projectId);
         if ($project && $project->client_id == $this->client->id) {
@@ -75,7 +76,7 @@ class ClientShow extends Component
         }
     }
 
-    public function render()
+    public function render() : View
     {
         return view('livewire.clients.client-show', [
             'client' => $this->client

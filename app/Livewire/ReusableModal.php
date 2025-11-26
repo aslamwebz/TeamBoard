@@ -18,7 +18,7 @@ class ReusableModal extends Component
     public $cancelLabel = 'Cancel';
     public $type = 'default'; // default, confirm, assign
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         return view('livewire.reusable-modal');
     }

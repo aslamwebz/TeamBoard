@@ -16,17 +16,17 @@ class VendorTasks extends Component
 
     protected $queryString = ['search'];
 
-    public function mount($vendorId)
+    public function mount($vendorId): void
     {
         $this->vendorId = $vendorId;
     }
 
-    public function updatingSearch()
+    public function updatingSearch(): void
     {
         $this->resetPage();
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         $query = Task::where('vendor_id', $this->vendorId)->with(['project']);
 

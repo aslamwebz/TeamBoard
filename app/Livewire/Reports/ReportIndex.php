@@ -3,6 +3,7 @@
 namespace App\Livewire\Reports;
 
 use App\Models\Report;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -22,7 +23,7 @@ class ReportIndex extends Component
 
     protected $queryString = ['search', 'typeFilter', 'statusFilter'];
 
-    public function render()
+    public function render() : View
     {
         $reports = Report::query()
             ->where('title', 'like', '%' . $this->search . '%')
@@ -58,13 +59,13 @@ class ReportIndex extends Component
         ]);
     }
 
-    public function deleteReport($id)
+    public function deleteReport($id) : void
     {
         $this->reportToDeleteId = $id;
         $this->showDeleteModal = true;
     }
 
-    public function confirmDelete()
+    public function confirmDelete() : void
     {
         $report = Report::find($this->reportToDeleteId);
         if ($report) {
@@ -75,18 +76,18 @@ class ReportIndex extends Component
         $this->reportToDeleteId = null;
     }
 
-    public function cancelDelete()
+    public function cancelDelete() : void
     {
         $this->showDeleteModal = false;
         $this->reportToDeleteId = null;
     }
 
-    public function updateTypeFilter($type)
+    public function updateTypeFilter($type) : void
     {
         $this->typeFilter = $type;
     }
 
-    public function updateStatusFilter($status)
+    public function updateStatusFilter($status) : void
     {
         $this->statusFilter = $status;
     }
