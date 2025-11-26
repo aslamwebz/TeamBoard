@@ -58,6 +58,18 @@ use App\Livewire\Reports\ReportCreate;
 use App\Livewire\Reports\ReportEdit;
 use App\Livewire\Reports\ReportShow;
 use App\Livewire\Vendors\VendorShow;
+use App\Livewire\Expenses\ExpenseIndex;
+use App\Livewire\Expenses\ExpenseCreate;
+use App\Livewire\Expenses\ExpenseEdit;
+use App\Livewire\Expenses\ExpenseShow;
+use App\Livewire\Expenses\ExpenseAttachments;
+use App\Livewire\Expenses\ExpenseApprovals;
+use App\Livewire\Payments\PaymentIndex;
+use App\Livewire\Payments\PaymentCreate;
+use App\Livewire\Payments\PaymentEdit;
+use App\Livewire\Payments\PaymentShow;
+use App\Livewire\Payments\PaymentReminders;
+use App\Livewire\Invoices\InvoicePayments;
 
 /*
  * |--------------------------------------------------------------------------
@@ -186,6 +198,26 @@ Route::middleware([
         Route::get('/workers/{workerId}/skills', WorkerSkills::class)->name('worker.skills');
         Route::get('/workers/{workerId}/certifications', WorkerCertifications::class)->name('worker.certifications');
         Route::get('/workers/{workerId}/timesheets', Timesheets::class)->name('worker.timesheets');
+
+        // Expenses routes
+        Route::get('/expenses', \App\Livewire\Expenses\ExpenseIndex::class)->name('expenses.index');
+        Route::get('/expenses/create', \App\Livewire\Expenses\ExpenseCreate::class)->name('expenses.create');
+        Route::get('/expenses/{expense}/edit', \App\Livewire\Expenses\ExpenseEdit::class)->name('expenses.edit');
+        Route::get('/expenses/{expense}', \App\Livewire\Expenses\ExpenseShow::class)->name('expenses.show');
+        Route::get('/expenses/{expense}/attachments', \App\Livewire\Expenses\ExpenseAttachments::class)->name('expenses.attachments');
+        Route::get('/expenses/approvals', \App\Livewire\Expenses\ExpenseApprovals::class)->name('expenses.approvals');
+
+        // Payments routes
+        Route::get('/payments', \App\Livewire\Payments\PaymentIndex::class)->name('payments.index');
+        Route::get('/payments/create', \App\Livewire\Payments\PaymentCreate::class)->name('payments.create');
+        Route::get('/payments/{payment}/edit', \App\Livewire\Payments\PaymentEdit::class)->name('payments.edit');
+        Route::get('/payments/{payment}', \App\Livewire\Payments\PaymentShow::class)->name('payments.show');
+
+        // Payment reminders route
+        Route::get('/payment-reminders', \App\Livewire\Payments\PaymentReminders::class)->name('payment-reminders.index');
+
+        // Invoice payments route
+        Route::get('/invoices/{invoice}/payments', \App\Livewire\Invoices\InvoicePayments::class)->name('invoices.payments');
     });
 
     Route::middleware(['auth'])->group(function () {

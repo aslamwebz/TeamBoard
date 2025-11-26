@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\User as UserModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,34 +12,28 @@ class ExpenseAttachment extends Model
 
     protected $fillable = [
         'expense_id',
-        'file_name',
+        'filename',
+        'original_name',
         'file_path',
-        'file_size',
         'mime_type',
-        'uploaded_by',
-        'upload_date',
+        'size',
         'description',
     ];
 
     protected $casts = [
-        'file_size' => 'integer',
-        'upload_date' => 'datetime',
+        'size' => 'integer',
     ];
 
-    /**
-     * Get the expense this attachment belongs to.
-     */
     public function expense(): BelongsTo
     {
         return $this->belongsTo(Expense::class);
     }
 
     /**
-     * Get the user who uploaded this attachment.
+     * Get the full URL for the attachment
      */
-    public function uploader(): BelongsTo
+    public function getUrl()
     {
-        return $this->belongsTo(UserModel::class, 'uploaded_by');
+        return \Storage::url($this->file_path);
     }
-
 }

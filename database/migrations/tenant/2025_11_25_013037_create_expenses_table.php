@@ -13,17 +13,23 @@ return new class extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('vendor_id')->nullable()->constrained()->onDelete('set null');
-            $table->string('name');
-            $table->string('category')->nullable(); // e.g., travel, office, software
+            $table->foreignId('expense_category_id')->nullable()->constrained('expense_categories')->onDelete('set null');
+            $table->foreignId('project_id')->nullable()->constrained('projects')->onDelete('set null');
+            $table->foreignId('vendor_id')->nullable()->constrained('vendors')->onDelete('set null');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->string('title');
             $table->text('description')->nullable();
             $table->decimal('amount', 10, 2);
+            $table->string('currency')->default('USD');
             $table->date('expense_date');
-            $table->string('expense_type')->default('expense'); // e.g., expense, bill, receipt
-            $table->enum('status', ['draft', 'pending_approval', 'approved', 'paid', 'rejected', 'cancelled'])
-                  ->default('pending_approval');
-            $table->string('receipt_url')->nullable(); // URL to receipt/image
+            $table->enum('status', ['pending', 'approved', 'rejected', 'paid', 'cancelled'])
+                  ->default('pending');
+            $table->string('payment_method')->nullable();
             $table->text('notes')->nullable();
+            $table->string('receipt_path')->nullable();
+            $table->foreignId('approver_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->timestamp('approved_at')->nullable();
+            $table->json('custom_fields')->nullable();
             $table->timestamps();
         });
     }

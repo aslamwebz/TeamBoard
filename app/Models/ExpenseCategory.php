@@ -21,11 +21,16 @@ class ExpenseCategory extends Model
         'is_active' => 'boolean',
     ];
 
-    /**
-     * Get the expenses for this category.
-     */
     public function expenses(): HasMany
     {
-        return $this->hasMany(Expense::class, 'category_id');
+        return $this->hasMany(Expense::class);
+    }
+
+    /**
+     * Scope to get only active expense categories
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
     }
 }

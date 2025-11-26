@@ -14,11 +14,16 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('invoice_id')->nullable()->constrained('invoices')->onDelete('set null');
+            $table->foreignId('expense_id')->nullable()->constrained('expenses')->onDelete('set null');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
             $table->decimal('amount', 10, 2); // Amount paid
             $table->string('payment_method')->nullable(); // e.g., credit_card, bank_transfer, check, paypal
             $table->string('transaction_reference')->nullable(); // Transaction ID from payment processor
             $table->text('notes')->nullable(); // Additional notes about the payment
+            $table->string('status')->default('completed'); // Payment status
+            $table->string('currency')->default('USD'); // Currency of payment
             $table->date('payment_date'); // Date of payment
+            $table->json('custom_fields')->nullable(); // For storing any custom fields
             $table->timestamps();
         });
     }

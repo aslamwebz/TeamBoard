@@ -8,8 +8,11 @@
         </a>
     </div>
 
-    <flux:navlist variant="outline">
-        <flux:navlist.group class="grid">
+    <!-- Groups are now handled by individual Flux sidebar groups with collapsible functionality -->
+
+    <!-- Core Navigation -->
+    <flux:sidebar.group label="Core" :current="request()->routeIs('dashboard') || request()->routeIs('notifications*') || request()->routeIs('tasks') || request()->routeIs('projects')">
+        <flux:navlist variant="outline">
             <flux:navlist.item icon="home" href="{{ route('dashboard') }}" :current="request()->routeIs('dashboard')"
                 wire:navigate.hover @mouseenter="preloadLink('{{ route('dashboard') }}')">
                 {{ __('Dashboard') }}
@@ -38,30 +41,88 @@
                 wire:navigate.hover @mouseenter="preloadLink('{{ route('projects') }}')">
                 {{ __('Projects') }}
             </flux:navlist.item>
+        </flux:navlist>
+    </flux:sidebar.group>
 
-            <!-- Teams - Available to all authenticated users -->
+    <!-- Collaboration -->
+    <flux:sidebar.group label="Collaboration" :current="request()->routeIs('teams*') || request()->routeIs('discussions*') || request()->routeIs('files*')">
+        <flux:navlist variant="outline">
             <flux:navlist.item icon="user-group" href="{{ route('teams.index') }}"
                 :current="request()->routeIs('teams*')" wire:navigate.hover
                 @mouseenter="preloadLink('{{ route('teams.index') }}')">
                 {{ __('Teams') }}
             </flux:navlist.item>
 
-            <!-- Discussions - Available to all authenticated users -->
             <flux:navlist.item icon="chat-bubble-left-right" href="{{ route('discussions.index') }}" :current="request()->routeIs('discussions*')"
                 wire:navigate.hover @mouseenter="preloadLink('{{ route('discussions.index') }}')">
                 {{ __('Discussions') }}
             </flux:navlist.item>
 
-            <!-- Files/Documents - Available to all authenticated users -->
             <flux:navlist.item icon="folder-open" href="{{ route('files.index') }}" :current="request()->routeIs('files*')"
                 wire:navigate.hover @mouseenter="preloadLink('{{ route('files.index') }}')">
                 {{ __('Files') }}
             </flux:navlist.item>
-        </flux:navlist.group>
+        </flux:navlist>
+    </flux:sidebar.group>
 
-        <!-- Users section - Only for users with user/role/permission permissions -->
-        @canany(['view users', 'view roles', 'view permissions'])
-        <flux:navlist.group label="Users" class="grid mt-4">
+    <!-- Business Operations -->
+    <flux:sidebar.group label="Business Operations" :current="request()->routeIs('clients*') || request()->routeIs('vendors*') || request()->routeIs('purchase-orders*')">
+        <flux:navlist variant="outline">
+            <flux:navlist.item icon="user-group" href="{{ route('clients.index') }}"
+                :current="request()->routeIs('clients*')" wire:navigate.hover
+                @mouseenter="preloadLink('{{ route('clients.index') }}')">
+                {{ __('Clients') }}
+            </flux:navlist.item>
+
+            <flux:navlist.item icon="building-office" href="{{ route('vendors') }}"
+                :current="request()->routeIs('vendors*')" wire:navigate.hover
+                @mouseenter="preloadLink('{{ route('vendors') }}')">
+                {{ __('Vendors') }}
+            </flux:navlist.item>
+
+            <flux:navlist.item icon="clipboard-document-list" href="{{ route('purchase-orders') }}"
+                :current="request()->routeIs('purchase-orders*')" wire:navigate.hover
+                @mouseenter="preloadLink('{{ route('purchase-orders') }}')">
+                {{ __('Purchase Orders') }}
+            </flux:navlist.item>
+        </flux:navlist>
+    </flux:sidebar.group>
+
+    <!-- Financial Management -->
+    <flux:sidebar.group label="Financial Management" :current="request()->routeIs('invoices*') || request()->routeIs('expenses*') || request()->routeIs('payments*') || request()->routeIs('payment-reminders*')">
+        <flux:navlist variant="outline">
+            @can('view invoices')
+            <flux:navlist.item icon="document-currency-dollar" href="{{ route('invoices.index') }}"
+                :current="request()->routeIs('invoices*')" wire:navigate.hover
+                @mouseenter="preloadLink('{{ route('invoices.index') }}')">
+                {{ __('Invoices') }}
+            </flux:navlist.item>
+            @endcan
+
+            <flux:navlist.item icon="receipt-percent" href="{{ route('expenses.index') }}"
+                :current="request()->routeIs('expenses*')" wire:navigate.hover
+                @mouseenter="preloadLink('{{ route('expenses.index') }}')">
+                {{ __('Expenses') }}
+            </flux:navlist.item>
+
+            <flux:navlist.item icon="credit-card" href="{{ route('payments.index') }}"
+                :current="request()->routeIs('payments*')" wire:navigate.hover
+                @mouseenter="preloadLink('{{ route('payments.index') }}')">
+                {{ __('Payments') }}
+            </flux:navlist.item>
+
+            <flux:navlist.item icon="bell-alert" href="{{ route('payment-reminders.index') }}"
+                :current="request()->routeIs('payment-reminders*')" wire:navigate.hover
+                @mouseenter="preloadLink('{{ route('payment-reminders.index') }}')">
+                {{ __('Payment Reminders') }}
+            </flux:navlist.item>
+        </flux:navlist>
+    </flux:sidebar.group>
+
+    <!-- Users section - Only for users with user/role/permission permissions -->
+    @canany(['view users', 'view roles', 'view permissions'])
+    <flux:sidebar.group label="User Management" :current="request()->routeIs('users') || request()->routeIs('roles*') || request()->routeIs('permissions*')">
+        <flux:navlist variant="outline">
             @can('view users')
             <flux:navlist.item icon="user" href="{{ route('users') }}" :current="request()->routeIs('users')"
                 wire:navigate.hover @mouseenter="preloadLink('{{ route('users') }}')">
@@ -82,46 +143,22 @@
                 {{ __('Permissions') }}
             </flux:navlist.item>
             @endcan
-        </flux:navlist.group>
-        @endcanany
+        </flux:navlist>
+    </flux:sidebar.group>
+    @endcanany
 
-        <!-- Business Operations Section - Available to all users -->
-        <flux:navlist.group label="Business Operations" class="grid mt-4">
-            <flux:navlist.item icon="building-office" href="{{ route('vendors') }}"
-                :current="request()->routeIs('vendors*')" wire:navigate.hover
-                @mouseenter="preloadLink('{{ route('vendors') }}')">
-                {{ __('Vendors') }}
-            </flux:navlist.item>
-
-            <flux:navlist.item icon="clipboard-document-list" href="{{ route('purchase-orders') }}"
-                :current="request()->routeIs('purchase-orders*')" wire:navigate.hover
-                @mouseenter="preloadLink('{{ route('purchase-orders') }}')">
-                {{ __('Purchase Orders') }}
-            </flux:navlist.item>
-
-            <flux:navlist.item icon="user-group" href="{{ route('clients.index') }}"
-                :current="request()->routeIs('clients*')" wire:navigate.hover
-                @mouseenter="preloadLink('{{ route('clients.index') }}')">
-                {{ __('Clients') }}
-            </flux:navlist.item>
-
-            @can('view invoices')
-            <flux:navlist.item icon="document-currency-dollar" href="{{ route('invoices.index') }}"
-                :current="request()->routeIs('invoices*')" wire:navigate.hover
-                @mouseenter="preloadLink('{{ route('invoices.index') }}')">
-                {{ __('Invoices') }}
-            </flux:navlist.item>
-            @endcan
-
-            @can('view reports')
+    <!-- Analytics -->
+    @can('view reports')
+    <flux:sidebar.group label="Analytics" :current="request()->routeIs('reports*')">
+        <flux:navlist variant="outline">
             <flux:navlist.item icon="chart-bar" href="{{ route('reports.index') }}"
                 :current="request()->routeIs('reports*')" wire:navigate.hover
                 @mouseenter="preloadLink('{{ route('reports.index') }}')">
                 {{ __('Reports') }}
             </flux:navlist.item>
-            @endcan
-        </flux:navlist.group>
-    </flux:navlist>
+        </flux:navlist>
+    </flux:sidebar.group>
+    @endcan
 
     <flux:spacer />
 

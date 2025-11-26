@@ -33,16 +33,8 @@ class NavigationHandler extends Component
         ];
     }
 
-    public function render(): \Stringable
+    public function render()
     {
-        return <<<'blade'
-            <div>
-                @push('head')
-                    @foreach($this->getNavigationRoutes() as $route)
-                        <link rel="prefetch" href="{{ $route }}" as="document" />
-                    @endforeach
-                @endpush
-            </div>
-        blade;
+        return view('livewire.navigation-handler');
     }
 }
