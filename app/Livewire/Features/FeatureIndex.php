@@ -10,6 +10,6 @@ class FeatureIndex extends Component
 {
     public function render()
     {
-        return view('livewire.features.index');
+        return view('livewire.features.feature-index');
     }
 }

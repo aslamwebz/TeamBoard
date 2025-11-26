@@ -92,6 +92,6 @@ class DiscussionEdit extends Component
 
     public function render()
     {
-        return view('livewire.discussions.edit');
+        return view('livewire.discussions.discussion-edit');
     }
 }

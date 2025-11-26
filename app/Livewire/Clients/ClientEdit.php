@@ -94,11 +94,11 @@ class ClientEdit extends Component
             $client->update($validated);
         }
 
-        return $this->redirectRoute('clients.index', navigate: true);
+        return $this->redirectRoute('clients.client-index', navigate: true);
     }
 
     public function render()
     {
-        return view('livewire.clients.edit');
+        return view('livewire.clients.client-edit');
     }
 }

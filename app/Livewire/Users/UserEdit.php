@@ -74,6 +74,6 @@ class UserEdit extends Component
 
     public function render()
     {
-        return view('livewire.users.edit');
+        return view('livewire.users.user-edit');
     }
 }

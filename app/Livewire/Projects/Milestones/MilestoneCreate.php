@@ -56,6 +56,6 @@ class MilestoneCreate extends Component
     public function render()
     {
         $phases = $this->project->phases;
-        return view('livewire.projects.milestones.create', compact('phases'));
+        return view('livewire.projects.milestones.milestone-create', compact('phases'));
     }
 }

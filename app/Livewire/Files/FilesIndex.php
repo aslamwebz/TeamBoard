@@ -53,7 +53,7 @@ class FilesIndex extends Component
         $files = $query->orderBy($this->sortBy, $this->sortDirection)
                        ->paginate(20);
 
-        return view('livewire.files.index', [
+        return view('livewire.files.files-index', [
             'files' => $files
         ]);
     }

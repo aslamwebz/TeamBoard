@@ -225,7 +225,7 @@ class DiscussionShow extends Component
             'client' => 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400',
         ];
 
-        return view('livewire.discussions.show', [
+        return view('livewire.discussions.discussion-show', [
             'typeColors' => $typeColors
         ]);
     }

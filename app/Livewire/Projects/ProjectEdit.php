@@ -50,6 +50,6 @@ class ProjectEdit extends Component
 
     public function render()
     {
-        return view('livewire.projects.edit');
+        return view('livewire.projects.project-edit');
     }
 }

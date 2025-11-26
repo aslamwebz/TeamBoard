@@ -59,7 +59,7 @@ class UserIndex extends Component
             $user->permissions_count = $user->getAllPermissions()->count();
         }
 
-        return view('livewire.users.index', [
+        return view('livewire.users.user-index', [
             'users' => $users
         ]);
     }

@@ -69,7 +69,7 @@ class InvoiceCreate extends Component
         $clients = Client::all();
         $projects = Project::all();
 
-        return view('livewire.invoices.create', [
+        return view('livewire.invoices.invoice-create', [
             'clients' => $clients,
             'projects' => $projects
         ]);

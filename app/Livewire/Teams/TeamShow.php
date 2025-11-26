@@ -219,7 +219,7 @@ class TeamShow extends Component
             'clients'
         ]);
 
-        return view('livewire.teams.show', [
+        return view('livewire.teams.team-show', [
             'team' => $this->team
         ]);
     }

@@ -37,7 +37,7 @@ class VendorIndex extends Component
 
         $vendors = $query->orderBy('name')->paginate($this->perPage);
 
-        return view('livewire.vendors.index', [
+        return view('livewire.vendors.vendor-index', [
             'vendors' => $vendors,
         ]);
     }

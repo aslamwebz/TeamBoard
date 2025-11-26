@@ -38,7 +38,7 @@ class PurchaseOrderIndex extends Component
 
         $purchaseOrders = $query->orderBy('order_date', 'desc')->paginate($this->perPage);
 
-        return view('livewire.purchase-orders.index', [
+        return view('livewire.purchase-orders.purchase-order-index', [
             'purchaseOrders' => $purchaseOrders,
         ]);
     }

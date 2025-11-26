@@ -53,7 +53,7 @@ class DiscussionIndex extends Component
 
         $discussions = $query->paginate(10);
 
-        return view('livewire.discussions.index', compact('discussions'));
+        return view('livewire.discussions.discussion-index', compact('discussions'));
     }
 
     public function createDiscussion($type = null, $typeId = null)

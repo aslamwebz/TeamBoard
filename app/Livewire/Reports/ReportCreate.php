@@ -74,6 +74,6 @@ class ReportCreate extends Component
 
     public function render()
     {
-        return view('livewire.reports.create');
+        return view('livewire.reports.report-create');
     }
 }

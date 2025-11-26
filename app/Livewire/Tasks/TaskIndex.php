@@ -53,10 +53,21 @@ class TaskIndex extends Component
             }
         }
 
-        return view('livewire.tasks.index', [
+        return view('livewire.tasks.task-index', [
             'tasks' => $tasks,
             'tasksByStatus' => $this->tasksByStatus
         ]);
+    }
+
+    public function getTaskStatusBadgeClass(string $status): string
+    {
+        return match($status) {
+            'todo' => 'bg-gray-100 text-gray-800',
+            'in_progress' => 'bg-blue-100 text-blue-800',
+            'completed' => 'bg-green-100 text-green-800',
+            'on_hold' => 'bg-yellow-100 text-yellow-800',
+            default => 'bg-gray-100 text-gray-800',
+        };
     }
 
     public function refreshTasksByStatus()

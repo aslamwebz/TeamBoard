@@ -96,6 +96,6 @@ class DiscussionCreate extends Component
 
     public function render()
     {
-        return view('livewire.discussions.create');
+        return view('livewire.discussions.discussion-create');
     }
 }

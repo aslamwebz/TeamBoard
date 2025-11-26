@@ -20,6 +20,6 @@ class ReportShow extends Component
 
     public function render()
     {
-        return view('livewire.reports.show');
+        return view('livewire.reports.report-show');
     }
 }

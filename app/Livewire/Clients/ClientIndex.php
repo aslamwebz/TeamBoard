@@ -32,8 +32,8 @@ class ClientIndex extends Component
             ->orderBy('name')
             ->paginate(10);
 
-        return view('livewire.clients.index', [
-            'clients' => $clients
+        return view('livewire.clients.client-index', [
+            'clients' => $clients   
         ]);
     }
 

@@ -47,7 +47,7 @@ class WorkerIndex extends Component
         // Get unique departments for filter dropdown
         $departments = WorkerProfile::select('department')->whereNotNull('department')->distinct()->pluck('department');
 
-        return view('livewire.workers.index', [
+        return view('livewire.workers.worker-index', [
             'workers' => $workers,
             'departments' => $departments,
         ]);

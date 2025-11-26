@@ -16,6 +16,6 @@ class WorkerShow extends Component
 
     public function render()
     {
-        return view('livewire.workers.show');
+        return view('livewire.workers.worker-show');
     }
 }

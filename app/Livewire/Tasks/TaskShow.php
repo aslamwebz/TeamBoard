@@ -20,6 +20,6 @@ class TaskShow extends Component
 
     public function render()
     {
-        return view('livewire.tasks.show');
+        return view('livewire.tasks.task-show');
     }
 }

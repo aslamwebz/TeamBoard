@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Livewire\Billing;
 
@@ -10,6 +8,6 @@ class BillingIndex extends Component
 {
     public function render()
     {
-        return view('livewire.billing.index');
+        return view('livewire.billing.billing-index');
     }
 }

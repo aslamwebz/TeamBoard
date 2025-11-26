@@ -37,6 +37,6 @@ class ProjectCreate extends Component
 
     public function render()
     {
-        return view('livewire.projects.create');
+        return view('livewire.projects.project-create');
     }
 }

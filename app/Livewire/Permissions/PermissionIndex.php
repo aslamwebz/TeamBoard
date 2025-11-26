@@ -193,7 +193,7 @@ class PermissionIndex extends Component
         $paginatedPermissions->currentPage($currentPage);
         $paginatedPermissions->lastPage($totalPages);
 
-        return view('livewire.permissions.index', [
+        return view('livewire.permissions.permission-index', [
             'permissions' => $paginatedPermissions,
             'groupedPermissions' => $currentGroups
         ]);

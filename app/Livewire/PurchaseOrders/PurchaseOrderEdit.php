@@ -86,8 +86,13 @@ class PurchaseOrderEdit extends Component
     public function render()
     {
         $vendors = Vendor::orderBy('name')->get();
-        return view('livewire.purchase-orders.edit', [
+        $projects = Project::all();
+        $tasks = Task::all();
+
+        return view('livewire.purchase-orders.purchase-order-edit', [
             'vendors' => $vendors,
+            'projects' => $projects,
+            'tasks' => $tasks,
         ]);
     }
 }

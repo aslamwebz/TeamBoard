@@ -55,7 +55,7 @@ class MilestoneEdit extends Component
 
         session()->flash('message', 'Milestone updated successfully.');
 
-        return redirect()->route('projects.show', $this->milestone->project);
+        return redirect()->route('projects.project-show', $this->milestone->project);
     }
 
     public function deleteMilestone()
@@ -65,12 +65,12 @@ class MilestoneEdit extends Component
 
         session()->flash('message', 'Milestone deleted successfully.');
 
-        return redirect()->route('projects.show', $project);
+        return redirect()->route('projects.project-show', $project);
     }
 
     public function render()
     {
         $phases = $this->milestone->project->phases;
-        return view('livewire.projects.milestones.edit', compact('phases'));
+        return view('livewire.projects.milestones.milestone-edit', compact('phases'));
     }
 }

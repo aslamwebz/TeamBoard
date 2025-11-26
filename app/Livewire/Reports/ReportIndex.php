@@ -51,7 +51,7 @@ class ReportIndex extends Component
             'archived' => 'Archived'
         ];
 
-        return view('livewire.reports.index', [
+        return view('livewire.reports.report-index', [
             'reports' => $reports,
             'reportTypes' => $reportTypes,
             'statuses' => $statuses

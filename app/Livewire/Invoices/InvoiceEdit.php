@@ -87,7 +87,7 @@ class InvoiceEdit extends Component
         $clients = Client::all();
         $projects = Project::all();
 
-        return view('livewire.invoices.edit', [
+        return view('livewire.invoices.invoice-edit', [
             'clients' => $clients,
             'projects' => $projects
         ]);

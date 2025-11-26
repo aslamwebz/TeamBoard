@@ -71,7 +71,7 @@ class PurchaseOrderCreate extends Component
     public function render()
     {
         $vendors = Vendor::orderBy('name')->get();
-        return view('livewire.purchase-orders.create', [
+        return view('livewire.purchase-orders.purchase-order-create', [
             'vendors' => $vendors,
         ]);
     }

@@ -33,6 +33,6 @@ class PermissionEdit extends Component
 
     public function render()
     {
-        return view('livewire.permissions.edit');
+        return view('livewire.permissions.permission-edit');
     }
 }

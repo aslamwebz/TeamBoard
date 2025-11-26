@@ -68,6 +68,6 @@ class VendorCreate extends Component
 
     public function render()
     {
-        return view('livewire.vendors.create');
+        return view('livewire.vendors.vendor-create');
     }
 }

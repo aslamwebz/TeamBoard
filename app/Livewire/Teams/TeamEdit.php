@@ -42,6 +42,6 @@ class TeamEdit extends Component
 
     public function render()
     {
-        return view('livewire.teams.edit');
+        return view('livewire.teams.team-edit');
     }
 }

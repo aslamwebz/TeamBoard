@@ -115,7 +115,7 @@ class Timesheets extends Component
         $totalLeaveHours = $query->whereIn('entry_type', ['vacation', 'sick_leave', 'holiday'])->sum('hours_worked');
         $totalHours = $totalRegularHours + $totalOvertimeHours + $totalLeaveHours;
 
-        return view('livewire.workers.timesheets', [
+        return view('livewire.workers.worker-timesheets', [
             'timesheets' => $timesheets,
             'projects' => $projects,
             'tasks' => $tasks,

@@ -33,7 +33,7 @@ class TeamIndex extends Component
             ->orderBy('name')
             ->paginate(10);
 
-        return view('livewire.teams.index', [
+        return view('livewire.teams.team-index', [
             'teams' => $teams,
         ]);
     }

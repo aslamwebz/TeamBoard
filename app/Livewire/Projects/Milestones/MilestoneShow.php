@@ -20,6 +20,6 @@ class MilestoneShow extends Component
 
     public function render()
     {
-        return view('livewire.projects.milestones.show');
+        return view('livewire.projects.milestones.milestone-show');
     }
 }

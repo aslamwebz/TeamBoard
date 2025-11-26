@@ -108,7 +108,7 @@ class WorkerEdit extends Component
     public function render()
     {
         $users = User::orderBy('name')->get();
-        return view('livewire.workers.edit', [
+        return view('livewire.workers.worker-edit', [
             'users' => $users,
         ]);
     }

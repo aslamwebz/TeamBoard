@@ -45,7 +45,7 @@ class InvoiceIndex extends Component
 
         $clients = \App\Models\Client::orderBy('name')->get();
 
-        return view('livewire.invoices.index', [
+        return view('livewire.invoices.invoice-index', [
             'invoices' => $invoices,
             'clients' => $clients
         ]);

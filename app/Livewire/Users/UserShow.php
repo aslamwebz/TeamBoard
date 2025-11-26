@@ -33,7 +33,7 @@ class UserShow extends Component
         $userPermissions = $this->user->getAllPermissions();
         $userPermissionsCount = $userPermissions->count();
 
-        return view('livewire.users.show', [
+        return view('livewire.users.user-show', [
             'userPermissions' => $userPermissions,
             'userPermissionsCount' => $userPermissionsCount
         ]);

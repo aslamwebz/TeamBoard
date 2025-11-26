@@ -25,6 +25,6 @@ class PermissionCreate extends Component
 
     public function render()
     {
-        return view('livewire.permissions.create');
+        return view('livewire.permissions.permission-create');
     }
 }

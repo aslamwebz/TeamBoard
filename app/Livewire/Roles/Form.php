@@ -119,6 +119,6 @@ class Form extends Component
 
     public function render()
     {
-        return view('livewire.roles.form');
+        return view('livewire.roles.role-form');
     }
 }

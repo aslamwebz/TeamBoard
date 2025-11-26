@@ -40,7 +40,7 @@ class RoleIndex extends Component
             ->with('permissions')
             ->paginate($this->perPage);
 
-        return view('livewire.roles.index', [
+        return view('livewire.roles.role-index', [
             'roles' => $roles
         ]);
     }

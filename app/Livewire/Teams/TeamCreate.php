@@ -32,6 +32,6 @@ class TeamCreate extends Component
 
     public function render()
     {
-        return view('livewire.teams.create');
+        return view('livewire.teams.team-create');
     }
 }

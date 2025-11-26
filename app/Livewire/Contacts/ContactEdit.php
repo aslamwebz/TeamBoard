@@ -101,6 +101,6 @@ class ContactEdit extends Component
 
     public function render()
     {
-        return view('livewire.contacts.edit');
+        return view('livewire.contacts.contact-edit');
     }
 }

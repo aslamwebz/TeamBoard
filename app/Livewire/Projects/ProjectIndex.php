@@ -31,7 +31,7 @@ class ProjectIndex extends Component
             })
             ->paginate(9);
 
-        return view('livewire.projects.index', [
+        return view('livewire.projects.project-index', [
             'projects' => $projects
         ]);
     }

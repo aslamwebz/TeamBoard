@@ -10,6 +10,6 @@ class PricingIndex extends Component
 {
     public function render()
     {
-        return view('livewire.pricing.index');
+        return view('livewire.pricing.pricing-index');
     }
 }

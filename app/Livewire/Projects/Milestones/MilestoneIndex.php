@@ -25,6 +25,6 @@ class MilestoneIndex extends Component
     public function render()
     {
         $milestones = $this->project->milestones()->paginate(10);
-        return view('livewire.projects.milestones.index', compact('milestones'));
+        return view('livewire.projects.milestones.milestone-index', compact('milestones'));
     }
 }

@@ -16,7 +16,7 @@ class VendorShow extends Component
 
     public function render()
     {
-        return view('livewire.vendors.show');
+        return view('livewire.vendors.vendor-show');
     }
 
     public function getVendorStatusBadgeClass(string $status): string

@@ -4,9 +4,9 @@ namespace App\Livewire\Clients;
 
 use App\Models\Client;
 use App\Models\Project;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use Livewire\Component;
 
 #[Layout('components.layouts.app')]
 #[Title('View Client')]
@@ -26,10 +26,11 @@ class ClientShow extends Component
     public function loadAvailableProjects()
     {
         // Load projects that are not already assigned to this client
-        $projects = Project::where(function($query) {
-                $query->whereNull('client_id')
-                      ->orWhere('client_id', '!=', $this->client->id);
-            })
+        $projects = Project::where(function ($query) {
+            $query
+                ->whereNull('client_id')
+                ->orWhere('client_id', '!=', $this->client->id);
+        })
             ->orderBy('name')
             ->get();
 
@@ -76,6 +77,8 @@ class ClientShow extends Component
 
     public function render()
     {
-        return view('livewire.clients.show');
+        return view('livewire.clients.client-show', [
+            'client' => $this->client
+        ]);
     }
 }

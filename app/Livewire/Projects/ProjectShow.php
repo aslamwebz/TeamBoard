@@ -128,7 +128,7 @@ class ProjectShow extends Component
 
     public function render()
     {
-        return view('livewire.projects.show', [
+        return view('livewire.projects.project-show', [
             'project' => $this->project,
         ]);
     }

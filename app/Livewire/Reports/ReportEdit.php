@@ -51,6 +51,6 @@ class ReportEdit extends Component
 
     public function render()
     {
-        return view('livewire.reports.edit');
+        return view('livewire.reports.report-edit');
     }
 }

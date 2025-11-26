@@ -83,6 +83,6 @@ class TaskEdit extends Component
 
     public function render()
     {
-        return view('livewire.tasks.edit');
+        return view('livewire.tasks.task-edit');
     }
 }

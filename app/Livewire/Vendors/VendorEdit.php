@@ -92,6 +92,6 @@ class VendorEdit extends Component
 
     public function render()
     {
-        return view('livewire.vendors.edit');
+        return view('livewire.vendors.vendor-edit');
     }
 }

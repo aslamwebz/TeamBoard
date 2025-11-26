@@ -69,6 +69,6 @@ class ClientCreate extends Component
 
     public function render()
     {
-        return view('livewire.clients.create');
+        return view('livewire.clients.client-create');
     }
 }
