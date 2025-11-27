@@ -77,7 +77,9 @@
     <div class="navigate-loading" :class="{ 'active': isLoading }"></div>
     <div class="flex h-full">
         <!-- Sidebar -->
-        @if(auth()->user()->hasRole('worker') && auth()->user()->roles()->count() <= 1)
+        @if(auth()->user()->hasRole('client') && auth()->user()->roles()->count() <= 1)
+            <x-layouts.app.client-sidebar />
+        @elseif(auth()->user()->hasRole('worker') && auth()->user()->roles()->count() <= 1)
             <x-layouts.app.worker-sidebar />
         @else
             <x-layouts.app.sidebar />

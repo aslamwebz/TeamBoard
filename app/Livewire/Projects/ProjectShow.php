@@ -37,9 +37,15 @@ class ProjectShow extends Component
         $this->project = $project->load([
             'client',
             'invoices',
-            'tasks',
-            'users',
-            'teams',
+            'tasks' => function($query) {
+                $query->with('phase', 'users');
+            },
+            'users' => function($query) {
+                $query->with('tasks');
+            },
+            'teams' => function($query) {
+                $query->with('users');
+            },
             'phases',
             'milestones',
             'discussions', // Load discussions for the project

@@ -61,6 +61,7 @@ use App\Livewire\Vendors\VendorServices;
 use App\Livewire\Vendors\VendorShow;
 use App\Livewire\Vendors\VendorTasks;
 use App\Livewire\Worker\WorkerDashboard;
+use App\Livewire\Client\ClientDashboard;
 use App\Livewire\Workers\Timesheets;
 use App\Livewire\Workers\WorkerCertifications;
 use App\Livewire\Workers\WorkerEdit;
@@ -90,8 +91,16 @@ Route::middleware([
     InitializeTenancyBySubdomain::class,
     PreventAccessFromCentralDomains::class,
 ])->group(function () {
-    Route::middleware(['auth', 'verified', 'worker'])->group(function () {
-        Route::get('/', Dashboard::class)->name('dashboard');
+    Route::middleware(['auth', 'verified'])->group(function () {
+        Route::get('/', function () {
+            $user = auth()->user();
+            if ($user->hasWorkerProfile()) {
+                return \Livewire::mount(WorkerDashboard::class);
+            }
+            return \Livewire::mount(Dashboard::class);
+        })->name('dashboard');
+
+        Route::get('/client', ClientDashboard::class)->name('client.dashboard')->middleware('client');
         Route::get('/my', WorkerDashboard::class)->name('worker.dashboard');
 
         Route::get('tasks', TaskIndex::class)->name('tasks');
