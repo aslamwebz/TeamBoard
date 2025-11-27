@@ -92,14 +92,7 @@ Route::middleware([
     PreventAccessFromCentralDomains::class,
 ])->group(function () {
     Route::middleware(['auth', 'verified'])->group(function () {
-        Route::get('/', function () {
-            $user = auth()->user();
-            if ($user->hasWorkerProfile()) {
-                return \Livewire::mount(WorkerDashboard::class);
-            }
-            return \Livewire::mount(Dashboard::class);
-        })->name('dashboard');
-
+        Route::get('/', Dashboard::class)->name('dashboard');
         Route::get('/client', ClientDashboard::class)->name('client.dashboard')->middleware('client');
         Route::get('/my', WorkerDashboard::class)->name('worker.dashboard');
 

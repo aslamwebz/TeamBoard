@@ -13,6 +13,20 @@
             {{ __('Dashboard') }}
         </flux:sidebar.item>
 
+        <flux:sidebar.item icon="home" href="{{ route('client.dashboard') }}"
+            :current="request()->routeIs('client.dashboard')" wire:navigate.hover
+            @mouseenter="preloadLink('{{ route('client.dashboard') }}')">
+            {{ __('Client Dashboard') }}
+        </flux:sidebar.item>
+
+        <flux:sidebar.item icon="home" href="{{ route('worker.dashboard') }}"
+            :current="request()->routeIs('worker.dashboard')" wire:navigate.hover
+            @mouseenter="preloadLink('{{ route('worker.dashboard') }}')">
+            {{ __('Worker Dashboard') }}
+        </flux:sidebar.item>
+
+        <flux:sidebar.spacer class="my-4" />
+
         <flux:sidebar.item icon="bell-alert" href="{{ route('notifications.index') }}"
             :current="request()->routeIs('notifications*')" wire:navigate.hover
             @mouseenter="preloadLink('{{ route('notifications.index') }}')">
@@ -27,8 +41,9 @@
 
         <flux:sidebar.group expandable expanded="false" icon="folder-open" heading="WORK" class="grid">
 
-            <flux:sidebar.item icon="briefcase" href="{{ route('projects') }}" :current="request()->routeIs('projects')"
-                wire:navigate.hover @mouseenter="preloadLink('{{ route('projects') }}')">
+            <flux:sidebar.item icon="briefcase" href="{{ route('projects') }}"
+                :current="request()->routeIs('projects')" wire:navigate.hover
+                @mouseenter="preloadLink('{{ route('projects') }}')">
                 {{ __('Projects') }}
             </flux:sidebar.item>
             <flux:sidebar.item icon="list-bullet" href="{{ route('tasks') }}" :current="request()->routeIs('tasks')"
@@ -64,8 +79,9 @@
         <flux:sidebar.group expandable expanded="false" icon="user-circle" heading="USERS" class="grid">
             @canany(['view users', 'view roles', 'view permissions'])
                 @can('view users')
-                    <flux:sidebar.item icon="identification" href="{{ route('users') }}" :current="request()->routeIs('users')"
-                        wire:navigate.hover @mouseenter="preloadLink('{{ route('users') }}')">
+                    <flux:sidebar.item icon="identification" href="{{ route('users') }}"
+                        :current="request()->routeIs('users')" wire:navigate.hover
+                        @mouseenter="preloadLink('{{ route('users') }}')">
                         {{ __('Users') }}
                     </flux:sidebar.item>
                 @endcan
@@ -169,7 +185,13 @@
                     <flux:menu.separator />
                     <flux:menu.item :href="route('settings.profile')" icon="cog">{{ __('Personal Settings') }}
                     </flux:menu.item>
-                    <flux:menu.item icon="arrow-right-start-on-rectangle">Logout</flux:menu.item>
+                    <form method="POST" action="{{ route('logout') }}" class="w-full">
+                        @csrf
+                        <flux:menu.item as="button" type="submit" icon="arrow-right-start-on-rectangle"
+                            class="w-full">
+                            {{ __('Log Out') }}
+                        </flux:menu.item>
+                    </form>
                 </flux:menu>
             </flux:dropdown>
             <flux:header class="lg:hidden">
@@ -198,7 +220,13 @@
                         <flux:menu.separator />
                         <flux:menu.item :href="route('settings.profile')" icon="cog">{{ __('Personal Settings') }}
                         </flux:menu.item>
-                        <flux:menu.item icon="arrow-right-start-on-rectangle">Logout</flux:menu.item>
+                        <form method="POST" action="{{ route('logout') }}" class="w-full">
+                            @csrf
+                            <flux:menu.item as="button" type="submit" icon="arrow-right-start-on-rectangle"
+                                class="w-full">
+                                {{ __('Log Out') }}
+                            </flux:menu.item>
+                        </form>
                     </flux:menu>
                 </flux:dropdown>
             </flux:header>
