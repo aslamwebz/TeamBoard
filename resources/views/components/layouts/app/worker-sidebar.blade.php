@@ -25,13 +25,13 @@
             @endif
         </flux:sidebar.item>
 
-        <flux:sidebar.group expandable expanded="true" icon="folder" heading="WORK" class="grid">
+        <flux:sidebar.group expandable expanded="true" icon="folder-open" heading="WORK" class="grid">
             <flux:sidebar.item icon="list-bullet" href="{{ route('tasks') }}" :current="request()->routeIs('tasks')"
                 wire:navigate.hover @mouseenter="preloadLink('{{ route('tasks') }}')">
                 {{ __('My Tasks') }}
             </flux:sidebar.item>
             
-            <flux:sidebar.item icon="folder" href="{{ route('projects') }}" :current="request()->routeIs('projects')"
+            <flux:sidebar.item icon="briefcase" href="{{ route('projects') }}" :current="request()->routeIs('projects')"
                 wire:navigate.hover @mouseenter="preloadLink('{{ route('projects') }}')">
                 {{ __('My Projects') }}
             </flux:sidebar.item>
@@ -42,7 +42,7 @@
             </flux:sidebar.item>
         </flux:sidebar.group>
         
-        <flux:sidebar.group expandable expanded="false" icon="user" heading="PROFILE" class="grid">
+        <flux:sidebar.group expandable expanded="false" icon="user-circle" heading="PROFILE" class="grid">
             <flux:sidebar.item icon="user" href="{{ route('workers.show', ['workerProfile' => auth()->user()->workerProfile->id]) }}"
                 :current="request()->routeIs('workers.show')"
                 wire:navigate.hover

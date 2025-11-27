@@ -25,9 +25,9 @@
             @endif
         </flux:sidebar.item>
 
-        <flux:sidebar.group expandable expanded="false" icon="star" heading="WORK" class="grid">
+        <flux:sidebar.group expandable expanded="false" icon="folder-open" heading="WORK" class="grid">
 
-            <flux:sidebar.item icon="folder" href="{{ route('projects') }}" :current="request()->routeIs('projects')"
+            <flux:sidebar.item icon="briefcase" href="{{ route('projects') }}" :current="request()->routeIs('projects')"
                 wire:navigate.hover @mouseenter="preloadLink('{{ route('projects') }}')">
                 {{ __('Projects') }}
             </flux:sidebar.item>
@@ -54,17 +54,17 @@
                 {{ __('Files') }}
             </flux:sidebar.item>
         </flux:sidebar.group>
-        <flux:sidebar.group expandable expanded="false" icon="star" heading="CLIENTS" class="grid">
-            <flux:sidebar.item icon="user-group" href="{{ route('clients.index') }}"
+        <flux:sidebar.group expandable expanded="false" icon="user-group" heading="CLIENTS" class="grid">
+            <flux:sidebar.item icon="user-circle" href="{{ route('clients.index') }}"
                 :current="request()->routeIs('clients*')" wire:navigate.hover
                 @mouseenter="preloadLink('{{ route('clients.index') }}')">
                 {{ __('Clients') }}
             </flux:sidebar.item>
         </flux:sidebar.group>
-        <flux:sidebar.group expandable expanded="false" icon="star" heading="USERS" class="grid">
+        <flux:sidebar.group expandable expanded="false" icon="user-circle" heading="USERS" class="grid">
             @canany(['view users', 'view roles', 'view permissions'])
                 @can('view users')
-                    <flux:sidebar.item icon="user" href="{{ route('users') }}" :current="request()->routeIs('users')"
+                    <flux:sidebar.item icon="identification" href="{{ route('users') }}" :current="request()->routeIs('users')"
                         wire:navigate.hover @mouseenter="preloadLink('{{ route('users') }}')">
                         {{ __('Users') }}
                     </flux:sidebar.item>
@@ -88,7 +88,7 @@
 
             @endcanany
         </flux:sidebar.group>
-        <flux:sidebar.group expandable expanded="false" icon="star" heading="FINANCE" class="grid">
+        <flux:sidebar.group expandable expanded="false" icon="currency-dollar" heading="FINANCE" class="grid">
             @can('view invoices')
                 <flux:sidebar.item icon="document-currency-dollar" href="{{ route('invoices.index') }}"
                     :current="request()->routeIs('invoices*')" wire:navigate.hover
@@ -115,7 +115,7 @@
                 {{ __('Payment Reminders') }}
             </flux:sidebar.item>
         </flux:sidebar.group>
-        <flux:sidebar.group expandable expanded="false" icon="star" heading="PROCUREMENT" class="grid">
+        <flux:sidebar.group expandable expanded="false" icon="shopping-cart" heading="PROCUREMENT" class="grid">
 
             <flux:sidebar.item icon="building-office" href="{{ route('vendors') }}"
                 :current="request()->routeIs('vendors*')" wire:navigate.hover
@@ -129,9 +129,9 @@
                 {{ __('Purchase Orders') }}
             </flux:sidebar.item>
         </flux:sidebar.group>
-        <flux:sidebar.group expandable expanded="false" icon="star" heading="REPORTS" class="grid">
+        <flux:sidebar.group expandable expanded="false" icon="chart-bar" heading="REPORTS" class="grid">
             @can('view reports')
-                <flux:sidebar.item icon="chart-bar" href="{{ route('reports.index') }}"
+                <flux:sidebar.item icon="chart-pie" href="{{ route('reports.index') }}"
                     :current="request()->routeIs('reports*')" wire:navigate.hover
                     @mouseenter="preloadLink('{{ route('reports.index') }}')">
                     {{ __('Reports') }}

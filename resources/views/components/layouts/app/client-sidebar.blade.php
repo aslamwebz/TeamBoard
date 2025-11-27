@@ -25,8 +25,8 @@
             @endif
         </flux:sidebar.item>
 
-        <flux:sidebar.group expandable expanded="true" icon="folder" heading="PROJECTS" class="grid">
-            <flux:sidebar.item icon="folder" href="{{ route('projects') }}" :current="request()->routeIs('projects')"
+        <flux:sidebar.group expandable expanded="true" icon="folder-open" heading="PROJECTS" class="grid">
+            <flux:sidebar.item icon="briefcase" href="{{ route('projects') }}" :current="request()->routeIs('projects')"
                 wire:navigate.hover @mouseenter="preloadLink('{{ route('projects') }}')">
                 {{ __('My Projects') }}
             </flux:sidebar.item>
@@ -58,10 +58,10 @@
             </flux:sidebar.item>
         </flux:sidebar.group>
 
-        <flux:sidebar.group expandable expanded="false" icon="document" heading="DOCUMENTS" class="grid">
-            <flux:sidebar.item icon="folder-open" href="{{ route('files.index') }}" 
-                :current="request()->routeIs('files*')" 
-                wire:navigate.hover 
+        <flux:sidebar.group expandable expanded="false" icon="document-text" heading="DOCUMENTS" class="grid">
+            <flux:sidebar.item icon="document-duplicate" href="{{ route('files.index') }}"
+                :current="request()->routeIs('files*')"
+                wire:navigate.hover
                 @mouseenter="preloadLink('{{ route('files.index') }}')">
                 {{ __('Project Files') }}
             </flux:sidebar.item>
@@ -74,7 +74,7 @@
             </flux:sidebar.item>
         </flux:sidebar.group>
 
-        <flux:sidebar.group expandable expanded="false" icon="user" heading="PROFILE" class="grid">
+        <flux:sidebar.group expandable expanded="false" icon="user-circle" heading="PROFILE" class="grid">
             <flux:sidebar.item icon="cog" href="{{ route('settings.profile') }}" 
                 :current="request()->routeIs('settings.profile*')" 
                 wire:navigate.hover 
