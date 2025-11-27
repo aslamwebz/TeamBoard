@@ -5,71 +5,73 @@ use App\Livewire\Clients\ClientCreate;
 use App\Livewire\Clients\ClientEdit;
 use App\Livewire\Clients\ClientIndex;
 use App\Livewire\Clients\ClientShow;
+use App\Livewire\Expenses\ExpenseApprovals;
+use App\Livewire\Expenses\ExpenseAttachments;
+use App\Livewire\Expenses\ExpenseCreate;
+use App\Livewire\Expenses\ExpenseEdit;
+use App\Livewire\Expenses\ExpenseIndex;
+use App\Livewire\Expenses\ExpenseShow;
+use App\Livewire\Features\FeatureIndex;
+use App\Livewire\Invoices\InvoiceCreate;
+use App\Livewire\Invoices\InvoiceEdit;
+use App\Livewire\Invoices\InvoiceIndex;
+use App\Livewire\Invoices\InvoicePayments;
+use App\Livewire\Invoices\InvoiceShow;
+use App\Livewire\NotificationList\NotificationList;
+use App\Livewire\Payments\PaymentCreate;
+use App\Livewire\Payments\PaymentEdit;
+use App\Livewire\Payments\PaymentIndex;
+use App\Livewire\Payments\PaymentReminders;
+use App\Livewire\Payments\PaymentShow;
+use App\Livewire\Pricing\PricingIndex;
+use App\Livewire\Projects\ProjectCreate;
+use App\Livewire\Projects\ProjectEdit;
+use App\Livewire\Projects\ProjectIndex;
+use App\Livewire\Projects\ProjectShow;
+use App\Livewire\PurchaseOrders\PurchaseOrderCreate;
+use App\Livewire\PurchaseOrders\PurchaseOrderEdit;
+use App\Livewire\PurchaseOrders\PurchaseOrderIndex;
+use App\Livewire\PurchaseOrders\PurchaseOrderShow;
+use App\Livewire\Reports\ReportCreate;
+use App\Livewire\Reports\ReportEdit;
+use App\Livewire\Reports\ReportIndex;
+use App\Livewire\Reports\ReportShow;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
-use App\Livewire\Tasks\TaskIndex;
 use App\Livewire\Tasks\TaskCreate;
 use App\Livewire\Tasks\TaskEdit;
+use App\Livewire\Tasks\TaskIndex;
+use App\Livewire\Tasks\TaskShow;
+use App\Livewire\Teams\TeamCreate;
+use App\Livewire\Teams\TeamEdit;
+use App\Livewire\Teams\TeamIndex;
+use App\Livewire\Teams\TeamShow;
+use App\Livewire\Users\UserCreate;
+use App\Livewire\Users\UserEdit;
 use App\Livewire\Users\UserIndex;
+use App\Livewire\Users\UserShow;
+use App\Livewire\Vendors\VendorContacts;
+use App\Livewire\Vendors\VendorCreate;
+use App\Livewire\Vendors\VendorEdit;
+use App\Livewire\Vendors\VendorIndex;
+use App\Livewire\Vendors\VendorInvoices;
+use App\Livewire\Vendors\VendorProjects;
+use App\Livewire\Vendors\VendorServices;
+use App\Livewire\Vendors\VendorShow;
+use App\Livewire\Vendors\VendorTasks;
+use App\Livewire\Worker\WorkerDashboard;
+use App\Livewire\Workers\Timesheets;
+use App\Livewire\Workers\WorkerCertifications;
+use App\Livewire\Workers\WorkerEdit;
+use App\Livewire\Workers\WorkerIndex;
+use App\Livewire\Workers\WorkerShow;
+use App\Livewire\Workers\WorkerSkills;
 use App\Livewire\Dashboard;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
-use App\Livewire\Teams\TeamIndex;
-use App\Livewire\Teams\TeamCreate;
-use App\Livewire\Teams\TeamEdit;
-use App\Livewire\Teams\TeamShow;
-use App\Livewire\NotificationList\NotificationList;
-use App\Livewire\Vendors\VendorIndex;
-use App\Livewire\Vendors\VendorCreate;
-use App\Livewire\Vendors\VendorEdit;
-use App\Livewire\Vendors\VendorContacts;
-use App\Livewire\Vendors\VendorServices;
-use App\Livewire\Vendors\VendorInvoices;
-use App\Livewire\Vendors\VendorProjects;
-use App\Livewire\Vendors\VendorTasks;
-use App\Livewire\Workers\WorkerIndex;
-use App\Livewire\Workers\WorkerShow;
-use App\Livewire\Workers\WorkerEdit;
-use App\Livewire\Workers\WorkerSkills;
-use App\Livewire\Workers\WorkerCertifications;
-use App\Livewire\Workers\Timesheets;
-use App\Livewire\PurchaseOrders\PurchaseOrderIndex;
-use App\Livewire\PurchaseOrders\PurchaseOrderCreate;
-use App\Livewire\PurchaseOrders\PurchaseOrderEdit;
-use App\Livewire\PurchaseOrders\PurchaseOrderShow;
-use App\Livewire\Features\FeatureIndex;
-use App\Livewire\Pricing\PricingIndex;
-use App\Livewire\Projects\ProjectIndex;
-use App\Livewire\Projects\ProjectCreate;
-use App\Livewire\Projects\ProjectEdit;
-use App\Livewire\Projects\ProjectShow;
-use App\Livewire\Tasks\TaskShow;
-use App\Livewire\Users\UserCreate;
-use App\Livewire\Users\UserEdit;
-use App\Livewire\Users\UserShow;
-use App\Livewire\Invoices\InvoiceIndex;
-use App\Livewire\Invoices\InvoiceCreate;
-use App\Livewire\Invoices\InvoiceEdit;
-use App\Livewire\Invoices\InvoiceShow;
-use App\Livewire\Reports\ReportIndex;
-use App\Livewire\Reports\ReportCreate;
-use App\Livewire\Reports\ReportEdit;
-use App\Livewire\Reports\ReportShow;
-use App\Livewire\Vendors\VendorShow;
-use App\Livewire\Expenses\ExpenseIndex;
-use App\Livewire\Expenses\ExpenseCreate;
-use App\Livewire\Expenses\ExpenseEdit;
-use App\Livewire\Expenses\ExpenseShow;
-use App\Livewire\Expenses\ExpenseAttachments;
-use App\Livewire\Expenses\ExpenseApprovals;
-use App\Livewire\Payments\PaymentIndex;
-use App\Livewire\Payments\PaymentCreate;
-use App\Livewire\Payments\PaymentEdit;
-use App\Livewire\Payments\PaymentShow;
-use App\Livewire\Payments\PaymentReminders;
-use App\Livewire\Invoices\InvoicePayments;
 
 /*
  * |--------------------------------------------------------------------------
@@ -88,8 +90,10 @@ Route::middleware([
     InitializeTenancyBySubdomain::class,
     PreventAccessFromCentralDomains::class,
 ])->group(function () {
-    Route::middleware(['auth', 'verified'])->group(function () {
+    Route::middleware(['auth', 'verified', 'worker'])->group(function () {
         Route::get('/', Dashboard::class)->name('dashboard');
+        Route::get('/my', WorkerDashboard::class)->name('worker.dashboard');
+
         Route::get('tasks', TaskIndex::class)->name('tasks');
         Route::get('users', UserIndex::class)->name('users');
         Route::get('billing', BillingIndex::class)->name('billing');
@@ -199,6 +203,26 @@ Route::middleware([
         Route::get('/workers/{workerId}/certifications', WorkerCertifications::class)->name('worker.certifications');
         Route::get('/workers/{workerId}/timesheets', Timesheets::class)->name('worker.timesheets');
 
+        // Worker-specific timesheets route for their own profile
+        Route::get('/my-timesheets', function () {
+            $user = auth()->user();
+            $workerProfile = $user->workerProfile;
+            if ($workerProfile) {
+                return \Livewire::mount(Timesheets::class, ['workerId' => $workerProfile->id]);
+            }
+            abort(403, 'Access denied');
+        })->name('my.timesheets');
+
+        // Worker-specific skills route for their own profile
+        Route::get('/my-skills', function () {
+            $user = auth()->user();
+            $workerProfile = $user->workerProfile;
+            if ($workerProfile) {
+                return \Livewire::mount(WorkerSkills::class, ['workerId' => $workerProfile->id]);
+            }
+            abort(403, 'Access denied');
+        })->name('my.skills');
+
         // Expenses routes
         Route::get('/expenses', \App\Livewire\Expenses\ExpenseIndex::class)->name('expenses.index');
         Route::get('/expenses/create', \App\Livewire\Expenses\ExpenseCreate::class)->name('expenses.create');
@@ -229,23 +253,23 @@ Route::middleware([
 
     // File serving route for tenant - needs to be inside the tenant group with proper middleware
     Route::get('/files/discussions/{filename}', [\App\Http\Controllers\TenantFileController::class, 'download'])
-         ->name('tenant.file.download')
-         ->middleware(['auth']);
+        ->name('tenant.file.download')
+        ->middleware(['auth']);
 
     // File preview route - shows the file with preview and download tools
     Route::get('/files/preview/{filename}', [\App\Http\Controllers\FilePreviewController::class, 'preview'])
-         ->name('tenant.file.preview')
-         ->middleware(['auth']);
+        ->name('tenant.file.preview')
+        ->middleware(['auth']);
 
     // File preview page route - separate page for preview
     Route::get('/files/preview-page/{filename}', [\App\Http\Controllers\FilePreviewPageController::class, 'show'])
-         ->name('tenant.file.preview.page')
-         ->middleware(['auth']);
+        ->name('tenant.file.preview.page')
+        ->middleware(['auth']);
 
     // Notifications route - separate page for all notifications
     Route::get('/notifications', NotificationList::class)
-         ->name('notifications.index')
-         ->middleware(['auth']);
+        ->name('notifications.index')
+        ->middleware(['auth']);
 
     require __DIR__ . '/auth.php';
 });

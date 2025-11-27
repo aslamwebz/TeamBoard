@@ -123,6 +123,14 @@ class Project extends Model
     }
 
     /**
+     * Accessor for completion percentage
+     */
+    public function getGetCompletionPercentageAttribute(): int
+    {
+        return $this->getCompletionPercentage();
+    }
+
+    /**
      * Get the workers assigned to this project through timesheets
      */
     public function workers()

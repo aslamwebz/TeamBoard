@@ -77,7 +77,11 @@
     <div class="navigate-loading" :class="{ 'active': isLoading }"></div>
     <div class="flex h-full">
         <!-- Sidebar -->
-        <x-layouts.app.sidebar />
+        @if(auth()->user()->hasRole('worker') && auth()->user()->roles()->count() <= 1)
+            <x-layouts.app.worker-sidebar />
+        @else
+            <x-layouts.app.sidebar />
+        @endif
 
         <!-- Main content -->
         <div class="flex-1 overflow-y-auto">
