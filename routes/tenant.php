@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 
+use App\Livewire\Auth\ResetPassword;
 use App\Livewire\Billing\BillingIndex;
+use App\Livewire\Client\ClientDashboard;
 use App\Livewire\Clients\ClientCreate;
 use App\Livewire\Clients\ClientEdit;
 use App\Livewire\Clients\ClientIndex;
@@ -61,7 +63,6 @@ use App\Livewire\Vendors\VendorServices;
 use App\Livewire\Vendors\VendorShow;
 use App\Livewire\Vendors\VendorTasks;
 use App\Livewire\Worker\WorkerDashboard;
-use App\Livewire\Client\ClientDashboard;
 use App\Livewire\Workers\Timesheets;
 use App\Livewire\Workers\WorkerCertifications;
 use App\Livewire\Workers\WorkerEdit;
@@ -275,3 +276,5 @@ Route::middleware([
 
     require __DIR__ . '/auth.php';
 });
+
+Route::get('reset-password/{token}', ResetPassword::class)->name('password.reset');

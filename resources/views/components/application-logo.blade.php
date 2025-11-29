@@ -1,7 +1,7 @@
 <div class="flex items-center">
-    @if(function_exists('tenant') && tenant() && (tenant()->logo_url ?? null))
-        <img src="{{ tenant()->logo_url }}" alt="{{ tenant()->getCompanyName() ?? config('app.name') }}" class="h-8 w-auto" />
-    @elseif(function_exists('tenant') && tenant() && (tenant()->legal_name ?? null))
+    @if(function_exists('tenant') && tenant() && (isset(tenant()->logo)))
+        <img src="{{ tenant()->logo }}" alt="{{ tenant()->getCompanyName() ?? config('app.name') }}" class="h-8 w-auto" />
+    @elseif(function_exists('tenant') && tenant() && (isset(tenant()->legal_name)))
         <div class="flex items-center justify-center h-8 w-8 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium text-sm">
             {{ strtoupper(substr(tenant()->legal_name, 0, 1)) }}
         </div>

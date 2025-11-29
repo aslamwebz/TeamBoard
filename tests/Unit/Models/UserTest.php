@@ -3,8 +3,10 @@
 declare(strict_types=1);
 
 use App\Models\User;
+use Spatie\Permission\Models\Permission;
 
 test('to array', function () {
+
     $user = User::factory()->create()->refresh();
 
     expect(array_keys($user->toArray()))->toBe([

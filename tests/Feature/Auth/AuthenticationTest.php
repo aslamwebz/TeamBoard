@@ -6,11 +6,14 @@ use App\Livewire\Auth\Login;
 use App\Models\User;
 use Livewire\Livewire;
 
+
+
 test('login screen can be rendered', function () {
-    $response = $this->get('/login');
+    $response = $this->get(route('login'));
 
     $response->assertStatus(200);
 });
+
 
 test('users can authenticate using the login screen', function () {
     $user = User::factory()->create();
@@ -26,6 +29,7 @@ test('users can authenticate using the login screen', function () {
 
     $this->assertAuthenticated();
 });
+
 
 test('users can not authenticate with invalid password', function () {
     $user = User::factory()->create();
