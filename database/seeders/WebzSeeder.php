@@ -9,12 +9,15 @@ use Database\Seeders\webz\TeamSeeder;
 use Database\Seeders\webz\UserTeamSeeder;
 use Database\Seeders\webz\ClientSeeder;
 use Database\Seeders\webz\ClientContactSeeder;
+use Database\Seeders\webz\ContactSeeder;
+use Database\Seeders\webz\ContactActivitySeeder;
 use Database\Seeders\webz\ProjectSeeder;
 use Database\Seeders\webz\ProjectTeamSeeder;
 use Database\Seeders\webz\ProjectUserSeeder;
 use Database\Seeders\webz\TaskSeeder;
 use Database\Seeders\webz\TaskAssignmentSeeder;
 use Database\Seeders\webz\ClientNoteSeeder;
+use Database\Seeders\webz\NoteSeeder;
 use Database\Seeders\webz\ClientProjectSeeder;
 use Database\Seeders\webz\InvoiceSeeder;
 use Database\Seeders\webz\InvoiceLineItemSeeder;
@@ -23,6 +26,7 @@ use Database\Seeders\webz\InvoiceProjectSeeder;
 use Database\Seeders\webz\VendorSeeder;
 use Database\Seeders\webz\VendorContactSeeder;
 use Database\Seeders\webz\VendorServiceSeeder;
+use Database\Seeders\webz\VendorInvoiceSeeder;
 use Database\Seeders\webz\PurchaseRequestSeeder;
 use Database\Seeders\webz\PurchaseRequestItemSeeder;
 use Database\Seeders\webz\PurchaseOrderSeeder;
@@ -33,11 +37,18 @@ use Database\Seeders\webz\ExpenseSeeder;
 use Database\Seeders\webz\ExpenseAttachmentSeeder;
 use Database\Seeders\webz\PaymentMethodSeeder;
 use Database\Seeders\webz\PaymentRecordSeeder;
+use Database\Seeders\webz\PaymentSeeder;
 use Database\Seeders\webz\ReportSeeder;
 use Database\Seeders\webz\MonthlyReportSeeder;
 use Database\Seeders\webz\WorkerProfileSeeder;
 use Database\Seeders\webz\SkillSeeder;
 use Database\Seeders\webz\CertificationSeeder;
+use Database\Seeders\webz\CommentSeeder;
+use Database\Seeders\webz\DiscussionSeeder;
+use Database\Seeders\webz\DiscussionAttachmentSeeder;
+use Database\Seeders\webz\FileAttachmentSeeder;
+use Database\Seeders\webz\MilestoneSeeder;
+use Database\Seeders\webz\NotificationSeeder;
 use Database\Seeders\webz\TimesheetSeeder;
 use Database\Seeders\webz\WorkerSkillSeeder;
 use Database\Seeders\webz\WorkerCertificationSeeder;
@@ -63,6 +74,8 @@ class WebzSeeder extends Seeder
             UserTeamSeeder::class,
             ClientSeeder::class,
             ClientContactSeeder::class,
+            ContactSeeder::class,
+            ContactActivitySeeder::class,
 
             // Phase 2 - Projects, Tasks, Clients Upgraded
             ProjectSeeder::class,
@@ -71,6 +84,7 @@ class WebzSeeder extends Seeder
             TaskSeeder::class,
             TaskAssignmentSeeder::class,
             ClientNoteSeeder::class,
+            NoteSeeder::class,
             ClientProjectSeeder::class,
 
             // Phase 3 - Financial Layer
@@ -78,11 +92,15 @@ class WebzSeeder extends Seeder
             InvoiceLineItemSeeder::class,
             InvoicePaymentSeeder::class,
             InvoiceProjectSeeder::class,
+            PaymentMethodSeeder::class,
+            PaymentRecordSeeder::class,
+            PaymentSeeder::class,
 
             // Phase 4 - Vendor System + Procurement + Expenses
             VendorSeeder::class,
             VendorContactSeeder::class,
             VendorServiceSeeder::class,
+            VendorInvoiceSeeder::class,
             PurchaseRequestSeeder::class,
             PurchaseRequestItemSeeder::class,
             PurchaseOrderSeeder::class,
@@ -91,9 +109,15 @@ class WebzSeeder extends Seeder
             ExpenseCategorySeeder::class,
             ExpenseSeeder::class,
             ExpenseAttachmentSeeder::class,
-            PaymentMethodSeeder::class,
             ExpensePaymentSeeder::class,
-            PaymentRecordSeeder::class,
+            DiscussionSeeder::class,
+            CommentSeeder::class,
+            DiscussionAttachmentSeeder::class,
+            FileAttachmentSeeder::class,
+
+            // Additional Content
+            MilestoneSeeder::class,
+            NotificationSeeder::class,
 
             // Reporting
             ReportSeeder::class,

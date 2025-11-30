@@ -12,6 +12,8 @@ abstract class TestCase extends BaseTestCase
 
     public User $admin;
 
+    public User $unverifiedUser;
+
     public Tenant $tenant;
 
     protected function setUp(): void
@@ -32,15 +34,23 @@ abstract class TestCase extends BaseTestCase
 
         $this->user = $this->createUser();
         $this->admin = $this->createUser(isAdmin: true);
+        $this->unverifiedUser = $this->CreateUnverifiedUser();
     }
 
     private function createUser(bool $isAdmin = false): User
     {
         $user = User::factory()->create();
+
         if ($isAdmin) {
             $user->assignRole('admin');
         }
+
         return $user;
+    }
+
+    private function CreateUnverifiedUser(): User
+    {
+        return User::factory()->unverified()->create();
     }
 
     public function initializeTenancy()

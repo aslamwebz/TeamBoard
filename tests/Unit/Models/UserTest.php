@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Models\User;
-use Spatie\Permission\Models\Permission;
 
 test('to array', function () {
 

@@ -8,11 +8,7 @@ use Livewire\Livewire;
 
 
 
-test('login screen can be rendered', function () {
-    $response = $this->get(route('login'));
-
-    $response->assertStatus(200);
-});
+it('can see login page')->get('/login')->assertStatus(200);
 
 
 test('users can authenticate using the login screen', function () {

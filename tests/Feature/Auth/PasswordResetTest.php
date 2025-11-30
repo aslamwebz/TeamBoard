@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 use App\Livewire\Auth\ForgotPassword;
 use App\Livewire\Auth\ResetPassword;
@@ -36,9 +34,9 @@ test('reset password screen can be rendered', function () {
         ->call('sendPasswordResetLink');
 
     Notification::assertSentTo($this->user, ResetPasswordNotification::class, function ($notification) {
-    $this->actingAs($this->user);
+        $this->actingAs($this->user);
 
-        $response = $this->get('/reset-password/'.$notification->token);
+        $response = $this->get('/reset-password/' . $notification->token);
 
         $response->assertStatus(200);
 
@@ -48,7 +46,6 @@ test('reset password screen can be rendered', function () {
 
 test('password can be reset with valid token', function () {
     Notification::fake();
-
 
     Livewire::test(ForgotPassword::class)
         ->set('email', $this->user->email)

@@ -18,8 +18,8 @@ class VendorInvoiceFactory extends Factory
         return [
             'vendor_id' => Vendor::factory(),
             'invoice_number' => 'VIN-' . fake()->unique()->numerify('####'),
-            'invoice_date' => fake()->date(),
-            'due_date' => fake()->date('+30 days'),
+            'invoice_date' => fake()->dateTimeBetween('-1 year', 'now')->format('Y-m-d'),
+            'due_date' => fake()->dateTimeBetween('now', '+60 days')->format('Y-m-d'),
             'amount' => $total - $tax,
             'tax_amount' => $tax,
             'total_amount' => $total,

@@ -33,7 +33,7 @@ class PurchaseOrderFactory extends Factory
             'shipping_method' => fake()->optional()->randomElement(['standard', 'express', 'overnight']),
             'payment_terms' => fake()->optional()->randomElement(['NET30', 'NET60', 'COD', '2% Discount NET10']),
             'created_by' => User::factory(),
-            'approved_by' => fake()->optional()->numberBetween(1, 10),
+            'approved_by' => 1,
             'approved_at' => fake()->optional()->dateTimeBetween($orderDate, 'now'),
             'sent_at' => fake()->optional()->dateTimeBetween($orderDate, 'now'),
             'received_at' => fake()->optional()->dateTimeBetween($orderDate, 'now'),
