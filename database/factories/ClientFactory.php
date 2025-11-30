@@ -12,7 +12,8 @@ class ClientFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->company(),
+            'company_name' => fake()->company(),
+            'name' => fake()->company(),    
             'email' => fake()->unique()->safeEmail(),
             'phone' => fake()->phoneNumber(),
             'address' => fake()->streetAddress(),
@@ -23,6 +24,16 @@ class ClientFactory extends Factory
             'tax_vat_number' => fake()->bothify('TX######'),
             'industry' => fake()->randomElement(['Technology', 'Finance', 'Healthcare', 'Retail', 'Manufacturing', 'Education']),
             'description' => fake()->optional()->paragraph(),
+            'billing_plan' => fake()->randomElement(['Basic', 'Standard', 'Premium']),
+            'subscription_start_date' => fake()->dateTimeBetween('-1 year', '+1 year'),
+            'subscription_end_date' => fake()->dateTimeBetween('-1 year', '+1 year'),
+            'subscription_status' => fake()->randomElement(['Active', 'Inactive', 'Expired']),
+            'notes' => fake()->optional()->paragraph(),
+            'billing_address' => fake()->optional()->streetAddress(),
+            'shipping_address' => fake()->optional()->streetAddress(),
+            'primary_contact_id' => fake()->optional()->numberBetween(1, 10),
+            'custom_fields' => ['key' => 'value', 'key2' => 'value2'],
+            'tax_vat_number' => fake()->bothify('TX######'),
         ];
     }
 }

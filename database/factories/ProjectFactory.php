@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Project;
 use App\Models\Client;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProjectFactory extends Factory
@@ -20,4 +21,17 @@ class ProjectFactory extends Factory
             'client_id' => Client::factory(),
         ];
     }
+
+    /**
+     * Configure the factory to have a client relationship
+     */
+    public function withClient(): static
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'client_id' => Client::factory(),
+            ];
+        });
+    }
+
 }
