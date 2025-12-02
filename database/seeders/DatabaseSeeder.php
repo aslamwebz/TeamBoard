@@ -18,6 +18,8 @@ final class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
+        \DB::statement('DROP DATABASE IF EXISTS tenantwebz');
+
         $tenant = Tenant::create(['id' => 'webz']);
         $tenant->domains()->create(['domain' => 'webz']);
 

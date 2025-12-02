@@ -13,13 +13,19 @@ class ContactActivityFactory extends Factory
 
     public function definition(): array
     {
+        // Create a user if none exists
+        $user = User::inRandomOrder()->first() ?? User::factory()->create();
+        
+        // Create a contact if none exists
+        $contact = Contact::inRandomOrder()->first() ?? Contact::factory()->create();
+
         return [
-            'contact_id' => Contact::factory(),
+            'contact_id' => $contact->id,
             'type' => fake()->randomElement(['email', 'call', 'meeting', 'note', 'task']),
             'description' => fake()->sentence(),
             'details' => ['note' => fake()->paragraph()],
             'activity_date' => fake()->dateTimeBetween('-1 year', 'now'),
-            'created_by' => User::factory(),
+            'created_by' => $user->id,
         ];
     }
 }

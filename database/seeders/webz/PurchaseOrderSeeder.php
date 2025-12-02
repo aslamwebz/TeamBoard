@@ -29,18 +29,7 @@ class PurchaseOrderSeeder extends Seeder
             for ($i = 1; $i <= $poCount; $i++) {
                 $status = $statuses[array_rand($statuses)];
 
-                PurchaseOrder::factory()->create([
-                    'vendor_id' => $vendor->id,
-                    'subtotal' => fake()->randomFloat(2, 500, 10000),
-                    'tax_amount' => 0.0,  // Will be calculated later
-                    'total_amount' => 0.0,  // Will be calculated later
-                    'status' => $status,
-                    'notes' => fake()->sentence(),
-                    'delivery_address' => fake()->address(),
-                    'shipping_method' => ['Standard', 'Express', 'Priority'][array_rand(['Standard', 'Express', 'Priority'])],
-                    'payment_terms' => ['NET30', 'NET60', '2% Discount NET10'][array_rand(['NET30', 'NET60', '2% Discount NET10'])],
-                    'created_by' => 1,  // Assuming first user is the creator
-                ]);
+                PurchaseOrder::factory()->create();
 
             }
         }

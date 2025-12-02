@@ -17,7 +17,7 @@ class ProjectFactory extends Factory
             'name' => fake()->sentence(3),
             'description' => fake()->paragraph(),
             'status' => fake()->randomElement(['planning', 'in_progress', 'completed', 'on_hold']),
-            'due_date' => fake()->optional()->date('+3 months'),
+            'due_date' => fake()->optional()->date(),
             'client_id' => Client::factory(),
         ];
     }

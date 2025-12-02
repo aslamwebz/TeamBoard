@@ -14,10 +14,29 @@ class PaymentFactory extends Factory
 
     public function definition(): array
     {
+        // Create or get a user
+        $user = User::inRandomOrder()->first() ?? User::factory()->create();
+        
+        // Only create invoice or expense if they don't exist
+        $invoice = Invoice::inRandomOrder()->first();
+        $expense = Expense::inRandomOrder()->first();
+        
+        // Only set expense_id if we have an expense
+        $expenseId = null;
+        if ($expense && fake()->boolean(50)) {
+            $expenseId = $expense->id;
+        }
+        
+        // Only set invoice_id if we have an invoice
+        $invoiceId = null;
+        if ($invoice && fake()->boolean(70)) {
+            $invoiceId = $invoice->id;
+        }
+
         return [
-            'invoice_id' => fake()->optional(0.7)->numberBetween(1, 10),
-            'expense_id' => fake()->optional(0.5)->numberBetween(1, 10),
-            'user_id' => User::factory(),
+            'invoice_id' => $invoiceId,
+            'expense_id' => $expenseId,
+            'user_id' => $user->id,
             'amount' => fake()->randomFloat(2, 100, 5000),
             'payment_method' => fake()->randomElement(['cash', 'credit_card', 'debit_card', 'bank_transfer', 'check', 'paypal', 'stripe', 'other']),
             'transaction_reference' => fake()->uuid(),

@@ -2,10 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Task;
 use App\Models\Project;
-use App\Models\User;
 use App\Models\ProjectPhase;
+use App\Models\Task;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TaskFactory extends Factory
@@ -18,49 +17,32 @@ class TaskFactory extends Factory
             'title' => fake()->sentence(3),
             'description' => fake()->optional()->paragraph(),
             'status' => fake()->randomElement(['todo', 'in_progress', 'completed', 'on_hold']),
-            'due_date' => fake()->optional()->date('+2 weeks'),
+            'due_date' => fake()->optional()->date(),
             'project_id' => Project::factory(),
-            'user_id' => fake()->optional()->numberBetween(1, 10), // 20% chance of having a user assigned
-            'project_phase_id' => fake()->optional()->numberBetween(1, 10),
-            'priority' => fake()->randomElement(['low', 'medium', 'high', 'critical']),
-            'estimated_hours' => fake()->optional()->randomFloat(1, 1, 160),
-            'actual_hours' => fake()->optional()->randomFloat(1, 0, 200),
+            'project_phase_id' => ProjectPhase::factory(),
+            'dependencies' => json_encode([]), // Make sure this is always a valid JSON array
+            'order' => fake()->numberBetween(1, 100), // Always provide a default order
         ];
     }
 
-    /**
-     * Configure the factory to have a project relationship
-     */
-    public function withProject(): static
+    public function withProject(Project $project): static
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'project_id' => Project::factory(),
-            ];
-        });
+        return $this->state(fn (array $attributes) => [
+            'project_id' => $project->id,
+        ]);
     }
 
-    /**
-     * Configure the factory to have a user relationship
-     */
-    public function withUser(): static
+    public function withPhase(ProjectPhase $phase): static
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'user_id' => User::factory(),
-            ];
-        });
+        return $this->state(fn (array $attributes) => [
+            'project_phase_id' => $phase->id,
+        ]);
     }
 
-    /**
-     * Configure the factory to have a project phase relationship
-     */
-    public function withPhase(): static
+    public function withDependencies(array $dependencies): static
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'project_phase_id' => ProjectPhase::factory(),
-            ];
-        });
+        return $this->state(fn (array $attributes) => [
+            'dependencies' => json_encode($dependencies),
+        ]);
     }
 }
