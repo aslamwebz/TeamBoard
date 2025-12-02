@@ -8,9 +8,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ContactActivity extends Model
+final class ContactActivity extends Model
 {
     use HasFactory;
+
+    /**
+     * Activity types
+     */
+    public const TYPE_EMAIL = 'email';
+
+    public const TYPE_CALL = 'call';
+
+    public const TYPE_MEETING = 'meeting';
+
+    public const TYPE_NOTE = 'note';
+
+    public const TYPE_TASK = 'task';
 
     protected $fillable = [
         'contact_id',
@@ -39,20 +52,11 @@ class ContactActivity extends Model
     }
 
     /**
-     * Activity types
-     */
-    public const TYPE_EMAIL = 'email';
-    public const TYPE_CALL = 'call';
-    public const TYPE_MEETING = 'meeting';
-    public const TYPE_NOTE = 'note';
-    public const TYPE_TASK = 'task';
-
-    /**
      * Get activity type label
      */
     public function getTypeLabelAttribute(): string
     {
-        return match($this->type) {
+        return match ($this->type) {
             self::TYPE_EMAIL => 'Email',
             self::TYPE_CALL => 'Call',
             self::TYPE_MEETING => 'Meeting',

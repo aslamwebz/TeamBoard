@@ -15,7 +15,7 @@ use Stancl\Tenancy\Listeners;
 use Stancl\Tenancy\Middleware;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 
-class TenancyServiceProvider extends ServiceProvider
+final class TenancyServiceProvider extends ServiceProvider
 {
     // By default, no namespace is used to support the callable array syntax.
     public static string $controllerNamespace = '';
@@ -107,13 +107,13 @@ class TenancyServiceProvider extends ServiceProvider
         $this->makeTenancyMiddlewareHighestPriority();
 
         Livewire::setUpdateRoute(function ($handle) {
-        return Route::post('/livewire/update', $handle)
-            ->middleware(
-                'web',
-                'universal',
-                InitializeTenancyBySubdomain::class, // or whatever tenancy middleware you use
-            );
-    });
+            return Route::post('/livewire/update', $handle)
+                ->middleware(
+                    'web',
+                    'universal',
+                    InitializeTenancyBySubdomain::class, // or whatever tenancy middleware you use
+                );
+        });
     }
 
     protected function bootEvents()
@@ -146,7 +146,7 @@ class TenancyServiceProvider extends ServiceProvider
             Middleware\PreventAccessFromCentralDomains::class,
 
             Middleware\InitializeTenancyByDomain::class,
-            Middleware\InitializeTenancyBySubdomain::class,
+            InitializeTenancyBySubdomain::class,
             Middleware\InitializeTenancyByDomainOrSubdomain::class,
             Middleware\InitializeTenancyByPath::class,
             Middleware\InitializeTenancyByRequestData::class,

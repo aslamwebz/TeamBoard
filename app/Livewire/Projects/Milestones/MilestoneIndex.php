@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Projects\Milestones;
 
 use App\Models\Project;
-use App\Models\Milestone;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use Livewire\Component;
 use Livewire\WithPagination;
 
 #[Layout('components.layouts.app')]
 #[Title('Project Milestones')]
-class MilestoneIndex extends Component
+final class MilestoneIndex extends Component
 {
     use WithPagination;
 
@@ -25,6 +26,7 @@ class MilestoneIndex extends Component
     public function render()
     {
         $milestones = $this->project->milestones()->paginate(10);
+
         return view('livewire.projects.milestones.milestone-index', compact('milestones'));
     }
 }

@@ -1,14 +1,16 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
 use App\Traits\HasMentions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Model;
 
-class Discussion extends Model
+final class Discussion extends Model
 {
     use HasFactory, HasMentions;
 
@@ -61,7 +63,7 @@ class Discussion extends Model
         $this->load([
             'attachments',
             'comments.attachments',
-            'comments.replies.attachments'
+            'comments.replies.attachments',
         ]);
 
         // Get discussion attachments
@@ -145,34 +147,6 @@ class Discussion extends Model
     }
 
     /**
-     * Boot the model and set up event listeners
-     */
-    protected static function booted()
-    {
-        static::creating(function ($discussion) {
-            // If type is project, set the project_id to the type_id
-            if ($discussion->type === 'project') {
-                $discussion->project_id = $discussion->type_id;
-            }
-            // If type is task, get the project ID from the task
-            elseif ($discussion->type === 'task') {
-                $task = \App\Models\Task::find($discussion->type_id);
-                if ($task) {
-                    $discussion->project_id = $task->project_id;
-                }
-            }
-            // If type is client, we might want to associate with all related projects
-            elseif ($discussion->type === 'client') {
-                // For now, we'll leave project_id as null for client discussions
-            }
-        });
-
-        static::updating(function ($discussion) {
-            // Handle updates if needed
-        });
-    }
-
-    /**
      * Format content with mentions
      */
     public function formatContentWithMentions($content = null)
@@ -183,7 +157,7 @@ class Discussion extends Model
 
         return preg_replace_callback($pattern, function ($matches) {
             $username = $matches[1];
-            $user = \App\Models\User::where('name', $username)->first();
+            $user = User::where('name', $username)->first();
 
             if ($user) {
                 return "<a href='/users/{$user->id}' class='text-blue-600 hover:underline'>@{$username}</a>";
@@ -191,5 +165,33 @@ class Discussion extends Model
 
             return $matches[0];  // Return original if user not found
         }, $content);
+    }
+
+    /**
+     * Boot the model and set up event listeners
+     */
+    protected static function booted()
+    {
+        self::creating(function ($discussion) {
+            // If type is project, set the project_id to the type_id
+            if ($discussion->type === 'project') {
+                $discussion->project_id = $discussion->type_id;
+            }
+            // If type is task, get the project ID from the task
+            elseif ($discussion->type === 'task') {
+                $task = Task::find($discussion->type_id);
+                if ($task) {
+                    $discussion->project_id = $task->project_id;
+                }
+            }
+            // If type is client, we might want to associate with all related projects
+            elseif ($discussion->type === 'client') {
+                // For now, we'll leave project_id as null for client discussions
+            }
+        });
+
+        self::updating(function ($discussion) {
+            // Handle updates if needed
+        });
     }
 }

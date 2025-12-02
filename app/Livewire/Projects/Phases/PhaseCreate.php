@@ -1,23 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Projects\Phases;
 
 use App\Models\Project;
-use App\Models\ProjectPhase;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use Livewire\Component;
 
 #[Layout('components.layouts.app')]
 #[Title('Create Phase')]
-class PhaseCreate extends Component
+final class PhaseCreate extends Component
 {
     public Project $project;
+
     public $name = '';
+
     public $description = '';
+
     public $start_date = '';
+
     public $end_date = '';
+
     public $status = 'not_started';
+
     public $order = 0;
 
     protected $rules = [

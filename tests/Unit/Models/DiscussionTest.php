@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
+use App\Models\Client;
 use App\Models\Discussion;
 use App\Models\Project;
-use App\Models\Client;
 use App\Models\User;
 
 it('to array', function () {

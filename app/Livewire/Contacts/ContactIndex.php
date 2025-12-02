@@ -10,47 +10,50 @@ use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class ContactIndex extends Component
+final class ContactIndex extends Component
 {
     use WithPagination;
 
     public Client $client;
+
     public $search = '';
+
     public $showDeleteModal = false;
+
     public $contactToDeleteId;
 
     protected $queryString = ['search'];
 
-    public function mount(Client $client) : void
+    public function mount(Client $client): void
     {
         $this->client = $client;
     }
 
-    public function render() : View
+    public function render(): View
     {
         $contacts = $this->client->contacts()
-            ->where(function($query) {
-                $query->where('first_name', 'like', '%' . $this->search . '%')
-                      ->orWhere('last_name', 'like', '%' . $this->search . '%')
-                      ->orWhere('email', 'like', '%' . $this->search . '%')
-                      ->orWhere('position', 'like', '%' . $this->search . '%');
+            ->where(function ($query) {
+                $query->where('first_name', 'like', '%'.$this->search.'%')
+                    ->orWhere('last_name', 'like', '%'.$this->search.'%')
+                    ->orWhere('email', 'like', '%'.$this->search.'%')
+                    ->orWhere('position', 'like', '%'.$this->search.'%');
             })
             ->orderBy('is_primary', 'desc')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
         return view('livewire.contacts.contact-index', [
-            'contacts' => $contacts
+            'contacts' => $contacts,
         ]);
     }
 
-    public function deleteContact($id) : void
+    public function deleteContact($id): void
     {
         $this->contactToDeleteId = $id;
         $this->showDeleteModal = true;
     }
 
-    public function confirmDelete() : void
+    public function confirmDelete(): void
     {
         $contact = Contact::find($this->contactToDeleteId);
 
@@ -67,13 +70,13 @@ class ContactIndex extends Component
         $this->contactToDeleteId = null;
     }
 
-    public function cancelDelete() : void
+    public function cancelDelete(): void
     {
         $this->showDeleteModal = false;
         $this->contactToDeleteId = null;
     }
 
-    public function makePrimary($contactId) : void
+    public function makePrimary($contactId): void
     {
         $contact = $this->client->contacts()->findOrFail($contactId);
 

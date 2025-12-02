@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Livewire\Users;
 
@@ -7,12 +9,14 @@ use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class UserIndex extends Component
+final class UserIndex extends Component
 {
     use WithPagination;
 
     public $search = '';
+
     public $role = 'all';
+
     public $perPage = 10;
 
     protected $queryString = [
@@ -30,24 +34,24 @@ class UserIndex extends Component
         }
     }
 
-    public function render() : View
+    public function render(): View
     {
         $query = User::query();
 
         if ($this->search) {
             $query->where(function ($q) {
                 $q
-                    ->where('name', 'like', '%' . $this->search . '%')
-                    ->orWhere('email', 'like', '%' . $this->search . '%');
+                    ->where('name', 'like', '%'.$this->search.'%')
+                    ->orWhere('email', 'like', '%'.$this->search.'%');
             });
         }
 
         if ($this->role === 'with-permissions') {
             $query->whereHas('roles.permissions') // Users with roles that have permissions
-                  ->orWhereHas('permissions'); // Or users with direct permissions
+                ->orWhereHas('permissions'); // Or users with direct permissions
         } elseif ($this->role === 'without-permissions') {
             $query->whereDoesntHave('roles.permissions') // Users without roles that have permissions
-                  ->whereDoesntHave('permissions'); // And without direct permissions
+                ->whereDoesntHave('permissions'); // And without direct permissions
         }
 
         $users = $query
@@ -61,7 +65,7 @@ class UserIndex extends Component
         }
 
         return view('livewire.users.user-index', [
-            'users' => $users
+            'users' => $users,
         ]);
     }
 }

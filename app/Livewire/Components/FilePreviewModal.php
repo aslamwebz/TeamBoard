@@ -1,18 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Components;
 
 use App\Models\DiscussionAttachment;
 use Livewire\Component;
 
-class FilePreviewModal extends Component
+final class FilePreviewModal extends Component
 {
     public ?DiscussionAttachment $file = null;
+
     public bool $showPreviewModal = false;
 
     protected $listeners = [
         'openFilePreview' => 'openPreview',
-        'closeFilePreview' => 'closePreview'
+        'closeFilePreview' => 'closePreview',
     ];
 
     public function openPreview($fileId): void
@@ -20,7 +23,7 @@ class FilePreviewModal extends Component
         $file = DiscussionAttachment::find($fileId);
         if ($file) {
             // Redirect to the preview page in a new tab
-            $this->js("window.open('" . route('tenant.file.preview.page', ['filename' => $file->filename]) . "', '_blank')");
+            $this->js("window.open('".route('tenant.file.preview.page', ['filename' => $file->filename])."', '_blank')");
         }
     }
 

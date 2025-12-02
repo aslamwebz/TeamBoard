@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use App\Models\User;
 use App\Models\WorkerProfile;
 use Illuminate\Database\Seeder;
 
-class WorkerProfileSeeder extends Seeder
+final class WorkerProfileSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,14 +19,15 @@ class WorkerProfileSeeder extends Seeder
 
         if ($users->isEmpty()) {
             $this->command->warn('No users found. Please run UserSeeder first.');
+
             return;
         }
 
         foreach ($users as $user) {
-            if (!$user->workerProfile) {
+            if (! $user->workerProfile) {
                 WorkerProfile::factory()->create([
                     'user_id' => $user->id,
-                    'employee_id' => 'EMP' . str_pad($user->id, 4, '0', STR_PAD_LEFT),
+                    'employee_id' => 'EMP'.mb_str_pad($user->id, 4, '0', STR_PAD_LEFT),
                     'job_title' => fake()->jobTitle(),
                     'department' => fake()->randomElement(['Technology', 'Sales', 'Marketing', 'Finance', 'HR', 'Operations', 'Support']),
                     'status' => fake()->randomElement(['active', 'on_leave', 'inactive']),

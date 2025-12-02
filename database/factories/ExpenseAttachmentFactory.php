@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
-use App\Models\ExpenseAttachment;
 use App\Models\Expense;
+use App\Models\ExpenseAttachment;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ExpenseAttachmentFactory extends Factory
+final class ExpenseAttachmentFactory extends Factory
 {
     protected $model = ExpenseAttachment::class;
 
@@ -15,8 +17,8 @@ class ExpenseAttachmentFactory extends Factory
     {
         return [
             'expense_id' => Expense::factory(),
-            'file_name' => fake()->word() . '.' . fake()->fileExtension,
-            'file_path' => 'expenses/' . fake()->uuid() . '.' . fake()->fileExtension,
+            'file_name' => fake()->word().'.'.fake()->fileExtension,
+            'file_path' => 'expenses/'.fake()->uuid().'.'.fake()->fileExtension,
             'file_size' => fake()->randomNumber(6),
             'mime_type' => fake()->randomElement(['application/pdf', 'image/jpeg', 'image/png', 'image/gif']),
             'uploaded_by' => User::factory(),

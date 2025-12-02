@@ -1,34 +1,38 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Discussions;
 
 use App\Models\Discussion;
 use App\Models\Project;
 use App\Models\Task;
-use Illuminate\Support\Facades\Auth;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use Livewire\Component;
 use Livewire\WithPagination;
 
 #[Layout('components.layouts.app')]
 #[Title('Discussions')]
-class DiscussionIndex extends Component
+final class DiscussionIndex extends Component
 {
     use WithPagination;
 
     public $type = null; // project, task, etc.
+
     public $typeId = null;
+
     public $search = '';
+
     public $sortBy = 'latest';
-    
+
     protected $queryString = ['type', 'typeId', 'search', 'sortBy'];
 
     public function render(): \Illuminate\Contracts\View\View
     {
         $query = Discussion::with(['user', 'comments', 'attachments'])
-            ->where('title', 'like', '%' . $this->search . '%')
-            ->orWhere('content', 'like', '%' . $this->search . '%');
+            ->where('title', 'like', '%'.$this->search.'%')
+            ->orWhere('content', 'like', '%'.$this->search.'%');
 
         // Filter by type and type_id if provided
         if ($this->type && $this->typeId) {

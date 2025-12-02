@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Milestone;
 use App\Models\Project;
-use App\Models\ProjectPhase;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class MilestoneFactory extends Factory
+final class MilestoneFactory extends Factory
 {
     protected $model = Milestone::class;
 

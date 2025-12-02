@@ -1,21 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Client;
 
-use App\Models\Project;
-use App\Models\Invoice;
 use App\Models\Client;
 use App\Models\Discussion;
+use App\Models\Project;
 use App\Models\User;
 use Livewire\Component;
 
-class ClientDashboard extends Component
+final class ClientDashboard extends Component
 {
     public $projectProgress = [];
+
     public $invoices = [];
+
     public $files = [];
+
     public $projectRequests = [];
+
     public $teamActivity = [];
+
     public $clientInfo = [];
 
     public function mount()
@@ -26,10 +32,10 @@ class ClientDashboard extends Component
     public function loadDashboardData()
     {
         $user = auth()->user();
-        
+
         // Get the client associated with this user
         $client = $this->getClientForUser($user);
-        
+
         if ($client) {
             // Load project progress for the client
             $this->projectProgress = $client->projects()
@@ -58,7 +64,7 @@ class ClientDashboard extends Component
 
             // Load project requests (discussions or requests related to client)
             $this->projectRequests = Discussion::where('user_id', $user->id)
-                ->orWhereHas('project', function($query) use ($client) {
+                ->orWhereHas('project', function ($query) use ($client) {
                     $query->where('client_id', $client->id);
                 })
                 ->latest()
@@ -67,13 +73,18 @@ class ClientDashboard extends Component
 
             // Load team activity related to client's projects
             $this->teamActivity = collect(); // Placeholder - would load actual activity in real implementation
-            
+
             $this->clientInfo = [
                 'name' => $client->company_name ?? $client->name,
                 'email' => $client->email,
                 'phone' => $client->phone,
             ];
         }
+    }
+
+    public function render()
+    {
+        return view('livewire.client.client-dashboard');
     }
 
     private function getClientForUser($user)
@@ -91,10 +102,5 @@ class ClientDashboard extends Component
 
         // For demo purposes, just return the first client
         return Client::first();
-    }
-
-    public function render()
-    {
-        return view('livewire.client.client-dashboard');
     }
 }

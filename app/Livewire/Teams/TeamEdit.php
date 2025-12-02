@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Teams;
 
 use App\Models\Team;
@@ -11,11 +13,14 @@ use Livewire\Component;
 
 #[Layout('components.layouts.app')]
 #[Title('Edit Team')]
-class TeamEdit extends Component
+final class TeamEdit extends Component
 {
     public Team $team;
+
     public $teamId;
+
     public $name = '';
+
     public $description = '';
 
     protected $rules = [
@@ -23,7 +28,7 @@ class TeamEdit extends Component
         'description' => 'nullable|string|max:1000',
     ];
 
-    public function mount(Team $team) : void
+    public function mount(Team $team): void
     {
         $this->team = $team;
         $this->teamId = $team->id;
@@ -31,7 +36,7 @@ class TeamEdit extends Component
         $this->description = $team->description;
     }
 
-    public function updateTeam() : RedirectResponse
+    public function updateTeam(): RedirectResponse
     {
         $validated = $this->validate();
 
@@ -42,7 +47,7 @@ class TeamEdit extends Component
         return redirect()->route('teams.index');
     }
 
-    public function render() : View
+    public function render(): View
     {
         return view('livewire.teams.team-edit');
     }

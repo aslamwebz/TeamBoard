@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Discussions;
 
 use App\Models\Discussion;
@@ -8,24 +10,29 @@ use App\Models\Task;
 use App\Services\ActivityService;
 use App\Services\FileUploadService;
 use Illuminate\Support\Facades\Auth;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use Livewire\Component;
 use Livewire\WithFileUploads;
 
 #[Layout('components.layouts.app')]
 #[Title('Create Discussion')]
-class DiscussionCreate extends Component
+final class DiscussionCreate extends Component
 {
     use WithFileUploads;
 
     public $title = '';
+
     public $content = '';
+
     public $type = '';
+
     public $typeId = '';
+
     public $attachments = [];
 
     public $projects = [];
+
     public $tasks = [];
 
     protected $rules = [
@@ -40,7 +47,7 @@ class DiscussionCreate extends Component
     {
         $this->projects = Project::all();
         $this->tasks = Task::all();
-        
+
         // Set default values if passed via query string
         if (request()->has('type')) {
             $this->type = request('type');
@@ -59,13 +66,13 @@ class DiscussionCreate extends Component
             'content' => $this->content,
             'type' => $this->type,
             'type_id' => $this->typeId,
-            'project_id' => $this->type === 'project' ? $this->typeId : ($this->type === 'task' ? \App\Models\Task::find($this->typeId)?->project_id : null),
+            'project_id' => $this->type === 'project' ? $this->typeId : ($this->type === 'task' ? Task::find($this->typeId)?->project_id : null),
             'user_id' => Auth::id(),
         ]);
 
         // Process attachments if any
         // Validate that attachments contain valid files before processing
-        if (!empty($this->attachments) && is_array($this->attachments)) {
+        if (! empty($this->attachments) && is_array($this->attachments)) {
             foreach ($this->attachments as $attachment) {
                 if ($attachment && method_exists($attachment, 'getClientOriginalName')) {
                     $this->processAttachment($attachment, $discussion->id, null);
@@ -82,12 +89,6 @@ class DiscussionCreate extends Component
         return redirect()->route('discussions.show', $discussion);
     }
 
-    private function processAttachment($file, $discussionId, $commentId = null)
-    {
-        $fileUploadService = new \App\Services\FileUploadService();
-        $fileUploadService->upload($file, Auth::id(), $discussionId, $commentId);
-    }
-
     public function updatedAttachments()
     {
         // Validate each attachment as it's added
@@ -97,5 +98,11 @@ class DiscussionCreate extends Component
     public function render()
     {
         return view('livewire.discussions.discussion-create');
+    }
+
+    private function processAttachment($file, $discussionId, $commentId = null)
+    {
+        $fileUploadService = new FileUploadService();
+        $fileUploadService->upload($file, Auth::id(), $discussionId, $commentId);
     }
 }

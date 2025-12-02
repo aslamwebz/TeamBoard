@@ -5,14 +5,27 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Helpers\TenantHelper;
-use App\Models\MonthlyReport;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Report extends Model
+final class Report extends Model
 {
     use HasFactory;
+
+    public const TYPE_FINANCIAL = 'financial';
+
+    public const TYPE_PROJECT = 'project';
+
+    public const TYPE_INVOICE = 'invoice';
+
+    public const TYPE_CLIENT = 'client';
+
+    public const STATUS_DRAFT = 'draft';
+
+    public const STATUS_GENERATED = 'generated';
+
+    public const STATUS_ARCHIVED = 'archived';
 
     protected $fillable = [
         'user_id',
@@ -30,15 +43,6 @@ class Report extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
-
-    public const TYPE_FINANCIAL = 'financial';
-    public const TYPE_PROJECT = 'project';
-    public const TYPE_INVOICE = 'invoice';
-    public const TYPE_CLIENT = 'client';
-
-    public const STATUS_DRAFT = 'draft';
-    public const STATUS_GENERATED = 'generated';
-    public const STATUS_ARCHIVED = 'archived';
 
     public function user(): BelongsTo
     {

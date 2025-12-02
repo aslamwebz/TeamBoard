@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use App\Models\Skill;
 use App\Models\WorkerProfile;
 use Illuminate\Database\Seeder;
 
-class WorkerSkillSeeder extends Seeder
+final class WorkerSkillSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,6 +20,7 @@ class WorkerSkillSeeder extends Seeder
 
         if ($workers->isEmpty() || $skills->isEmpty()) {
             $this->command->warn('Workers or Skills not found. Please run WorkerProfileSeeder and SkillSeeder first.');
+
             return;
         }
 

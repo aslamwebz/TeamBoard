@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
+use Exception;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Facades\Storage;
-use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
 use Stancl\Tenancy\Contracts\TenantWithDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDomains;
-use Stancl\Tenancy\Resolvers\DomainTenantResolver;
+use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
 
-class Tenant extends BaseTenant implements TenantWithDatabase
+final class Tenant extends BaseTenant implements TenantWithDatabase
 {
     use HasDatabase, HasDomains;
 
@@ -32,6 +34,19 @@ class Tenant extends BaseTenant implements TenantWithDatabase
         'updated_at' => 'datetime',
         'branding' => 'array',
     ];
+
+    /**
+     * Get the current tenant
+     */
+    public static function current(): ?self
+    {
+        try {
+            return tenant();
+        } catch (Exception $e) {
+            // If no tenant is set, return null
+            return null;
+        }
+    }
 
     /**
      * Accessor for the company legal name
@@ -62,19 +77,6 @@ class Tenant extends BaseTenant implements TenantWithDatabase
         return Attribute::make(
             get: fn ($value) => json_decode($value ?? '{}', true) ?: [],
         );
-    }
-
-    /**
-     * Get the current tenant
-     */
-    public static function current(): ?self
-    {
-        try {
-            return tenant();
-        } catch (\Exception $e) {
-            // If no tenant is set, return null
-            return null;
-        }
     }
 
     /**

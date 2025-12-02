@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Invoices;
 
 use App\Models\Invoice;
@@ -11,27 +13,32 @@ use Livewire\WithPagination;
 
 #[Layout('components.layouts.app')]
 #[Title('Invoices')]
-class InvoiceIndex extends Component
+final class InvoiceIndex extends Component
 {
     use WithPagination;
 
     public $search = '';
+
     public $status_filter = '';
+
     public $client_filter = '';
+
     public $per_page = 10;
+
     public $confirmingDelete = false;
+
     public $invoiceToDeleteId;
 
     protected $queryString = ['search', 'status_filter', 'client_filter', 'per_page'];
 
-    public function render() : View
+    public function render(): View
     {
         $invoices = Invoice::query()
             ->where(function ($query) {
                 $query
-                    ->where('invoice_number', 'like', '%' . $this->search . '%')
+                    ->where('invoice_number', 'like', '%'.$this->search.'%')
                     ->orWhereHas('client', function ($query) {
-                        $query->where('name', 'like', '%' . $this->search . '%');
+                        $query->where('name', 'like', '%'.$this->search.'%');
                     });
             })
             ->when($this->status_filter, function ($query) {
@@ -48,17 +55,17 @@ class InvoiceIndex extends Component
 
         return view('livewire.invoices.invoice-index', [
             'invoices' => $invoices,
-            'clients' => $clients
+            'clients' => $clients,
         ]);
     }
 
-    public function deleteInvoice($id) : void
+    public function deleteInvoice($id): void
     {
         $this->invoiceToDeleteId = $id;
         $this->confirmingDelete = true;
     }
 
-    public function confirmDelete() : void
+    public function confirmDelete(): void
     {
         $invoice = Invoice::find($this->invoiceToDeleteId);
         if ($invoice) {
@@ -69,7 +76,7 @@ class InvoiceIndex extends Component
         $this->invoiceToDeleteId = null;
     }
 
-    public function cancelDelete() : void
+    public function cancelDelete(): void
     {
         $this->confirmingDelete = false;
         $this->invoiceToDeleteId = null;

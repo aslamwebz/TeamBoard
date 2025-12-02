@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Payments;
 
 use App\Models\Invoice;
-use App\Models\Payment;
-use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Log;
 
-class PaymentReminders extends Component
+final class PaymentReminders extends Component
 {
     use WithPagination;
 
@@ -25,7 +26,7 @@ class PaymentReminders extends Component
                 $invoices = $invoices->where('due_date', '<', now())
                     ->where(function ($query) {
                         $query->where('status', '!=', Invoice::STATUS_PAID)
-                              ->orWhere('status', Invoice::STATUS_PARTIALLY_PAID);
+                            ->orWhere('status', Invoice::STATUS_PARTIALLY_PAID);
                     });
                 break;
             case 'upcoming':
@@ -43,7 +44,7 @@ class PaymentReminders extends Component
         $totalOverdue = Invoice::where('due_date', '<', now())
             ->where(function ($query) {
                 $query->where('status', '!=', Invoice::STATUS_PAID)
-                      ->where('status', '!=', Invoice::STATUS_CANCELLED);
+                    ->where('status', '!=', Invoice::STATUS_CANCELLED);
             })
             ->sum('total');
 
@@ -55,7 +56,7 @@ class PaymentReminders extends Component
         $overdueCount = Invoice::where('due_date', '<', now())
             ->where(function ($query) {
                 $query->where('status', '!=', Invoice::STATUS_PAID)
-                      ->where('status', '!=', Invoice::STATUS_CANCELLED);
+                    ->where('status', '!=', Invoice::STATUS_CANCELLED);
             })
             ->count();
 
@@ -73,8 +74,8 @@ class PaymentReminders extends Component
         if ($invoice) {
             // In a real app, you would send an email notification here
             // For now, we'll just log it
-            \Log::info("Payment reminder sent for invoice {$invoice->invoice_number}");
-            
+            Log::info("Payment reminder sent for invoice {$invoice->invoice_number}");
+
             $this->dispatch('reminder-sent', message: 'Reminder sent successfully');
         }
     }

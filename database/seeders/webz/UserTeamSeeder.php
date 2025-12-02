@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class UserTeamSeeder extends Seeder
+final class UserTeamSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,9 +17,10 @@ class UserTeamSeeder extends Seeder
     {
         $users = User::all();
         $teams = Team::all();
-        
+
         if ($users->isEmpty() || $teams->isEmpty()) {
             $this->command->warn('Users or Teams not found. Please run UserSeeder and TeamSeeder first.');
+
             return;
         }
 

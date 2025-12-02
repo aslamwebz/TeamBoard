@@ -1,32 +1,38 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Reports;
 
 use App\Models\Report;
 use Illuminate\Contracts\View\View;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use Livewire\Component;
 use Livewire\WithPagination;
 
 #[Layout('components.layouts.app')]
 #[Title('Reports')]
-class ReportIndex extends Component
+final class ReportIndex extends Component
 {
     use WithPagination;
 
     public $search = '';
+
     public $typeFilter = '';
+
     public $statusFilter = '';
+
     public $showDeleteModal = false;
+
     public $reportToDeleteId;
 
     protected $queryString = ['search', 'typeFilter', 'statusFilter'];
 
-    public function render() : View
+    public function render(): View
     {
         $reports = Report::query()
-            ->where('title', 'like', '%' . $this->search . '%')
+            ->where('title', 'like', '%'.$this->search.'%')
             ->when($this->typeFilter, function ($query) {
                 $query->where('report_type', $this->typeFilter);
             })
@@ -42,30 +48,30 @@ class ReportIndex extends Component
             'financial' => 'Financial',
             'project' => 'Project',
             'invoice' => 'Invoice',
-            'client' => 'Client'
+            'client' => 'Client',
         ];
 
         $statuses = [
             '' => 'All Statuses',
             'draft' => 'Draft',
             'generated' => 'Generated',
-            'archived' => 'Archived'
+            'archived' => 'Archived',
         ];
 
         return view('livewire.reports.report-index', [
             'reports' => $reports,
             'reportTypes' => $reportTypes,
-            'statuses' => $statuses
+            'statuses' => $statuses,
         ]);
     }
 
-    public function deleteReport($id) : void
+    public function deleteReport($id): void
     {
         $this->reportToDeleteId = $id;
         $this->showDeleteModal = true;
     }
 
-    public function confirmDelete() : void
+    public function confirmDelete(): void
     {
         $report = Report::find($this->reportToDeleteId);
         if ($report) {
@@ -76,18 +82,18 @@ class ReportIndex extends Component
         $this->reportToDeleteId = null;
     }
 
-    public function cancelDelete() : void
+    public function cancelDelete(): void
     {
         $this->showDeleteModal = false;
         $this->reportToDeleteId = null;
     }
 
-    public function updateTypeFilter($type) : void
+    public function updateTypeFilter($type): void
     {
         $this->typeFilter = $type;
     }
 
-    public function updateStatusFilter($status) : void
+    public function updateStatusFilter($status): void
     {
         $this->statusFilter = $status;
     }

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use App\Models\Note;
 use Illuminate\Database\Seeder;
 
-class NoteSeeder extends Seeder
+final class NoteSeeder extends Seeder
 {
     /**
      * Run the database seeds.

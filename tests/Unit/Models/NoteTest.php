@@ -1,7 +1,9 @@
 <?php
 
-use App\Models\Note;
+declare(strict_types=1);
+
 use App\Models\Client;
+use App\Models\Note;
 use App\Models\User;
 
 it('to array', function () {

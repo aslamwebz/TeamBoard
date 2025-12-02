@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class FileAttachment extends Model
+final class FileAttachment extends Model
 {
     use HasFactory;
 
@@ -47,7 +49,7 @@ class FileAttachment extends Model
      */
     public function getFilePath(): string
     {
-        return storage_path('app/files/' . $this->filename);
+        return storage_path('app/files/'.$this->filename);
     }
 
     /**
@@ -55,7 +57,7 @@ class FileAttachment extends Model
      */
     public function getUrl(): string
     {
-        return asset('storage/files/' . $this->filename);
+        return asset('storage/files/'.$this->filename);
     }
 
     /**
@@ -88,12 +90,12 @@ class FileAttachment extends Model
     {
         $bytes = $this->size;
         $units = ['B', 'KB', 'MB', 'GB'];
-        
+
         for ($i = 0; $bytes > 1024 && $i < count($units) - 1; $i++) {
             $bytes /= 1024;
         }
-        
-        return round($bytes, 2) . ' ' . $units[$i];
+
+        return round($bytes, 2).' '.$units[$i];
     }
 
     /**

@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests;
 
 use App\Models\Tenant;
 use App\Models\User;
+use DB;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use URL;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -21,12 +25,12 @@ abstract class TestCase extends BaseTestCase
         parent::setup();
         $this->withoutVite();
 
-        \DB::statement('DROP DATABASE IF EXISTS tenantwebz_testing');
+        DB::statement('DROP DATABASE IF EXISTS tenantwebz_testing');
 
         $this->initializeTenancy();
 
         config(['app.url' => 'http://test.teamboard.test:8000']);
-        \URL::forceRootUrl(config('app.url'));
+        URL::forceRootUrl(config('app.url'));
 
         $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
 
@@ -35,6 +39,20 @@ abstract class TestCase extends BaseTestCase
         $this->user = $this->createUser();
         $this->admin = $this->createUser(isAdmin: true);
         $this->unverifiedUser = $this->CreateUnverifiedUser();
+    }
+
+    final public function initializeTenancy()
+    {
+        $tenant = Tenant::create([
+            'id' => 'webz_testing',
+            'legal_name' => 'Webz Testing',
+            'logo' => 'https://via.placeholder.com/150',
+            'email' => 'test@example.com',
+            'phone' => '1234567890',
+        ]);
+        $tenant->domains()->create(['domain' => 'test']);
+
+        tenancy()->initialize($tenant);
     }
 
     private function createUser(bool $isAdmin = false): User
@@ -51,19 +69,5 @@ abstract class TestCase extends BaseTestCase
     private function CreateUnverifiedUser(): User
     {
         return User::factory()->unverified()->create();
-    }
-
-    public function initializeTenancy()
-    {
-        $tenant = Tenant::create([
-            'id' => 'webz_testing',
-            'legal_name' => 'Webz Testing',
-            'logo' => 'https://via.placeholder.com/150',
-            'email' => 'test@example.com',
-            'phone' => '1234567890',
-        ]);
-        $tenant->domains()->create(['domain' => 'test']);
-
-        tenancy()->initialize($tenant);
     }
 }

@@ -1,18 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Invoices;
 
 use App\Models\Invoice;
 use App\Models\Payment;
 use Livewire\Component;
 
-class InvoicePayments extends Component
+final class InvoicePayments extends Component
 {
     public Invoice $invoice;
+
     public $paymentAmount;
+
     public $paymentMethod;
+
     public $transactionReference;
+
     public $paymentDate;
+
     public $notes;
 
     public $payment_methods;
@@ -37,7 +44,7 @@ class InvoicePayments extends Component
     public function addPayment()
     {
         $this->validate([
-            'paymentAmount' => 'required|numeric|min:0.01|max:' . $this->invoice->getRemainingBalance(),
+            'paymentAmount' => 'required|numeric|min:0.01|max:'.$this->invoice->getRemainingBalance(),
             'paymentDate' => 'required|date',
             'paymentMethod' => 'required|string|max:255',
         ]);
@@ -68,7 +75,7 @@ class InvoicePayments extends Component
     public function render()
     {
         $payments = $this->invoice->payments()->orderBy('payment_date', 'desc')->get();
-        
+
         return view('livewire.invoices.invoice-payments', [
             'payments' => $payments,
         ])->layout('components.layouts.app');

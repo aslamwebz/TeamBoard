@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Expense;
 use App\Models\ExpenseCategory;
 use App\Models\Project;
-use App\Models\Vendor;
 use App\Models\User;
+use App\Models\Vendor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ExpenseFactory extends Factory
+final class ExpenseFactory extends Factory
 {
     protected $model = Expense::class;
 

@@ -1,24 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Projects\Milestones;
 
-use App\Models\Milestone;
 use App\Models\Project;
-use App\Models\ProjectPhase;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use Livewire\Component;
 
 #[Layout('components.layouts.app')]
 #[Title('Create Milestone')]
-class MilestoneCreate extends Component
+final class MilestoneCreate extends Component
 {
     public Project $project;
+
     public $name = '';
+
     public $description = '';
+
     public $due_date = '';
+
     public $project_phase_id = '';
+
     public $status = 'not_started';
+
     public $order = 0;
 
     protected $rules = [
@@ -56,6 +62,7 @@ class MilestoneCreate extends Component
     public function render(): \Illuminate\Contracts\View\View
     {
         $phases = $this->project->phases;
+
         return view('livewire.projects.milestones.milestone-create', compact('phases'));
     }
 }

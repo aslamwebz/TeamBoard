@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Models\ActivityLog;
-use App\Models\Discussion;
 use App\Models\Comment;
-use App\Models\Task;
+use App\Models\Discussion;
 use App\Models\Project;
+use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
 
-class ActivityService
+final class ActivityService
 {
-    public function logActivity(string $action, string $description = null, $relatedModel = null, array $metadata = []): ActivityLog
+    public function logActivity(string $action, ?string $description = null, $relatedModel = null, array $metadata = []): ActivityLog
     {
         $activityData = [
             'action' => $action,
@@ -94,7 +96,7 @@ class ActivityService
 
     public function getRecentActivities($limit = 20)
     {
-        return \App\Models\ActivityLog::with('user')
+        return ActivityLog::with('user')
             ->latest()
             ->limit($limit)
             ->get();
@@ -103,28 +105,28 @@ class ActivityService
     public function getProjectActivities(Project $project, $limit = 20)
     {
         // Get activities related to the project itself plus related discussions and tasks
-        return \App\Models\ActivityLog::with('user')
-            ->where(function($query) use ($project) {
-                $query->where(function($q) use ($project) {
+        return ActivityLog::with('user')
+            ->where(function ($query) use ($project) {
+                $query->where(function ($q) use ($project) {
                     $q->where('type', 'Project')
-                      ->where('type_id', $project->id);
+                        ->where('type_id', $project->id);
                 })
-                ->orWhere(function($q) use ($project) {
-                    $q->where('type', 'Discussion')
-                      ->whereIn('type_id', $project->discussions()->pluck('id'));
-                })
-                ->orWhere(function($q) use ($project) {
-                    $q->where('type', 'Task')
-                      ->whereIn('type_id', $project->tasks()->pluck('id'));
-                })
-                ->orWhere(function($q) use ($project) {
-                    $q->where('type', 'Comment')
-                      ->whereIn('type_id', function($subQuery) use ($project) {
-                          $subQuery->select('id')
-                                   ->from('comments')
-                                   ->whereIn('discussion_id', $project->discussions()->pluck('id'));
-                      });
-                });
+                    ->orWhere(function ($q) use ($project) {
+                        $q->where('type', 'Discussion')
+                            ->whereIn('type_id', $project->discussions()->pluck('id'));
+                    })
+                    ->orWhere(function ($q) use ($project) {
+                        $q->where('type', 'Task')
+                            ->whereIn('type_id', $project->tasks()->pluck('id'));
+                    })
+                    ->orWhere(function ($q) use ($project) {
+                        $q->where('type', 'Comment')
+                            ->whereIn('type_id', function ($subQuery) use ($project) {
+                                $subQuery->select('id')
+                                    ->from('comments')
+                                    ->whereIn('discussion_id', $project->discussions()->pluck('id'));
+                            });
+                    });
             })
             ->latest()
             ->limit($limit)

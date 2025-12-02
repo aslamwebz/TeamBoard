@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Teams;
 
 use App\Models\Team;
@@ -11,9 +13,10 @@ use Livewire\Component;
 
 #[Layout('components.layouts.app')]
 #[Title('Create Team')]
-class TeamCreate extends Component
+final class TeamCreate extends Component
 {
     public $name = '';
+
     public $description = '';
 
     protected $rules = [
@@ -21,7 +24,7 @@ class TeamCreate extends Component
         'description' => 'nullable|string|max:1000',
     ];
 
-    public function createTeam() : RedirectResponse
+    public function createTeam(): RedirectResponse
     {
         $validated = $this->validate();
 
@@ -32,7 +35,7 @@ class TeamCreate extends Component
         return redirect()->route('teams.index');
     }
 
-    public function render() : View
+    public function render(): View
     {
         return view('livewire.teams.team-create');
     }

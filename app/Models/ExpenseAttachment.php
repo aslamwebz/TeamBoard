@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Storage;
 
-class ExpenseAttachment extends Model
+final class ExpenseAttachment extends Model
 {
     use HasFactory;
 
@@ -34,6 +37,6 @@ class ExpenseAttachment extends Model
      */
     public function getUrl()
     {
-        return \Storage::url($this->file_path);
+        return Storage::url($this->file_path);
     }
 }

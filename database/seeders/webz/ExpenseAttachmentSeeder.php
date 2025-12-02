@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use App\Models\Expense;
 use Illuminate\Database\Seeder;
 
-class ExpenseAttachmentSeeder extends Seeder
+final class ExpenseAttachmentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,6 +18,7 @@ class ExpenseAttachmentSeeder extends Seeder
 
         if ($expenses->isEmpty()) {
             $this->command->warn('No expenses found. Please run ExpenseSeeder first.');
+
             return;
         }
 
@@ -23,9 +26,9 @@ class ExpenseAttachmentSeeder extends Seeder
             // Create 1-2 attachments per expense
             for ($i = 0; $i < rand(1, 2); $i++) {
                 $expense->attachments()->create([
-                    'filename' => fake()->word() . '_' . fake()->fileExtension,
-                    'original_name' => fake()->word() . '_' . fake()->fileExtension,
-                    'file_path' => 'expenses/' . fake()->uuid . '.' . fake()->fileExtension,
+                    'filename' => fake()->word().'_'.fake()->fileExtension,
+                    'original_name' => fake()->word().'_'.fake()->fileExtension,
+                    'file_path' => 'expenses/'.fake()->uuid.'.'.fake()->fileExtension,
                     'size' => fake()->randomNumber(6),
                     'mime_type' => fake()->randomElement(['image/jpeg', 'image/png', 'application/pdf', 'text/plain']),
                     'description' => fake()->sentence(),

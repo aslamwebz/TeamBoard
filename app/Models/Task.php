@@ -1,16 +1,27 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
 use App\Helpers\TenantHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Model;
 
-class Task extends Model
+final class Task extends Model
 {
     use HasFactory;
+
+    // Define task statuses
+    public const STATUS_TODO = 'todo';
+
+    public const STATUS_IN_PROGRESS = 'in_progress';
+
+    public const STATUS_COMPLETED = 'completed';
+
+    public const STATUS_ON_HOLD = 'on_hold';
 
     protected $fillable = [
         'title',
@@ -27,12 +38,6 @@ class Task extends Model
         'due_date' => 'date',
         'dependencies' => 'array',
     ];
-
-    // Define task statuses
-    public const STATUS_TODO = 'todo';
-    public const STATUS_IN_PROGRESS = 'in_progress';
-    public const STATUS_COMPLETED = 'completed';
-    public const STATUS_ON_HOLD = 'on_hold';
 
     public function project(): BelongsTo
     {
@@ -75,7 +80,7 @@ class Task extends Model
      */
     public function hasDependencies(): bool
     {
-        return !empty($this->dependencies) && count($this->dependencies) > 0;
+        return ! empty($this->dependencies) && count($this->dependencies) > 0;
     }
 
     /**
@@ -83,7 +88,7 @@ class Task extends Model
      */
     public function areDependenciesCompleted(): bool
     {
-        if (!$this->hasDependencies()) {
+        if (! $this->hasDependencies()) {
             return true; // No dependencies means it can be started
         }
 
@@ -112,7 +117,7 @@ class Task extends Model
     public function addDependency($taskId)
     {
         $dependencies = $this->dependencies ?? [];
-        if (!in_array($taskId, $dependencies)) {
+        if (! in_array($taskId, $dependencies)) {
             $dependencies[] = $taskId;
             $this->update(['dependencies' => $dependencies]);
         }
@@ -124,8 +129,8 @@ class Task extends Model
     public function removeDependency($taskId)
     {
         $dependencies = $this->dependencies ?? [];
-        $dependencies = array_filter($dependencies, function($id) use ($taskId) {
-            return $id != $taskId;
+        $dependencies = array_filter($dependencies, function ($id) use ($taskId) {
+            return $id !== $taskId;
         });
         $this->update(['dependencies' => array_values($dependencies)]);
     }
@@ -136,10 +141,10 @@ class Task extends Model
     public function getPotentialDependencies()
     {
         return self::where('project_id', $this->project_id)
-                    ->where('id', '!=', $this->id)
-                    ->orderBy('order')
-                    ->orderBy('created_at')
-                    ->get();
+            ->where('id', '!=', $this->id)
+            ->orderBy('order')
+            ->orderBy('created_at')
+            ->get();
     }
 
     /**
@@ -148,8 +153,8 @@ class Task extends Model
     public function discussions()
     {
         return $this->hasManyThrough(
-            \App\Models\Discussion::class,
-            \App\Models\Project::class,
+            Discussion::class,
+            Project::class,
             'id', // Foreign key on projects table
             'type_id', // Foreign key on discussions table
             'project_id', // Local key on tasks table
@@ -179,7 +184,7 @@ class Task extends Model
     public function worker()
     {
         return $this->belongsToMany(WorkerProfile::class, 'timesheets', 'task_id', 'worker_profile_id')
-                    ->withPivot('hours_worked', 'entry_type', 'date')
-                    ->withTimestamps();
+            ->withPivot('hours_worked', 'entry_type', 'date')
+            ->withTimestamps();
     }
 }

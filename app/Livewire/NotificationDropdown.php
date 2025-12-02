@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire;
 
-use App\Models\Notification;
-use App\Services\NotificationService;
 use Livewire\Component;
 
-class NotificationDropdown extends Component
+final class NotificationDropdown extends Component
 {
     public $unreadCount = 0;
+
     public $notifications = [];
+
     public $showDropdown = false;
 
     protected $listeners = [
@@ -43,7 +45,7 @@ class NotificationDropdown extends Component
             ->where('id', $notificationId)
             ->first();
 
-        if ($notification && !$notification->isRead()) {
+        if ($notification && ! $notification->isRead()) {
             $notification->markAsRead();
             $this->decrementUnreadCount();
             $this->loadNotifications(); // Reload notifications to update UI

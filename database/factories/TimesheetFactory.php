@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
-use App\Models\Timesheet;
-use App\Models\WorkerProfile;
 use App\Models\Project;
 use App\Models\Task;
-use App\Models\User;
+use App\Models\Timesheet;
+use App\Models\WorkerProfile;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class TimesheetFactory extends Factory
+final class TimesheetFactory extends Factory
 {
     protected $model = Timesheet::class;
 
@@ -17,7 +18,7 @@ class TimesheetFactory extends Factory
     {
         $date = fake()->dateTimeBetween('-1 month', 'now');
         $status = fake()->randomElement(['pending', 'approved', 'rejected']);
-        
+
         return [
             'worker_profile_id' => WorkerProfile::factory(),
             'project_id' => fake()->optional(0.8)->numberBetween(1, 10), // 80% chance of having a project

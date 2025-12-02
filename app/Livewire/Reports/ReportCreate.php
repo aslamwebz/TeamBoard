@@ -1,21 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Reports;
 
 use App\Models\Report;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use Livewire\Component;
 
 #[Layout('components.layouts.app')]
 #[Title('Create Report')]
-class ReportCreate extends Component
+final class ReportCreate extends Component
 {
     public $title = '';
+
     public $description = '';
+
     public $report_type = 'financial';
+
     public $data = [];
 
     protected $rules = [
@@ -24,7 +29,7 @@ class ReportCreate extends Component
         'report_type' => 'required|in:financial,project,invoice,client',
     ];
 
-    public function createReport() : RedirectResponse
+    public function createReport(): RedirectResponse
     {
         $validated = $this->validate();
 
@@ -33,7 +38,7 @@ class ReportCreate extends Component
         $validated['generated_at'] = now();
 
         // Add sample data based on report type
-        switch($this->report_type) {
+        switch ($this->report_type) {
             case 'financial':
                 $validated['data'] = [
                     'period' => 'monthly',
@@ -41,7 +46,7 @@ class ReportCreate extends Component
                     'to_date' => now()->endOfMonth()->toDateString(),
                     'total_revenue' => 0,
                     'total_expenses' => 0,
-                    'net_income' => 0
+                    'net_income' => 0,
                 ];
                 break;
             case 'project':
@@ -49,7 +54,7 @@ class ReportCreate extends Component
                     'status' => 'active',
                     'projects_count' => 0,
                     'completed_projects' => 0,
-                    'in_progress_projects' => 0
+                    'in_progress_projects' => 0,
                 ];
                 break;
             case 'invoice':
@@ -57,14 +62,14 @@ class ReportCreate extends Component
                     'status' => 'paid',
                     'invoices_count' => 0,
                     'total_amount' => 0,
-                    'overdue_invoices' => 0
+                    'overdue_invoices' => 0,
                 ];
                 break;
             case 'client':
                 $validated['data'] = [
                     'clients_count' => 0,
                     'active_clients' => 0,
-                    'new_clients' => 0
+                    'new_clients' => 0,
                 ];
                 break;
         }
@@ -74,7 +79,7 @@ class ReportCreate extends Component
         return $this->redirectRoute('reports.index', navigate: true);
     }
 
-    public function render() : View
+    public function render(): View
     {
         return view('livewire.reports.report-create');
     }

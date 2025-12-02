@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Discussions;
 
 use App\Models\Comment;
@@ -14,17 +16,24 @@ use Livewire\WithFileUploads;
 
 #[Layout('components.layouts.app')]
 #[Title('Discussion')]
-class DiscussionShow extends Component
+final class DiscussionShow extends Component
 {
     use WithFileUploads;
 
     public Discussion $discussion;
+
     public $newComment = '';
+
     public $attachments = [];
+
     public $replyingTo = null;
+
     public $replyContent = '';
+
     public $allAttachments = [];
+
     public $relatedDiscussions = [];
+
     public $limit = 20;
 
     protected $rules = [
@@ -42,12 +51,12 @@ class DiscussionShow extends Component
                     'user',
                     'replies.user',
                     'replies.attachments',
-                    'attachments'
+                    'attachments',
                 ]);
             },
             'attachments',
             'project',
-            'phase'
+            'phase',
         ]);
 
         // Load all attachments (from discussion and its comments)
@@ -68,7 +77,7 @@ class DiscussionShow extends Component
         ]);
 
         // Process attachments if any
-        if (!empty($this->attachments)) {
+        if (! empty($this->attachments)) {
             foreach ($this->attachments as $attachment) {
                 if ($attachment && method_exists($attachment, 'getClientOriginalName')) {
                     $this->processAttachment($attachment, $this->discussion->id, $comment->id);
@@ -88,17 +97,17 @@ class DiscussionShow extends Component
         // Using the method from the trait - need to call it properly
         $mentionedUsers = $this->parseMentions($comment->content);
         foreach ($mentionedUsers as $mentionedUser) {
-            if ($mentionedUser['id'] != Auth::id()) {
+            if ($mentionedUser['id'] !== Auth::id()) {
                 // Create notification for mentioned user
                 $activityService->logActivity(
                     'user_mentioned',
-                    'You were mentioned by ' . Auth::user()->name . ' in a comment',
+                    'You were mentioned by '.Auth::user()->name.' in a comment',
                     $this->discussion,
                     [
                         'mentioned_by' => Auth::id(),
                         'content' => $comment->content,
                         'comment_id' => $comment->id,
-                        'mentioned_user' => $mentionedUser['id']
+                        'mentioned_user' => $mentionedUser['id'],
                     ]
                 );
             }
@@ -125,7 +134,7 @@ class DiscussionShow extends Component
         $this->validateOnly('replyContent');
 
         $parentComment = Comment::find($this->replyingTo);
-        if (!$parentComment) {
+        if (! $parentComment) {
             return;
         }
 
@@ -141,7 +150,7 @@ class DiscussionShow extends Component
         $activityService->logCommentAdded($comment);
 
         // Process attachments if any
-        if (!empty($this->attachments)) {
+        if (! empty($this->attachments)) {
             foreach ($this->attachments as $attachment) {
                 if ($attachment && method_exists($attachment, 'getClientOriginalName')) {
                     $this->processAttachment($attachment, $this->discussion->id, $comment->id);
@@ -161,10 +170,23 @@ class DiscussionShow extends Component
         $this->discussion->load(['user', 'comments.user', 'comments.replies.user', 'attachments']);
     }
 
-    private function processAttachment($file, $discussionId, $commentId = null): void
+    public function render(): \Illuminate\Contracts\View\View
     {
-        $fileUploadService = new FileUploadService();
-        $fileUploadService->upload($file, Auth::id(), $discussionId, $commentId);
+        $typeColors = [
+            'project' => 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
+            'task' => 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
+            'client' => 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400',
+        ];
+
+        return view('livewire.discussions.discussion-show', [
+            'typeColors' => $typeColors,
+        ]);
+    }
+
+    public function updatedAttachments(): void
+    {
+        // Validate each attachment as it's added
+        $this->validateOnly('attachments.*');
     }
 
     /**
@@ -217,22 +239,9 @@ class DiscussionShow extends Component
         return $mentionedUsers->toArray();
     }
 
-    public function render(): \Illuminate\Contracts\View\View
+    private function processAttachment($file, $discussionId, $commentId = null): void
     {
-        $typeColors = [
-            'project' => 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
-            'task' => 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
-            'client' => 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400',
-        ];
-
-        return view('livewire.discussions.discussion-show', [
-            'typeColors' => $typeColors
-        ]);
-    }
-
-    public function updatedAttachments(): void
-    {
-        // Validate each attachment as it's added
-        $this->validateOnly('attachments.*');
+        $fileUploadService = new FileUploadService();
+        $fileUploadService->upload($file, Auth::id(), $discussionId, $commentId);
     }
 }

@@ -1,39 +1,62 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Clients;
 
 use App\Models\Client;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
 
 #[Layout('components.layouts.app')]
 #[Title('Edit Client')]
-class ClientEdit extends Component
+final class ClientEdit extends Component
 {
     public Client $client;
+
     public $clientId;
+
     public $company_name = '';
+
     public $name = '';
+
     public $email = '';
+
     public $phone = '';
+
     public $address = '';
+
     public $city = '';
+
     public $state = '';
+
     public $zip_code = '';
+
     public $country = '';
+
     public $vat_number = '';
+
     public $logo = '';
+
     public $registration_number = '';
+
     public $tax_id = '';
+
     public $website = '';
+
     public $industry = '';
+
     public $description = '';
+
     public $billing_plan = '';
+
     public $subscription_start_date = '';
+
     public $subscription_end_date = '';
+
     public $subscription_status = '';
 
     protected $rules = [
@@ -59,7 +82,7 @@ class ClientEdit extends Component
         'subscription_status' => 'nullable|string|max:50',
     ];
 
-    public function mount(Client $client) : void
+    public function mount(Client $client): void
     {
         $this->client = $client;
         $this->clientId = $client->id;
@@ -85,10 +108,10 @@ class ClientEdit extends Component
         $this->subscription_status = $client->subscription_status;
     }
 
-    public function updateClient() : RedirectResponse
+    public function updateClient(): RedirectResponse
     {
-        $this->rules['email'] = 'required|email|unique:clients,email,' . $this->clientId;
-        $this->rules['company_name'] = 'required|string|max:255|unique:clients,company_name,' . $this->clientId;
+        $this->rules['email'] = 'required|email|unique:clients,email,'.$this->clientId;
+        $this->rules['company_name'] = 'required|string|max:255|unique:clients,company_name,'.$this->clientId;
         $validated = $this->validate();
 
         $client = Client::find($this->clientId);
@@ -99,7 +122,7 @@ class ClientEdit extends Component
         return redirect()->route('clients.index');
     }
 
-    public function render() : View
+    public function render(): View
     {
         return view('livewire.clients.client-edit');
     }

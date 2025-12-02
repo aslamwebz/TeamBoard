@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Discussions;
 
 use App\Models\Discussion;
@@ -7,27 +9,35 @@ use App\Models\Project;
 use App\Models\ProjectPhase;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use Livewire\Component;
 use Livewire\WithFileUploads;
 
 #[Layout('components.layouts.app')]
 #[Title('Edit Discussion')]
-class DiscussionEdit extends Component
+final class DiscussionEdit extends Component
 {
     use WithFileUploads;
 
     public Discussion $discussion;
+
     public $title;
+
     public $content;
+
     public $type;
+
     public $typeId;
+
     public $projectPhaseId;
+
     public $attachments = [];
 
     public $projects = [];
+
     public $phases = [];
+
     public $users = [];
 
     protected $rules = [
@@ -49,12 +59,12 @@ class DiscussionEdit extends Component
         $this->projectPhaseId = $discussion->project_phase_id;
 
         $this->projects = Project::all();
-        
+
         // Load phases for the current project
         if ($discussion->type === 'project' && $discussion->type_id) {
             $this->phases = ProjectPhase::where('project_id', $discussion->type_id)->get();
         }
-        
+
         $this->users = User::all();
     }
 

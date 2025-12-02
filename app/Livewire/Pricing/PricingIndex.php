@@ -6,7 +6,7 @@ namespace App\Livewire\Pricing;
 
 use Livewire\Component;
 
-class PricingIndex extends Component
+final class PricingIndex extends Component
 {
     public function render(): \Illuminate\Contracts\View\View
     {

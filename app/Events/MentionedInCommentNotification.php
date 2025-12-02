@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Events;
 
 use App\Models\Comment;
@@ -7,12 +9,14 @@ use App\Models\User;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class MentionedInCommentNotification
+final class MentionedInCommentNotification
 {
     use Dispatchable, SerializesModels;
 
     public $comment;
+
     public $mentionedUser;
+
     public $mentioningUser;
 
     /**

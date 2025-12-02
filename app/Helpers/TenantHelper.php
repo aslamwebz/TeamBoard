@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Helpers;
 
 use App\Models\Tenant;
 
-class TenantHelper
+final class TenantHelper
 {
     /**
      * Get the current tenant's company name
@@ -12,6 +14,7 @@ class TenantHelper
     public static function getCompanyName(): ?string
     {
         $tenant = Tenant::current();
+
         return $tenant?->getCompanyName();
     }
 
@@ -21,6 +24,7 @@ class TenantHelper
     public static function getCompanyLogo(): ?string
     {
         $tenant = Tenant::current();
+
         return $tenant?->logo_url;
     }
 
@@ -30,6 +34,7 @@ class TenantHelper
     public static function getCompanyEmail(): ?string
     {
         $tenant = Tenant::current();
+
         return $tenant?->getContactEmail();
     }
 
@@ -39,6 +44,7 @@ class TenantHelper
     public static function getCompanyPhone(): ?string
     {
         $tenant = Tenant::current();
+
         return $tenant?->getCompanyPhone();
     }
 
@@ -48,6 +54,7 @@ class TenantHelper
     public static function getCompanyAddress(): ?string
     {
         $tenant = Tenant::current();
+
         return $tenant?->getCompanyAddress();
     }
 
@@ -57,6 +64,7 @@ class TenantHelper
     public static function getDefaultCurrency(): string
     {
         $tenant = Tenant::current();
+
         return $tenant?->getDefaultCurrency() ?? 'USD';
     }
 
@@ -66,6 +74,7 @@ class TenantHelper
     public static function getDefaultTimezone(): string
     {
         $tenant = Tenant::current();
+
         return $tenant?->getDefaultTimezone() ?? 'UTC';
     }
 
@@ -75,6 +84,7 @@ class TenantHelper
     public static function getBrandingConfig(): array
     {
         $tenant = Tenant::current();
+
         return $tenant?->getBrandingConfig() ?? [];
     }
 
@@ -84,6 +94,7 @@ class TenantHelper
     public static function getTaxVatNumber(): ?string
     {
         $tenant = Tenant::current();
+
         return $tenant?->getTaxVatNumber();
     }
 
@@ -93,6 +104,7 @@ class TenantHelper
     public static function getIndustry(): ?string
     {
         $tenant = Tenant::current();
+
         return $tenant?->getIndustry();
     }
 }

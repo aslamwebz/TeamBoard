@@ -1,20 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\NotificationList;
 
-use App\Models\Notification;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class NotificationList extends Component
+final class NotificationList extends Component
 {
     use WithPagination;
 
     public string $activeTab = 'all';  // 'all', 'read', 'unread'
+
     public int $perPage = 15;
 
     public $listeners = [
-        'switchTab' => 'switchTab'
+        'switchTab' => 'switchTab',
     ];
 
     public function getUnreadCountProperty(): int

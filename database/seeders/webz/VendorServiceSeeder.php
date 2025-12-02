@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use App\Models\Vendor;
 use App\Models\VendorService;
 use Illuminate\Database\Seeder;
 
-class VendorServiceSeeder extends Seeder
+final class VendorServiceSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,6 +19,7 @@ class VendorServiceSeeder extends Seeder
 
         if ($vendors->isEmpty()) {
             $this->command->warn('No vendors found. Please run VendorSeeder first.');
+
             return;
         }
 

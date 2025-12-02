@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Tasks;
 
 use App\Models\Project;
@@ -9,24 +11,32 @@ use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use Livewire\Component;
 
 #[Layout('components.layouts.app')]
 #[Title('Create Task')]
-class TaskCreate extends Component
+final class TaskCreate extends Component
 {
     public $title;
+
     public $description;
+
     public $status = 'todo';
+
     public $due_date;
+
     public $project_id;
+
     public $project_phase_id;
+
     public $user_id;
 
     public $projects = [];
+
     public $phases = [];
+
     public $users = [];
 
     protected $rules = [
@@ -39,14 +49,14 @@ class TaskCreate extends Component
         'user_id' => 'nullable|exists:users,id',
     ];
 
-    public function mount() : void
+    public function mount(): void
     {
         $this->projects = Project::all();
         $this->phases = collect(); // Empty initially
         $this->users = User::all();
     }
 
-    public function createTask() : RedirectResponse
+    public function createTask(): RedirectResponse
     {
         $validatedData = $this->validate();
         $validatedData['user_id'] = Auth::id();
@@ -54,7 +64,7 @@ class TaskCreate extends Component
         $task = Task::create($validatedData);
 
         // If the task is assigned to a specific user (different from the creator), send a notification
-        if ($this->user_id && $this->user_id != Auth::id()) {
+        if ($this->user_id && $this->user_id !== Auth::id()) {
             $assignedUser = User::find($this->user_id);
             $assigner = Auth::user();
 
@@ -66,7 +76,7 @@ class TaskCreate extends Component
         return redirect()->route('tasks');
     }
 
-    public function updatedProjectId() : void
+    public function updatedProjectId(): void
     {
         // When project changes, reload the phases
         if ($this->project_id) {
@@ -78,7 +88,7 @@ class TaskCreate extends Component
         }
     }
 
-    public function render() : View
+    public function render(): View
     {
         return view('livewire.tasks.task-create');
     }

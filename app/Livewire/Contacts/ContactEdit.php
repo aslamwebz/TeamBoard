@@ -6,10 +6,10 @@ namespace App\Livewire\Contacts;
 
 use App\Models\Contact;
 use Illuminate\Contracts\View\View;
-use Livewire\Component;
 use Livewire\Attributes\Validate;
+use Livewire\Component;
 
-class ContactEdit extends Component
+final class ContactEdit extends Component
 {
     public Contact $contact;
 
@@ -54,7 +54,7 @@ class ContactEdit extends Component
 
     public array $communication_preferences = [];
 
-    public function mount(Contact $contact) : void
+    public function mount(Contact $contact): void
     {
         $this->contact = $contact;
 
@@ -74,7 +74,7 @@ class ContactEdit extends Component
         $this->communication_preferences = $contact->communication_preferences ?? [];
     }
 
-    public function save() : void
+    public function save(): void
     {
         $validated = $this->validate();
 
@@ -88,7 +88,7 @@ class ContactEdit extends Component
         // If this is the primary contact, update the client record
         if ($validated['is_primary']) {
             $this->contact->client->update(['primary_contact_id' => $this->contact->id]);
-        } else if ($this->contact->is_primary && !$validated['is_primary']) {
+        } elseif ($this->contact->is_primary && ! $validated['is_primary']) {
             // If this was the primary contact and is no longer primary, clear the client's primary contact
             if ($this->contact->client->primary_contact_id === $this->contact->id) {
                 $this->contact->client->update(['primary_contact_id' => null]);
@@ -100,7 +100,7 @@ class ContactEdit extends Component
         $this->dispatch('contact-updated', contactId: $this->contact->id);
     }
 
-    public function render() : View
+    public function render(): View
     {
         return view('livewire.contacts.contact-edit');
     }

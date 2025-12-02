@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
+use App\Models\Client;
 use App\Models\Expense;
 use App\Models\ExpenseCategory;
 use App\Models\Project;
-use App\Models\Client;
-use App\Models\Vendor;
 use App\Models\User;
+use App\Models\Vendor;
 
 it('to array', function () {
     // Create related records in proper order to satisfy foreign key constraints

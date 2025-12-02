@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Tenants;
 
 use App\Filament\Resources\Tenants\Pages\CreateTenant;
@@ -16,7 +18,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
-class TenantResource extends Resource
+final class TenantResource extends Resource
 {
     protected static ?string $model = Tenant::class;
 

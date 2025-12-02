@@ -1,20 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Listeners;
 
-use App\Events\TaskAssignedNotification;
-use App\Events\NewInvoiceNotification;
-use App\Events\ProjectUpdatedNotification;
-use App\Events\MentionedInCommentNotification;
 use App\Events\ClientAddedNotification;
+use App\Events\MentionedInCommentNotification;
+use App\Events\NewInvoiceNotification;
 use App\Events\PaymentFailedNotification;
+use App\Events\ProjectUpdatedNotification;
+use App\Events\TaskAssignedNotification;
 use App\Services\NotificationService;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
-class SendNotificationListener
+final class SendNotificationListener
 {
-    protected $notificationService;
+    private $notificationService;
 
     /**
      * Create the event listener.
@@ -44,7 +44,7 @@ class SendNotificationListener
         }
     }
 
-    protected function handleTaskAssigned(TaskAssignedNotification $event): void
+    private function handleTaskAssigned(TaskAssignedNotification $event): void
     {
         $this->notificationService->notifyTaskAssigned(
             $event->task,
@@ -53,7 +53,7 @@ class SendNotificationListener
         );
     }
 
-    protected function handleNewInvoice(NewInvoiceNotification $event): void
+    private function handleNewInvoice(NewInvoiceNotification $event): void
     {
         $this->notificationService->notifyNewInvoice(
             $event->invoice,
@@ -61,7 +61,7 @@ class SendNotificationListener
         );
     }
 
-    protected function handleProjectUpdated(ProjectUpdatedNotification $event): void
+    private function handleProjectUpdated(ProjectUpdatedNotification $event): void
     {
         $this->notificationService->notifyProjectUpdated(
             $event->project,
@@ -69,7 +69,7 @@ class SendNotificationListener
         );
     }
 
-    protected function handleMentionedInComment(MentionedInCommentNotification $event): void
+    private function handleMentionedInComment(MentionedInCommentNotification $event): void
     {
         $this->notificationService->notifyMentionedInComment(
             $event->comment,
@@ -78,7 +78,7 @@ class SendNotificationListener
         );
     }
 
-    protected function handleClientAdded(ClientAddedNotification $event): void
+    private function handleClientAdded(ClientAddedNotification $event): void
     {
         $this->notificationService->notifyClientAdded(
             $event->client,
@@ -86,7 +86,7 @@ class SendNotificationListener
         );
     }
 
-    protected function handlePaymentFailed(PaymentFailedNotification $event): void
+    private function handlePaymentFailed(PaymentFailedNotification $event): void
     {
         $this->notificationService->notifyPaymentFailed(
             $event->user,

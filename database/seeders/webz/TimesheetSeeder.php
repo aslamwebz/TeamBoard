@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use App\Models\Project;
-use App\Models\Task;
 use App\Models\Timesheet;
 use App\Models\WorkerProfile;
 use Illuminate\Database\Seeder;
 
-class TimesheetSeeder extends Seeder
+final class TimesheetSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -20,6 +21,7 @@ class TimesheetSeeder extends Seeder
 
         if ($workers->isEmpty() || $projects->isEmpty()) {
             $this->command->warn('Workers or Projects not found. Please run WorkerProfileSeeder and ProjectSeeder first.');
+
             return;
         }
 

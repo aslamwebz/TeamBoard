@@ -1,37 +1,58 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Clients;
 
 use App\Models\Client;
-use Livewire\Component;
-use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
+use Livewire\Component;
 
 #[Layout('components.layouts.app')]
 #[Title('Create Client')]
-class ClientCreate extends Component
+final class ClientCreate extends Component
 {
     public $company_name = '';
+
     public $name = '';
+
     public $email = '';
+
     public $phone = '';
+
     public $address = '';
+
     public $city = '';
+
     public $state = '';
+
     public $zip_code = '';
+
     public $country = '';
+
     public $vat_number = '';
+
     public $logo = '';
+
     public $registration_number = '';
+
     public $tax_id = '';
+
     public $website = '';
+
     public $industry = '';
+
     public $description = '';
+
     public $billing_plan = '';
+
     public $subscription_start_date = '';
+
     public $subscription_end_date = '';
+
     public $subscription_status = '';
 
     protected $rules = [
@@ -57,19 +78,19 @@ class ClientCreate extends Component
         'subscription_status' => 'nullable|string|max:50',
     ];
 
-    public function createClient() : RedirectResponse
+    public function createClient(): RedirectResponse
     {
         $validated = $this->validate();
 
         $client = Client::create($validated);
 
         // Dispatch notification when client is added
-        \App\Events\ClientAddedNotification::dispatch($client, auth()->user()); 
+        \App\Events\ClientAddedNotification::dispatch($client, auth()->user());
 
         return redirect()->route('clients.index');
     }
 
-    public function render() : View
+    public function render(): View
     {
         return view('livewire.clients.client-create');
     }

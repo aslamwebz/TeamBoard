@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 use App\Livewire\Auth\ResetPassword;
 use App\Livewire\Billing\BillingIndex;
@@ -7,6 +9,7 @@ use App\Livewire\Clients\ClientCreate;
 use App\Livewire\Clients\ClientEdit;
 use App\Livewire\Clients\ClientIndex;
 use App\Livewire\Clients\ClientShow;
+use App\Livewire\Dashboard;
 use App\Livewire\Expenses\ExpenseApprovals;
 use App\Livewire\Expenses\ExpenseAttachments;
 use App\Livewire\Expenses\ExpenseCreate;
@@ -69,8 +72,6 @@ use App\Livewire\Workers\WorkerEdit;
 use App\Livewire\Workers\WorkerIndex;
 use App\Livewire\Workers\WorkerShow;
 use App\Livewire\Workers\WorkerSkills;
-use App\Livewire\Dashboard;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -146,36 +147,36 @@ Route::middleware([
         Route::get('/teams/{team}', TeamShow::class)->name('teams.show');
 
         // Roles management routes
-        Route::get('/roles', \App\Livewire\Roles\RoleIndex::class)->name('roles.index');
-        Route::get('/roles/create', \App\Livewire\Roles\Form::class)->name('roles.create');
-        Route::get('/roles/{role}/edit', \App\Livewire\Roles\Form::class)->name('roles.edit')->where('role', '[0-9]+');
+        Route::get('/roles', App\Livewire\Roles\RoleIndex::class)->name('roles.index');
+        Route::get('/roles/create', App\Livewire\Roles\Form::class)->name('roles.create');
+        Route::get('/roles/{role}/edit', App\Livewire\Roles\Form::class)->name('roles.edit')->where('role', '[0-9]+');
 
         // Permissions management routes
-        Route::get('/permissions', \App\Livewire\Permissions\PermissionIndex::class)->name('permissions.index');
-        Route::get('/permissions/create', \App\Livewire\Permissions\PermissionCreate::class)->name('permissions.create');
-        Route::get('/permissions/{permission}/edit', \App\Livewire\Permissions\PermissionEdit::class)->name('permissions.edit');
+        Route::get('/permissions', App\Livewire\Permissions\PermissionIndex::class)->name('permissions.index');
+        Route::get('/permissions/create', App\Livewire\Permissions\PermissionCreate::class)->name('permissions.create');
+        Route::get('/permissions/{permission}/edit', App\Livewire\Permissions\PermissionEdit::class)->name('permissions.edit');
 
         // Phases routes
-        Route::get('/projects/{project}/phases', \App\Livewire\Projects\Phases\PhaseIndex::class)->name('phases.index');
-        Route::get('/projects/{project}/phases/create', \App\Livewire\Projects\Phases\PhaseCreate::class)->name('phases.create');
-        Route::get('/projects/{project}/phases/{phase}', \App\Livewire\Projects\Phases\PhaseShow::class)->name('phases.show');
-        Route::get('/projects/{project}/phases/{phase}/edit', \App\Livewire\Projects\Phases\PhaseEdit::class)->name('phases.edit');
+        Route::get('/projects/{project}/phases', App\Livewire\Projects\Phases\PhaseIndex::class)->name('phases.index');
+        Route::get('/projects/{project}/phases/create', App\Livewire\Projects\Phases\PhaseCreate::class)->name('phases.create');
+        Route::get('/projects/{project}/phases/{phase}', App\Livewire\Projects\Phases\PhaseShow::class)->name('phases.show');
+        Route::get('/projects/{project}/phases/{phase}/edit', App\Livewire\Projects\Phases\PhaseEdit::class)->name('phases.edit');
 
         // Milestones routes
-        Route::get('/projects/{project}/milestones', \App\Livewire\Projects\Milestones\MilestoneIndex::class)->name('milestones.index');
-        Route::get('/projects/{project}/milestones/create', \App\Livewire\Projects\Milestones\MilestoneCreate::class)->name('milestones.create');
-        Route::get('/projects/{project}/milestones/{milestone}', \App\Livewire\Projects\Milestones\MilestoneShow::class)->name('milestones.show');
-        Route::get('/projects/{project}/milestones/{milestone}/edit', \App\Livewire\Projects\Milestones\MilestoneEdit::class)->name('milestones.edit');
+        Route::get('/projects/{project}/milestones', App\Livewire\Projects\Milestones\MilestoneIndex::class)->name('milestones.index');
+        Route::get('/projects/{project}/milestones/create', App\Livewire\Projects\Milestones\MilestoneCreate::class)->name('milestones.create');
+        Route::get('/projects/{project}/milestones/{milestone}', App\Livewire\Projects\Milestones\MilestoneShow::class)->name('milestones.show');
+        Route::get('/projects/{project}/milestones/{milestone}/edit', App\Livewire\Projects\Milestones\MilestoneEdit::class)->name('milestones.edit');
 
         // Discussions routes
-        Route::get('/discussions', \App\Livewire\Discussions\DiscussionIndex::class)->name('discussions.index');
-        Route::get('/discussions/create', \App\Livewire\Discussions\DiscussionCreate::class)->name('discussions.create');
-        Route::get('/discussions/{discussion}', \App\Livewire\Discussions\DiscussionShow::class)->name('discussions.show');
-        Route::get('/discussions/{discussion}/edit', \App\Livewire\Discussions\DiscussionEdit::class)->name('discussions.edit');
+        Route::get('/discussions', App\Livewire\Discussions\DiscussionIndex::class)->name('discussions.index');
+        Route::get('/discussions/create', App\Livewire\Discussions\DiscussionCreate::class)->name('discussions.create');
+        Route::get('/discussions/{discussion}', App\Livewire\Discussions\DiscussionShow::class)->name('discussions.show');
+        Route::get('/discussions/{discussion}/edit', App\Livewire\Discussions\DiscussionEdit::class)->name('discussions.edit');
 
         // Files routes
-        Route::get('/files', \App\Livewire\Files\FilesIndex::class)->name('files.index');
-        Route::get('/files/upload', \App\Livewire\Files\Upload::class)->name('files.upload');
+        Route::get('/files', App\Livewire\Files\FilesIndex::class)->name('files.index');
+        Route::get('/files/upload', App\Livewire\Files\Upload::class)->name('files.upload');
 
         // Vendors routes
         Route::get('/vendors', VendorIndex::class)->name('vendors');
@@ -211,7 +212,7 @@ Route::middleware([
             $user = auth()->user();
             $workerProfile = $user->workerProfile;
             if ($workerProfile) {
-                return \Livewire::mount(Timesheets::class, ['workerId' => $workerProfile->id]);
+                return Livewire::mount(Timesheets::class, ['workerId' => $workerProfile->id]);
             }
             abort(403, 'Access denied');
         })->name('my.timesheets');
@@ -221,51 +222,51 @@ Route::middleware([
             $user = auth()->user();
             $workerProfile = $user->workerProfile;
             if ($workerProfile) {
-                return \Livewire::mount(WorkerSkills::class, ['workerId' => $workerProfile->id]);
+                return Livewire::mount(WorkerSkills::class, ['workerId' => $workerProfile->id]);
             }
             abort(403, 'Access denied');
         })->name('my.skills');
 
         // Expenses routes
-        Route::get('/expenses', \App\Livewire\Expenses\ExpenseIndex::class)->name('expenses.index');
-        Route::get('/expenses/create', \App\Livewire\Expenses\ExpenseCreate::class)->name('expenses.create');
-        Route::get('/expenses/{expense}/edit', \App\Livewire\Expenses\ExpenseEdit::class)->name('expenses.edit');
-        Route::get('/expenses/{expense}', \App\Livewire\Expenses\ExpenseShow::class)->name('expenses.show');
-        Route::get('/expenses/{expense}/attachments', \App\Livewire\Expenses\ExpenseAttachments::class)->name('expenses.attachments');
-        Route::get('/expenses/approvals', \App\Livewire\Expenses\ExpenseApprovals::class)->name('expenses.approvals');
+        Route::get('/expenses', ExpenseIndex::class)->name('expenses.index');
+        Route::get('/expenses/create', ExpenseCreate::class)->name('expenses.create');
+        Route::get('/expenses/{expense}/edit', ExpenseEdit::class)->name('expenses.edit');
+        Route::get('/expenses/{expense}', ExpenseShow::class)->name('expenses.show');
+        Route::get('/expenses/{expense}/attachments', ExpenseAttachments::class)->name('expenses.attachments');
+        Route::get('/expenses/approvals', ExpenseApprovals::class)->name('expenses.approvals');
 
         // Payments routes
-        Route::get('/payments', \App\Livewire\Payments\PaymentIndex::class)->name('payments.index');
-        Route::get('/payments/create', \App\Livewire\Payments\PaymentCreate::class)->name('payments.create');
-        Route::get('/payments/{payment}/edit', \App\Livewire\Payments\PaymentEdit::class)->name('payments.edit');
-        Route::get('/payments/{payment}', \App\Livewire\Payments\PaymentShow::class)->name('payments.show');
+        Route::get('/payments', PaymentIndex::class)->name('payments.index');
+        Route::get('/payments/create', PaymentCreate::class)->name('payments.create');
+        Route::get('/payments/{payment}/edit', PaymentEdit::class)->name('payments.edit');
+        Route::get('/payments/{payment}', PaymentShow::class)->name('payments.show');
 
         // Payment reminders route
-        Route::get('/payment-reminders', \App\Livewire\Payments\PaymentReminders::class)->name('payment-reminders.index');
+        Route::get('/payment-reminders', PaymentReminders::class)->name('payment-reminders.index');
 
         // Invoice payments route
-        Route::get('/invoices/{invoice}/payments', \App\Livewire\Invoices\InvoicePayments::class)->name('invoices.payments');
+        Route::get('/invoices/{invoice}/payments', InvoicePayments::class)->name('invoices.payments');
     });
 
     Route::middleware(['auth'])->group(function () {
         Route::get('settings/profile', Profile::class)->name('settings.profile');
         Route::get('settings/password', Password::class)->name('settings.password');
         Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
-        Route::get('settings/company-profile', \App\Livewire\Settings\CompanyProfile::class)->name('settings.company-profile');
+        Route::get('settings/company-profile', App\Livewire\Settings\CompanyProfile::class)->name('settings.company-profile');
     });
 
     // File serving route for tenant - needs to be inside the tenant group with proper middleware
-    Route::get('/files/discussions/{filename}', [\App\Http\Controllers\TenantFileController::class, 'download'])
+    Route::get('/files/discussions/{filename}', [App\Http\Controllers\TenantFileController::class, 'download'])
         ->name('tenant.file.download')
         ->middleware(['auth']);
 
     // File preview route - shows the file with preview and download tools
-    Route::get('/files/preview/{filename}', [\App\Http\Controllers\FilePreviewController::class, 'preview'])
+    Route::get('/files/preview/{filename}', [App\Http\Controllers\FilePreviewController::class, 'preview'])
         ->name('tenant.file.preview')
         ->middleware(['auth']);
 
     // File preview page route - separate page for preview
-    Route::get('/files/preview-page/{filename}', [\App\Http\Controllers\FilePreviewPageController::class, 'show'])
+    Route::get('/files/preview-page/{filename}', [App\Http\Controllers\FilePreviewPageController::class, 'show'])
         ->name('tenant.file.preview.page')
         ->middleware(['auth']);
 
@@ -274,7 +275,7 @@ Route::middleware([
         ->name('notifications.index')
         ->middleware(['auth']);
 
-    require __DIR__ . '/auth.php';
+    require __DIR__.'/auth.php';
 });
 
 Route::get('reset-password/{token}', ResetPassword::class)->name('password.reset');

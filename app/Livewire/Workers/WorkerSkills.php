@@ -1,16 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Workers;
 
-use App\Models\WorkerProfile;
 use App\Models\Skill;
+use App\Models\WorkerProfile;
 use Livewire\Component;
 
-class WorkerSkills extends Component
+final class WorkerSkills extends Component
 {
     public $workerId;
+
     public $selectedSkills = [];
+
     public $proficiency = [];
+
     public $notes = [];
 
     public function mount($workerId): void

@@ -1,11 +1,13 @@
 <?php
 
-use App\Models\Timesheet;
-use App\Models\WorkerProfile;
-use App\Models\Project;
+declare(strict_types=1);
+
 use App\Models\Client;
+use App\Models\Project;
 use App\Models\Task;
+use App\Models\Timesheet;
 use App\Models\User;
+use App\Models\WorkerProfile;
 
 it('to array', function () {
     $client = Client::create([

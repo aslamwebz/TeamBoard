@@ -1,36 +1,42 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Files;
 
 use App\Models\DiscussionAttachment;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-class FileBrowser extends Component
+final class FileBrowser extends Component
 {
     use WithFileUploads;
 
     public $files = [];
+
     public $selectedFiles = [];
+
     public $uploading = false;
+
     public $maxFileSize = 10485760; // 10MB in bytes
+
     public $allowedFileTypes = [
         'image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml',
         'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
         'text/plain', 'text/csv', 'application/zip', 'application/x-rar-compressed',
-        'application/x-7z-compressed', 'application/x-tar', 'application/gzip', 'application/json'
+        'application/x-7z-compressed', 'application/x-tar', 'application/gzip', 'application/json',
     ];
 
     public $showModal = false;
+
     public $currentFolder = 'discussions';
 
     protected $listeners = [
         'openFileBrowser' => 'openModal',
         'closeFileBrowser' => 'closeModal',
-        'attachFile' => 'attachFile'
+        'attachFile' => 'attachFile',
     ];
 
     public function mount(): void
@@ -49,15 +55,15 @@ class FileBrowser extends Component
     {
         foreach ($this->files as $file) {
             $this->validateOnly('files.*', [
-                'files.*' => 'file|max:10240|mimes:jpeg,png,gif,webp,svg,pdf,doc,docx,xls,xlsx,ppt,pptx,txt,csv,zip,rar,7z,tar,gz,json'
+                'files.*' => 'file|max:10240|mimes:jpeg,png,gif,webp,svg,pdf,doc,docx,xls,xlsx,ppt,pptx,txt,csv,zip,rar,7z,tar,gz,json',
             ]);
         }
     }
 
-    public function uploadFiles($discussionId = null, $commentId = null, $userId): void
+    public function uploadFiles($discussionId, $commentId, $userId): void
     {
         $this->validate([
-            'files.*' => 'file|max:10240'
+            'files.*' => 'file|max:10240',
         ]);
 
         $fileUploadService = new \App\Services\FileUploadService();
@@ -76,13 +82,13 @@ class FileBrowser extends Component
     {
         $attachment = DiscussionAttachment::find($fileId);
 
-        if (!$attachment) {
+        if (! $attachment) {
             return;
         }
 
-        $filePath = storage_path('app/discussions/' . $attachment->filename);
+        $filePath = storage_path('app/discussions/'.$attachment->filename);
 
-        if (!file_exists($filePath)) {
+        if (! file_exists($filePath)) {
             return;
         }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -42,7 +44,7 @@ return new class extends Migration
                 'billing_address',
                 'shipping_address',
                 'primary_contact_id',
-                'custom_fields'
+                'custom_fields',
             ]);
         });
 
@@ -53,7 +55,7 @@ return new class extends Migration
                 'mobile_phone',
                 'communication_preferences',
                 'is_billing_contact',
-                'is_technical_contact'
+                'is_technical_contact',
             ]);
 
             // Revert position field back to original if needed

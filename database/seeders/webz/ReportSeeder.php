@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use Illuminate\Database\Seeder;
 
-class ReportSeeder extends Seeder
+final class ReportSeeder extends Seeder
 {
     /**
      * Run the database seeds.

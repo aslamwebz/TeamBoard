@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Payments;
 
 use App\Models\Payment;
 use Livewire\Component;
 
-class PaymentShow extends Component
+final class PaymentShow extends Component
 {
     public Payment $payment;
 

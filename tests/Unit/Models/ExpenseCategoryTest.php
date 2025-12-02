@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\ExpenseCategory;
 
 it('to array', function () {

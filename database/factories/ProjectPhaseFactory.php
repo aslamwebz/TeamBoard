@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
-use App\Models\ProjectPhase;
 use App\Models\Project;
+use App\Models\ProjectPhase;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ProjectPhaseFactory extends Factory
+final class ProjectPhaseFactory extends Factory
 {
     protected $model = ProjectPhase::class;
 

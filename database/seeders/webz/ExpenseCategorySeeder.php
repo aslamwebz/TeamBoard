@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
-use App\Models\Vendor;
 use Illuminate\Database\Seeder;
 
-class ExpenseCategorySeeder extends Seeder
+final class ExpenseCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.

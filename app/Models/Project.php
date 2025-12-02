@@ -1,17 +1,28 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
 use App\Helpers\TenantHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Model;
 
-class Project extends Model
+final class Project extends Model
 {
     use HasFactory;
+
+    // Define project statuses
+    public const STATUS_PLANNING = 'planning';
+
+    public const STATUS_IN_PROGRESS = 'in_progress';
+
+    public const STATUS_COMPLETED = 'completed';
+
+    public const STATUS_ON_HOLD = 'on_hold';
 
     protected $fillable = [
         'name',
@@ -24,12 +35,6 @@ class Project extends Model
     protected $casts = [
         'due_date' => 'date',
     ];
-
-    // Define project statuses
-    public const STATUS_PLANNING = 'planning';
-    public const STATUS_IN_PROGRESS = 'in_progress';
-    public const STATUS_COMPLETED = 'completed';
-    public const STATUS_ON_HOLD = 'on_hold';
 
     public function client(): BelongsTo
     {
@@ -136,8 +141,8 @@ class Project extends Model
     public function workers()
     {
         return $this->belongsToMany(WorkerProfile::class, 'timesheets', 'project_id', 'worker_profile_id')
-                    ->withPivot('total_hours', 'entry_type')
-                    ->withTimestamps();
+            ->withPivot('total_hours', 'entry_type')
+            ->withTimestamps();
     }
 
     /**
@@ -145,7 +150,7 @@ class Project extends Model
      */
     public function projectDiscussions()
     {
-        return $this->hasMany(\App\Models\Discussion::class, 'project_id');
+        return $this->hasMany(Discussion::class, 'project_id');
     }
 
     /**
@@ -166,7 +171,7 @@ class Project extends Model
 
         // Get discussions associated with tasks in this project
         $taskIds = $this->tasks()->pluck('id');
-        $taskDiscussions = \App\Models\Discussion::where('type', 'task')
+        $taskDiscussions = Discussion::where('type', 'task')
             ->whereIn('type_id', $taskIds)
             ->get();
 

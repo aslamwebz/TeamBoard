@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use App\Models\Report;
 use Illuminate\Database\Seeder;
 
-class MonthlyReportSeeder extends Seeder
+final class MonthlyReportSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,6 +18,7 @@ class MonthlyReportSeeder extends Seeder
 
         if ($reports->isEmpty()) {
             $this->command->warn('No reports found. Please run ReportSeeder first.');
+
             return;
         }
 

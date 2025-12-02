@@ -1,37 +1,57 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Workers;
 
-use App\Models\WorkerProfile;
 use App\Models\User;
+use App\Models\WorkerProfile;
 use Livewire\Component;
 
-class WorkerEdit extends Component
+final class WorkerEdit extends Component
 {
     public WorkerProfile $workerProfile;
 
     public $user_id;
+
     public string $employee_id = '';
+
     public string $job_title = '';
+
     public string $bio = '';
+
     public string $hourly_rate = '0.00';
+
     public string $department = '';
+
     public $manager_id;
+
     public string $hire_date = '';
+
     public string $employment_type = '';
+
     public string $status = 'active';
+
     public $availability = [];
+
     public string $emergency_contact = '';
+
     public string $emergency_contact_phone = '';
+
     public string $address = '';
+
     public string $city = '';
+
     public string $state = '';
+
     public string $zip_code = '';
+
     public string $country = '';
+
     public string $phone = '';
 
     protected $rules = [
-        'employee_id' => 'nullable|string|max:50|unique:worker_profiles,employee_id,' . 'workerProfile.id',
+        'employee_id' => 'nullable|string|max:50|unique:worker_profiles,employee_id,'.'workerProfile.id',
         'job_title' => 'nullable|string|max:255',
         'bio' => 'nullable|string',
         'hourly_rate' => 'nullable|numeric|min:0',
@@ -108,6 +128,7 @@ class WorkerEdit extends Component
     public function render(): \Illuminate\Contracts\View\View
     {
         $users = User::orderBy('name')->get();
+
         return view('livewire.workers.worker-edit', [
             'users' => $users,
         ]);

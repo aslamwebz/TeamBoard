@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use App\Models\User;
@@ -7,7 +9,7 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class TenantRolePermissionSeeder extends Seeder
+final class TenantRolePermissionSeeder extends Seeder
 {
     /**
      * Run the database seeds.

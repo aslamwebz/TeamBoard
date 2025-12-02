@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use App\Models\Certification;
 use Illuminate\Database\Seeder;
 
-class CertificationSeeder extends Seeder
+final class CertificationSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -35,7 +37,7 @@ class CertificationSeeder extends Seeder
                 'name' => $cert['name'],
                 'issuing_organization' => $cert['issuing_organization'],
                 'description' => $cert['description'],
-                'license_number' => strtoupper(fake()->bothify('?????-#####')),
+                'license_number' => mb_strtoupper(fake()->bothify('?????-#####')),
                 'issue_date' => fake()->dateTimeBetween('-3 years', 'now'),
                 'expiry_date' => fake()->dateTimeBetween('+1 year', '+3 years'),
                 'credential_id' => fake()->uuid(),

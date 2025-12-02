@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use App\Models\Certification;
 use App\Models\WorkerProfile;
 use Illuminate\Database\Seeder;
 
-class WorkerCertificationSeeder extends Seeder
+final class WorkerCertificationSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,6 +20,7 @@ class WorkerCertificationSeeder extends Seeder
 
         if ($workers->isEmpty() || $certifications->isEmpty()) {
             $this->command->warn('Workers or Certifications not found. Please run WorkerProfileSeeder and CertificationSeeder first.');
+
             return;
         }
 

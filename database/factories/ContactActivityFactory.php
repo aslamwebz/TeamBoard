@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Contact;
@@ -7,7 +9,7 @@ use App\Models\ContactActivity;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ContactActivityFactory extends Factory
+final class ContactActivityFactory extends Factory
 {
     protected $model = ContactActivity::class;
 
@@ -15,7 +17,7 @@ class ContactActivityFactory extends Factory
     {
         // Create a user if none exists
         $user = User::inRandomOrder()->first() ?? User::factory()->create();
-        
+
         // Create a contact if none exists
         $contact = Contact::inRandomOrder()->first() ?? Contact::factory()->create();
 

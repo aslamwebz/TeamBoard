@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Certification extends Model
+final class Certification extends Model
 {
     use HasFactory;
 
@@ -31,7 +33,7 @@ class Certification extends Model
     public function workerProfiles()
     {
         return $this->belongsToMany(WorkerProfile::class, 'worker_certifications')
-                    ->withPivot('date_obtained', 'expiry_date', 'status', 'notes', 'attachment_path')
-                    ->withTimestamps();
+            ->withPivot('date_obtained', 'expiry_date', 'status', 'notes', 'attachment_path')
+            ->withTimestamps();
     }
 }

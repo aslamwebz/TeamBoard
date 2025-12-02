@@ -1,16 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Events;
 
 use App\Models\User;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class PaymentFailedNotification
+final class PaymentFailedNotification
 {
     use Dispatchable, SerializesModels;
 
     public $user;
+
     public $paymentDetails;
 
     /**

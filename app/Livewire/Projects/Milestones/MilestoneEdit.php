@@ -1,23 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Projects\Milestones;
 
 use App\Models\Milestone;
-use App\Models\ProjectPhase;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use Livewire\Component;
 
 #[Layout('components.layouts.app')]
 #[Title('Edit Milestone')]
-class MilestoneEdit extends Component
+final class MilestoneEdit extends Component
 {
     public Milestone $milestone;
+
     public $name = '';
+
     public $description = '';
+
     public $due_date = '';
+
     public $project_phase_id = '';
+
     public $status = 'not_started';
+
     public $order = 0;
 
     protected $rules = [
@@ -71,6 +78,7 @@ class MilestoneEdit extends Component
     public function render()
     {
         $phases = $this->milestone->project->phases;
+
         return view('livewire.projects.milestones.milestone-edit', compact('phases'));
     }
 }

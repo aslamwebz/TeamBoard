@@ -1,18 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Expenses;
 
 use App\Models\Expense;
+use App\Models\ExpenseAttachment;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use App\Models\ExpenseAttachment;
+use Storage;
 
-class ExpenseAttachments extends Component
+final class ExpenseAttachments extends Component
 {
     use WithFileUploads;
 
     public Expense $expense;
+
     public $attachments = [];
+
     public $newAttachment;
 
     public function mount(Expense $expense)
@@ -27,8 +32,8 @@ class ExpenseAttachments extends Component
         ]);
 
         foreach ($this->newAttachment as $file) {
-            $path = $file->store('expense-attachments/' . date('Y/m'), 'public');
-            
+            $path = $file->store('expense-attachments/'.date('Y/m'), 'public');
+
             ExpenseAttachment::create([
                 'expense_id' => $this->expense->id,
                 'filename' => $file->getClientOriginalName(),
@@ -48,8 +53,8 @@ class ExpenseAttachments extends Component
         $attachment = ExpenseAttachment::find($attachmentId);
         if ($attachment && $attachment->expense_id === $this->expense->id) {
             // Delete the file from storage
-            \Storage::disk('public')->delete($attachment->file_path);
-            
+            Storage::disk('public')->delete($attachment->file_path);
+
             $attachment->delete();
             $this->dispatch('attachment-deleted');
         }
@@ -58,7 +63,7 @@ class ExpenseAttachments extends Component
     public function render()
     {
         $attachments = $this->expense->attachments()->orderBy('created_at', 'desc')->get();
-        
+
         return view('livewire.expenses.expense-attachments', [
             'attachments' => $attachments,
         ])->layout('components.layouts.app');

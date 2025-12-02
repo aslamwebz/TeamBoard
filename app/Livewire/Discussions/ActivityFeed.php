@@ -1,18 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Discussions;
 
 use App\Models\ActivityLog;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use Livewire\Component;
 
 #[Layout('components.layouts.app')]
 #[Title('Activity Feed')]
-class ActivityFeed extends Component
+final class ActivityFeed extends Component
 {
     public $limit = 20;
+
     public $type = null;
+
     public $typeId = null;
 
     public function mount($type = null, $typeId = null)
@@ -32,7 +36,7 @@ class ActivityFeed extends Component
         $activities = $query->latest()->limit($this->limit)->get();
 
         return view('livewire.discussions.activity-feed', [
-            'activities' => $activities
+            'activities' => $activities,
         ]);
     }
 }

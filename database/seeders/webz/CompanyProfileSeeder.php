@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use App\Models\Tenant;
 use Illuminate\Database\Seeder;
 
-class CompanyProfileSeeder extends Seeder
+final class CompanyProfileSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,7 +15,7 @@ class CompanyProfileSeeder extends Seeder
     public function run(): void
     {
         $tenant = Tenant::first(); // Assuming tenant is already created
-        
+
         if ($tenant) {
             $tenant->update([
                 'legal_name' => 'Webz Technologies Inc.',

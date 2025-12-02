@@ -1,35 +1,49 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Workers;
 
-use App\Models\WorkerProfile;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\Timesheet;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class Timesheets extends Component
+final class Timesheets extends Component
 {
     use WithPagination;
 
     public $workerId;
+
     public string $date = '';
+
     public string $hours_worked = '0.00';
+
     public string $activity_description = '';
+
     public string $entry_type = 'regular';
+
     public string $project_id = '';
+
     public string $task_id = '';
+
     public string $status = 'pending';
+
     public string $notes = '';
+
     public string $search = '';
+
     public string $entryTypeFilter = '';
+
     public string $statusFilter = '';
+
     public string $startDate = '';
+
     public string $endDate = '';
 
     protected $queryString = ['search', 'entryTypeFilter', 'statusFilter', 'startDate', 'endDate'];
-    
+
     protected $rules = [
         'date' => 'required|date',
         'hours_worked' => 'required|numeric|min:0.01|max:24',
@@ -72,7 +86,7 @@ class Timesheets extends Component
     public function deleteTimesheet($timesheetId): void
     {
         $timesheet = Timesheet::find($timesheetId);
-        if ($timesheet && $timesheet->worker_profile_id == $this->workerId) {
+        if ($timesheet && $timesheet->worker_profile_id === $this->workerId) {
             $timesheet->delete();
             session()->flash('message', 'Timesheet entry deleted successfully.');
         }
@@ -81,11 +95,11 @@ class Timesheets extends Component
     public function render(): \Illuminate\Contracts\View\View
     {
         $query = Timesheet::where('worker_profile_id', $this->workerId)
-                         ->with(['project', 'task']);
+            ->with(['project', 'task']);
 
         // Apply filters
         if ($this->search) {
-            $query->where('activity_description', 'like', '%' . $this->search . '%');
+            $query->where('activity_description', 'like', '%'.$this->search.'%');
         }
 
         if ($this->entryTypeFilter) {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\PurchaseOrders;
 
 use App\Models\PurchaseOrder;
@@ -7,30 +9,32 @@ use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class PurchaseOrderIndex extends Component
+final class PurchaseOrderIndex extends Component
 {
     use WithPagination;
 
     public string $search = '';
+
     public string $status = '';
+
     public int $perPage = 10;
 
     protected $queryString = ['search', 'status'];
 
-    public function updatingSearch() : void
+    public function updatingSearch(): void
     {
         $this->resetPage();
     }
 
-    public function render() : View
+    public function render(): View
     {
         $query = PurchaseOrder::with(['vendor', 'creator']);
 
         if ($this->search) {
-            $query->where('po_number', 'like', '%' . $this->search . '%')
-                  ->orWhereHas('vendor', function ($q) {
-                      $q->where('name', 'like', '%' . $this->search . '%');
-                  });
+            $query->where('po_number', 'like', '%'.$this->search.'%')
+                ->orWhereHas('vendor', function ($q) {
+                    $q->where('name', 'like', '%'.$this->search.'%');
+                });
         }
 
         if ($this->status) {
@@ -46,7 +50,7 @@ class PurchaseOrderIndex extends Component
 
     public function getStatusBadgeClass(string $status): string
     {
-        return match($status) {
+        return match ($status) {
             'draft' => 'bg-blue-100 text-blue-800',
             'pending' => 'bg-yellow-100 text-yellow-800',
             'approved' => 'bg-green-100 text-green-800',

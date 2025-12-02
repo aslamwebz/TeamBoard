@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Expenses;
 
 use App\Models\Expense;
@@ -7,20 +9,25 @@ use App\Models\ExpenseCategory;
 use App\Models\Project;
 use App\Models\Vendor;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class ExpenseIndex extends Component
+final class ExpenseIndex extends Component
 {
     use WithPagination;
 
     public $search = '';
+
     public $projectId = '';
+
     public $categoryId = '';
+
     public $vendorId = '';
+
     public $status = '';
+
     public $dateFrom = '';
+
     public $dateTo = '';
 
     protected $queryString = [
@@ -37,8 +44,8 @@ class ExpenseIndex extends Component
     {
         $expenses = Expense::with(['category', 'project', 'vendor', 'user'])
             ->when($this->search, function (Builder $query) {
-                $query->where('title', 'like', '%' . $this->search . '%')
-                      ->orWhere('description', 'like', '%' . $this->search . '%');
+                $query->where('title', 'like', '%'.$this->search.'%')
+                    ->orWhere('description', 'like', '%'.$this->search.'%');
             })
             ->when($this->projectId, function (Builder $query) {
                 $query->where('project_id', $this->projectId);

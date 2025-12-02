@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Filament\Auth\Pages\Login;
 
 return [

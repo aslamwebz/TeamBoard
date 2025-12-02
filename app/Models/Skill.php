@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Skill extends Model
+final class Skill extends Model
 {
     use HasFactory;
 
@@ -21,7 +23,7 @@ class Skill extends Model
     public function workerProfiles()
     {
         return $this->belongsToMany(WorkerProfile::class, 'worker_skills')
-                    ->withPivot('proficiency_level', 'notes')
-                    ->withTimestamps();
+            ->withPivot('proficiency_level', 'notes')
+            ->withTimestamps();
     }
 }

@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notifications;
 
-use App\Models\Notification as ModelNotification;
 use Illuminate\Notifications\Notification;
 
-class DatabaseNotificationChannel extends Notification
+final class DatabaseNotificationChannel extends Notification
 {
     public function via($notifiable)
     {

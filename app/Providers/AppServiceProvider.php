@@ -11,14 +11,15 @@ use App\Models\Tenant;
 use App\Observers\TaskObserver;
 use App\Services\NotificationService;
 use Carbon\CarbonImmutable;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\View;
 
 final class AppServiceProvider extends ServiceProvider
 {
@@ -50,13 +51,13 @@ final class AppServiceProvider extends ServiceProvider
 
         // Register event listeners for notifications
         Event::listen([
-            \App\Events\TaskAssignedNotification::class,
+            TaskAssignedNotification::class,
             \App\Events\NewInvoiceNotification::class,
             \App\Events\ProjectUpdatedNotification::class,
             \App\Events\MentionedInCommentNotification::class,
             \App\Events\ClientAddedNotification::class,
             \App\Events\PaymentFailedNotification::class,
-        ], \App\Listeners\SendNotificationListener::class);
+        ], SendNotificationListener::class);
     }
 
     /**
@@ -125,7 +126,7 @@ final class AppServiceProvider extends ServiceProvider
                         ]);
                     }
                 }
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Silently fail if tenant context isn't available
             }
         });

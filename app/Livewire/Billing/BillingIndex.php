@@ -1,13 +1,15 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Livewire\Billing;
 
-use Livewire\Component;
 use Illuminate\Contracts\View\View;
+use Livewire\Component;
 
-class BillingIndex extends Component
+final class BillingIndex extends Component
 {
-    public function render() : View
+    public function render(): View
     {
         return view('livewire.billing.billing-index');
     }

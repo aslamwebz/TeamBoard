@@ -1,40 +1,48 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Tasks;
 
 use App\Models\Task;
 use Illuminate\Contracts\View\View;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use Livewire\Component;
 use Livewire\WithPagination;
 
 #[Layout('components.layouts.app')]
 #[Title('Tasks')]
-class TaskIndex extends Component
+final class TaskIndex extends Component
 {
     use WithPagination;
 
     public $search = '';
+
     public $statusFilter = '';
+
     public $showDeleteModal = false;
+
     public $taskToDeleteId;
+
     public $viewMode = 'table'; // 'table' or 'board'
 
     public $showTaskModal = false;
+
     public $selectedTaskId = null;
+
     public $selectedTask = null;
 
     public $tasksByStatus;
 
     protected $queryString = ['search', 'statusFilter', 'viewMode'];
 
-    public function mount() : void
+    public function mount(): void
     {
         $this->refreshTasksByStatus();
     }
 
-    public function render() : View
+    public function render(): View
     {
         // Always provide both datasets to the view to prevent issues
         if ($this->viewMode === 'board') {
@@ -42,7 +50,7 @@ class TaskIndex extends Component
             $tasks = collect(); // Not used in board view but provided to prevent issues
         } else {
             $tasks = Task::query()
-                ->where('title', 'like', '%' . $this->search . '%')
+                ->where('title', 'like', '%'.$this->search.'%')
                 ->when($this->statusFilter, function ($query) {
                     $query->where('status', $this->statusFilter);
                 })
@@ -56,13 +64,13 @@ class TaskIndex extends Component
 
         return view('livewire.tasks.task-index', [
             'tasks' => $tasks,
-            'tasksByStatus' => $this->tasksByStatus
+            'tasksByStatus' => $this->tasksByStatus,
         ]);
     }
 
     public function getTaskStatusBadgeClass(string $status): string
     {
-        return match($status) {
+        return match ($status) {
             'todo' => 'bg-gray-100 text-gray-800',
             'in_progress' => 'bg-blue-100 text-blue-800',
             'completed' => 'bg-green-100 text-green-800',
@@ -76,7 +84,7 @@ class TaskIndex extends Component
         $query = Task::query();
 
         if ($this->search) {
-            $query->where('title', 'like', '%' . $this->search . '%');
+            $query->where('title', 'like', '%'.$this->search.'%');
         }
 
         if ($this->statusFilter) {
@@ -93,7 +101,7 @@ class TaskIndex extends Component
             'todo' => [],
             'in_progress' => [],
             'completed' => [],
-            'on_hold' => []
+            'on_hold' => [],
         ];
 
         foreach ($tasks as $task) {

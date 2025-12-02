@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
-use App\Models\VendorService;
 use App\Models\Vendor;
+use App\Models\VendorService;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class VendorServiceFactory extends Factory
+final class VendorServiceFactory extends Factory
 {
     protected $model = VendorService::class;
 

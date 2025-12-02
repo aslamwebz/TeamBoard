@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Traits;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Str;
 
 trait HasMentions
 {
@@ -15,7 +16,7 @@ trait HasMentions
     {
         $pattern = '/@(\w+)/';
         preg_match_all($pattern, $content, $matches);
-        
+
         if (empty($matches[1])) {
             return [];
         }
@@ -32,15 +33,15 @@ trait HasMentions
     public function formatContentWithMentions(string $content): string
     {
         $pattern = '/@(\w+)/';
-        
+
         return preg_replace_callback($pattern, function ($matches) {
             $username = $matches[1];
             $user = User::where('name', $username)->first();
-            
+
             if ($user) {
                 return "<a href='/users/{$user->id}' class='text-blue-600 hover:underline'>@{$username}</a>";
             }
-            
+
             return $matches[0]; // Return original if user not found
         }, $content);
     }
@@ -53,7 +54,7 @@ trait HasMentions
         $mentionedUsers = collect($this->parseMentions($content));
         $mentionedUsers = $mentionedUsers->filter(function ($user) use ($author) {
             // Don't notify the author of the comment if they mentioned themselves
-            return $user['id'] != $author->id;
+            return $user['id'] !== $author->id;
         });
 
         foreach ($mentionedUsers as $user) {
@@ -95,7 +96,7 @@ trait HasMentions
      */
     private function getMentionNotificationUrl($relatedModel, string $type): string
     {
-        if (!$relatedModel) {
+        if (! $relatedModel) {
             return '/';
         }
 

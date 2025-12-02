@@ -1,26 +1,38 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Payments;
 
-use App\Models\Payment;
-use App\Models\Invoice;
 use App\Models\Expense;
+use App\Models\Invoice;
+use App\Models\Payment;
 use Livewire\Component;
 
-class PaymentCreate extends Component
+final class PaymentCreate extends Component
 {
     public $invoice_id;
+
     public $expense_id;
+
     public $amount;
+
     public $payment_method;
+
     public $transaction_reference;
+
     public $payment_date;
+
     public $notes;
+
     public $status = Payment::STATUS_COMPLETED;
+
     public $currency = 'USD';
 
     public $invoices;
+
     public $expenses;
+
     public $payment_methods;
 
     public function mount()
@@ -49,9 +61,10 @@ class PaymentCreate extends Component
         ]);
 
         // Either invoice_id or expense_id must be provided
-        if (!$this->invoice_id && !$this->expense_id) {
+        if (! $this->invoice_id && ! $this->expense_id) {
             $this->addError('invoice_id', 'Either Invoice or Expense must be selected');
             $this->addError('expense_id', 'Either Invoice or Expense must be selected');
+
             return;
         }
 
@@ -73,7 +86,7 @@ class PaymentCreate extends Component
             if ($payment->isForInvoice() && $payment->invoice) {
                 $payment->invoice->updateStatusFromPayment();
             } elseif ($payment->isForExpense() && $payment->expense) {
-                $payment->expense->update(['status' => \App\Models\Expense::STATUS_PAID]);
+                $payment->expense->update(['status' => Expense::STATUS_PAID]);
             }
         }
 

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Tenants\Schemas;
 
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 
-class TenantInfolist
+final class TenantInfolist
 {
     public static function configure(Schema $schema): Schema
     {

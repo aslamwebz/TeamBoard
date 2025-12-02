@@ -1,21 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Worker;
 
 use App\Models\Task;
-use App\Models\Project;
-use App\Models\Notification;
-use App\Models\WorkerProfile;
 use Livewire\Component;
 
-class WorkerDashboard extends Component
+final class WorkerDashboard extends Component
 {
     public $myTasks = [];
+
     public $myProjects = [];
+
     public $upcomingDeadlines = [];
+
     public $teamActivity = [];
+
     public $importantAnnouncements = [];
+
     public $notifications = [];
+
     public $quickActions = [];
 
     public function mount()
@@ -27,24 +32,24 @@ class WorkerDashboard extends Component
     {
         // Get the authenticated user
         $user = auth()->user();
-        
+
         // Get the worker profile for this user
         $workerProfile = $user->workerProfile;
-        
+
         if ($workerProfile) {
             // Load "My Tasks" - tasks assigned to this user
-            $this->myTasks = Task::whereHas('users', function($query) use ($user) {
+            $this->myTasks = Task::whereHas('users', function ($query) use ($user) {
                 $query->where('user_id', $user->id);
             })
-            ->with(['project', 'users'])
-            ->latest()
-            ->take(5)
-            ->get();
+                ->with(['project', 'users'])
+                ->latest()
+                ->take(5)
+                ->get();
 
             // Load "My Projects" - projects this user is assigned to
             $this->myProjects = $user->projects()
-                ->with(['tasks' => function($query) use ($user) {
-                    $query->whereHas('users', function($q) use ($user) {
+                ->with(['tasks' => function ($query) use ($user) {
+                    $query->whereHas('users', function ($q) use ($user) {
                         $q->where('user_id', $user->id);
                     })->with('users');
                 }, 'milestones', 'phases'])
@@ -53,14 +58,14 @@ class WorkerDashboard extends Component
                 ->get();
 
             // Load "Upcoming Deadlines" - tasks assigned to the user with due dates (including overdue)
-            $this->upcomingDeadlines = Task::whereHas('users', function($query) use ($user) {
+            $this->upcomingDeadlines = Task::whereHas('users', function ($query) use ($user) {
                 $query->where('user_id', $user->id);
             })
-            ->whereNotNull('due_date')
-            ->with('project')
-            ->orderByRaw('CASE WHEN due_date < ? THEN 0 ELSE 1 END, due_date ASC', [now()->startOfDay()])
-            ->take(10)
-            ->get();
+                ->whereNotNull('due_date')
+                ->with('project')
+                ->orderByRaw('CASE WHEN due_date < ? THEN 0 ELSE 1 END, due_date ASC', [now()->startOfDay()])
+                ->take(10)
+                ->get();
 
             // Load notifications for the user
             $this->notifications = $user->notifications()
@@ -73,7 +78,7 @@ class WorkerDashboard extends Component
         $this->teamActivity = collect();
 
         // Get recent activities related to user's tasks and projects
-        $userTasks = Task::whereHas('users', function($query) use ($user) {
+        $userTasks = Task::whereHas('users', function ($query) use ($user) {
             $query->where('user_id', $user->id);
         })->pluck('id');
 
@@ -105,14 +110,14 @@ class WorkerDashboard extends Component
                 'description' => 'Check and update your assigned tasks',
                 'icon' => 'list-bullet',
                 'route' => 'tasks',
-                'color' => 'blue'
+                'color' => 'blue',
             ],
             [
                 'title' => 'View My Projects',
                 'description' => 'See projects you are assigned to',
                 'icon' => 'folder',
                 'route' => 'projects',
-                'color' => 'emerald'
+                'color' => 'emerald',
             ],
             [
                 'title' => 'Update Profile',
@@ -120,29 +125,29 @@ class WorkerDashboard extends Component
                 'icon' => 'user',
                 'route' => 'workers.show',
                 'color' => 'amber',
-                'params' => $user->workerProfile->id ?? null
+                'params' => $user->workerProfile->id ?? null,
             ],
             [
                 'title' => 'Log Hours',
                 'description' => 'Track your time and activities',
                 'icon' => 'clock',
                 'route' => 'my.timesheets',
-                'color' => 'violet'
+                'color' => 'violet',
             ],
             [
                 'title' => 'Skills & Certs',
                 'description' => 'Manage your skills and certifications',
                 'icon' => 'academic-cap',
                 'route' => 'my.skills',
-                'color' => 'purple'
+                'color' => 'purple',
             ],
             [
                 'title' => 'Report Issue',
                 'description' => 'Submit a support ticket',
                 'icon' => 'exclamation-circle',
                 'route' => 'discussions.index',
-                'color' => 'red'
-            ]
+                'color' => 'red',
+            ],
         ];
     }
 
@@ -150,7 +155,7 @@ class WorkerDashboard extends Component
     {
         $user = auth()->user();
         $task = Task::where('id', $taskId)
-            ->whereHas('users', function($query) use ($user) {
+            ->whereHas('users', function ($query) use ($user) {
                 $query->where('user_id', $user->id);
             })
             ->first();

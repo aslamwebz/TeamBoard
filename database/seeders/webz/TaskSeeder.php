@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use App\Models\Task;
 use Illuminate\Database\Seeder;
 
-class TaskSeeder extends Seeder
+final class TaskSeeder extends Seeder
 {
     /**
      * Run the database seeds.

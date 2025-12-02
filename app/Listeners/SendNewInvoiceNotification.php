@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Listeners;
 
 use App\Events\NewInvoiceNotification as NewInvoiceEvent;
 use App\Services\NotificationService;
 
-class SendNewInvoiceNotification
+final class SendNewInvoiceNotification
 {
-    protected $notificationService;
+    private $notificationService;
 
     public function __construct(NotificationService $notificationService)
     {

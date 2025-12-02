@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Observers;
 
 use App\Models\Task;
 
-class TaskObserver
+final class TaskObserver
 {
     /**
      * Handle the Task "updated" event.

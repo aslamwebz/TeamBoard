@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Expenses;
 
 use App\Models\Expense;
 use Livewire\Component;
 
-class ExpenseShow extends Component
+final class ExpenseShow extends Component
 {
     public Expense $expense;
 

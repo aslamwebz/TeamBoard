@@ -7,10 +7,10 @@ namespace App\Livewire\Contacts;
 use App\Models\Client;
 use App\Models\Contact;
 use Illuminate\Contracts\View\View;
-use Livewire\Component;
 use Livewire\Attributes\Validate;
+use Livewire\Component;
 
-class ContactCreate extends Component
+final class ContactCreate extends Component
 {
     public Client $client;
 
@@ -55,12 +55,12 @@ class ContactCreate extends Component
 
     public array $communication_preferences = [];
 
-    public function mount(Client $client) : void
+    public function mount(Client $client): void
     {
         $this->client = $client;
     }
 
-    public function save() : void
+    public function save(): void
     {
         $validated = $this->validate();
 
@@ -84,7 +84,7 @@ class ContactCreate extends Component
         $this->dispatch('contact-created', contactId: $contact->id);
     }
 
-    public function render() : View
+    public function render(): View
     {
         return view('livewire.contacts.contact-create');
     }

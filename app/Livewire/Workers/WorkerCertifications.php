@@ -1,23 +1,32 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Workers;
 
-use App\Models\WorkerProfile;
 use App\Models\Certification;
+use App\Models\WorkerProfile;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-class WorkerCertifications extends Component
+final class WorkerCertifications extends Component
 {
     use WithFileUploads;
 
     public $workerId;
+
     public $certification_id;
+
     public $date_obtained;
+
     public $expiry_date;
+
     public $attachment;
+
     public $status = 'active';
+
     public $notes = '';
+
     public $certifications = [];
 
     protected $rules = [
@@ -45,7 +54,7 @@ class WorkerCertifications extends Component
         // Handle file upload if provided
         $attachmentPath = null;
         if ($this->attachment) {
-            $attachmentPath = $this->attachment->store('certifications/' . $this->workerId, 'public');
+            $attachmentPath = $this->attachment->store('certifications/'.$this->workerId, 'public');
         }
 
         // Attach the certification to the worker

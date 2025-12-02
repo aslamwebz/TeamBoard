@@ -1,14 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Tasks\Dependencies;
 
 use App\Models\Task;
 use Livewire\Component;
 
-class Manage extends Component
+final class Manage extends Component
 {
     public Task $task;
+
     public $selectedDependencies = [];
+
     public $availableTasks = [];
 
     protected $listeners = ['refreshDependencies' => '$refresh'];
@@ -28,7 +32,7 @@ class Manage extends Component
 
     public function addDependency($taskId): void
     {
-        if (!in_array($taskId, $this->selectedDependencies)) {
+        if (! in_array($taskId, $this->selectedDependencies)) {
             $this->selectedDependencies[] = $taskId;
             $this->updateDependencies();
         }
@@ -36,8 +40,8 @@ class Manage extends Component
 
     public function removeDependency($taskId): void
     {
-        $this->selectedDependencies = array_filter($this->selectedDependencies, function($id) use ($taskId) {
-            return $id != $taskId;
+        $this->selectedDependencies = array_filter($this->selectedDependencies, function ($id) use ($taskId) {
+            return $id !== $taskId;
         });
         $this->updateDependencies();
     }
@@ -46,6 +50,7 @@ class Manage extends Component
     {
         $availableTasks = $this->availableTasks;
         $selectedDependencies = $this->selectedDependencies;
+
         return view('livewire.tasks.dependencies.manage', compact('availableTasks', 'selectedDependencies'));
     }
 }

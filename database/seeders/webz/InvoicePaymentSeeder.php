@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use App\Models\Invoice;
 use Illuminate\Database\Seeder;
 
-class InvoicePaymentSeeder extends Seeder
+final class InvoicePaymentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,6 +18,7 @@ class InvoicePaymentSeeder extends Seeder
 
         if ($invoices->isEmpty()) {
             $this->command->warn('No paid or partially paid invoices found.');
+
             return;
         }
 
@@ -27,8 +30,9 @@ class InvoicePaymentSeeder extends Seeder
             $paymentCount = $invoice->status === 'paid' ? rand(1, 3) : 1;
 
             for ($i = 0; $i < $paymentCount; $i++) {
-                if ($remaining <= 0)
+                if ($remaining <= 0) {
                     break;
+                }
 
                 $paymentAmount = $paymentCount === 1 ? $remaining : (
                     $i === $paymentCount - 1 ? $remaining : min($remaining, $invoice->total / $paymentCount)
@@ -38,7 +42,7 @@ class InvoicePaymentSeeder extends Seeder
                     'amount' => $paymentAmount,
                     'payment_method' => fake()->randomElement(['credit_card', 'bank_transfer', 'check', 'paypal', 'cash']),
                     'payment_date' => fake()->dateTimeBetween($invoice->issue_date, $invoice->due_date),
-                    'transaction_reference' => 'TXN-' . strtoupper(fake()->bothify('?????-#####')),
+                    'transaction_reference' => 'TXN-'.mb_strtoupper(fake()->bothify('?????-#####')),
                     'notes' => fake()->sentence(),
                 ]);
 

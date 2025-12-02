@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Workers;
 
 use App\Models\WorkerProfile;
 use Livewire\Component;
 
-class WorkerShow extends Component
+final class WorkerShow extends Component
 {
     public WorkerProfile $workerProfile;
 

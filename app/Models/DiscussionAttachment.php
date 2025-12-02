@@ -1,12 +1,14 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class DiscussionAttachment extends Model
+final class DiscussionAttachment extends Model
 {
     use HasFactory;
 
@@ -46,7 +48,7 @@ class DiscussionAttachment extends Model
      */
     public function getFilePath(): string
     {
-        return storage_path('app/public/discussions/' . $this->filename);
+        return storage_path('app/public/discussions/'.$this->filename);
     }
 
     /**
@@ -102,7 +104,7 @@ class DiscussionAttachment extends Model
             $bytes /= 1024;
         }
 
-        return round($bytes, 2) . ' ' . $units[$i];
+        return round($bytes, 2).' '.$units[$i];
     }
 
     /**

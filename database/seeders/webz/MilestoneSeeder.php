@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use App\Models\Milestone;
 use Illuminate\Database\Seeder;
 
-class MilestoneSeeder extends Seeder
+final class MilestoneSeeder extends Seeder
 {
     /**
      * Run the database seeds.

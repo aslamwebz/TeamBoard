@@ -1,20 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Client;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-class ClientFactory extends Factory
+final class ClientFactory extends Factory
 {
     protected $model = Client::class;
 
     public function definition(): array
     {
         // Generate a unique company name
-        $companyName = fake()->company() . ' ' . Str::random(5);
-        
+        $companyName = fake()->company().' '.Str::random(5);
+
         return [
             'company_name' => $companyName,
             'name' => fake()->name(),  // Changed from company() to name() for the contact person
@@ -25,7 +27,7 @@ class ClientFactory extends Factory
             'state' => fake()->stateAbbr(),
             'zip_code' => fake()->postcode(),
             'country' => fake()->country(),
-            'tax_vat_number' => 'TX' . fake()->unique()->numerify('#######'),
+            'tax_vat_number' => 'TX'.fake()->unique()->numerify('#######'),
             'industry' => fake()->randomElement(['Technology', 'Finance', 'Healthcare', 'Retail', 'Manufacturing', 'Education']),
             'description' => fake()->optional()->paragraph(),
             'billing_plan' => fake()->randomElement(['Basic', 'Standard', 'Premium']),
@@ -35,7 +37,7 @@ class ClientFactory extends Factory
             'notes' => fake()->optional()->paragraph(),
             'billing_address' => fake()->address(),
             'shipping_address' => fake()->optional()->address(),
-            'primary_contact_id' => null, 
+            'primary_contact_id' => null,
             'custom_fields' => ['key' => 'value', 'key2' => 'value2'],
         ];
     }

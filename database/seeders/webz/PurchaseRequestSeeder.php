@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
-use App\Models\PurchaseOrder;
 use Illuminate\Database\Seeder;
 
-class PurchaseRequestSeeder extends Seeder
+final class PurchaseRequestSeeder extends Seeder
 {
     /**
      * Run the database seeds.

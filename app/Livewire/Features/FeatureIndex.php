@@ -6,7 +6,7 @@ namespace App\Livewire\Features;
 
 use Livewire\Component;
 
-class FeatureIndex extends Component
+final class FeatureIndex extends Component
 {
     public function render()
     {

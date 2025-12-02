@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use App\Models\Project;
 use App\Models\Team;
 use Illuminate\Database\Seeder;
 
-class ProjectTeamSeeder extends Seeder
+final class ProjectTeamSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,9 +17,10 @@ class ProjectTeamSeeder extends Seeder
     {
         $projects = Project::all();
         $teams = Team::all();
-        
+
         if ($projects->isEmpty() || $teams->isEmpty()) {
             $this->command->warn('Projects or Teams not found. Please run ProjectSeeder and TeamSeeder first.');
+
             return;
         }
 

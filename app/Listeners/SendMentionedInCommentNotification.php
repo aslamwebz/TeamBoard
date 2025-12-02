@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Listeners;
 
 use App\Events\MentionedInCommentNotification as MentionedInCommentEvent;
 use App\Services\NotificationService;
 
-class SendMentionedInCommentNotification
+final class SendMentionedInCommentNotification
 {
-    protected $notificationService;
+    private $notificationService;
 
     public function __construct(NotificationService $notificationService)
     {

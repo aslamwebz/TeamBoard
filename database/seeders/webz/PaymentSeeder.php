@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use App\Models\Payment;
 use Illuminate\Database\Seeder;
 
-class PaymentSeeder extends Seeder
+final class PaymentSeeder extends Seeder
 {
     /**
      * Run the database seeds.

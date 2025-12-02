@@ -1,25 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Tasks;
 
 use App\Models\Task;
 use Illuminate\Contracts\View\View;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use Livewire\Component;
 
 #[Layout('components.layouts.app')]
 #[Title('Task Details')]
-class TaskShow extends Component
+final class TaskShow extends Component
 {
     public Task $task;
 
-    public function mount(Task $task) : void
+    public function mount(Task $task): void
     {
         $this->task = $task->load(['project', 'user', 'phase']);
     }
 
-    public function render() : View
+    public function render(): View
     {
         return view('livewire.tasks.task-show');
     }

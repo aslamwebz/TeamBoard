@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class TaskAssignmentSeeder extends Seeder
+final class TaskAssignmentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,9 +17,10 @@ class TaskAssignmentSeeder extends Seeder
     {
         $tasks = Task::all();
         $users = User::all();
-        
+
         if ($tasks->isEmpty() || $users->isEmpty()) {
             $this->command->warn('Tasks or Users not found. Please run TaskSeeder and UserSeeder first.');
+
             return;
         }
 

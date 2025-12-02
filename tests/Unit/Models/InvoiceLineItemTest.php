@@ -1,8 +1,10 @@
 <?php
 
-use App\Models\InvoiceLineItem;
-use App\Models\Invoice;
+declare(strict_types=1);
+
 use App\Models\Client;
+use App\Models\Invoice;
+use App\Models\InvoiceLineItem;
 
 it('to array', function () {
     // Create dependencies first to satisfy foreign key constraints

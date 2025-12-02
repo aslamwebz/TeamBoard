@@ -1,8 +1,10 @@
 <?php
 
-use App\Models\ProjectPhase;
-use App\Models\Project;
+declare(strict_types=1);
+
 use App\Models\Client;
+use App\Models\Project;
+use App\Models\ProjectPhase;
 
 it('to array', function () {
     // Create required related records first

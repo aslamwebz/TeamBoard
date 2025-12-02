@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
-use App\Models\Contact;
 use App\Models\Client;
+use App\Models\Contact;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ContactFactory extends Factory
+final class ContactFactory extends Factory
 {
     protected $model = Contact::class;
 

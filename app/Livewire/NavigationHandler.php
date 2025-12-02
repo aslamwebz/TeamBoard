@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire;
 
 use Livewire\Component;
-use Illuminate\Support\Facades\Route;
 
-class NavigationHandler extends Component
+final class NavigationHandler extends Component
 {
     /**
      * Preload the given URL when hovering over a navigation item

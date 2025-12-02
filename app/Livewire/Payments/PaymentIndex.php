@@ -1,26 +1,35 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Payments;
 
-use App\Models\Payment;
-use App\Models\Invoice;
 use App\Models\Expense;
+use App\Models\Invoice;
+use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class PaymentIndex extends Component
+final class PaymentIndex extends Component
 {
     use WithPagination;
 
     public $search = '';
+
     public $invoiceId = '';
+
     public $expenseId = '';
+
     public $userId = '';
+
     public $status = '';
+
     public $dateFrom = '';
+
     public $dateTo = '';
+
     public $paymentMethod = '';
 
     protected $queryString = [
@@ -38,8 +47,8 @@ class PaymentIndex extends Component
     {
         $payments = Payment::with(['invoice', 'expense', 'user'])
             ->when($this->search, function (Builder $query) {
-                $query->where('transaction_reference', 'like', '%' . $this->search . '%')
-                      ->orWhere('notes', 'like', '%' . $this->search . '%');
+                $query->where('transaction_reference', 'like', '%'.$this->search.'%')
+                    ->orWhere('notes', 'like', '%'.$this->search.'%');
             })
             ->when($this->invoiceId, function (Builder $query) {
                 $query->where('invoice_id', $this->invoiceId);

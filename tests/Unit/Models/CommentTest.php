@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
+use App\Models\Client;
 use App\Models\Comment;
 use App\Models\Discussion;
-use App\Models\User;
 use App\Models\Project;
-use App\Models\Client;
+use App\Models\User;
 
 it('to array', function () {
     // Create related records first to satisfy foreign key constraints

@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
-use App\Models\Note;
 use App\Models\Client;
+use App\Models\Note;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class NoteFactory extends Factory
+final class NoteFactory extends Factory
 {
     protected $model = Note::class;
 

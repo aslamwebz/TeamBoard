@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Expenses;
 
 use App\Models\Expense;
@@ -8,32 +10,46 @@ use App\Models\Project;
 use App\Models\Vendor;
 use Livewire\Component;
 
-class ExpenseEdit extends Component
+final class ExpenseEdit extends Component
 {
     public Expense $expense;
-    
+
     public $title;
+
     public $description;
+
     public $amount;
+
     public $currency;
+
     public $expense_date;
+
     public $expense_category_id;
+
     public $project_id;
+
     public $vendor_id;
+
     public $payment_method;
+
     public $notes;
+
     public $receipt_path;
+
     public $status;
 
     public $projects;
+
     public $categories;
+
     public $vendors;
+
     public $payment_methods;
 
     public function mount(Expense $expense)
     {
         $this->expense = $expense;
-        
+
         $this->title = $expense->title;
         $this->description = $expense->description;
         $this->amount = $expense->amount;

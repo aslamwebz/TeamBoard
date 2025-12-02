@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\PurchaseOrders;
 
 use App\Models\Project;
@@ -10,25 +12,37 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
 
-class PurchaseOrderEdit extends Component
+final class PurchaseOrderEdit extends Component
 {
     public PurchaseOrder $purchaseOrder;
 
     public $vendor_id;
+
     public string $po_number = '';
+
     public string $order_date = '';
+
     public string $required_date = '';
+
     public string $expected_delivery_date = '';
+
     public string $subtotal = '0.00';
+
     public string $tax_amount = '0.00';
+
     public string $total_amount = '0.00';
+
     public string $status = 'draft';
+
     public string $notes = '';
+
     public string $delivery_address = '';
+
     public string $shipping_method = '';
+
     public string $payment_terms = '';
 
-    public function mount(PurchaseOrder $purchaseOrder) : void
+    public function mount(PurchaseOrder $purchaseOrder): void
     {
         $this->purchaseOrder = $purchaseOrder;
         $this->fill([
@@ -48,26 +62,7 @@ class PurchaseOrderEdit extends Component
         ]);
     }
 
-    protected function rules() : array
-    {
-        return [
-            'vendor_id' => 'required|exists:vendors,id',
-            'po_number' => 'required|string|max:255|unique:purchase_orders,po_number,' . $this->purchaseOrder->id,
-            'order_date' => 'required|date',
-            'required_date' => 'nullable|date',
-            'expected_delivery_date' => 'nullable|date',
-            'subtotal' => 'required|numeric|min:0',
-            'tax_amount' => 'required|numeric|min:0',
-            'total_amount' => 'required|numeric|min:0',
-            'status' => 'required|in:draft,pending,approved,sent,partially_received,received,closed,cancelled',
-            'notes' => 'nullable|string',
-            'delivery_address' => 'nullable|string',
-            'shipping_method' => 'nullable|string|max:100',
-            'payment_terms' => 'nullable|string|max:100',
-        ];
-    }
-
-    public function update() : RedirectResponse
+    public function update(): RedirectResponse
     {
         $this->validate();
 
@@ -90,7 +85,7 @@ class PurchaseOrderEdit extends Component
         return redirect()->route('purchase-orders.show', $this->purchaseOrder->id)->with('message', 'Purchase Order updated successfully.');
     }
 
-    public function render() : View
+    public function render(): View
     {
         $vendors = Vendor::orderBy('name')->get();
         $projects = Project::all();
@@ -101,5 +96,24 @@ class PurchaseOrderEdit extends Component
             'projects' => $projects,
             'tasks' => $tasks,
         ]);
+    }
+
+    protected function rules(): array
+    {
+        return [
+            'vendor_id' => 'required|exists:vendors,id',
+            'po_number' => 'required|string|max:255|unique:purchase_orders,po_number,'.$this->purchaseOrder->id,
+            'order_date' => 'required|date',
+            'required_date' => 'nullable|date',
+            'expected_delivery_date' => 'nullable|date',
+            'subtotal' => 'required|numeric|min:0',
+            'tax_amount' => 'required|numeric|min:0',
+            'total_amount' => 'required|numeric|min:0',
+            'status' => 'required|in:draft,pending,approved,sent,partially_received,received,closed,cancelled',
+            'notes' => 'nullable|string',
+            'delivery_address' => 'nullable|string',
+            'shipping_method' => 'nullable|string|max:100',
+            'payment_terms' => 'nullable|string|max:100',
+        ];
     }
 }

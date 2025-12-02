@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use App\Models\PaymentMethod;
 use Illuminate\Database\Seeder;
 
-class PaymentRecordSeeder extends Seeder
+final class PaymentRecordSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,6 +18,7 @@ class PaymentRecordSeeder extends Seeder
 
         if ($paymentMethods->isEmpty()) {
             $this->command->warn('No payment methods found. Please run PaymentMethodSeeder first.');
+
             return;
         }
 

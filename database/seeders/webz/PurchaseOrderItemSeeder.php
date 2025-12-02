@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderItem;
 use Illuminate\Database\Seeder;
 
-class PurchaseOrderItemSeeder extends Seeder
+final class PurchaseOrderItemSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,6 +19,7 @@ class PurchaseOrderItemSeeder extends Seeder
 
         if ($purchaseOrders->isEmpty()) {
             $this->command->warn('No purchase orders found. Please run PurchaseOrderSeeder first.');
+
             return;
         }
 
@@ -54,7 +57,7 @@ class PurchaseOrderItemSeeder extends Seeder
                     'total_price' => $totalPrice,
                     'unit_of_measure' => $item[2],
                     'received_quantity' => $purchaseOrder->status === 'received' ? $quantity : ($purchaseOrder->status === 'partially_received' ? rand(1, $quantity) : 0),
-                    'service_code' => 'CODE-' . strtoupper(substr(md5($item[0]), 0, 6)),
+                    'service_code' => 'CODE-'.mb_strtoupper(mb_substr(md5($item[0]), 0, 6)),
                 ]);
             }
         }

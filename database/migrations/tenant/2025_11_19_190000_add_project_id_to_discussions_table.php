@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,10 +15,10 @@ return new class extends Migration
     {
         Schema::table('discussions', function (Blueprint $table) {
             $table->unsignedBigInteger('project_id')->nullable()->after('type_id');
-            
+
             // Add foreign key constraint
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
-            
+
             // Add index for better performance
             $table->index(['project_id']);
         });

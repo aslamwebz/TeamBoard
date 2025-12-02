@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Listeners;
 
 use App\Events\ProjectUpdatedNotification as ProjectUpdatedEvent;
 use App\Services\NotificationService;
 
-class SendProjectUpdatedNotification
+final class SendProjectUpdatedNotification
 {
-    protected $notificationService;
+    private $notificationService;
 
     public function __construct(NotificationService $notificationService)
     {

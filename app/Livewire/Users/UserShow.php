@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Livewire\Users;
 
@@ -10,22 +12,23 @@ use Livewire\Component;
 
 #[Layout('components.layouts.app')]
 #[Title('User Details')]
-class UserShow extends Component
+final class UserShow extends Component
 {
     public User $user;
+
     public string $activeTab = 'projects';
 
-    public function mount(User $user) : void
+    public function mount(User $user): void
     {
         $this->user = $user;
     }
 
-    public function changeTab($tab) : void
+    public function changeTab($tab): void
     {
         $this->activeTab = $tab;
     }
 
-    public function render() : View
+    public function render(): View
     {
         // Load related data to prevent lazy loading
         $this->user->load(['roles.permissions', 'permissions']);
@@ -36,7 +39,7 @@ class UserShow extends Component
 
         return view('livewire.users.user-show', [
             'userPermissions' => $userPermissions,
-            'userPermissionsCount' => $userPermissionsCount
+            'userPermissionsCount' => $userPermissionsCount,
         ]);
     }
 }

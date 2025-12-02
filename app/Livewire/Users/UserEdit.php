@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Livewire\Users;
 
@@ -9,28 +11,29 @@ use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
-class UserEdit extends Component
+final class UserEdit extends Component
 {
     public $user;
+
     public $name;
+
     public $email;
+
     public $selectedProjects = [];
+
     public $selectedTasks = [];
+
     public $selectedClients = [];
+
     public $projects;
+
     public $tasks;
+
     public $clients;
+
     public $processing = false;
 
-    protected function rules()
-    {
-        return [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $this->user->id],
-        ];
-    }
-
-    public function mount(User $user) : void
+    public function mount(User $user): void
     {
         $this->user = $user;
         $this->name = $user->name;
@@ -47,7 +50,7 @@ class UserEdit extends Component
         $this->selectedClients = $user->clients()->pluck('client_id')->toArray();
     }
 
-    public function updateUser() : \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+    public function updateUser(): \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
     {
         $this->processing = true;
 
@@ -73,8 +76,16 @@ class UserEdit extends Component
         return $this->redirect('/users', navigate: true);
     }
 
-    public function render() : View
+    public function render(): View
     {
         return view('livewire.users.user-edit');
+    }
+
+    protected function rules()
+    {
+        return [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$this->user->id],
+        ];
     }
 }

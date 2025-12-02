@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Expenses;
 
 use App\Models\Expense;
@@ -8,15 +10,20 @@ use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class ExpenseApprovals extends Component
+final class ExpenseApprovals extends Component
 {
     use WithPagination;
 
     public $search = '';
+
     public $projectId = '';
+
     public $categoryId = '';
+
     public $vendorId = '';
+
     public $dateFrom = '';
+
     public $dateTo = '';
 
     protected $queryString = [
@@ -38,8 +45,8 @@ class ExpenseApprovals extends Component
                 $query->where('user_id', '!=', auth()->id()); // Don't show expenses created by current user
             })
             ->when($this->search, function (Builder $query) {
-                $query->where('title', 'like', '%' . $this->search . '%')
-                      ->orWhere('description', 'like', '%' . $this->search . '%');
+                $query->where('title', 'like', '%'.$this->search.'%')
+                    ->orWhere('description', 'like', '%'.$this->search.'%');
             })
             ->when($this->projectId, function (Builder $query) {
                 $query->where('project_id', $this->projectId);

@@ -7,10 +7,10 @@ namespace App\Livewire\Clients;
 use App\Models\Client;
 use Livewire\Component;
 
-class Notes extends Component
+final class Notes extends Component
 {
     public Client $client;
-    
+
     public string $notes = '';
 
     public function mount(Client $client): void
@@ -22,7 +22,7 @@ class Notes extends Component
     public function saveNotes(): void
     {
         $this->validate([
-            'notes' => 'nullable|string'
+            'notes' => 'nullable|string',
         ]);
 
         $this->client->update(['notes' => $this->notes]);

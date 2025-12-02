@@ -1,16 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Roles;
 
 use Livewire\Component;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
-class Form extends Component
+final class Form extends Component
 {
     public $role;
+
     public $name;
+
     public array $permissions = [];
+
     public $allPermissions;
 
     public function mount($role = null): void
@@ -28,8 +33,8 @@ class Form extends Component
             $this->name = $this->role->name;
 
             // Get the current permissions for the role and ensure they're integers
-            $permissionIds = $this->role->permissions->pluck('id')->map(function($id) {
-                return (int)$id;
+            $permissionIds = $this->role->permissions->pluck('id')->map(function ($id) {
+                return (int) $id;
             })->toArray();
             $this->permissions = $permissionIds;
         } else {
@@ -86,7 +91,7 @@ class Form extends Component
                 $category = 'General';
             }
 
-            if (!isset($grouped[$category])) {
+            if (! isset($grouped[$category])) {
                 $grouped[$category] = [];
             }
 
@@ -96,11 +101,10 @@ class Form extends Component
         return $grouped;
     }
 
-
     public function save(): \Illuminate\Http\RedirectResponse
     {
         $validated = $this->validate([
-            'name' => $this->role ? 'required|string|max:255|unique:roles,name,' . $this->role->id : 'required|string|max:255|unique:roles,name',
+            'name' => $this->role ? 'required|string|max:255|unique:roles,name,'.$this->role->id : 'required|string|max:255|unique:roles,name',
             'permissions' => 'array',
         ]);
 

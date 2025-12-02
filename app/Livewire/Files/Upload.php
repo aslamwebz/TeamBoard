@@ -1,30 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Files;
 
 use App\Models\Discussion;
 use App\Models\Project;
 use App\Models\Task;
 use App\Services\FileUploadService;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Log;
 
 #[Layout('components.layouts.app')]
 #[Title('Upload Files')]
-class Upload extends Component
+final class Upload extends Component
 {
     use WithFileUploads;
 
     public $files = [];
+
     public $type = null;  // project, task, discussion, client
+
     public $typeId = null;
+
     public $projectId = null;
+
     public $projects = [];
+
     public $tasks = [];
+
     public $discussions = [];
+
     public $clients = [];
 
     protected $rules = [
@@ -60,22 +71,18 @@ class Upload extends Component
                 'projectId' => 'nullable|integer',
             ]);
 
-
-
-
             // Validate files only if they exist to avoid temporary file issues
-            if (!empty($this->files)) {
+            if (! empty($this->files)) {
                 $this->validate([
-                    'files.*' => 'file|max:10240|mimes:jpeg,png,gif,webp,svg,pdf,doc,docx,xls,xlsx,ppt,pptx,txt,csv,zip,rar,7z'
+                    'files.*' => 'file|max:10240|mimes:jpeg,png,gif,webp,svg,pdf,doc,docx,xls,xlsx,ppt,pptx,txt,csv,zip,rar,7z',
                 ]);
             }
 
             if (empty($this->files)) {
-                throw new \Exception('No files selected for upload.');
+                throw new Exception('No files selected for upload.');
             }
 
-
-            $fileUploadService = new \App\Services\FileUploadService();
+            $fileUploadService = new FileUploadService();
             $discussionId = null;
             $successCount = 0;
             $errorMessages = [];
@@ -83,15 +90,15 @@ class Upload extends Component
             // Determine where to attach the files based on type
             if ($this->type === 'discussion' && $this->typeId) {
                 $discussion = Discussion::find($this->typeId);
-                if (!$discussion) {
-                    throw new \Exception('Discussion not found.');
+                if (! $discussion) {
+                    throw new Exception('Discussion not found.');
                 }
                 $discussionId = $discussion->id;
             } elseif ($this->type === 'task' && $this->typeId) {
                 // Find the discussion related to this task
                 $task = Task::find($this->typeId);
-                if (!$task) {
-                    throw new \Exception('Task not found.');
+                if (! $task) {
+                    throw new Exception('Task not found.');
                 }
 
                 // Find or create a discussion for this task
@@ -108,8 +115,8 @@ class Upload extends Component
                 $discussionId = $discussion->id;
             } elseif ($this->type === 'project' && $this->typeId) {
                 $project = Project::find($this->typeId);
-                if (!$project) {
-                    throw new \Exception('Project not found.');
+                if (! $project) {
+                    throw new Exception('Project not found.');
                 }
 
                 $discussion = Discussion::firstOrCreate([
@@ -125,8 +132,8 @@ class Upload extends Component
                 $discussionId = $discussion->id;
             } elseif ($this->type === 'client' && $this->typeId) {
                 $client = \App\Models\Client::find($this->typeId);
-                if (!$client) {
-                    throw new \Exception('Client not found.');
+                if (! $client) {
+                    throw new Exception('Client not found.');
                 }
 
                 $discussion = Discussion::firstOrCreate([
@@ -144,22 +151,22 @@ class Upload extends Component
                 // For general files, don't associate with any specific entity
                 $discussionId = null;
             } else {
-                throw new \Exception('Invalid upload target specified.');
+                throw new Exception('Invalid upload target specified.');
             }
 
             // Process each file
-            if (!empty($this->files)) {
+            if (! empty($this->files)) {
                 foreach ($this->files as $file) {
                     if ($file && method_exists($file, 'getClientOriginalName')) {
                         try {
                             $fileUploadService->upload($file, Auth::id(), $discussionId, null);
                             $successCount++;
-                        } catch (\Exception $e) {
-                            $errorMessages[] = 'Failed to upload ' . $file->getClientOriginalName() . ': ' . $e->getMessage();
-                            \Log::error('File upload failed', [
+                        } catch (Exception $e) {
+                            $errorMessages[] = 'Failed to upload '.$file->getClientOriginalName().': '.$e->getMessage();
+                            Log::error('File upload failed', [
                                 'file' => $file->getClientOriginalName(),
                                 'error' => $e->getMessage(),
-                                'trace' => $e->getTraceAsString()
+                                'trace' => $e->getTraceAsString(),
                             ]);
                         }
                     }
@@ -171,7 +178,7 @@ class Upload extends Component
                 session()->flash('success', "Successfully uploaded {$successCount} file(s).");
             }
 
-            if (!empty($errorMessages)) {
+            if (! empty($errorMessages)) {
                 $this->addError('upload', implode(' ', $errorMessages));
                 session()->flash('error', 'Some files failed to upload. Please check the errors below.');
             }
@@ -184,21 +191,23 @@ class Upload extends Component
             // Redirect back to appropriate location
             if ($this->type === 'discussion' && $this->typeId) {
                 return redirect()->route('discussions.show', $this->typeId);
-            } elseif ($this->type === 'task' && $this->typeId) {
+            }
+            if ($this->type === 'task' && $this->typeId) {
                 return redirect()->route('tasks.show', $this->typeId);
-            } elseif ($this->type === 'project' && $this->typeId) {
+            }
+            if ($this->type === 'project' && $this->typeId) {
                 return redirect()->route('projects.show', $this->typeId);
             }
 
             return redirect()->route('files.index');
-        } catch (\Exception $e) {
-            \Log::error('Upload error: ' . $e->getMessage(), [
+        } catch (Exception $e) {
+            Log::error('Upload error: '.$e->getMessage(), [
                 'exception' => $e,
-                'trace' => $e->getTraceAsString()
+                'trace' => $e->getTraceAsString(),
             ]);
 
-            $this->addError('upload', 'An error occurred: ' . $e->getMessage());
-            session()->flash('error', 'An error occurred while uploading files: ' . $e->getMessage());
+            $this->addError('upload', 'An error occurred: '.$e->getMessage());
+            session()->flash('error', 'An error occurred while uploading files: '.$e->getMessage());
 
             return back()->withInput();
         }
@@ -208,6 +217,25 @@ class Upload extends Component
     {
         $this->typeId = null;
         $this->loadData();
+    }
+
+    public function render(): \Illuminate\Contracts\View\View
+    {
+        return view('livewire.files.upload', [
+            'projects' => Project::orderBy('name')->get(),
+            'tasks' => $this->type === 'task' && $this->projectId
+                ? Task::where('project_id', $this->projectId)->orderBy('title')->get()
+                : collect(),
+            'discussions' => $this->type === 'discussion' && $this->projectId
+                ? Discussion::where('project_id', $this->projectId)->orderBy('title')->get()
+                : collect(),
+        ]);
+    }
+
+    public function updatedFiles(): void
+    {
+        // Don't validate files immediately to prevent temporary file metadata issues
+        // Validation will happen during upload
     }
 
     protected function loadData(): void
@@ -230,24 +258,5 @@ class Upload extends Component
         } elseif ($this->type === 'client') {
             $this->clients = \App\Models\Client::orderBy('name')->get();
         }
-    }
-
-    public function render(): \Illuminate\Contracts\View\View
-    {
-        return view('livewire.files.upload', [
-            'projects' => Project::orderBy('name')->get(),
-            'tasks' => $this->type === 'task' && $this->projectId
-                ? Task::where('project_id', $this->projectId)->orderBy('title')->get()
-                : collect(),
-            'discussions' => $this->type === 'discussion' && $this->projectId
-                ? Discussion::where('project_id', $this->projectId)->orderBy('title')->get()
-                : collect(),
-        ]);
-    }
-
-    public function updatedFiles(): void
-    {
-        // Don't validate files immediately to prevent temporary file metadata issues
-        // Validation will happen during upload
     }
 }

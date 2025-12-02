@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use App\Models\Invoice;
 use App\Models\Project;
 use Illuminate\Database\Seeder;
 
-class InvoiceProjectSeeder extends Seeder
+final class InvoiceProjectSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,6 +20,7 @@ class InvoiceProjectSeeder extends Seeder
 
         if ($invoices->isEmpty() || $projects->isEmpty()) {
             $this->command->warn('Invoices or Projects not found. Please run InvoiceSeeder and ProjectSeeder first.');
+
             return;
         }
 

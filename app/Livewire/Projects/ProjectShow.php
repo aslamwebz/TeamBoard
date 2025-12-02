@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Projects;
 
 use App\Models\Project;
-use App\Models\ProjectPhase;
 use App\Models\Team;
 use App\Models\User;
 use App\Traits\ModalTrait;
@@ -14,42 +15,54 @@ use Livewire\Component;
 
 #[Layout('components.layouts.app')]
 #[Title('Project Details')]
-class ProjectShow extends Component
+final class ProjectShow extends Component
 {
     use ModalTrait;
 
     public Project $project;
+
     public $showAssignUserModal = false;
+
     public $showAssignTeamModal = false;
+
     public $showAssignPhaseModal = false;
+
     public $showAssignMilestoneModal = false;
+
     public $selectedUsers = [];
+
     public $selectedTeams = [];
+
     public $selectedPhases = [];
+
     public $selectedMilestones = [];
+
     public $availableUsers = [];
+
     public $availableTeams = [];
+
     public $availablePhases = [];
+
     public $availableMilestones = [];
 
-    public function mount(Project $project) : void
+    public function mount(Project $project): void
     {
         $this->project = $project->load([
             'client',
             'invoices',
-            'tasks' => function($query) {
+            'tasks' => function ($query) {
                 $query->with('phase', 'users');
             },
-            'users' => function($query) {
+            'users' => function ($query) {
                 $query->with('tasks');
             },
-            'teams' => function($query) {
+            'teams' => function ($query) {
                 $query->with('users');
             },
             'phases',
             'milestones',
             'discussions', // Load discussions for the project
-            'phases.tasks' // Load tasks for each phase
+            'phases.tasks', // Load tasks for each phase
         ]);
     }
 
@@ -63,7 +76,7 @@ class ProjectShow extends Component
         return Team::whereNotIn('id', $this->project->teams->pluck('id'))->get();
     }
 
-    public function assignUsers() : void
+    public function assignUsers(): void
     {
         if (empty($this->selectedUsers)) {
             return;
@@ -77,7 +90,7 @@ class ProjectShow extends Component
         session()->flash('success', 'Users assigned successfully!');
     }
 
-    public function assignTeams() : void
+    public function assignTeams(): void
     {
         if (empty($this->selectedTeams)) {
             return;
@@ -91,33 +104,33 @@ class ProjectShow extends Component
         session()->flash('success', 'Teams assigned successfully!');
     }
 
-    public function cancelAssignUser() : void
+    public function cancelAssignUser(): void
     {
         $this->selectedUsers = [];
         $this->showAssignUserModal = false;
     }
 
-    public function cancelAssignTeam() : void
+    public function cancelAssignTeam(): void
     {
         $this->selectedTeams = [];
         $this->showAssignTeamModal = false;
     }
 
-    public function updatedShowAssignUserModal($value) : void
+    public function updatedShowAssignUserModal($value): void
     {
-        if (!$value) {
+        if (! $value) {
             $this->selectedUsers = [];
         }
     }
 
-    public function updatedShowAssignTeamModal($value) : void
+    public function updatedShowAssignTeamModal($value): void
     {
-        if (!$value) {
+        if (! $value) {
             $this->selectedTeams = [];
         }
     }
 
-    public function removeUser($userId) : void
+    public function removeUser($userId): void
     {
         $this->project->users()->detach($userId);
         $this->project->load('users');
@@ -125,7 +138,7 @@ class ProjectShow extends Component
         session()->flash('success', 'User removed successfully!');
     }
 
-    public function removeTeam($teamId) : void
+    public function removeTeam($teamId): void
     {
         $this->project->teams()->detach($teamId);
         $this->project->load('teams');
@@ -133,7 +146,7 @@ class ProjectShow extends Component
         session()->flash('success', 'Team removed successfully!');
     }
 
-    public function render() : View
+    public function render(): View
     {
         return view('livewire.projects.project-show', [
             'project' => $this->project,

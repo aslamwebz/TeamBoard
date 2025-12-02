@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\MonthlyReport;
@@ -7,7 +9,7 @@ use App\Models\Report;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class MonthlyReportFactory extends Factory
+final class MonthlyReportFactory extends Factory
 {
     protected $model = MonthlyReport::class;
 

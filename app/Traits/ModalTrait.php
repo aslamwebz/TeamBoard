@@ -1,13 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Traits;
 
 trait ModalTrait
 {
     public $showDeleteModal = false;
+
     public $showAssignModal = false;
+
     public $modalType = null;
+
     public $modalData = [];
+
     public $selectedItem = null;
 
     /**
@@ -18,8 +24,8 @@ trait ModalTrait
         $this->modalType = $type;
         $this->modalData = $data;
         $this->selectedItem = $itemId;
-        
-        switch($type) {
+
+        switch ($type) {
             case 'delete':
                 $this->showDeleteModal = true;
                 break;

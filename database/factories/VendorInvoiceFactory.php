@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
-use App\Models\VendorInvoice;
 use App\Models\Vendor;
+use App\Models\VendorInvoice;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class VendorInvoiceFactory extends Factory
+final class VendorInvoiceFactory extends Factory
 {
     protected $model = VendorInvoice::class;
 
@@ -17,7 +19,7 @@ class VendorInvoiceFactory extends Factory
 
         return [
             'vendor_id' => Vendor::factory(),
-            'invoice_number' => 'VIN-' . fake()->unique()->numerify('####'),
+            'invoice_number' => 'VIN-'.fake()->unique()->numerify('####'),
             'invoice_date' => fake()->dateTimeBetween('-1 year', 'now')->format('Y-m-d'),
             'due_date' => fake()->dateTimeBetween('now', '+60 days')->format('Y-m-d'),
             'amount' => $total - $tax,

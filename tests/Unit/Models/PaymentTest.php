@@ -1,9 +1,11 @@
 <?php
 
-use App\Models\Payment;
-use App\Models\User;
+declare(strict_types=1);
+
 use App\Models\Client;
 use App\Models\Invoice;
+use App\Models\Payment;
+use App\Models\User;
 
 it('to array', function () {
     $client = Client::create([

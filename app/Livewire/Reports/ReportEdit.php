@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Reports;
 
 use App\Models\Report;
@@ -11,14 +13,20 @@ use Livewire\Component;
 
 #[Layout('components.layouts.app')]
 #[Title('Edit Report')]
-class ReportEdit extends Component
+final class ReportEdit extends Component
 {
     public $reportId;
+
     public $report;
+
     public $title = '';
+
     public $description = '';
+
     public $report_type = 'financial';
+
     public $status = 'draft';
+
     public $data = [];
 
     protected $rules = [
@@ -28,7 +36,7 @@ class ReportEdit extends Component
         'status' => 'required|in:draft,generated,archived',
     ];
 
-    public function mount(Report $report) : void
+    public function mount(Report $report): void
     {
         $this->report = $report;
         $this->reportId = $report->id;
@@ -39,7 +47,7 @@ class ReportEdit extends Component
         $this->data = $report->data ?? [];
     }
 
-    public function updateReport() : RedirectResponse
+    public function updateReport(): RedirectResponse
     {
         $validated = $this->validate();
 
@@ -51,7 +59,7 @@ class ReportEdit extends Component
         return $this->redirectRoute('reports.index', navigate: true);
     }
 
-    public function render() : View
+    public function render(): View
     {
         return view('livewire.reports.report-edit');
     }

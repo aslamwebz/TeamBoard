@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use App\Models\Client;
 use App\Models\Note;
 use Illuminate\Database\Seeder;
 
-class ClientNoteSeeder extends Seeder
+final class ClientNoteSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,6 +19,7 @@ class ClientNoteSeeder extends Seeder
 
         if ($clients->isEmpty()) {
             $this->command->warn('No clients found. Please run ClientSeeder first.');
+
             return;
         }
 

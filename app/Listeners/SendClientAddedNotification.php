@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Listeners;
 
 use App\Events\ClientAddedNotification as ClientAddedEvent;
 use App\Services\NotificationService;
 
-class SendClientAddedNotification
+final class SendClientAddedNotification
 {
-    protected $notificationService;
+    private $notificationService;
 
     public function __construct(NotificationService $notificationService)
     {

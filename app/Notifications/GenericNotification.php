@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class GenericNotification extends Notification
+final class GenericNotification extends Notification
 {
     use Queueable;
 
@@ -39,7 +40,7 @@ class GenericNotification extends Notification
         return (new MailMessage)
             ->subject(ucfirst(str_replace('_', ' ', $this->dbNotification->type)))
             ->line($this->dbNotification->message)
-            ->action('View Details', url('/notifications/' . $this->dbNotification->id))
+            ->action('View Details', url('/notifications/'.$this->dbNotification->id))
             ->line('Thank you for using our application!');
     }
 

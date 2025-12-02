@@ -1,15 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
+use App\Jobs\SendPushNotification;
 use App\Models\Notification as NotificationModel;
 use App\Models\User;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Bus;
-use App\Jobs\SendPushNotification;
 use App\Notifications\GenericNotification;
+use Exception;
+use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Mail;
+use Log;
 
-class NotificationService
+final class NotificationService
 {
     /**
      * Get unread notifications count for a user
@@ -46,6 +50,7 @@ class NotificationService
 
         if ($notification) {
             $notification->update(['read_at' => now()]);
+
             return true;
         }
 
@@ -66,11 +71,11 @@ class NotificationService
      * Create a notification
      */
     public function createNotification(
-        User $user, 
-        string $type, 
-        string $message, 
-        array $data = [], 
-        bool $sendEmail = true, 
+        User $user,
+        string $type,
+        string $message,
+        array $data = [],
+        bool $sendEmail = true,
         bool $sendPush = false
     ): Notification {
         $notification = NotificationModel::create([
@@ -91,32 +96,6 @@ class NotificationService
         }
 
         return $notification;
-    }
-
-    /**
-     * Send email notification
-     */
-    protected function sendEmailNotification(User $user, Notification $notification): void
-    {
-        try {
-            Mail::to($user)->send(new GenericNotification($notification));
-            $notification->update(['email_sent_at' => now()]);
-        } catch (\Exception $e) {
-            \Log::error('Failed to send email notification: ' . $e->getMessage());
-        }
-    }
-
-    /**
-     * Send push notification
-     */
-    protected function sendPushNotification(User $user, Notification $notification): void
-    {
-        try {
-            Bus::dispatch(new SendPushNotification($user, $notification));
-            $notification->update(['push_sent_at' => now()]);
-        } catch (\Exception $e) {
-            \Log::error('Failed to send push notification: ' . $e->getMessage());
-        }
     }
 
     /**
@@ -219,10 +198,36 @@ class NotificationService
         $this->createNotification(
             $user,
             'payment_failed',
-            "A payment has failed. Please check your billing information.",
+            'A payment has failed. Please check your billing information.',
             [
                 'details' => $details,
             ]
         );
+    }
+
+    /**
+     * Send email notification
+     */
+    private function sendEmailNotification(User $user, Notification $notification): void
+    {
+        try {
+            Mail::to($user)->send(new GenericNotification($notification));
+            $notification->update(['email_sent_at' => now()]);
+        } catch (Exception $e) {
+            Log::error('Failed to send email notification: '.$e->getMessage());
+        }
+    }
+
+    /**
+     * Send push notification
+     */
+    private function sendPushNotification(User $user, Notification $notification): void
+    {
+        try {
+            Bus::dispatch(new SendPushNotification($user, $notification));
+            $notification->update(['push_sent_at' => now()]);
+        } catch (Exception $e) {
+            Log::error('Failed to send push notification: '.$e->getMessage());
+        }
     }
 }

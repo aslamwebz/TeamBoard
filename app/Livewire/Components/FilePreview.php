@@ -1,16 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Components;
 
 use App\Models\DiscussionAttachment;
-use Livewire\Component;
 use Livewire\Attributes\Lazy;
+use Livewire\Component;
 
 #[Lazy]
-class FilePreview extends Component
+final class FilePreview extends Component
 {
     public DiscussionAttachment $file;
+
     public bool $showPreview = false;
+
     public bool $showModal = false;
 
     public function mount(DiscussionAttachment $file): void

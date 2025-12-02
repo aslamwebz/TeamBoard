@@ -1,17 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
-use App\Models\User;
-use App\Models\Skill;
-use App\Models\Certification;
-use App\Models\Timesheet;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class WorkerProfile extends Model
+final class WorkerProfile extends Model
 {
     use HasFactory;
 
@@ -65,8 +63,8 @@ class WorkerProfile extends Model
     public function skills(): BelongsToMany
     {
         return $this->belongsToMany(Skill::class, 'worker_skills')
-                    ->withPivot('proficiency_level', 'notes')
-                    ->withTimestamps();
+            ->withPivot('proficiency_level', 'notes')
+            ->withTimestamps();
     }
 
     /**
@@ -75,8 +73,8 @@ class WorkerProfile extends Model
     public function certifications(): BelongsToMany
     {
         return $this->belongsToMany(Certification::class, 'worker_certifications')
-                    ->withPivot('date_obtained', 'expiry_date', 'status', 'notes', 'attachment_path')
-                    ->withTimestamps();
+            ->withPivot('date_obtained', 'expiry_date', 'status', 'notes', 'attachment_path')
+            ->withTimestamps();
     }
 
     /**

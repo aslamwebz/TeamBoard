@@ -9,13 +9,16 @@ use App\Models\Contact;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class ContactList extends Component
+final class ContactList extends Component
 {
     use WithPagination;
 
     public Client $client;
+
     public $search = '';
+
     public $showDeleteModal = false;
+
     public $contactToDeleteId;
 
     protected $queryString = ['search'];
@@ -28,18 +31,18 @@ class ContactList extends Component
     public function render(): \Illuminate\Contracts\View\View
     {
         $contacts = $this->client->contacts()
-            ->where(function($query) {
-                $query->where('first_name', 'like', '%' . $this->search . '%')
-                      ->orWhere('last_name', 'like', '%' . $this->search . '%')
-                      ->orWhere('email', 'like', '%' . $this->search . '%')
-                      ->orWhere('position', 'like', '%' . $this->search . '%');
+            ->where(function ($query) {
+                $query->where('first_name', 'like', '%'.$this->search.'%')
+                    ->orWhere('last_name', 'like', '%'.$this->search.'%')
+                    ->orWhere('email', 'like', '%'.$this->search.'%')
+                    ->orWhere('position', 'like', '%'.$this->search.'%');
             })
             ->orderBy('is_primary', 'desc')
             ->orderBy('created_at', 'desc')
             ->paginate(8);
 
         return view('livewire.clients.contact-list', [
-            'contacts' => $contacts
+            'contacts' => $contacts,
         ]);
     }
 

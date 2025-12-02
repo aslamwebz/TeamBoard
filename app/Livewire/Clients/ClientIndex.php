@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Clients;
 
 use App\Models\Client;
@@ -11,40 +13,42 @@ use Livewire\WithPagination;
 
 #[Layout('components.layouts.app')]
 #[Title('Clients')]
-class ClientIndex extends Component
+final class ClientIndex extends Component
 {
     use WithPagination;
 
     public $search = '';
+
     public $showDeleteModal = false;
+
     public $clientToDeleteId;
 
     protected $queryString = ['search'];
 
-    public function render() : View
+    public function render(): View
     {
         $clients = Client::query()
             ->where(function ($query) {
                 $query
-                    ->where('name', 'like', '%' . $this->search . '%')
-                    ->orWhere('email', 'like', '%' . $this->search . '%')
-                    ->orWhere('company_name', 'like', '%' . $this->search . '%');
+                    ->where('name', 'like', '%'.$this->search.'%')
+                    ->orWhere('email', 'like', '%'.$this->search.'%')
+                    ->orWhere('company_name', 'like', '%'.$this->search.'%');
             })
             ->orderBy('name')
             ->paginate(10);
 
         return view('livewire.clients.client-index', [
-            'clients' => $clients
+            'clients' => $clients,
         ]);
     }
 
-    public function deleteClient($id) : void
+    public function deleteClient($id): void
     {
         $this->clientToDeleteId = $id;
         $this->showDeleteModal = true;
     }
 
-    public function confirmDelete() : void
+    public function confirmDelete(): void
     {
         $client = Client::find($this->clientToDeleteId);
         if ($client) {
@@ -55,7 +59,7 @@ class ClientIndex extends Component
         $this->clientToDeleteId = null;
     }
 
-    public function cancelDelete() : void
+    public function cancelDelete(): void
     {
         $this->showDeleteModal = false;
         $this->clientToDeleteId = null;

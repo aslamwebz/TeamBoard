@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,12 +22,12 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id'); // User who performed the action
             $table->json('metadata')->nullable(); // Additional data about the action
             $table->timestamps();
-            
+
             // Indexes
             $table->index(['type', 'type_id']);
             $table->index('user_id');
             $table->index('action');
-            
+
             // Foreign key constraints
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

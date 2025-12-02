@@ -1,62 +1,63 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
-use Database\Seeders\webz\UserSeeder;
-use Database\Seeders\webz\RolePermissionSeeder;
-use Database\Seeders\webz\CompanyProfileSeeder;
-use Database\Seeders\webz\TeamSeeder;
-use Database\Seeders\webz\UserTeamSeeder;
-use Database\Seeders\webz\ClientSeeder;
+use Database\Seeders\webz\CertificationSeeder;
 use Database\Seeders\webz\ClientContactSeeder;
-use Database\Seeders\webz\ContactSeeder;
-use Database\Seeders\webz\ContactActivitySeeder;
-use Database\Seeders\webz\ProjectSeeder;
-use Database\Seeders\webz\ProjectTeamSeeder;
-use Database\Seeders\webz\ProjectUserSeeder;
-use Database\Seeders\webz\TaskSeeder;
-use Database\Seeders\webz\TaskAssignmentSeeder;
 use Database\Seeders\webz\ClientNoteSeeder;
-use Database\Seeders\webz\NoteSeeder;
 use Database\Seeders\webz\ClientProjectSeeder;
-use Database\Seeders\webz\InvoiceSeeder;
+use Database\Seeders\webz\ClientSeeder;
+use Database\Seeders\webz\CommentSeeder;
+use Database\Seeders\webz\CompanyProfileSeeder;
+use Database\Seeders\webz\ContactActivitySeeder;
+use Database\Seeders\webz\ContactSeeder;
+use Database\Seeders\webz\DiscussionAttachmentSeeder;
+use Database\Seeders\webz\DiscussionSeeder;
+use Database\Seeders\webz\ExpenseAttachmentSeeder;
+use Database\Seeders\webz\ExpenseCategorySeeder;
+use Database\Seeders\webz\ExpensePaymentSeeder;
+use Database\Seeders\webz\ExpenseSeeder;
+use Database\Seeders\webz\FileAttachmentSeeder;
 use Database\Seeders\webz\InvoiceLineItemSeeder;
 use Database\Seeders\webz\InvoicePaymentSeeder;
 use Database\Seeders\webz\InvoiceProjectSeeder;
-use Database\Seeders\webz\VendorSeeder;
-use Database\Seeders\webz\VendorContactSeeder;
-use Database\Seeders\webz\VendorServiceSeeder;
-use Database\Seeders\webz\VendorInvoiceSeeder;
-use Database\Seeders\webz\PurchaseRequestSeeder;
-use Database\Seeders\webz\PurchaseRequestItemSeeder;
-use Database\Seeders\webz\PurchaseOrderSeeder;
-use Database\Seeders\webz\PurchaseOrderItemSeeder;
-use Database\Seeders\webz\PurchaseOrderVendorSeeder;
-use Database\Seeders\webz\ExpenseCategorySeeder;
-use Database\Seeders\webz\ExpenseSeeder;
-use Database\Seeders\webz\ExpenseAttachmentSeeder;
+use Database\Seeders\webz\InvoiceSeeder;
+use Database\Seeders\webz\MilestoneSeeder;
+use Database\Seeders\webz\MonthlyReportSeeder;
+use Database\Seeders\webz\NoteSeeder;
+use Database\Seeders\webz\NotificationSeeder;
 use Database\Seeders\webz\PaymentMethodSeeder;
 use Database\Seeders\webz\PaymentRecordSeeder;
 use Database\Seeders\webz\PaymentSeeder;
+use Database\Seeders\webz\ProjectSeeder;
+use Database\Seeders\webz\ProjectTeamSeeder;
+use Database\Seeders\webz\ProjectUserSeeder;
+use Database\Seeders\webz\PurchaseOrderItemSeeder;
+use Database\Seeders\webz\PurchaseOrderSeeder;
+use Database\Seeders\webz\PurchaseOrderVendorSeeder;
+use Database\Seeders\webz\PurchaseRequestItemSeeder;
+use Database\Seeders\webz\PurchaseRequestSeeder;
 use Database\Seeders\webz\ReportSeeder;
-use Database\Seeders\webz\MonthlyReportSeeder;
-use Database\Seeders\webz\WorkerProfileSeeder;
+use Database\Seeders\webz\RolePermissionSeeder;
 use Database\Seeders\webz\SkillSeeder;
-use Database\Seeders\webz\CertificationSeeder;
-use Database\Seeders\webz\CommentSeeder;
-use Database\Seeders\webz\DiscussionSeeder;
-use Database\Seeders\webz\DiscussionAttachmentSeeder;
-use Database\Seeders\webz\FileAttachmentSeeder;
-use Database\Seeders\webz\MilestoneSeeder;
-use Database\Seeders\webz\NotificationSeeder;
+use Database\Seeders\webz\TaskAssignmentSeeder;
+use Database\Seeders\webz\TaskSeeder;
+use Database\Seeders\webz\TeamSeeder;
 use Database\Seeders\webz\TimesheetSeeder;
-use Database\Seeders\webz\WorkerSkillSeeder;
+use Database\Seeders\webz\UserSeeder;
+use Database\Seeders\webz\UserTeamSeeder;
+use Database\Seeders\webz\VendorContactSeeder;
+use Database\Seeders\webz\VendorInvoiceSeeder;
+use Database\Seeders\webz\VendorSeeder;
+use Database\Seeders\webz\VendorServiceSeeder;
 use Database\Seeders\webz\WorkerCertificationSeeder;
-use Database\Seeders\webz\ExpensePaymentSeeder;
+use Database\Seeders\webz\WorkerProfileSeeder;
+use Database\Seeders\webz\WorkerSkillSeeder;
 use Illuminate\Database\Seeder;
 
-
-class WebzSeeder extends Seeder
+final class WebzSeeder extends Seeder
 {
     /**
      * Run the database seeds.

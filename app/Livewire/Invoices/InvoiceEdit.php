@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Invoices;
 
 use App\Models\Client;
@@ -13,19 +15,30 @@ use Livewire\Component;
 
 #[Layout('components.layouts.app')]
 #[Title('Edit Invoice')]
-class InvoiceEdit extends Component
+final class InvoiceEdit extends Component
 {
     public $invoice;
+
     public $invoiceId;
+
     public $client_id = '';
+
     public $project_id = '';
+
     public $invoice_number = '';
+
     public $issue_date = '';
+
     public $due_date = '';
+
     public $amount = '';
+
     public $tax = '';
+
     public $total = '';
+
     public $status = 'draft';
+
     public $description = '';
 
     protected $rules = [
@@ -41,7 +54,7 @@ class InvoiceEdit extends Component
         'description' => 'nullable|string|max:500',
     ];
 
-    public function mount(Invoice $invoice) : void
+    public function mount(Invoice $invoice): void
     {
         $this->invoice = $invoice;
         $this->invoiceId = $invoice->id;
@@ -57,9 +70,9 @@ class InvoiceEdit extends Component
         $this->description = $invoice->description;
     }
 
-    public function updateInvoice() : RedirectResponse
+    public function updateInvoice(): RedirectResponse
     {
-        $this->rules['invoice_number'] = 'required|string|unique:invoices,invoice_number,' . $this->invoiceId;
+        $this->rules['invoice_number'] = 'required|string|unique:invoices,invoice_number,'.$this->invoiceId;
         $validated = $this->validate();
 
         // Calculate total
@@ -79,19 +92,19 @@ class InvoiceEdit extends Component
         return $this->redirectRoute('invoices.index', navigate: true);
     }
 
-    public function calculateTotal() : void
+    public function calculateTotal(): void
     {
         $this->total = (float) $this->amount + (float) $this->tax;
     }
 
-    public function render() : View
+    public function render(): View
     {
         $clients = Client::all();
         $projects = Project::all();
 
         return view('livewire.invoices.invoice-edit', [
             'clients' => $clients,
-            'projects' => $projects
+            'projects' => $projects,
         ]);
     }
 }

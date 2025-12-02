@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use App\Models\Invoice;
 use Illuminate\Database\Seeder;
 
-class InvoiceLineItemSeeder extends Seeder
+final class InvoiceLineItemSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,6 +18,7 @@ class InvoiceLineItemSeeder extends Seeder
 
         if ($invoices->isEmpty()) {
             $this->command->warn('No invoices found. Please run InvoiceSeeder first.');
+
             return;
         }
 

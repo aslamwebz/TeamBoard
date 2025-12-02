@@ -1,12 +1,14 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ActivityLog extends Model
+final class ActivityLog extends Model
 {
     use HasFactory;
 
@@ -33,14 +35,14 @@ class ActivityLog extends Model
     /**
      * Get the related model instance (project, task, etc.)
      */
-    public function getRelatedModel()
+    public function getRelatedModel(): ?Model
     {
-        if (!$this->type || !$this->type_id) {
+        if (! $this->type || ! $this->type_id) {
             return null;
         }
 
         $modelClass = "App\\Models\\{$this->type}";
-        
+
         if (class_exists($modelClass)) {
             return $modelClass::find($this->type_id);
         }

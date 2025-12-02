@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class VendorContact extends Model
+final class VendorContact extends Model
 {
     use HasFactory;
 
@@ -37,6 +39,6 @@ class VendorContact extends Model
      */
     public function getFullNameAttribute(): string
     {
-        return trim($this->first_name . ' ' . $this->last_name);
+        return mb_trim($this->first_name.' '.$this->last_name);
     }
 }

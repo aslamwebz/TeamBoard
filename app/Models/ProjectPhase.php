@@ -1,15 +1,26 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Model;
 
-class ProjectPhase extends Model
+final class ProjectPhase extends Model
 {
     use HasFactory;
+
+    // Define phase statuses
+    public const STATUS_NOT_STARTED = 'not_started';
+
+    public const STATUS_IN_PROGRESS = 'in_progress';
+
+    public const STATUS_COMPLETED = 'completed';
+
+    public const STATUS_ON_HOLD = 'on_hold';
 
     protected $fillable = [
         'name',
@@ -27,12 +38,6 @@ class ProjectPhase extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
-
-    // Define phase statuses
-    public const STATUS_NOT_STARTED = 'not_started';
-    public const STATUS_IN_PROGRESS = 'in_progress';
-    public const STATUS_COMPLETED = 'completed';
-    public const STATUS_ON_HOLD = 'on_hold';
 
     public function project(): BelongsTo
     {
@@ -60,6 +65,7 @@ class ProjectPhase extends Model
             if ($this->start_date && $this->start_date->isPast()) {
                 return $this->status === self::STATUS_COMPLETED ? 100 : 0;
             }
+
             return 0;
         }
 
@@ -82,6 +88,7 @@ class ProjectPhase extends Model
             if ($this->end_date && $this->end_date->isPast() && $this->status !== self::STATUS_COMPLETED) {
                 return self::STATUS_ON_HOLD; // Phase is past due without tasks completed
             }
+
             return $this->status; // Return current status if no tasks
         }
 
@@ -91,15 +98,17 @@ class ProjectPhase extends Model
 
         if ($completedTasks->count() === $tasks->count()) {
             return self::STATUS_COMPLETED;
-        } elseif ($completedTasks->count() > 0) {
-            return self::STATUS_IN_PROGRESS;
-        } else {
-            // If tasks exist but none are completed, check if phase should be in progress based on dates
-            if ($this->start_date && $this->start_date->isPast() && $this->end_date && $this->end_date->isFuture()) {
-                return self::STATUS_IN_PROGRESS;
-            }
-            return self::STATUS_NOT_STARTED;
         }
+        if ($completedTasks->count() > 0) {
+            return self::STATUS_IN_PROGRESS;
+        }
+        // If tasks exist but none are completed, check if phase should be in progress based on dates
+        if ($this->start_date && $this->start_date->isPast() && $this->end_date && $this->end_date->isFuture()) {
+            return self::STATUS_IN_PROGRESS;
+        }
+
+        return self::STATUS_NOT_STARTED;
+
     }
 
     /**
@@ -109,6 +118,7 @@ class ProjectPhase extends Model
     {
         $calculatedStatus = $this->getCalculatedStatus();
         $this->update(['status' => $calculatedStatus]);
+
         return $calculatedStatus;
     }
 }

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class RolePermissionSeeder extends Seeder
+final class RolePermissionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -20,65 +22,65 @@ class RolePermissionSeeder extends Seeder
             'create users',
             'edit users',
             'delete users',
-            
+
             // Role permissions
             'view roles',
             'create roles',
             'edit roles',
             'delete roles',
-            
+
             // Permission permissions
             'view permissions',
             'assign permissions',
-            
+
             // Project permissions
             'view projects',
             'create projects',
             'edit projects',
             'delete projects',
-            
+
             // Task permissions
             'view tasks',
             'create tasks',
             'edit tasks',
             'delete tasks',
-            
+
             // Client permissions
             'view clients',
             'create clients',
             'edit clients',
             'delete clients',
-            
+
             // Invoice permissions
             'view invoices',
             'create invoices',
             'edit invoices',
             'delete invoices',
-            
+
             // Report permissions
             'view reports',
             'create reports',
             'edit reports',
             'delete reports',
-            
+
             // Team permissions
             'view teams',
             'create teams',
             'edit teams',
             'delete teams',
-            
+
             // Vendor permissions
             'view vendors',
             'create vendors',
             'edit vendors',
             'delete vendors',
-            
+
             // Purchase Order permissions
             'view purchase-orders',
             'create purchase-orders',
             'edit purchase-orders',
             'delete purchase-orders',
-            
+
             // Worker permissions
             'view workers',
             'create workers',

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,7 +23,7 @@ return new class extends Migration
             $table->boolean('is_public')->default(true); // Whether the note is publicly visible
             $table->unsignedBigInteger('created_by')->nullable(); // User who created the note
             $table->timestamps();
-            
+
             // Indexes for polymorphic relationship
             $table->index(['noteable_type', 'noteable_id']);
         });

@@ -1,14 +1,25 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Milestone extends Model
+final class Milestone extends Model
 {
     use HasFactory;
+
+    // Define milestone statuses
+    public const STATUS_NOT_STARTED = 'not_started';
+
+    public const STATUS_IN_PROGRESS = 'in_progress';
+
+    public const STATUS_COMPLETED = 'completed';
+
+    public const STATUS_ON_HOLD = 'on_hold';
 
     protected $fillable = [
         'name',
@@ -25,12 +36,6 @@ class Milestone extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
-
-    // Define milestone statuses
-    public const STATUS_NOT_STARTED = 'not_started';
-    public const STATUS_IN_PROGRESS = 'in_progress';
-    public const STATUS_COMPLETED = 'completed';
-    public const STATUS_ON_HOLD = 'on_hold';
 
     public function project(): BelongsTo
     {

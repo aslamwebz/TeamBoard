@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Projects\Phases;
 
 use App\Models\ProjectPhase;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use Livewire\Component;
 
 #[Layout('components.layouts.app')]
 #[Title('View Phase')]
-class PhaseShow extends Component
+final class PhaseShow extends Component
 {
     public ProjectPhase $phase;
 

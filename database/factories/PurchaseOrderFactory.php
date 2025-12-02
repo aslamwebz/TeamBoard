@@ -1,27 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\PurchaseOrder;
-use App\Models\Vendor;
 use App\Models\User;
+use App\Models\Vendor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PurchaseOrderFactory extends Factory
+final class PurchaseOrderFactory extends Factory
 {
     protected $model = PurchaseOrder::class;
 
     public function definition(): array
     {
         $orderDate = fake()->dateTimeBetween('-1 year', 'now');
-        $expectedDeliveryDate = (clone $orderDate)->modify('+' . fake()->numberBetween(7, 30) . ' days');
+        $expectedDeliveryDate = (clone $orderDate)->modify('+'.fake()->numberBetween(7, 30).' days');
         $subtotal = fake()->randomFloat(2, 100, 10000);
         $tax = $subtotal * 0.08; // 8% tax
         $total = $subtotal + $tax;
 
         return [
             'vendor_id' => Vendor::inRandomOrder()->first()?->id ?? Vendor::factory(),
-            'po_number' => 'PO-' . fake()->unique()->numberBetween(1000, 9999),
+            'po_number' => 'PO-'.fake()->unique()->numberBetween(1000, 9999),
             'order_date' => $orderDate,
             'required_date' => fake()->dateTimeBetween($orderDate, '+2 months'),
             'expected_delivery_date' => $expectedDeliveryDate,

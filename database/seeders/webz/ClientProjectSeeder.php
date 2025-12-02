@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use App\Models\Client;
 use App\Models\Project;
 use Illuminate\Database\Seeder;
 
-class ClientProjectSeeder extends Seeder
+final class ClientProjectSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,12 +20,13 @@ class ClientProjectSeeder extends Seeder
 
         if ($clients->isEmpty() || $projects->isEmpty()) {
             $this->command->warn('Clients or Projects not found. Please run ClientSeeder and ProjectSeeder first.');
+
             return;
         }
 
         // Link projects to clients (some projects may already have clients)
         foreach ($projects as $project) {
-            if (!$project->client_id) {
+            if (! $project->client_id) {
                 $client = $clients->random();
                 $project->update(['client_id' => $client->id]);
             }

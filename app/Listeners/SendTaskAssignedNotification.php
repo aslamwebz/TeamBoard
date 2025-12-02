@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Listeners;
 
 use App\Events\TaskAssignedNotification as TaskAssignedEvent;
-use App\Models\Notification as NotificationModel;
 use App\Services\NotificationService;
 
-class SendTaskAssignedNotification
+final class SendTaskAssignedNotification
 {
-    protected $notificationService;
+    private $notificationService;
 
     public function __construct(NotificationService $notificationService)
     {

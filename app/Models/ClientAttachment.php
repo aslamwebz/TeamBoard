@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ClientAttachment extends Model
+final class ClientAttachment extends Model
 {
     use HasFactory;
 
@@ -46,7 +46,7 @@ class ClientAttachment extends Model
      */
     public function getDownloadUrlAttribute(): string
     {
-        return asset('storage/' . $this->path);
+        return asset('storage/'.$this->path);
     }
 
     /**
@@ -55,15 +55,18 @@ class ClientAttachment extends Model
     public function getFormattedSizeAttribute(): string
     {
         $bytes = $this->size;
-        
+
         if ($bytes >= 1073741824) {
-            return number_format($bytes / 1073741824, 2) . ' GB';
-        } elseif ($bytes >= 1048576) {
-            return number_format($bytes / 1048576, 2) . ' MB';
-        } elseif ($bytes >= 1024) {
-            return number_format($bytes / 1024, 2) . ' KB';
-        } else {
-            return $bytes . ' bytes';
+            return number_format($bytes / 1073741824, 2).' GB';
         }
+        if ($bytes >= 1048576) {
+            return number_format($bytes / 1048576, 2).' MB';
+        }
+        if ($bytes >= 1024) {
+            return number_format($bytes / 1024, 2).' KB';
+        }
+
+        return $bytes.' bytes';
+
     }
 }

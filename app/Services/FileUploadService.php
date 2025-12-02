@@ -1,15 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Models\DiscussionAttachment;
+use Exception;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use InvalidArgumentException;
 
-class FileUploadService
+final class FileUploadService
 {
-    protected $allowedMimeTypes = [
+    private $allowedMimeTypes = [
         // Images
         'image/jpeg',
         'image/png',
@@ -36,32 +39,32 @@ class FileUploadService
         'application/json',
     ];
 
-    protected $maxFileSize = 10 * 1024 * 1024;  // 10MB in bytes
+    private $maxFileSize = 10 * 1024 * 1024;  // 10MB in bytes
 
     public function upload($file, $userId, $discussionId = null, $commentId = null)
     {
         try {
             // Validate file
-            if (!$this->isValidFile($file)) {
-                throw new \InvalidArgumentException('Invalid file type or size');
+            if (! $this->isValidFile($file)) {
+                throw new InvalidArgumentException('Invalid file type or size');
             }
 
             // Generate unique filename
             $originalName = $file->getClientOriginalName();
             $extension = $file->getClientOriginalExtension();
-            $filename = uniqid() . '_' . time() . '.' . $extension;
+            $filename = uniqid().'_'.time().'.'.$extension;
 
             // Ensure the directory exists
             $directory = 'discussions';
-            if (!Storage::disk('public')->exists($directory)) {
+            if (! Storage::disk('public')->exists($directory)) {
                 Storage::disk('public')->makeDirectory($directory, 0755, true);
             }
 
             // Store the file in the public disk
             $path = $file->storeAs($directory, $filename, 'public');
 
-            if (!$path) {
-                throw new \Exception('Failed to store file');
+            if (! $path) {
+                throw new Exception('Failed to store file');
             }
 
             // Create attachment record - store just the filename, not the full path
@@ -76,11 +79,11 @@ class FileUploadService
             ]);
 
             return $attachment;
-        } catch (\Exception $e) {
-            \Log::error('File upload failed: ' . $e->getMessage(), [
+        } catch (Exception $e) {
+            \Log::error('File upload failed: '.$e->getMessage(), [
                 'file' => $file->getClientOriginalName(),
                 'user_id' => $userId,
-                'exception' => $e
+                'exception' => $e,
             ]);
             throw $e;
         }
@@ -88,7 +91,7 @@ class FileUploadService
 
     public function isValidFile($file): bool
     {
-        if (!$file instanceof UploadedFile) {
+        if (! $file instanceof UploadedFile) {
             return false;
         }
 
@@ -98,7 +101,7 @@ class FileUploadService
         }
 
         // Check MIME type
-        if (!in_array($file->getMimeType(), $this->allowedMimeTypes)) {
+        if (! in_array($file->getMimeType(), $this->allowedMimeTypes)) {
             return false;
         }
 
@@ -108,7 +111,7 @@ class FileUploadService
     public function deleteAttachment(DiscussionAttachment $attachment): bool
     {
         // Delete the physical file from public disk
-        $filePath = 'discussions/' . $attachment->filename;
+        $filePath = 'discussions/'.$attachment->filename;
         if (Storage::disk('public')->exists($filePath)) {
             Storage::disk('public')->delete($filePath);
         }
@@ -131,7 +134,7 @@ class FileUploadService
             $bytes /= 1024;
         }
 
-        return round($bytes, 2) . ' ' . $units[$i];
+        return round($bytes, 2).' '.$units[$i];
     }
 
     public function getAllowedFileTypes(): array

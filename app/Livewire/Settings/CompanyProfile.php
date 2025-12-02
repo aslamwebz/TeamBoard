@@ -5,29 +5,40 @@ declare(strict_types=1);
 namespace App\Livewire\Settings;
 
 use App\Models\Tenant;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use Livewire\Component;
 use Livewire\WithFileUploads;
+use Storage;
 
 #[Layout('components.layouts.app')]
 #[Title('Company Profile')]
-class CompanyProfile extends Component
+final class CompanyProfile extends Component
 {
     use WithFileUploads;
 
     public $legal_name;
+
     public $logo;
+
     public $address;
+
     public $phone;
+
     public $email;
+
     public $tax_vat_number;
+
     public $industry;
+
     public $currency;
+
     public $timezone;
+
     public $branding = [];
 
     public $currentLogoUrl = null;
+
     public $logoPreview = null;
 
     protected $rules = [
@@ -74,8 +85,9 @@ class CompanyProfile extends Component
         $validatedData = $this->validate();
 
         $tenant = Tenant::current();
-        if (!$tenant) {
+        if (! $tenant) {
             $this->addError('general', 'No active tenant found.');
+
             return;
         }
 
@@ -83,7 +95,7 @@ class CompanyProfile extends Component
         if ($this->logo) {
             // Delete old logo if exists
             if ($tenant->logo) {
-                \Storage::delete($tenant->logo);
+                Storage::delete($tenant->logo);
             }
 
             // Store new logo
@@ -103,7 +115,7 @@ class CompanyProfile extends Component
     {
         $tenant = Tenant::current();
         if ($tenant && $tenant->logo) {
-            \Storage::delete($tenant->logo);
+            Storage::delete($tenant->logo);
             $tenant->update(['logo' => null]);
             $this->currentLogoUrl = null;
             $this->logo = null;

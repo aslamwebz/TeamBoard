@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\webz;
 
 use App\Models\Contact;
 use Illuminate\Database\Seeder;
 
-class ContactSeeder extends Seeder
+final class ContactSeeder extends Seeder
 {
     /**
      * Run the database seeds.

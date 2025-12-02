@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\PurchaseOrders;
 
 use App\Models\PurchaseOrder;
 use Livewire\Component;
 
-class PurchaseOrderShow extends Component
+final class PurchaseOrderShow extends Component
 {
     public PurchaseOrder $purchaseOrder;
 
@@ -21,7 +23,7 @@ class PurchaseOrderShow extends Component
 
     public function getStatusBadgeClass(string $status): string
     {
-        return match($status) {
+        return match ($status) {
             'draft' => 'bg-blue-100 text-blue-800',
             'pending' => 'bg-yellow-100 text-yellow-800',
             'approved' => 'bg-green-100 text-green-800',

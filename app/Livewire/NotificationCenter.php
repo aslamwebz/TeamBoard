@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire;
 
-use App\Models\Notification;
-use App\Services\NotificationService;
 use Livewire\Component;
 
-class NotificationCenter extends Component
+final class NotificationCenter extends Component
 {
     public $showDropdown = false;
+
     public $previewFileId = null;
 
     public function mount(): void

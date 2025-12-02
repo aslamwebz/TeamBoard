@@ -1,23 +1,30 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
 use App\Helpers\TenantHelper;
-use App\Models\Task;
-use App\Models\Project;
-use App\Models\Client;
-use App\Models\User;
-use App\Models\InvoiceLineItem;
-use App\Models\Payment;
-use App\Models\PaymentMethod;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Model;
 
-class Invoice extends Model
+final class Invoice extends Model
 {
     use HasFactory;
+
+    public const STATUS_DRAFT = 'draft';
+
+    public const STATUS_SENT = 'sent';
+
+    public const STATUS_PARTIALLY_PAID = 'partially_paid';
+
+    public const STATUS_PAID = 'paid';
+
+    public const STATUS_OVERDUE = 'overdue';
+
+    public const STATUS_CANCELLED = 'cancelled';
 
     protected $fillable = [
         'client_id',
@@ -41,13 +48,6 @@ class Invoice extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
-
-    public const STATUS_DRAFT = 'draft';
-    public const STATUS_SENT = 'sent';
-    public const STATUS_PARTIALLY_PAID = 'partially_paid';
-    public const STATUS_PAID = 'paid';
-    public const STATUS_OVERDUE = 'overdue';
-    public const STATUS_CANCELLED = 'cancelled';
 
     public function client(): BelongsTo
     {
@@ -119,6 +119,7 @@ class Invoice extends Model
         }
 
         $paid = $this->getTotalPaidAmount();
+
         return round(($paid / $this->total) * 100, 2);
     }
 
@@ -136,6 +137,7 @@ class Invoice extends Model
     public function isPartiallyPaid(): bool
     {
         $totalPaid = $this->getTotalPaidAmount();
+
         return $totalPaid > 0 && $totalPaid < $this->total;
     }
 
@@ -155,6 +157,7 @@ class Invoice extends Model
         }
 
         $this->save();
+
         return $this->status;
     }
 
@@ -164,6 +167,7 @@ class Invoice extends Model
     public function getLatestPaymentDate()
     {
         $latestPayment = $this->payments()->where('status', Payment::STATUS_COMPLETED)->latest('payment_date')->first();
+
         return $latestPayment ? $latestPayment->payment_date : null;
     }
 

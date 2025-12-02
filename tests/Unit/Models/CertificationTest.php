@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\Certification;
 
 it('to array', function () {
     $certification = Certification::factory()->create()->refresh();
-    
+
     expect(array_keys($certification->toArray()))->toBe([
         'id',
         'name',

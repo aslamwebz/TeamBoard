@@ -1,18 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Workers;
 
 use App\Models\WorkerProfile;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class WorkerIndex extends Component
+final class WorkerIndex extends Component
 {
     use WithPagination;
 
     public string $search = '';
+
     public string $status = '';
+
     public string $department = '';
+
     public int $perPage = 10;
 
     protected $queryString = ['search', 'status', 'department'];
@@ -28,10 +33,10 @@ class WorkerIndex extends Component
 
         if ($this->search) {
             $query->whereHas('user', function ($q) {
-                $q->where('name', 'like', '%' . $this->search . '%')
-                  ->orWhere('email', 'like', '%' . $this->search . '%');
-            })->orWhere('job_title', 'like', '%' . $this->search . '%')
-              ->orWhere('department', 'like', '%' . $this->search . '%');
+                $q->where('name', 'like', '%'.$this->search.'%')
+                    ->orWhere('email', 'like', '%'.$this->search.'%');
+            })->orWhere('job_title', 'like', '%'.$this->search.'%')
+                ->orWhere('department', 'like', '%'.$this->search.'%');
         }
 
         if ($this->status) {

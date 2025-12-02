@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
-use App\Models\PurchaseOrderItem;
 use App\Models\PurchaseOrder;
+use App\Models\PurchaseOrderItem;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PurchaseOrderItemFactory extends Factory
+final class PurchaseOrderItemFactory extends Factory
 {
     protected $model = PurchaseOrderItem::class;
 
@@ -25,7 +27,7 @@ class PurchaseOrderItemFactory extends Factory
             'total_price' => $totalPrice,
             'unit_of_measure' => fake()->randomElement(['ea', 'ft', 'lb', 'kg', 'hr', 'item', 'set', 'box']),
             'received_quantity' => fake()->numberBetween(0, $quantity), // May not be fully received yet
-            'service_code' => 'CODE-' . strtoupper(fake()->lexify('????')),
+            'service_code' => 'CODE-'.mb_strtoupper(fake()->lexify('????')),
         ];
     }
 }

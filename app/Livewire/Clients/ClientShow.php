@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Clients;
 
 use App\Models\Client;
@@ -11,20 +13,23 @@ use Livewire\Component;
 
 #[Layout('components.layouts.app')]
 #[Title('View Client')]
-class ClientShow extends Component
+final class ClientShow extends Component
 {
     public Client $client;
+
     public $showAssignProjectModal = false;
+
     public $selectedProjectId = null;
+
     public $availableProjects = [];
 
-    public function mount(Client $client) : void
+    public function mount(Client $client): void
     {
         $this->client = $client;
         $this->loadAvailableProjects();
     }
 
-    public function loadAvailableProjects() : void
+    public function loadAvailableProjects(): void
     {
         // Load projects that are not already assigned to this client
         $projects = Project::where(function ($query) {
@@ -43,7 +48,7 @@ class ClientShow extends Component
         })->toArray();
     }
 
-    public function assignProject() : void
+    public function assignProject(): void
     {
         if ($this->selectedProjectId) {
             $project = Project::find($this->selectedProjectId);
@@ -62,10 +67,10 @@ class ClientShow extends Component
         }
     }
 
-    public function unassignProject($projectId) : void
+    public function unassignProject($projectId): void
     {
         $project = Project::find($projectId);
-        if ($project && $project->client_id == $this->client->id) {
+        if ($project && $project->client_id === $this->client->id) {
             $project->update(['client_id' => null]);
 
             // Refresh the available projects list
@@ -76,10 +81,10 @@ class ClientShow extends Component
         }
     }
 
-    public function render() : View
+    public function render(): View
     {
         return view('livewire.clients.client-show', [
-            'client' => $this->client
+            'client' => $this->client,
         ]);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Permissions;
 
 use Illuminate\Contracts\View\View;
@@ -7,50 +9,52 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Spatie\Permission\Models\Permission;
 
-class PermissionIndex extends Component
+final class PermissionIndex extends Component
 {
     use WithPagination;
 
     public $search = '';
+
     public $perPage = 15;
+
     public $page = 1;
 
     protected $paginationTheme = 'tailwind';
 
-    public function updatingSearch() : void
+    public function updatingSearch(): void
     {
         $this->resetPage();
     }
 
-    public function updatingPage() : void
+    public function updatingPage(): void
     {
         $this->resetPage();
     }
 
-
-    public function mount() : void
+    public function mount(): void
     {
         $this->page = request()->query('page', 1);
     }
 
-    public function updatedPage() : void
+    public function updatedPage(): void
     {
         // This will be called when the page property changes
         // The render method will be called automatically
     }
 
-    public function gotoPage($page) : void
+    public function gotoPage($page): void
     {
         $this->page = $page;
     }
 
-    public function deletePermission($permissionId) : void
+    public function deletePermission($permissionId): void
     {
         $permission = Permission::findOrFail($permissionId);
 
         // Only allow deleting permissions that are not assigned to roles
         if ($permission->roles()->count() > 0) {
             $this->dispatch('error', 'Cannot delete permission that is assigned to roles.');
+
             return;
         }
 
@@ -58,10 +62,10 @@ class PermissionIndex extends Component
         $this->dispatch('success', 'Permission deleted successfully.');
     }
 
-    public function render() : View
+    public function render(): View
     {
         // Get all permissions matching the search term
-        $allPermissions = Permission::where('name', 'like', '%' . $this->search . '%')
+        $allPermissions = Permission::where('name', 'like', '%'.$this->search.'%')
             ->orderBy('name')
             ->get();
 
@@ -70,7 +74,7 @@ class PermissionIndex extends Component
             // Standard CRUD permissions are typically in format: action model (e.g., 'view users', 'create projects')
             $parts = explode(' ', $permission->name, 2); // Limit to 2 parts to avoid breaking on multi-word descriptions
 
-            if (count($parts) == 2) {
+            if (count($parts) === 2) {
                 $action = $parts[0]; // First part is the action (view, create, edit, delete)
                 $model = $parts[1];  // Second part is the model
 
@@ -78,7 +82,7 @@ class PermissionIndex extends Component
                 $crudActions = ['view', 'create', 'edit', 'delete', 'update'];
                 $knownModels = ['roles', 'permissions', 'users', 'teams', 'projects', 'tasks', 'clients', 'invoices', 'reports'];
 
-                if (in_array(strtolower($action), $crudActions) && in_array(strtolower($model), $knownModels)) {
+                if (in_array(mb_strtolower($action), $crudActions) && in_array(mb_strtolower($model), $knownModels)) {
                     return $model;
                 }
             }
@@ -157,7 +161,7 @@ class PermissionIndex extends Component
                 $calculatePage++;
                 $tempItemCount = $tempGroupSize; // Start new page with current group
                 $tempIndex++;
-            } else if ($tempItemCount + $tempGroupSize <= $maxItemsPerPage) {
+            } elseif ($tempItemCount + $tempGroupSize <= $maxItemsPerPage) {
                 // Can add this group to current page
                 $tempItemCount += $tempGroupSize;
                 $tempIndex++;
@@ -196,7 +200,7 @@ class PermissionIndex extends Component
 
         return view('livewire.permissions.permission-index', [
             'permissions' => $paginatedPermissions,
-            'groupedPermissions' => $currentGroups
+            'groupedPermissions' => $currentGroups,
         ]);
     }
 }

@@ -1,17 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Vendors;
 
 use App\Models\VendorService;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class VendorServices extends Component
+final class VendorServices extends Component
 {
     use WithPagination;
 
     public $vendorId;
+
     public string $search = '';
+
     public int $perPage = 10;
 
     protected $queryString = ['search'];
@@ -31,8 +35,8 @@ class VendorServices extends Component
         $query = VendorService::where('vendor_id', $this->vendorId);
 
         if ($this->search) {
-            $query->where('name', 'like', '%' . $this->search . '%')
-                  ->orWhere('category', 'like', '%' . $this->search . '%');
+            $query->where('name', 'like', '%'.$this->search.'%')
+                ->orWhere('category', 'like', '%'.$this->search.'%');
         }
 
         $services = $query->orderBy('name')->paginate($this->perPage);

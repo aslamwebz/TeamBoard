@@ -1,22 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
+use App\Models\Discussion;
 use App\Models\DiscussionAttachment;
 use App\Models\User;
-use App\Models\Discussion;
-use App\Models\Comment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class DiscussionAttachmentFactory extends Factory
+final class DiscussionAttachmentFactory extends Factory
 {
     protected $model = DiscussionAttachment::class;
 
     public function definition(): array
     {
         return [
-            'filename' => fake()->word() . '.pdf',
-            'original_name' => fake()->word() . '.pdf',
+            'filename' => fake()->word().'.pdf',
+            'original_name' => fake()->word().'.pdf',
             'mime_type' => 'application/pdf',
             'size' => fake()->numberBetween(1000, 5000000),
             'discussion_id' => Discussion::factory(),

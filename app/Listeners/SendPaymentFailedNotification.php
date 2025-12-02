@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Listeners;
 
 use App\Events\PaymentFailedNotification as PaymentFailedEvent;
 use App\Services\NotificationService;
 
-class SendPaymentFailedNotification
+final class SendPaymentFailedNotification
 {
-    protected $notificationService;
+    private $notificationService;
 
     public function __construct(NotificationService $notificationService)
     {

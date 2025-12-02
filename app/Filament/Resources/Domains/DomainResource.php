@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Domains;
 
 use App\Filament\Resources\Domains\Pages\CreateDomain;
@@ -14,7 +16,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
-class DomainResource extends Resource
+final class DomainResource extends Resource
 {
     protected static ?string $model = Domain::class;
 

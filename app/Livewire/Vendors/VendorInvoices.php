@@ -1,18 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Vendors;
 
 use App\Models\VendorInvoice;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class VendorInvoices extends Component
+final class VendorInvoices extends Component
 {
     use WithPagination;
 
     public $vendorId;
+
     public string $search = '';
+
     public string $status = '';
+
     public int $perPage = 10;
 
     protected $queryString = ['search', 'status'];
@@ -32,7 +37,7 @@ class VendorInvoices extends Component
         $query = VendorInvoice::where('vendor_id', $this->vendorId);
 
         if ($this->search) {
-            $query->where('invoice_number', 'like', '%' . $this->search . '%');
+            $query->where('invoice_number', 'like', '%'.$this->search.'%');
         }
 
         if ($this->status) {
@@ -48,7 +53,7 @@ class VendorInvoices extends Component
 
     public function getStatusBadgeClass(string $status): string
     {
-        return match($status) {
+        return match ($status) {
             'paid' => 'bg-green-100 text-green-800',
             'overdue' => 'bg-red-100 text-red-800',
             'cancelled' => 'bg-gray-100 text-gray-800',

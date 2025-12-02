@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
+use App\Models\Client;
 use App\Models\Milestone;
 use App\Models\Project;
-use App\Models\Client;
 
 it('to array', function () {
     // Create required related records first

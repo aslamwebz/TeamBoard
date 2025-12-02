@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
@@ -17,7 +19,7 @@ return new class extends Migration
             // Check if a worker profile already exists for this user
             $existing = DB::table('worker_profiles')->where('user_id', $user->id)->first();
 
-            if (!$existing) {
+            if (! $existing) {
                 // Create a worker profile for each existing user
                 DB::table('worker_profiles')->insert([
                     'user_id' => $user->id,

@@ -5,20 +5,22 @@ declare(strict_types=1);
 namespace App\Livewire\Clients;
 
 use App\Models\Client;
-use Livewire\Component;
-use Livewire\WithFileUploads;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Attributes\Validate;
+use Livewire\Component;
+use Livewire\WithFileUploads;
 
-class Attachments extends Component
+final class Attachments extends Component
 {
     use WithFileUploads;
 
     public Client $client;
+
     public $attachments;
+
     public $uploadForm = false;
+
     public $uploadedFiles = [];
 
     public $files = [];
@@ -33,18 +35,18 @@ class Attachments extends Component
         'description' => 'nullable|string|max:1000',
     ];
 
-    public function mount(Client $client) : void
+    public function mount(Client $client): void
     {
         $this->client = $client;
         $this->attachments = $this->client->attachments()->latest()->get();
     }
 
-    public function updatedFiles() : void
+    public function updatedFiles(): void
     {
         $this->validateOnly('files');
     }
 
-    public function addAttachments() : void
+    public function addAttachments(): void
     {
         $validatedData = $this->validate([
             'files.*' => 'required|file|max:10240', // 10MB max
@@ -54,7 +56,7 @@ class Attachments extends Component
 
         foreach ($this->files as $file) {
             // Store the file
-            $path = $file->store('client-attachments/' . $this->client->id, 'public');
+            $path = $file->store('client-attachments/'.$this->client->id, 'public');
 
             /** @var \App\Models\User $user */
             $user = Auth::user();
@@ -78,10 +80,10 @@ class Attachments extends Component
         // Reset form
         $this->reset(['files', 'attachment_type', 'description', 'uploadForm']);
 
-        session()->flash('message', count($this->files) . ' file(s) uploaded successfully.');
+        session()->flash('message', count($this->files).' file(s) uploaded successfully.');
     }
 
-    public function deleteAttachment($attachmentId) : void
+    public function deleteAttachment($attachmentId): void
     {
         /** @var \App\Models\ClientAttachment $attachment */
         $attachment = $this->client->attachments()->findOrFail($attachmentId);
@@ -98,7 +100,7 @@ class Attachments extends Component
         session()->flash('message', 'Attachment deleted successfully.');
     }
 
-    public function render() : View
+    public function render(): View
     {
         return view('livewire.clients.attachments');
     }

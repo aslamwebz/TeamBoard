@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,11 +21,11 @@ return new class extends Migration
             $table->unsignedBigInteger('type_id'); // ID of the related item
             $table->unsignedBigInteger('user_id'); // Creator of the discussion
             $table->timestamps();
-            
+
             // Indexes for performance
             $table->index(['type', 'type_id']);
             $table->index('user_id');
-            
+
             // Foreign key constraints
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
@@ -35,12 +37,12 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id'); // Comment author
             $table->unsignedBigInteger('parent_id')->nullable(); // For nested replies
             $table->timestamps();
-            
+
             // Indexes
             $table->index('discussion_id');
             $table->index('user_id');
             $table->index('parent_id');
-            
+
             // Foreign key constraints
             $table->foreign('discussion_id')->references('id')->on('discussions')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
@@ -57,11 +59,11 @@ return new class extends Migration
             $table->unsignedBigInteger('comment_id')->nullable();
             $table->unsignedBigInteger('user_id'); // Uploader
             $table->timestamps();
-            
+
             // Indexes
             $table->index(['discussion_id', 'comment_id']);
             $table->index('user_id');
-            
+
             // Foreign key constraints
             $table->foreign('discussion_id')->references('id')->on('discussions')->onDelete('cascade');
             $table->foreign('comment_id')->references('id')->on('comments')->onDelete('cascade');
@@ -77,7 +79,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id'); // User who performed the action
             $table->json('metadata')->nullable(); // Additional data about the action
             $table->timestamps();
-            
+
             // Indexes
             $table->index(['type', 'type_id']);
             $table->index('user_id');
