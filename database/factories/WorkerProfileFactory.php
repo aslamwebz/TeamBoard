@@ -15,8 +15,7 @@ final class WorkerProfileFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
-            'employee_id' => 'EMP'.mb_str_pad(fake()->unique()->numberBetween(1, 9999), 4, '0', STR_PAD_LEFT),
+            'employee_id' => 'EMP-000'.mb_str_pad((string) fake()->unique()->numberBetween(1, 9999), 4, '0', STR_PAD_LEFT),
             'job_title' => fake()->jobTitle(),
             'bio' => fake()->optional()->paragraph(),
             'hourly_rate' => fake()->randomFloat(2, 15, 100),

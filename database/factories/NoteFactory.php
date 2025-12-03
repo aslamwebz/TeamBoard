@@ -26,7 +26,7 @@ final class NoteFactory extends Factory
             'content' => fake()->paragraphs(3, true),
             'type' => fake()->randomElement(['general', 'follow_up', 'meeting', 'reminder', 'important']),
             'is_public' => fake()->boolean(70), // 70% public
-            'created_by' => User::factory(),
+            'created_by' => User::all()->random()->id,
         ];
     }
 }

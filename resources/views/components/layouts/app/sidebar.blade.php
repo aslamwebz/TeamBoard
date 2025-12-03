@@ -28,7 +28,7 @@
         <flux:sidebar.spacer class="my-4" />
 
         <flux:sidebar.item icon="bell-alert" href="{{ route('notifications.index') }}"
-            :current="request()->routeIs('notifications*')" wire:navigate.hover
+            :current="request()->routeIs('notifications*')" wire:navigate
             @mouseenter="preloadLink('{{ route('notifications.index') }}')">
             {{ __('Notifications') }}
             @php

@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Database\Factories;
 
@@ -15,7 +13,7 @@ final class ClientFactory extends Factory
     public function definition(): array
     {
         // Generate a unique company name
-        $companyName = fake()->company().' '.Str::random(5);
+        $companyName = fake()->company() . ' ' . Str::random(5);
 
         return [
             'company_name' => $companyName,
@@ -27,12 +25,12 @@ final class ClientFactory extends Factory
             'state' => fake()->stateAbbr(),
             'zip_code' => fake()->postcode(),
             'country' => fake()->country(),
-            'tax_vat_number' => 'TX'.fake()->unique()->numerify('#######'),
+            'tax_vat_number' => 'TX' . fake()->unique()->numerify('#######'),
             'industry' => fake()->randomElement(['Technology', 'Finance', 'Healthcare', 'Retail', 'Manufacturing', 'Education']),
             'description' => fake()->optional()->paragraph(),
             'billing_plan' => fake()->randomElement(['Basic', 'Standard', 'Premium']),
-            'subscription_start_date' => fake()->dateTimeBetween('-1 year', '+1 year'),
-            'subscription_end_date' => fake()->dateTimeBetween('+1 month', '+2 years'),
+            'subscription_start_date' => fake()->dateTimeBetween('-1 year', '+1 year')->format('Y-m-d'),
+            'subscription_end_date' => fake()->dateTimeBetween('+1 month', '+2 years')->format('Y-m-d'),
             'subscription_status' => fake()->randomElement(['Active', 'Inactive', 'Expired']),
             'notes' => fake()->optional()->paragraph(),
             'billing_address' => fake()->address(),

@@ -1,36 +1,34 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Livewire\Client;
 
 use App\Models\Client;
 use App\Models\Discussion;
-use App\Models\Project;
 use App\Models\User;
 use Livewire\Component;
 
 final class ClientDashboard extends Component
 {
-    public $projectProgress = [];
+    public array $projectProgress = [];
 
-    public $invoices = [];
+    public array $invoices = [];
 
     public $files = [];
 
-    public $projectRequests = [];
+    public array $projectRequests = [];
 
     public $teamActivity = [];
 
-    public $clientInfo = [];
+    public array $clientInfo = [];
 
-    public function mount()
+    public function mount(): void
     {
         $this->loadDashboardData();
     }
 
-    public function loadDashboardData()
+    public function loadDashboardData(): void
     {
+        /** @var \App\Models\User $user */
         $user = auth()->user();
 
         // Get the client associated with this user
@@ -38,7 +36,8 @@ final class ClientDashboard extends Component
 
         if ($client) {
             // Load project progress for the client
-            $this->projectProgress = $client->projects()
+            $this->projectProgress = $client
+                ->projects()
                 ->with(['tasks', 'phases', 'milestones'])
                 ->get()
                 ->map(function ($project) {
@@ -54,13 +53,14 @@ final class ClientDashboard extends Component
                 });
 
             // Load invoices for the client
-            $this->invoices = $client->invoices()
+            $this->invoices = $client
+                ->invoices()
                 ->latest()
                 ->take(5)
                 ->get();
 
             // Load files for the client (from attachments or discussions)
-            $this->files = collect(); // Placeholder - would load actual files in real implementation
+            $this->files = collect();  // Placeholder - would load actual files in real implementation
 
             // Load project requests (discussions or requests related to client)
             $this->projectRequests = Discussion::where('user_id', $user->id)
@@ -72,7 +72,7 @@ final class ClientDashboard extends Component
                 ->get();
 
             // Load team activity related to client's projects
-            $this->teamActivity = collect(); // Placeholder - would load actual activity in real implementation
+            $this->teamActivity = collect();  // Placeholder - would load actual activity in real implementation
 
             $this->clientInfo = [
                 'name' => $client->company_name ?? $client->name,
@@ -87,7 +87,7 @@ final class ClientDashboard extends Component
         return view('livewire.client.client-dashboard');
     }
 
-    private function getClientForUser($user)
+    private function getClientForUser(User $user): ?Client
     {
         // Check if the user is directly associated with any clients
         if ($user->clients()->exists()) {

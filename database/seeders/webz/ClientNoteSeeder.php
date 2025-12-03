@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Database\Seeders\webz;
 
@@ -24,16 +22,13 @@ final class ClientNoteSeeder extends Seeder
         }
 
         foreach ($clients as $client) {
-            // Create 2-5 notes per client
-            for ($i = 0; $i < rand(2, 5); $i++) {
-                Note::factory()->create([
-                    'noteable_type' => 'App\Models\Client',
-                    'noteable_id' => $client->id,
-                    'title' => fake()->sentence(3),
-                    'content' => fake()->paragraph(3),
-                    'type' => fake()->randomElement(['general', 'follow_up', 'meeting', 'reminder']),
-                ]);
-            }
+            Note::factory()->create([
+                'noteable_type' => 'App\Models\Client',
+                'noteable_id' => $client->id,
+                'title' => fake()->sentence(3),
+                'content' => fake()->paragraph(3),
+                'type' => fake()->randomElement(['general', 'follow_up', 'meeting', 'reminder']),
+            ]);
         }
     }
 }

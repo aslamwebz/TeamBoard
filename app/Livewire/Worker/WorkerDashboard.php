@@ -5,30 +5,25 @@ declare(strict_types=1);
 namespace App\Livewire\Worker;
 
 use App\Models\Task;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 final class WorkerDashboard extends Component
 {
-    public $myTasks = [];
+    public $myTasks;
+    public $myProjects;
+    public $upcomingDeadlines;
+    public $teamActivity;
+    public $importantAnnouncements;
+    public $notifications;
+    public $quickActions;
 
-    public $myProjects = [];
-
-    public $upcomingDeadlines = [];
-
-    public $teamActivity = [];
-
-    public $importantAnnouncements = [];
-
-    public $notifications = [];
-
-    public $quickActions = [];
-
-    public function mount()
+    public function mount() : void
     {
         $this->loadDashboardData();
     }
 
-    public function loadDashboardData()
+    public function loadDashboardData() : void
     {
         // Get the authenticated user
         $user = auth()->user();
@@ -151,8 +146,9 @@ final class WorkerDashboard extends Component
         ];
     }
 
-    public function updateTaskStatus($taskId, $status)
+    public function updateTaskStatus($taskId, $status) : void
     {
+        /** @var \App\Models\User $user */
         $user = auth()->user();
         $task = Task::where('id', $taskId)
             ->whereHas('users', function ($query) use ($user) {
@@ -167,7 +163,7 @@ final class WorkerDashboard extends Component
         }
     }
 
-    public function render()
+    public function render() : View
     {
         return view('livewire.worker.worker-dashboard');
     }

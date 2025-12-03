@@ -15,7 +15,7 @@
                 </svg>
             </div>
             <div class="p-6 pt-0">
-                <div class="text-2xl font-bold text-foreground">{{ $myTasks->count() }}</div>
+                <div class="text-2xl font-bold text-foreground">{{ $myTasks->count() ?? 0 }}</div>
                 <p class="text-xs text-zinc-500 dark:text-zinc-400">
                     @if($myTasks->where('status', 'completed')->count() > 0)
                         <span class="text-green-600">+{{ $myTasks->where('status', 'completed')->count() }} {{ __('completed') }}</span>
