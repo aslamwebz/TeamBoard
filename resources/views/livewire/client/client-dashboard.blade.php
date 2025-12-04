@@ -33,11 +33,8 @@
                 </svg>
             </div>
             <div class="p-6 pt-0">
-                <div class="text-2xl font-bold text-foreground">{{ $invoices->where('status', '!=', 'paid')->count() }}</div>
+                <div class="text-2xl font-bold text-foreground">{{ $outstandingInvoicesCount }}</div>
                 <p class="text-xs text-zinc-500 dark:text-zinc-400">
-                    @php
-                        $outstandingAmount = $invoices->where('status', '!=', 'paid')->sum('amount');
-                    @endphp
                     <span class="text-red-600">${{ number_format($outstandingAmount, 2) }}</span> {{ __('due') }}
                 </p>
             </div>
@@ -53,9 +50,9 @@
                 </svg>
             </div>
             <div class="p-6 pt-0">
-                <div class="text-2xl font-bold text-foreground">{{ $files->count() }}</div>
+                <div class="text-2xl font-bold text-foreground">{{ $filesCount }}</div>
                 <p class="text-xs text-zinc-500 dark:text-zinc-400">
-                    {{ __('latest: ') }}{{ $files->first()?->created_at?->format('M d') ?? 'N/A' }}
+                    {{ __('latest: ') }}{{ $latestFileDate ? $latestFileDate->format('M d') : 'N/A' }}
                 </p>
             </div>
         </div>
@@ -69,10 +66,10 @@
                 </svg>
             </div>
             <div class="p-6 pt-0">
-                <div class="text-2xl font-bold text-foreground">{{ $projectRequests->count() }}</div>
+                <div class="text-2xl font-bold text-foreground">{{ $projectRequestsCount }}</div>
                 <p class="text-xs text-zinc-500 dark:text-zinc-400">
-                    @if($projectRequests->count() > 0)
-                        <span class="text-green-600">{{ $projectRequests->where('status', 'pending')->count() }} {{ __('pending') }}</span>
+                    @if($projectRequestsCount > 0)
+                        <span class="text-green-600">{{ $pendingProjectRequestsCount }} {{ __('pending') }}</span>
                     @endif
                 </p>
             </div>
@@ -127,7 +124,7 @@
                     <a href="{{ route('invoices.index') }}" class="text-sm text-blue-600 hover:underline">{{ __('View All') }}</a>
                 </div>
                 
-                @if($invoices->count() > 0)
+                @if(count($invoices) > 0)
                     <div class="space-y-4">
                         @foreach($invoices as $invoice)
                             <a href="{{ route('invoices.show', $invoice->id) }}" class="block space-y-2">
@@ -245,7 +242,7 @@
                     <a href="{{ route('discussions.index') }}" class="text-sm text-blue-600 hover:underline">{{ __('View All') }}</a>
                 </div>
                 
-                @if($projectRequests->count() > 0)
+                @if($projectRequestsCount > 0)
                     <div class="space-y-4">
                         @foreach($projectRequests as $request)
                             <div class="p-4 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">

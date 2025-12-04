@@ -17,6 +17,12 @@ final class WorkerDashboard extends Component
     public $importantAnnouncements;
     public $notifications;
     public $quickActions;
+    public $myTasksCount = 0;
+    public $completedTasksCount = 0;
+    public $myProjectsCount = 0;
+    public $avgProjectCompletion = 0;
+    public $upcomingDeadlinesCount = 0;
+    public $overdueDeadlinesCount = 0;
 
     public function mount() : void
     {
@@ -41,6 +47,10 @@ final class WorkerDashboard extends Component
                 ->take(5)
                 ->get();
 
+            // Calculate task statistics
+            $this->myTasksCount = $this->myTasks->count();
+            $this->completedTasksCount = $this->myTasks->where('status', 'completed')->count();
+
             // Load "My Projects" - projects this user is assigned to
             $this->myProjects = $user->projects()
                 ->with(['tasks' => function ($query) use ($user) {
@@ -52,6 +62,16 @@ final class WorkerDashboard extends Component
                 ->take(5)
                 ->get();
 
+            // Calculate project statistics
+            $this->myProjectsCount = $this->myProjects->count();
+            if ($this->myProjectsCount > 0) {
+                $totalCompletion = 0;
+                foreach ($this->myProjects as $project) {
+                    $totalCompletion += $project->getCompletionPercentage();
+                }
+                $this->avgProjectCompletion = $totalCompletion / $this->myProjectsCount;
+            }
+
             // Load "Upcoming Deadlines" - tasks assigned to the user with due dates (including overdue)
             $this->upcomingDeadlines = Task::whereHas('users', function ($query) use ($user) {
                 $query->where('user_id', $user->id);
@@ -61,6 +81,10 @@ final class WorkerDashboard extends Component
                 ->orderByRaw('CASE WHEN due_date < ? THEN 0 ELSE 1 END, due_date ASC', [now()->startOfDay()])
                 ->take(10)
                 ->get();
+
+            // Calculate deadline statistics
+            $this->upcomingDeadlinesCount = $this->upcomingDeadlines->count();
+            $this->overdueDeadlinesCount = $this->upcomingDeadlines->where('due_date', '<', now()->addDays(1))->count();
 
             // Load notifications for the user
             $this->notifications = $user->notifications()

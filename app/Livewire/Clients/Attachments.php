@@ -18,6 +18,7 @@ final class Attachments extends Component
     public Client $client;
 
     public $attachments;
+    public $attachmentsCount = 0;
 
     public $uploadForm = false;
 
@@ -39,6 +40,7 @@ final class Attachments extends Component
     {
         $this->client = $client;
         $this->attachments = $this->client->attachments()->latest()->get();
+        $this->attachmentsCount = $this->attachments->count();
     }
 
     public function updatedFiles(): void
@@ -76,6 +78,7 @@ final class Attachments extends Component
 
         // Refresh attachments
         $this->attachments = $this->client->attachments()->latest()->get();
+        $this->attachmentsCount = $this->attachments->count();
 
         // Reset form
         $this->reset(['files', 'attachment_type', 'description', 'uploadForm']);
@@ -96,6 +99,7 @@ final class Attachments extends Component
 
         // Refresh attachments
         $this->attachments = $this->client->attachments()->latest()->get();
+        $this->attachmentsCount = $this->attachments->count();
 
         session()->flash('message', 'Attachment deleted successfully.');
     }

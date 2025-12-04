@@ -17,6 +17,12 @@ final class ClientDashboard extends Component
     public array $projectRequests = [];
     public array $teamActivity = [];
     public array $clientInfo = [];
+    public $outstandingInvoicesCount = 0;
+    public $outstandingAmount = 0;
+    public $filesCount = 0;
+    public $latestFileDate = null;
+    public $projectRequestsCount = 0;
+    public $pendingProjectRequestsCount = 0;
 
     public function mount(): void
     {
@@ -39,7 +45,7 @@ final class ClientDashboard extends Component
             ->map(function ($project) {
                 $completedTasks = $project->tasks->where('status', 'completed')->count();
                 $totalTasks = $project->tasks->count();
-                
+
                 return [
                     'id' => $project->id,
                     'name' => $project->name,
@@ -49,26 +55,38 @@ final class ClientDashboard extends Component
             })
             ->toArray();
 
-        // Load invoices for the client
-        $this->invoices = $client->invoices()
+        // Load invoices for the client and compute related statistics
+        $invoicesCollection = $client->invoices()
             ->latest()
             ->take(5)
-            ->get()
-            ->toArray();
+            ->get();
+
+        $this->invoices = $invoicesCollection->toArray();
+
+        // Calculate outstanding invoices statistics
+        $outstandingInvoices = $client->invoices()->where('status', '!=', 'paid')->get();
+        $this->outstandingInvoicesCount = $outstandingInvoices->count();
+        $this->outstandingAmount = $outstandingInvoices->sum('amount');
 
         // Load files for the client (from attachments or discussions)
-        $this->files = []; // Placeholder - would load actual files in real implementation
+        // Placeholder - would load actual files in real implementation
+        $this->files = [];
+        $this->filesCount = count($this->files);
+        $this->latestFileDate = !empty($this->files) ? $this->files[0]['created_at'] ?? null : null;
 
         // Load project requests (discussions or requests related to client)
-        $this->projectRequests = Discussion::query()
+        $projectRequestsCollection = Discussion::query()
             ->where('user_id', $user->id)
             ->orWhereHas('project', function ($query) use ($client) {
                 $query->where('client_id', $client->id);
             })
             ->latest()
             ->take(5)
-            ->get()
-            ->toArray();
+            ->get();
+
+        $this->projectRequests = $projectRequestsCollection->toArray();
+        $this->projectRequestsCount = $projectRequestsCollection->count();
+        $this->pendingProjectRequestsCount = $projectRequestsCollection->where('status', 'pending')->count();
 
         // Load team activity related to client's projects
         $this->teamActivity = []; // Placeholder - would load actual activity in real implementation

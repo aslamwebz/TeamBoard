@@ -15,10 +15,10 @@
                 </svg>
             </div>
             <div class="p-6 pt-0">
-                <div class="text-2xl font-bold text-foreground">{{ $myTasks->count() ?? 0 }}</div>
+                <div class="text-2xl font-bold text-foreground">{{ $myTasksCount }}</div>
                 <p class="text-xs text-zinc-500 dark:text-zinc-400">
-                    @if($myTasks->where('status', 'completed')->count() > 0)
-                        <span class="text-green-600">+{{ $myTasks->where('status', 'completed')->count() }} {{ __('completed') }}</span>
+                    @if($completedTasksCount > 0)
+                        <span class="text-green-600">+{{ $completedTasksCount }} {{ __('completed') }}</span>
                     @endif
                     {{ __('this week') }}
                 </p>
@@ -34,17 +34,10 @@
                 </svg>
             </div>
             <div class="p-6 pt-0">
-                <div class="text-2xl font-bold text-foreground">{{ $myProjects->count() }}</div>
+                <div class="text-2xl font-bold text-foreground">{{ $myProjectsCount }}</div>
                 <p class="text-xs text-zinc-500 dark:text-zinc-400">
-                    @if($myProjects->count() > 0)
-                        @php
-                            $total = 0;
-                            foreach($myProjects as $project) {
-                                $total += $project->getCompletionPercentage();
-                            }
-                            $avg = $myProjects->count() > 0 ? $total / $myProjects->count() : 0;
-                        @endphp
-                        <span class="text-green-600">{{ number_format($avg, 0) }}%</span> {{ __('avg completion') }}
+                    @if($myProjectsCount > 0)
+                        <span class="text-green-600">{{ number_format($avgProjectCompletion, 0) }}%</span> {{ __('avg completion') }}
                     @endif
                 </p>
             </div>
@@ -79,10 +72,10 @@
                 </svg>
             </div>
             <div class="p-6 pt-0">
-                <div class="text-2xl font-bold text-foreground">{{ $upcomingDeadlines->count() }}</div>
+                <div class="text-2xl font-bold text-foreground">{{ $upcomingDeadlinesCount }}</div>
                 <p class="text-xs text-zinc-500 dark:text-zinc-400">
-                    @if($upcomingDeadlines->where('due_date', '<', now()->addDays(1))->count() > 0)
-                        <span class="text-red-600">{{ $upcomingDeadlines->where('due_date', '<', now()->addDays(1))->count() }} {{ __('overdue') }}</span>
+                    @if($overdueDeadlinesCount > 0)
+                        <span class="text-red-600">{{ $overdueDeadlinesCount }} {{ __('overdue') }}</span>
                     @endif
                 </p>
             </div>
@@ -99,7 +92,7 @@
                     <a href="{{ route('tasks') }}" class="text-sm text-blue-600 hover:underline">{{ __('View All') }}</a>
                 </div>
                 
-                @if($myTasks->count() > 0)
+                @if($myTasksCount > 0)
                     <div class="space-y-4">
                         @foreach($myTasks->take(5) as $task)
                             <div class="space-y-2">
@@ -142,7 +135,7 @@
                     <a href="{{ route('projects') }}" class="text-sm text-blue-600 hover:underline">{{ __('View All') }}</a>
                 </div>
                 
-                @if($myProjects->count() > 0)
+                @if($myProjectsCount > 0)
                     <div class="space-y-4">
                         @foreach($myProjects->take(5) as $project)
                             <div class="space-y-2">
@@ -187,7 +180,7 @@
                     <a href="{{ route('tasks') }}" class="text-sm text-blue-600 hover:underline">{{ __('View All') }}</a>
                 </div>
                 
-                @if($upcomingDeadlines->count() > 0)
+                @if($upcomingDeadlinesCount > 0)
                     <div class="space-y-4">
                         @foreach($upcomingDeadlines->take(5) as $task)
                             @php
@@ -231,7 +224,7 @@
             <div class="p-6">
                 <h2 class="text-xl font-semibold text-foreground mb-4">{{ __('Team Activity') }}</h2>
                 
-                @if($teamActivity->count() > 0)
+                @if(count($teamActivity) > 0)
                     <div class="space-y-4">
                         @foreach($teamActivity->take(5) as $activity)
                             <div class="flex items-start">

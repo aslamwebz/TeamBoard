@@ -37,7 +37,7 @@
             <h3 class="text-lg font-medium leading-6 text-gray-900">Attachments</h3>
         </div>
         <div class="px-4 py-5 sm:p-6">
-            @if($attachments->count() > 0)
+            @if(count($attachments) > 0)
                 <div class="overflow-hidden bg-white shadow sm:rounded-md">
                     <ul role="list" class="divide-y divide-gray-200">
                         @foreach($attachments as $attachment)

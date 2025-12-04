@@ -69,7 +69,7 @@
     @endif
 
     <!-- Attachments List -->
-    @if($attachments->count() > 0)
+    @if($attachmentsCount > 0)
         <div class="bg-white dark:bg-zinc-800 rounded-lg border border-zinc-200 dark:border-zinc-700 overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-zinc-200 dark:divide-zinc-700">
