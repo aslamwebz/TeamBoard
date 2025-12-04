@@ -1,24 +1,21 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Livewire\Client;
 
 use App\Models\Client;
 use App\Models\Discussion;
-use App\Models\User;
 use Livewire\Component;
+use Illuminate\View\View;
 
 final class ClientDashboard extends Component
 {
     public array $projectProgress = [];
-
     public array $invoices = [];
-
-    public $files = [];
-
+    public array $files = [];
     public array $projectRequests = [];
-
-    public $teamActivity = [];
-
+    public array $teamActivity = [];
     public array $clientInfo = [];
 
     public function mount(): void
@@ -28,79 +25,68 @@ final class ClientDashboard extends Component
 
     public function loadDashboardData(): void
     {
-        /** @var \App\Models\User $user */
         $user = auth()->user();
-
-        // Get the client associated with this user
         $client = $this->getClientForUser($user);
 
-        if ($client) {
-            // Load project progress for the client
-            $this->projectProgress = $client
-                ->projects()
-                ->with(['tasks', 'phases', 'milestones'])
-                ->get()
-                ->map(function ($project) {
-                    return [
-                        'id' => $project->id,
-                        'name' => $project->name,
-                        'progress' => $project->getCompletionPercentage(),
-                        'status' => $project->status,
-                        'due_date' => $project->due_date,
-                        'tasks_completed' => $project->tasks->where('status', 'completed')->count(),
-                        'total_tasks' => $project->tasks->count(),
-                    ];
-                });
-
-            // Load invoices for the client
-            $this->invoices = $client
-                ->invoices()
-                ->latest()
-                ->take(5)
-                ->get();
-
-            // Load files for the client (from attachments or discussions)
-            $this->files = collect();  // Placeholder - would load actual files in real implementation
-
-            // Load project requests (discussions or requests related to client)
-            $this->projectRequests = Discussion::where('user_id', $user->id)
-                ->orWhereHas('project', function ($query) use ($client) {
-                    $query->where('client_id', $client->id);
-                })
-                ->latest()
-                ->take(5)
-                ->get();
-
-            // Load team activity related to client's projects
-            $this->teamActivity = collect();  // Placeholder - would load actual activity in real implementation
-
-            $this->clientInfo = [
-                'name' => $client->company_name ?? $client->name,
-                'email' => $client->email,
-                'phone' => $client->phone,
-            ];
+        if (!$client) {
+            return;
         }
+
+        // Load project progress for the client
+        $this->projectProgress = $client->projects()
+            ->with(['tasks', 'phases', 'milestones'])
+            ->get()
+            ->map(function ($project) {
+                $completedTasks = $project->tasks->where('status', 'completed')->count();
+                $totalTasks = $project->tasks->count();
+                
+                return [
+                    'id' => $project->id,
+                    'name' => $project->name,
+                    'progress' => $totalTasks > 0 ? round(($completedTasks / $totalTasks) * 100) : 0,
+                    'status' => $project->status,
+                ];
+            })
+            ->toArray();
+
+        // Load invoices for the client
+        $this->invoices = $client->invoices()
+            ->latest()
+            ->take(5)
+            ->get()
+            ->toArray();
+
+        // Load files for the client (from attachments or discussions)
+        $this->files = []; // Placeholder - would load actual files in real implementation
+
+        // Load project requests (discussions or requests related to client)
+        $this->projectRequests = Discussion::query()
+            ->where('user_id', $user->id)
+            ->orWhereHas('project', function ($query) use ($client) {
+                $query->where('client_id', $client->id);
+            })
+            ->latest()
+            ->take(5)
+            ->get()
+            ->toArray();
+
+        // Load team activity related to client's projects
+        $this->teamActivity = []; // Placeholder - would load actual activity in real implementation
+
+        $this->clientInfo = [
+            'name' => $client->company_name ?? $client->name,
+            'email' => $client->email,
+            'phone' => $client->phone,
+        ];
     }
 
-    public function render()
+    private function getClientForUser($user): ?Client
+    {
+        return $user->clients()->first() ?? Client::where('email', $user->email)->first();
+    }
+
+    public function render(): View
     {
         return view('livewire.client.client-dashboard');
-    }
-
-    private function getClientForUser(User $user): ?Client
-    {
-        // Check if the user is directly associated with any clients
-        if ($user->clients()->exists()) {
-            return $user->clients()->first();
-        }
-
-        // If not found through user_clients, try getting client through projects
-        $project = $user->projects()->first();
-        if ($project && $project->client) {
-            return $project->client;
-        }
-
-        // For demo purposes, just return the first client
-        return Client::first();
     }
 }

@@ -35,7 +35,7 @@
                 $unreadCount = auth()->user()?->notifications()->unread()->count() ?? 0;
             @endphp
             @if ($unreadCount > 0)
-                <flux:badge slot="badge" variant="danger">{{ $unreadCount }}</flux:badge>
+                <flux:badge variant="danger">{{ $unreadCount }}</flux:badge>
             @endif
         </flux:sidebar.item>
 
