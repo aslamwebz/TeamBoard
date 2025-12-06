@@ -240,9 +240,6 @@
         @endif
 
     </div>
-    <div class="mt-6">
-        {{ $clients->links() }}
-    </div>
 
     <!-- Delete Confirmation Modal -->
     <flux:modal name="delete-client" wire:model="showDeleteModal">
