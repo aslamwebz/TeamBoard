@@ -230,13 +230,7 @@
 
         <!-- Pagination -->
         @if ($clients->hasPages())
-            <div class="flex items-center justify-between">
-                <div class="text-sm text-muted-foreground">
-                    Showing {{ $clients->firstItem() }} to {{ $clients->lastItem() }} of {{ $clients->total() }}
-                    results
-                </div>
-                {{ $clients->links() }}
-            </div>
+            {{ $clients->links() }}
         @endif
 
     </div>

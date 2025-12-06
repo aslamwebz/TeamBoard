@@ -138,15 +138,13 @@
                 </tbody>
             </table>
         </div>
-        <!-- Pagination -->
-        @if ($vendors->hasPages())
-            <div class="flex items-center justify-between">
-                <div class="text-sm text-muted-foreground">
-                    Showing {{ $vendors->firstItem() }} to {{ $vendors->lastItem() }} of {{ $vendors->total() }}
-                    results
-                </div>
-                {{ $vendors->links() }}
-            </div>
-        @endif
-
     </div>
+
+    <!-- Pagination -->
+    @if ($vendors->hasPages())
+        <div class="mt-6">
+            {{ $vendors->links() }}
+        </div>
+    @endif
+
+</div>

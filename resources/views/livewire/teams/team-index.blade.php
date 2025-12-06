@@ -182,11 +182,7 @@
 
         <!-- Pagination -->
         @if ($teams->hasPages())
-            <div class="flex items-center justify-between">
-                <div class="text-sm text-muted-foreground">
-                    Showing {{ $teams->firstItem() }} to {{ $teams->lastItem() }} of {{ $teams->total() }}
-                    results
-                </div>
+            <div class="mt-6">
                 {{ $teams->links() }}
             </div>
         @endif
@@ -196,18 +192,16 @@
             <div class="space-y-6">
                 <div>
                     <flux:heading size="lg">Delete Team</flux:heading>
-                    <flux:text class="mt-2">Are you sure you want to delete this team? This action cannot be undone.</flux:text>
+                    <flux:text class="mt-2">Are you sure you want to delete this team? This action cannot be undone.
+                    </flux:text>
                 </div>
 
                 <div class="flex gap-2">
                     <flux:spacer />
                     <flux:button wire:click="cancelDelete" variant="ghost">Cancel</flux:button>
-                    <flux:button wire:click="delete" variant="danger">Delete Team</flux:button>
+                    <flux:button wire:click="confirmDelete" variant="danger">Delete Team</flux:button>
                 </div>
             </div>
         </flux:modal>
-    </div>
-    <div class="mt-6">
-        {{ $teams->links() }}
     </div>
 </div>

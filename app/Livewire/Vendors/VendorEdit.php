@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Livewire\Vendors;
 
@@ -15,33 +13,33 @@ final class VendorEdit extends Component
 
     public string $name = '';
 
-    public string $email = '';
+    public ?string $email = '';
 
-    public string $phone = '';
+    public ?string $phone = '';
 
-    public string $address = '';
+    public ?string $address = '';
 
-    public string $city = '';
+    public ?string $city = '';
 
-    public string $state = '';
+    public ?string $state = '';
 
-    public string $zip_code = '';
+    public ?string $zip_code = '';
 
-    public string $country = '';
+    public ?string $country = '';
 
-    public string $tax_id = '';
+    public ?string $tax_id = '';
 
-    public string $description = '';
+    public ?string $description = '';
 
-    public float $rating = 0.00;
+    public float $rating = 0.0;
 
-    public string $website = '';
+    public ?string $website = '';
 
     public string $status = 'active';
 
-    public string $payment_terms = '';
+    public ?string $payment_terms = '';
 
-    public float $credit_limit = 0.00;
+    public float $credit_limit = 0.0;
 
     protected $rules = [
         'name' => 'required|string|max:255',
@@ -83,7 +81,7 @@ final class VendorEdit extends Component
         ]);
     }
 
-    public function update(): RedirectResponse
+    public function update(): void
     {
         $this->validate();
 
@@ -105,7 +103,7 @@ final class VendorEdit extends Component
             'credit_limit' => $this->credit_limit,
         ]);
 
-        return redirect()->route('vendors.show', $this->vendor->id)->with('message', 'Vendor updated successfully.');
+        $this->redirectRoute('vendors.show', $this->vendor->id, navigate: true);
     }
 
     public function render(): View

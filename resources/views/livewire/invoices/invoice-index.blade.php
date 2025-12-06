@@ -185,11 +185,7 @@
 
     <!-- Pagination -->
     @if ($invoices->hasPages())
-        <div class="flex items-center justify-between">
-            <div class="text-sm text-muted-foreground">
-                Showing {{ $invoices->firstItem() }} to {{ $invoices->lastItem() }} of {{ $invoices->total() }}
-                results
-            </div>
+        <div class="mt-6">
             {{ $invoices->links() }}
         </div>
     @endif

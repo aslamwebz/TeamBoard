@@ -73,7 +73,8 @@
                                 <div class="text-sm text-foreground">
                                     <div class="font-medium">{{ $user->projects_count }}</div>
                                     @if ($user->active_projects > 0)
-                                        <div class="text-xs text-green-600 dark:text-green-400">{{ $user->active_projects }}
+                                        <div class="text-xs text-green-600 dark:text-green-400">
+                                            {{ $user->active_projects }}
                                             {{ __('active') }}</div>
                                     @endif
                                 </div>
@@ -83,7 +84,8 @@
                                     <div class="font-medium">{{ $user->tasks_count }}</div>
                                     @if ($user->tasks_count > 0)
                                         <div class="text-xs text-blue-600 dark:text-blue-400">
-                                            {{ round(($user->completed_tasks / $user->tasks_count) * 100) }}% {{ __('done') }}
+                                            {{ round(($user->completed_tasks / $user->tasks_count) * 100) }}%
+                                            {{ __('done') }}
                                         </div>
                                     @endif
                                 </div>
@@ -137,8 +139,9 @@
                                 <div class="mt-6">
                                     <flux:button wire:navigate href="/users/create" class="gap-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="h-4 w-4">
                                             <path d="M5 12h14"></path>
                                             <path d="M12 5v14"></path>
                                         </svg>
@@ -155,17 +158,8 @@
 
     <!-- Pagination -->
     @if ($users->hasPages())
-        <div class="flex items-center justify-between">
-            <div class="text-sm text-muted-foreground">
-                {{ __('Showing :from to :to of :total results', [
-                    'from' => $users->firstItem(),
-                    'to' => $users->lastItem(),
-                    'total' => $users->total(),
-                ]) }}
-            </div>
-            <div>
-                {{ $users->links() }}
-            </div>
+        <div class="mt-6">
+            {{ $users->links() }}
         </div>
     @endif
 </div>
