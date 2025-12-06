@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Livewire\Tasks;
 
@@ -38,7 +36,7 @@ final class TaskShow extends Component
 
     public function getTaskDependents()
     {
-        return $this->task->getTaskDependents;
+        return $this->task->getTaskDependents();
     }
 
     public function getTaskStatusBadgeClass(string $status): string

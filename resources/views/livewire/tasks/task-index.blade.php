@@ -1,10 +1,10 @@
 <div class="space-y-6">
-    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <div class="flex items-center justify-between">
         <div>
             <h1 class="text-3xl font-bold text-foreground">{{ __('Tasks') }}</h1>
             <p class="text-muted-foreground">{{ __('Manage your tasks across all projects') }}</p>
         </div>
-        <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+        <div class="flex items-center gap-3">
             <!-- View Mode Toggle -->
             <div class="flex border border-zinc-200 dark:border-zinc-700 rounded-md p-1">
                 <button wire:click="switchViewMode('table')"
@@ -16,8 +16,7 @@
                     {{ __('Board') }}
                 </button>
             </div>
-            <a href="{{ route('tasks.create') }}"
-                class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900">
+            <flux:button :href="route('tasks.create')" class="flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="h-4 w-4">
@@ -25,73 +24,82 @@
                     <path d="M12 5v14"></path>
                 </svg>
                 {{ __('New Task') }}
-            </a>
+            </flux:button>
         </div>
     </div>
 
     <!-- Search and Filters -->
-    <div class="flex flex-col sm:flex-row gap-4">
-        <div class="flex-1">
-            <input type="text" wire:model.live="search" placeholder="{{ __('Search tasks...') }}"
-                class="w-full px-3 py-2 border border-zinc-200 rounded-md dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300" />
-        </div>
-        <div class="flex gap-2 flex-wrap">
-            <button wire:click="updateStatusFilter('')" type="button"
-                class="px-3 py-1.5 text-sm rounded-md border {{ $statusFilter === '' ? 'border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' : 'border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700' }}">
-                {{ __('All') }}
-            </button>
-            <button wire:click="updateStatusFilter('todo')" type="button"
-                class="px-3 py-1.5 text-sm rounded-md border {{ $statusFilter === 'todo' ? 'border-zinc-500 bg-zinc-50 text-zinc-700 dark:bg-zinc-900/30 dark:text-zinc-400' : 'border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700' }}">
-                {{ __('To Do') }}
-            </button>
-            <button wire:click="updateStatusFilter('in_progress')" type="button"
-                class="px-3 py-1.5 text-sm rounded-md border {{ $statusFilter === 'in_progress' ? 'border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' : 'border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700' }}">
-                {{ __('In Progress') }}
-            </button>
-            <button wire:click="updateStatusFilter('completed')" type="button"
-                class="px-3 py-1.5 text-sm rounded-md border {{ $statusFilter === 'completed' ? 'border-green-500 bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700' }}">
-                {{ __('Completed') }}
-            </button>
-            <button wire:click="updateStatusFilter('on_hold')" type="button"
-                class="px-3 py-1.5 text-sm rounded-md border {{ $statusFilter === 'on_hold' ? 'border-red-500 bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-400' : 'border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700' }}">
-                {{ __('On Hold') }}
-            </button>
+    <div class="bg-white dark:bg-zinc-800 rounded-lg border border-zinc-200 dark:border-zinc-700 p-4">
+        <div class="grid gap-4 md:grid-cols-3">
+            <div class="relative">
+                <input type="text" wire:model.live="search" placeholder="{{ __('Search tasks...') }}"
+                    class="w-full pl-10 pr-4 py-2 border border-zinc-300 rounded-lg dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <svg class="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </div>
+
+            <select wire:model.live="statusFilter"
+                class="w-full px-3 py-2 border border-zinc-300 rounded-lg dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <option value="">{{ __('All Status') }}</option>
+                <option value="todo">{{ __('To Do') }}</option>
+                <option value="in_progress">{{ __('In Progress') }}</option>
+                <option value="completed">{{ __('Completed') }}</option>
+                <option value="on_hold">{{ __('On Hold') }}</option>
+            </select>
+
+            <select wire:model.live="projectFilter"
+                class="w-full px-3 py-2 border border-zinc-300 rounded-lg dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <option value="">{{ __('All Projects') }}</option>
+                @foreach ($projects as $project)
+                    <option value="{{ $project->id }}">{{ $project->name }}</option>
+                @endforeach
+            </select>
         </div>
     </div>
 
     @if ($viewMode === 'table')
         <!-- Tasks Table -->
-        <div class="bg-white dark:bg-zinc-800 rounded-lg shadow-md overflow-hidden">
+        <div class="bg-white dark:bg-zinc-800 rounded-lg border border-zinc-200 dark:border-zinc-700 overflow-hidden">
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-zinc-200 dark:divide-zinc-700">
-                    <thead class="bg-zinc-50 dark:bg-zinc-700">
+                <table class="w-full">
+                    <thead class="bg-zinc-50 dark:bg-zinc-700/50 border-b border-zinc-200 dark:border-zinc-600">
                         <tr>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-300 uppercase tracking-wider">
-                                {{ __('Title') }}</th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-300 uppercase tracking-wider">
-                                {{ __('Project') }}</th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-300 uppercase tracking-wider">
-                                {{ __('Phase') }}</th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-300 uppercase tracking-wider">
-                                {{ __('Status') }}</th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-300 uppercase tracking-wider">
-                                {{ __('Due Date') }}</th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-300 uppercase tracking-wider">
-                                {{ __('Assigned To') }}</th>
-                            <th scope="col"
-                                class="px-6 py-3 text-right text-xs font-medium text-zinc-500 dark:text-zinc-300 uppercase tracking-wider">
-                                {{ __('Actions') }}</th>
+                            <th
+                                class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                                {{ __('Title') }}
+                            </th>
+                            <th
+                                class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                                {{ __('Project') }}
+                            </th>
+                            <th
+                                class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                                {{ __('Phase') }}
+                            </th>
+                            <th
+                                class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                                {{ __('Status') }}
+                            </th>
+                            <th
+                                class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                                {{ __('Due Date') }}
+                            </th>
+                            <th
+                                class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                                {{ __('Assigned To') }}
+                            </th>
+                            <th
+                                class="px-6 py-3 text-right text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                                {{ __('Actions') }}
+                            </th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-zinc-200 dark:divide-zinc-700">
+                    <tbody class="divide-y divide-zinc-200 dark:divide-zinc-600">
                         @forelse($tasks as $task)
-                            <tr>
+                            <tr class="hover:bg-zinc-50 dark:hover:bg-zinc-700/50 transition-colors">
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm font-medium text-foreground">{{ $task->title }}</div>
                                     @if ($task->description)
@@ -107,10 +115,9 @@
                                     <div class="text-sm text-foreground">{{ $task->phase->name ?? 'No Phase' }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span
-                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $this->getTaskStatusBadgeClass($task->status) }}">
+                                    <flux:badge class="{{ $this->getTaskStatusBadgeClass($task->status) }}">
                                         {{ ucfirst(str_replace('_', ' ', $task->status)) }}
-                                    </span>
+                                    </flux:badge>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-foreground">
                                     {{ $task->due_date ? $task->due_date->format('M d, Y') : 'No due date' }}
@@ -119,7 +126,7 @@
                                     {{ $task->user->name ?? 'Unassigned' }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <div class="flex justify-end space-x-2">
+                                    <div class="flex items-center justify-end gap-2">
                                         <flux:button variant="outline" size="sm"
                                             :href="route('tasks.show', $task)">
                                             {{ __('View') }}

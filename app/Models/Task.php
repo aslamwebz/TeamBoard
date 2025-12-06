@@ -1,14 +1,12 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Models;
 
 use App\Helpers\TenantHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Model;
 
 final class Task extends Model
 {
@@ -68,11 +66,12 @@ final class Task extends Model
     }
 
     /**
-     * Get the dependent tasks for this task
+     * Get tasks that this task depends on
      */
     public function getDependentTasks()
     {
-        return $this->whereIn('id', $this->dependencies ?? []);
+        $dependencies = is_string($this->dependencies) ? json_decode($this->dependencies, true) : $this->dependencies;
+        return $this->whereIn('id', $dependencies ?? []);
     }
 
     /**
@@ -80,7 +79,8 @@ final class Task extends Model
      */
     public function hasDependencies(): bool
     {
-        return ! empty($this->dependencies) && count($this->dependencies) > 0;
+        $dependencies = is_string($this->dependencies) ? json_decode($this->dependencies, true) : $this->dependencies;
+        return !empty($dependencies) && count($dependencies) > 0;
     }
 
     /**
@@ -88,11 +88,12 @@ final class Task extends Model
      */
     public function areDependenciesCompleted(): bool
     {
-        if (! $this->hasDependencies()) {
-            return true; // No dependencies means it can be started
+        if (!$this->hasDependencies()) {
+            return true;  // No dependencies means it can be started
         }
 
-        $dependencyTasks = self::whereIn('id', $this->dependencies)->get();
+        $dependencies = is_string($this->dependencies) ? json_decode($this->dependencies, true) : $this->dependencies;
+        $dependencyTasks = self::whereIn('id', $dependencies)->get();
 
         foreach ($dependencyTasks as $dependencyTask) {
             if ($dependencyTask->status !== self::STATUS_COMPLETED) {
@@ -117,7 +118,7 @@ final class Task extends Model
     public function addDependency($taskId)
     {
         $dependencies = $this->dependencies ?? [];
-        if (! in_array($taskId, $dependencies)) {
+        if (!in_array($taskId, $dependencies)) {
             $dependencies[] = $taskId;
             $this->update(['dependencies' => $dependencies]);
         }
@@ -155,10 +156,10 @@ final class Task extends Model
         return $this->hasManyThrough(
             Discussion::class,
             Project::class,
-            'id', // Foreign key on projects table
-            'type_id', // Foreign key on discussions table
-            'project_id', // Local key on tasks table
-            'id' // Local key on projects table
+            'id',  // Foreign key on projects table
+            'type_id',  // Foreign key on discussions table
+            'project_id',  // Local key on tasks table
+            'id'  // Local key on projects table
         )->where('discussions.type', 'task');
     }
 
@@ -183,7 +184,8 @@ final class Task extends Model
      */
     public function worker()
     {
-        return $this->belongsToMany(WorkerProfile::class, 'timesheets', 'task_id', 'worker_profile_id')
+        return $this
+            ->belongsToMany(WorkerProfile::class, 'timesheets', 'task_id', 'worker_profile_id')
             ->withPivot('hours_worked', 'entry_type', 'date')
             ->withTimestamps();
     }

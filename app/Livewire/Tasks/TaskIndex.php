@@ -1,9 +1,8 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Livewire\Tasks;
 
+use App\Models\Project;
 use App\Models\Task;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
@@ -21,11 +20,13 @@ final class TaskIndex extends Component
 
     public $statusFilter = '';
 
+    public $projectFilter = '';
+
     public $showDeleteModal = false;
 
     public $taskToDeleteId;
 
-    public $viewMode = 'table'; // 'table' or 'board'
+    public $viewMode = 'table';  // 'table' or 'board'
 
     public $showTaskModal = false;
 
@@ -37,13 +38,20 @@ final class TaskIndex extends Component
 
     public array $statusColors = [];
 
-    protected $queryString = ['search', 'statusFilter', 'viewMode'];
+    public $projects = [];
+
+    protected $queryString = ['search', 'statusFilter', 'projectFilter', 'viewMode'];
 
     public function mount(): void
     {
         $this->refreshTasksByStatus();
+        $this->loadProjects();
     }
 
+    public function loadProjects(): void
+    {
+        $this->projects = Project::orderBy('name')->get();
+    }
 
     public function getTaskStatusBadgeClass(string $status): string
     {
@@ -60,14 +68,19 @@ final class TaskIndex extends Component
         $query = Task::query();
 
         if ($this->search) {
-            $query->where('title', 'like', '%'.$this->search.'%');
+            $query->where('title', 'like', '%' . $this->search . '%');
         }
 
         if ($this->statusFilter) {
             $query->where('status', $this->statusFilter);
         }
 
-        $tasks = $query->with(['project', 'users', 'phase', 'user'])
+        if ($this->projectFilter) {
+            $query->where('project_id', $this->projectFilter);
+        }
+
+        $tasks = $query
+            ->with(['project', 'users', 'phase', 'user'])
             ->orderBy('status')
             ->orderBy('created_at')
             ->get();
@@ -164,7 +177,7 @@ final class TaskIndex extends Component
         $query = Task::query();
 
         if ($this->search) {
-            $query->where('title', 'like', '%'.$this->search.'%');
+            $query->where('title', 'like', '%' . $this->search . '%');
         }
 
         if ($this->statusFilter) {
