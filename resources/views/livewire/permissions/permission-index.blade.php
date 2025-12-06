@@ -11,7 +11,7 @@
             <p class="text-xs text-muted-foreground">Manage individual permissions</p>
         </div>
         <div class="flex gap-2">
-            <a href="{{ route('permissions.create') }}" class="px-2.5 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700">
+            <a href="{{ route('permissions.create') }}" class="px-2.5 py-1 text-xs bg-sky-600 text-white rounded hover:bg-sky-700">
                 Create Permission
             </a>
         </div>
@@ -26,7 +26,7 @@
                         wire:model.live="search"
                         type="text"
                         placeholder="Search permissions..."
-                        class="w-full px-2 py-1 text-xs border border-zinc-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white"
+                        class="w-full px-2 py-1 text-xs border border-zinc-300 rounded focus:ring-1 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white"
                     >
                 </div>
             </div>

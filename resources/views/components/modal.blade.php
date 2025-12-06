@@ -28,7 +28,7 @@
                     <label
                         class="flex items-center gap-3 p-3 border border-zinc-200 dark:border-zinc-700 rounded-lg cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-700/50">
                         <input type="checkbox" wire:model="{{ $selectedItemsProperty }}" value="{{ $item->id }}"
-                            class="rounded text-blue-600">
+                            class="rounded text-sky-600">
                         <div class="flex-1">
                             <h4 class="font-medium text-foreground">
                                 {{ $item->name ?? ($item->title ?? ($item->email ?? $item->id)) }}</h4>

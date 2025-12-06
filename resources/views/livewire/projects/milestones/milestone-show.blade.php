@@ -1,7 +1,6 @@
 <div class="max-w-4xl mx-auto p-6">
     <div class="flex items-center justify-between mb-6">
         <div>
-            <h1 class="text-3xl font-bold text-foreground">{{ $milestone->name }}</h1>
             <p class="text-muted-foreground">{{ $milestone->description }}</p>
         </div>
         <div class="flex gap-3">
@@ -54,7 +53,7 @@
                 <div class="p-4 bg-zinc-50 dark:bg-zinc-900/20 rounded-lg">
                     <h3 class="font-medium text-foreground mb-2">Progress</h3>
                     <div class="w-full bg-zinc-200 dark:bg-zinc-700 rounded-full h-2.5">
-                        <div class="bg-blue-600 h-2.5 rounded-full" style="width: {{ $milestone->status === 'completed' ? 100 : ($milestone->status === 'in_progress' ? 50 : 0) }}%"></div>
+                        <div class="bg-sky-600 h-2.5 rounded-full" style="width: {{ $milestone->status === 'completed' ? 100 : ($milestone->status === 'in_progress' ? 50 : 0) }}%"></div>
                     </div>
                     <div class="mt-1 text-sm text-muted-foreground">
                         {{ $milestone->status === 'completed' ? 'Completed' : ($milestone->status === 'in_progress' ? 'In Progress' : 'Not Started') }}
@@ -67,7 +66,7 @@
                         @if($milestone->isOverdue())
                             <div class="text-red-600 dark:text-red-400">Overdue by {{ $milestone->due_date->diffInDays(now()) }} days</div>
                         @elseif($milestone->isUpcoming())
-                            <div class="text-blue-600 dark:text-blue-400">Due in {{ $milestone->due_date->diffInDays(now()) }} days</div>
+                            <div class="text-sky-600 dark:text-sky-400">Due in {{ $milestone->due_date->diffInDays(now()) }} days</div>
                         @else
                             <div class="text-green-600 dark:text-green-400">Due date reached</div>
                         @endif

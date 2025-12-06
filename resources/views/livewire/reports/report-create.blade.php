@@ -2,7 +2,6 @@
     <!-- Header -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-            <h1 class="text-3xl font-bold text-foreground">Create Report</h1>
             <p class="text-muted-foreground">Generate a new report</p>
         </div>
         <a href="{{ route('reports.index') }}"
@@ -38,7 +37,7 @@
                                 <label for="title" class="block text-sm font-medium text-foreground mb-1">Title
                                     *</label>
                                 <input type="text" id="title" wire:model="title" placeholder="Enter report title"
-                                    class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('title') border-red-500 @enderror">
+                                    class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('title') border-red-500 @enderror">
                                 @error('title')
                                     <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                 @enderror
@@ -48,7 +47,7 @@
                                 <label for="report_type" class="block text-sm font-medium text-foreground mb-1">Report
                                     Type *</label>
                                 <select id="report_type" wire:model="report_type"
-                                    class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('report_type') border-red-500 @enderror">
+                                    class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('report_type') border-red-500 @enderror">
                                     <option value="">Select report type</option>
                                     <option value="financial">Financial</option>
                                     <option value="project">Project</option>
@@ -64,7 +63,7 @@
                                 <label for="description"
                                     class="block text-sm font-medium text-foreground mb-1">Description</label>
                                 <textarea id="description" wire:model="description" rows="4" placeholder="Enter report description (optional)"
-                                    class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('description') border-red-500 @enderror"></textarea>
+                                    class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('description') border-red-500 @enderror"></textarea>
                                 @error('description')
                                     <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                 @enderror
@@ -75,7 +74,7 @@
                     <!-- Submit Button -->
                     <div class="flex justify-end pt-6 border-t border-zinc-200 dark:border-zinc-700">
                         <button type="submit"
-                            class="inline-flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                            class="inline-flex items-center gap-2 px-6 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 transition-colors font-medium">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" class="h-5 w-5">
@@ -105,7 +104,7 @@
 
                 <div class="space-y-3 text-sm">
                     <div class="flex items-start gap-2">
-                        <div class="w-2 h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></div>
+                        <div class="w-2 h-2 bg-sky-500rounded-full mt-1.5 flex-shrink-0"></div>
                         <div>
                             <p class="font-medium text-foreground">Financial</p>
                             <p class="text-muted-foreground">Revenue, expenses, and financial summaries</p>
@@ -151,7 +150,7 @@
                     <div class="flex items-start gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0">
+                            stroke-linejoin="round" class="h-4 w-4 text-sky-500 mt-0.5 flex-shrink-0">
                             <circle cx="12" cy="12" r="10" />
                             <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3" />
                             <line x1="12" y1="17" x2="12.01" y2="17" />
@@ -161,7 +160,7 @@
                     <div class="flex items-start gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0">
+                            stroke-linejoin="round" class="h-4 w-4 text-sky-500 mt-0.5 flex-shrink-0">
                             <circle cx="12" cy="12" r="10" />
                             <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3" />
                             <line x1="12" y1="17" x2="12.01" y2="17" />
@@ -171,7 +170,7 @@
                     <div class="flex items-start gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0">
+                            stroke-linejoin="round" class="h-4 w-4 text-sky-500 mt-0.5 flex-shrink-0">
                             <circle cx="12" cy="12" r="10" />
                             <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3" />
                             <line x1="12" y1="17" x2="12.01" y2="17" />

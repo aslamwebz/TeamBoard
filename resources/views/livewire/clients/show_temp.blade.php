@@ -1,7 +1,6 @@
 <div class="space-y-6">
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-3xl font-bold text-foreground">{{ $client->company_name }}</h1>
             @if ($client->name)
                 <p class="text-muted-foreground">{{ $client->name }}</p>
             @endif
@@ -11,14 +10,14 @@
                 class="px-4 py-2 border border-zinc-200 rounded-lg text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-700">Back
                 to Clients</a>
             <a href="{{ route('clients.edit', $client) }}"
-                class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Edit Client</a>
+                class="px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700">Edit Client</a>
         </div>
     </div>
 
     <!-- CRM Section Navigation -->
     <div class="border-b border-zinc-200 dark:border-zinc-700">
         <nav class="-mb-px flex space-x-8">
-            <a href="#overview" class="border-blue-500 text-blue-600 dark:text-blue-400 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+            <a href="#overview" class="border-sky-500 text-sky-600 dark:text-sky-400 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
                 Overview
             </a>
             <a href="#contacts" class="border-transparent text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300 hover:border-zinc-300 dark:hover:border-zinc-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
@@ -40,7 +39,7 @@
             <div class="flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="h-5 w-5 text-blue-600">
+                    class="h-5 w-5 text-sky-600">
                     <path d="M22 19h-4.5a2.5 2.5 0 0 1-2.5-2.5V12a2.5 2.5 0 0 1 2.5-2.5H22"></path>
                     <path d="M2 19h4.5a2.5 2.5 0 0 0 2.5-2.5V12a2.5 2.5 0 0 0-2.5-2.5H2"></path>
                     <path d="M12 19h0"></path>
@@ -144,7 +143,7 @@
                                             <path d="M12 8h.01"></path>
                                         </svg>
                                         <a href="{{ $client->website }}" target="_blank"
-                                            class="text-blue-600 hover:text-blue-800 dark:text-blue-400">{{ $client->website }}</a>
+                                            class="text-sky-600 hover:text-sky-800 dark:text-sky-400">{{ $client->website }}</a>
                                     </div>
                                 @endif
                                 @if ($client->description)
@@ -181,7 +180,7 @@
                                             <path d="m22 7-10 5L2 7"></path>
                                         </svg>
                                         <a href="mailto:{{ $client->email }}"
-                                            class="text-blue-600 hover:text-blue-800 dark:text-blue-400">{{ $client->email }}</a>
+                                            class="text-sky-600 hover:text-sky-800 dark:text-sky-400">{{ $client->email }}</a>
                                     </div>
                                 @endif
                                 @if ($client->phone)
@@ -195,7 +194,7 @@
                                             </path>
                                         </svg>
                                         <a href="tel:{{ $client->phone }}"
-                                            class="text-blue-600 hover:text-blue-800 dark:text-blue-400">{{ $client->phone }}</a>
+                                            class="text-sky-600 hover:text-sky-800 dark:text-sky-400">{{ $client->phone }}</a>
                                     </div>
                                 @endif
                             </div>
@@ -244,11 +243,11 @@
                         <h2 class="text-lg font-semibold text-foreground">Projects</h2>
                         <div class="flex items-center space-x-2">
                             <button type="button" wire:click="$toggle('showAssignProjectModal')"
-                                class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400">
+                                class="text-sm text-sky-600 hover:text-sky-800 dark:text-sky-400">
                                 + Assign Project
                             </button>
                             <a href="{{ route('projects.create') }}?client_id={{ $client->id }}"
-                                class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400">+ Add Project</a>
+                                class="text-sm text-sky-600 hover:text-sky-800 dark:text-sky-400">+ Add Project</a>
                         </div>
                     </div>
 
@@ -261,7 +260,7 @@
                                         <div class="flex-1">
                                             <h3 class="font-medium text-foreground mb-1">
                                                 <a href="{{ route('projects.show', $project) }}"
-                                                    class="hover:text-blue-600 dark:hover:text-blue-400">
+                                                    class="hover:text-sky-600 dark:hover:text-sky-500">
                                                     {{ $project->name }}
                                                 </a>
                                             </h3>
@@ -330,7 +329,7 @@
                                 projects yet.</p>
                             <div class="mt-4">
                                 <a href="{{ route('projects.create') }}?client_id={{ $client->id }}"
-                                    class="inline-flex items-center gap-2 px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700">
+                                    class="inline-flex items-center gap-2 px-3 py-2 bg-sky-600 text-white text-sm rounded-lg hover:bg-sky-700">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
@@ -353,7 +352,7 @@
                         <div class="flex items-center justify-between mb-4">
                             <h2 class="text-lg font-semibold text-foreground">Recent Tasks</h2>
                             <a href="{{ route('tasks.index') }}?client_id={{ $client->id }}"
-                                class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400">View All</a>
+                                class="text-sm text-sky-600 hover:text-sky-800 dark:text-sky-400">View All</a>
                         </div>
 
                         <div class="space-y-3">
@@ -363,7 +362,7 @@
                                     <div class="flex-1">
                                         <h4 class="font-medium text-foreground mb-1">
                                             <a href="{{ route('tasks.show', $task) }}"
-                                                class="hover:text-blue-600 dark:hover:text-blue-400">
+                                                class="hover:text-sky-600 dark:hover:text-sky-500">
                                                 {{ $task->title }}
                                             </a>
                                         </h4>

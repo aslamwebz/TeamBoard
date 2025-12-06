@@ -31,11 +31,11 @@
                 <div class="flex items-center space-x-3">
                     <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-slate-700">
                         @if($attachment->isImage())
-                            <i class="fas fa-image text-blue-400"></i>
+                            <i class="fas fa-image text-sky-500"></i>
                         @elseif($attachment->mime_type === 'application/pdf')
                             <i class="fas fa-file-pdf text-red-500"></i>
                         @elseif(Str::contains($attachment->mime_type, 'word'))
-                            <i class="fas fa-file-word text-blue-500"></i>
+                            <i class="fas fa-file-word text-sky-500"></i>
                         @elseif(Str::contains($attachment->mime_type, 'excel'))
                             <i class="fas fa-file-excel text-green-500"></i>
                         @elseif(Str::contains($attachment->mime_type, 'powerpoint'))
@@ -57,7 +57,7 @@
                 <div class="flex items-center space-x-3">
                     <a href="{{ route('tenant.file.download', ['filename' => $attachment->filename]) }}" 
                        target="_blank"
-                       class="flex items-center px-3 py-2 bg-blue-600 hover:bg-blue-700 rounded-md text-sm transition-colors">
+                       class="flex items-center px-3 py-2 bg-sky-600 hover:bg-sky-700 rounded-md text-sm transition-colors">
                         <i class="fas fa-download mr-2"></i> Download
                     </a>
                     <a href="javascript:window.close()" 
@@ -85,7 +85,7 @@
                         class="w-full h-[75vh] border border-slate-700 rounded-lg"
                         type="application/pdf"
                         title="PDF Preview">
-                        <p class="text-center p-8 text-slate-400">Your browser doesn't support PDF previews. <a href="{{ route('tenant.file.download', ['filename' => $attachment->filename]) }}" class="text-blue-400 hover:underline" target="_blank">Download the PDF</a> to view it.</p>
+                        <p class="text-center p-8 text-slate-400">Your browser doesn't support PDF previews. <a href="{{ route('tenant.file.download', ['filename' => $attachment->filename]) }}" class="text-sky-500 hover:underline" target="_blank">Download the PDF</a> to view it.</p>
                     </iframe>
                 </div>
             @elseif(in_array($attachment->mime_type, ['text/plain', 'text/csv', 'text/html', 'application/json']))
@@ -108,7 +108,7 @@
                             @if(Str::contains($attachment->mime_type, 'pdf'))
                                 <i class="fas fa-file-pdf text-red-500 text-5xl"></i>
                             @elseif(Str::contains($attachment->mime_type, 'word'))
-                                <i class="fas fa-file-word text-blue-500 text-5xl"></i>
+                                <i class="fas fa-file-word text-sky-500 text-5xl"></i>
                             @elseif(Str::contains($attachment->mime_type, 'excel'))
                                 <i class="fas fa-file-excel text-green-500 text-5xl"></i>
                             @elseif(Str::contains($attachment->mime_type, 'powerpoint'))
@@ -126,7 +126,7 @@
                     <p class="text-slate-400 mb-6">This file type cannot be previewed in the browser. Please download the file to view its contents.</p>
                     <a href="{{ route('tenant.file.download', ['filename' => $attachment->filename]) }}" 
                        target="_blank"
-                       class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-md transition-colors">
+                       class="inline-flex items-center px-4 py-2 bg-sky-600 hover:bg-sky-700 rounded-md transition-colors">
                         <i class="fas fa-download mr-2"></i> Download File
                     </a>
                 </div>

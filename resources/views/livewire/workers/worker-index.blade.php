@@ -11,13 +11,13 @@
                     wire:model.live="search" 
                     type="text" 
                     placeholder="Search workers..." 
-                    class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                    class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 bg-white text-gray-900"
                 />
             </div>
             
             <select 
                 wire:model.live="status" 
-                class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 bg-white text-gray-900"
             >
                 <option value="">All Statuses</option>
                 <option value="active">Active</option>
@@ -28,7 +28,7 @@
             
             <select 
                 wire:model.live="department" 
-                class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 bg-white text-gray-900"
             >
                 <option value="">All Departments</option>
                 @foreach($departments as $dept)

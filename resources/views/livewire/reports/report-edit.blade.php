@@ -2,7 +2,6 @@
     <!-- Header -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-            <h1 class="text-3xl font-bold text-foreground">Edit Report</h1>
             <p class="text-muted-foreground">Update report details</p>
         </div>
         <a href="{{ route('reports.index') }}"
@@ -38,7 +37,7 @@
                                 <label for="title" class="block text-sm font-medium text-foreground mb-1">Title
                                     *</label>
                                 <input type="text" id="title" wire:model="title" placeholder="Enter report title"
-                                    class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('title') border-red-500 @enderror">
+                                    class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('title') border-red-500 @enderror">
                                 @error('title')
                                     <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                 @enderror
@@ -48,7 +47,7 @@
                                 <label for="report_type" class="block text-sm font-medium text-foreground mb-1">Report
                                     Type *</label>
                                 <select id="report_type" wire:model="report_type"
-                                    class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('report_type') border-red-500 @enderror">
+                                    class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('report_type') border-red-500 @enderror">
                                     <option value="">Select report type</option>
                                     <option value="financial">Financial</option>
                                     <option value="project">Project</option>
@@ -64,7 +63,7 @@
                                 <label for="status" class="block text-sm font-medium text-foreground mb-1">Status
                                     *</label>
                                 <select id="status" wire:model="status"
-                                    class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('status') border-red-500 @enderror">
+                                    class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('status') border-red-500 @enderror">
                                     <option value="">Select status</option>
                                     <option value="draft">Draft</option>
                                     <option value="generated">Generated</option>
@@ -79,7 +78,7 @@
                                 <label for="description"
                                     class="block text-sm font-medium text-foreground mb-1">Description</label>
                                 <textarea id="description" wire:model="description" rows="4" placeholder="Enter report description (optional)"
-                                    class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('description') border-red-500 @enderror"></textarea>
+                                    class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('description') border-red-500 @enderror"></textarea>
                                 @error('description')
                                     <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                 @enderror
@@ -90,7 +89,7 @@
                     <!-- Submit Button -->
                     <div class="flex justify-end pt-6 border-t border-zinc-200 dark:border-zinc-700">
                         <button type="submit"
-                            class="inline-flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                            class="inline-flex items-center gap-2 px-6 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 transition-colors font-medium">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" class="h-5 w-5">

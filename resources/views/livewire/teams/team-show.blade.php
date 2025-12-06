@@ -8,7 +8,6 @@
 
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-3xl font-bold text-foreground">{{ $team->name }}</h1>
             @if ($team->description)
                 <p class="text-muted-foreground">{{ $team->description }}</p>
             @endif
@@ -18,7 +17,7 @@
                 class="px-4 py-2 border border-zinc-200 rounded-lg text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-700">Back
                 to Teams</a>
             <a href="{{ route('teams.edit', $team) }}"
-                class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Edit Team</a>
+                class="px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700">Edit Team</a>
         </div>
     </div>
 
@@ -26,10 +25,10 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="bg-white dark:bg-zinc-800 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6">
             <div class="flex items-center gap-3">
-                <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                <div class="p-2 bg-sky-100 dark:bg-sky-900/30 rounded-lg">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" class="h-6 w-6 text-blue-600 dark:text-blue-400">
+                        stroke-linejoin="round" class="h-6 w-6 text-sky-600 dark:text-sky-400">
                         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
                         <circle cx="9" cy="7" r="4"></circle>
                     </svg>
@@ -88,7 +87,7 @@
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-lg font-semibold text-foreground">Projects</h2>
                         <button type="button" wire:click="$toggle('showAssignProjectModal')"
-                            class="inline-flex items-center px-3 py-1.5 border border-blue-300 rounded-md text-sm font-medium text-blue-700 bg-white hover:bg-blue-50 dark:bg-zinc-700 dark:text-blue-400 dark:border-blue-600 dark:hover:bg-blue-900/20">
+                            class="inline-flex items-center px-3 py-1.5 border border-sky-500 rounded-md text-sm font-medium text-sky-700 bg-white hover:bg-sky-50 dark:bg-zinc-700 dark:text-sky-400 dark:border-sky-500 dark:hover:bg-sky-500/20">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                 class="h-4 w-4 mr-1">
@@ -107,7 +106,7 @@
                                         <div class="flex-1">
                                             <h3 class="font-medium text-foreground mb-1">
                                                 <a href="{{ route('projects.show', $project) }}"
-                                                    class="hover:text-blue-600 dark:hover:text-blue-400">
+                                                    class="hover:text-sky-600 dark:hover:text-sky-500">
                                                     {{ $project->name }}
                                                 </a>
                                             </h3>
@@ -182,7 +181,7 @@
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-lg font-semibold text-foreground">Team Tasks</h2>
                         <button type="button" wire:click="$toggle('showAssignTaskModal')"
-                            class="inline-flex items-center px-3 py-1.5 border border-blue-300 rounded-md text-sm font-medium text-blue-700 bg-white hover:bg-blue-50 dark:bg-zinc-700 dark:text-blue-400 dark:border-blue-600 dark:hover:bg-blue-900/20">
+                            class="inline-flex items-center px-3 py-1.5 border border-sky-500 rounded-md text-sm font-medium text-sky-700 bg-white hover:bg-sky-50 dark:bg-zinc-700 dark:text-sky-400 dark:border-sky-500 dark:hover:bg-sky-500/20">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                 class="h-4 w-4 mr-1">
@@ -200,7 +199,7 @@
                                     <div class="flex-1">
                                         <h4 class="font-medium text-foreground mb-1">
                                             <a href="{{ route('tasks.show', $task) }}"
-                                                class="hover:text-blue-600 dark:hover:text-blue-400">
+                                                class="hover:text-sky-600 dark:hover:text-sky-500">
                                                 {{ $task->title }}
                                             </a>
                                         </h4>
@@ -266,7 +265,7 @@
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-lg font-semibold text-foreground">Clients</h3>
                     <button type="button" wire:click="$toggle('showAssignClientModal')"
-                        class="inline-flex items-center px-3 py-1.5 border border-blue-300 rounded-md text-sm font-medium text-blue-700 bg-white hover:bg-blue-50 dark:bg-zinc-700 dark:text-blue-400 dark:border-blue-600 dark:hover:bg-blue-900/20">
+                        class="inline-flex items-center px-3 py-1.5 border border-sky-500 rounded-md text-sm font-medium text-sky-700 bg-white hover:bg-sky-50 dark:bg-zinc-700 dark:text-sky-400 dark:border-sky-500 dark:hover:bg-sky-500/20">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="h-4 w-4 mr-1">
@@ -290,7 +289,7 @@
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <a href="{{ route('clients.show', $client) }}"
-                                        class="text-blue-600 hover:text-blue-800 dark:text-blue-400">
+                                        class="text-sky-600 hover:text-sky-800 dark:text-sky-400">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -326,7 +325,7 @@
             <div class="flex items-center justify-between mb-4">
                 <h2 class="text-lg font-semibold text-foreground">Team Members</h2>
                 <button type="button" wire:click="$toggle('showAssignMemberModal')"
-                    class="inline-flex items-center px-3 py-1.5 border border-blue-300 rounded-md text-sm font-medium text-blue-700 bg-white hover:bg-blue-50 dark:bg-zinc-700 dark:text-blue-400 dark:border-blue-600 dark:hover:bg-blue-900/20">
+                    class="inline-flex items-center px-3 py-1.5 border border-sky-500 rounded-md text-sm font-medium text-sky-700 bg-white hover:bg-sky-50 dark:bg-zinc-700 dark:text-sky-400 dark:border-sky-500 dark:hover:bg-sky-500/20">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                         class="h-4 w-4 mr-1">
@@ -365,7 +364,7 @@
                                         <div class="flex items-center">
                                             <div class="flex-shrink-0 h-10 w-10">
                                                 <div
-                                                    class="h-10 w-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-medium">
+                                                    class="h-10 w-10 rounded-full bg-gradient-to-r from-sky-500 to-purple-600 flex items-center justify-center text-white font-medium">
                                                     {{ substr($user->name, 0, 2) }}
                                                 </div>
                                             </div>
@@ -418,7 +417,7 @@
                     <p class="mt-1 text-sm text-muted-foreground">Get started by adding team members.</p>
                     <div class="mt-6">
                         <button type="button" wire:click="$toggle('showAssignMemberModal')"
-                            class="inline-flex items-center px-3 py-1.5 border border-blue-300 rounded-md text-sm font-medium text-blue-700 bg-white hover:bg-blue-50 dark:bg-zinc-700 dark:text-blue-400 dark:border-blue-600 dark:hover:bg-blue-900/20">
+                            class="inline-flex items-center px-3 py-1.5 border border-sky-500 rounded-md text-sm font-medium text-sky-700 bg-white hover:bg-sky-50 dark:bg-zinc-700 dark:text-sky-400 dark:border-sky-500 dark:hover:bg-sky-500/20">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                 class="h-4 w-4 mr-1">

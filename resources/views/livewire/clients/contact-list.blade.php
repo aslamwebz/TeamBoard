@@ -26,7 +26,7 @@
             <div class="bg-white dark:bg-zinc-800 rounded-lg border border-zinc-200 dark:border-zinc-700 p-4">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-medium">
+                        <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gradient-to-r from-sky-500 to-purple-600 flex items-center justify-center text-white font-medium">
                             {{ substr($contact->first_name, 0, 1) }}
                         </div>
                         <div class="ml-4">
@@ -35,7 +35,7 @@
                                 {{ $contact->position }} @if($contact->job_title) • {{ $contact->job_title }} @endif
                             </div>
                             <div class="text-sm text-zinc-500 dark:text-zinc-400">
-                                <a href="mailto:{{ $contact->email }}" class="hover:text-blue-600 dark:hover:text-blue-400">{{ $contact->email }}</a>
+                                <a href="mailto:{{ $contact->email }}" class="hover:text-sky-600 dark:hover:text-sky-500">{{ $contact->email }}</a>
                                 @if($contact->phone)
                                     • {{ $contact->phone }}
                                 @endif
@@ -44,7 +44,7 @@
                     </div>
                     <div class="flex items-center space-x-2">
                         @if($contact->is_primary)
-                            <flux:badge variant="outline" class="text-blue-700 dark:text-blue-400">Primary</flux:badge>
+                            <flux:badge variant="outline" class="text-sky-700 dark:text-sky-400">Primary</flux:badge>
                         @endif
                         @if($contact->is_billing_contact)
                             <flux:badge variant="outline" class="text-green-700 dark:text-green-400">Billing</flux:badge>

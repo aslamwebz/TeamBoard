@@ -72,7 +72,7 @@
                                             class="w-full h-[70vh] border border-zinc-200 dark:border-zinc-700 rounded-lg"
                                             type="application/pdf"
                                         >
-                                            <p>Your browser doesn't support PDF previews. <a href="{{ $file->getUrl() }}" class="text-blue-600 hover:underline">Download the PDF</a> instead.</p>
+                                            <p>Your browser doesn't support PDF previews. <a href="{{ $file->getUrl() }}" class="text-sky-600 hover:underline">Download the PDF</a> instead.</p>
                                         </iframe>
                                     </div>
                                 @elseif(in_array($file->mime_type, ['text/plain', 'text/csv']))
@@ -93,7 +93,7 @@
                                                     <path d="M10 9H8"/>
                                                 </svg>
                                             @elseif(Str::contains($file->mime_type, 'word'))
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-blue-500">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-sky-500">
                                                     <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
                                                     <polyline points="14 2 14 8 20 8"/>
                                                     <line x1="16" y1="13" x2="8" y2="13"/>
@@ -133,7 +133,7 @@
                                 <a 
                                     href="{{ $file->getUrl() }}" 
                                     target="_blank"
-                                    class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                                    class="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 text-white rounded-md hover:bg-sky-700"
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
                                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>

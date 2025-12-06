@@ -6,7 +6,7 @@
         </div>
         <a 
             href="{{ route('workers.show', $workerId) }}" 
-            class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
         >
             Back to Worker
         </a>
@@ -26,7 +26,7 @@
                                 id="skill_{{ $skill->id }}" 
                                 value="{{ $skill->id }}" 
                                 wire:model="selectedSkills"
-                                class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                class="h-4 w-4 text-sky-600 focus:ring-sky-500 border-gray-300 rounded"
                             >
                             <label for="skill_{{ $skill->id }}" class="ml-3 block text-sm font-medium text-gray-700">
                                 {{ $skill->name }}
@@ -43,7 +43,7 @@
                                     <select 
                                         id="proficiency_{{ $skill->id }}" 
                                         wire:model="proficiency.{{ $skill->id }}"
-                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white text-gray-900"
+                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm bg-white text-gray-900"
                                     >
                                         <option value="1">1 - Beginner</option>
                                         <option value="2">2 - Basic</option>
@@ -58,7 +58,7 @@
                                         type="text" 
                                         id="notes_{{ $skill->id }}" 
                                         wire:model="notes.{{ $skill->id }}" 
-                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white text-gray-900"
+                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm bg-white text-gray-900"
                                         placeholder="Add notes about this skill..."
                                     />
                                 </div>
@@ -70,7 +70,7 @@
                 <div class="mt-6">
                     <button 
                         wire:click="updateSkills"
-                        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
                     >
                         Save Skills
                     </button>

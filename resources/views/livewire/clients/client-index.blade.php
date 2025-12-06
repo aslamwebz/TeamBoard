@@ -2,7 +2,6 @@
     <div class="space-y-6">
         <div class="flex items-center justify-between">
             <div>
-                <h1 class="text-3xl font-bold text-foreground">Clients</h1>
                 <p class="text-muted-foreground">Manage your clients and their projects</p>
             </div>
             <flux:button :href="route('clients.create')" class="flex items-center gap-2">
@@ -21,7 +20,7 @@
             <div class="grid gap-4 md:grid-cols-4">
                 <div class="relative">
                     <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search clients..."
-                        class="w-full pl-10 pr-4 py-2 border border-zinc-300 rounded-lg dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        class="w-full pl-10 pr-4 py-2 border border-zinc-300 rounded-lg dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500">
                     <svg class="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -30,7 +29,7 @@
                 </div>
 
                 <select wire:model.live="status_filter"
-                    class="w-full px-3 py-2 border border-zinc-300 rounded-lg dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    class="w-full px-3 py-2 border border-zinc-300 rounded-lg dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500">
                     <option value="">All Status</option>
                     <option value="active">Active</option>
                     <option value="inactive">Inactive</option>
@@ -38,7 +37,7 @@
                 </select>
 
                 <select wire:model.live="project_filter"
-                    class="w-full px-3 py-2 border border-zinc-300 rounded-lg dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    class="w-full px-3 py-2 border border-zinc-300 rounded-lg dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500">
                     <option value="">All Projects</option>
                     <option value="has_projects">Has Projects</option>
                     <option value="no_projects">No Projects</option>
@@ -46,7 +45,7 @@
                 </select>
 
                 <select wire:model.live="per_page"
-                    class="w-full px-3 py-2 border border-zinc-300 rounded-lg dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    class="w-full px-3 py-2 border border-zinc-300 rounded-lg dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500">
                     <option value="10">10 per page</option>
                     <option value="25">25 per page</option>
                     <option value="50">50 per page</option>
@@ -147,7 +146,7 @@
                                     <div class="text-sm text-foreground">
                                         <div class="font-medium">{{ $client->total_tasks }}</div>
                                         @if ($client->total_tasks > 0)
-                                            <div class="text-xs text-blue-600 dark:text-blue-400">
+                                            <div class="text-xs text-sky-600 dark:text-sky-400">
                                                 {{ round(($client->completed_tasks / $client->total_tasks) * 100) }}%
                                                 done
                                             </div>
@@ -209,7 +208,7 @@
                                         client.</p>
                                     <div class="mt-6">
                                         <a href="{{ route('clients.create') }}"
-                                            class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900">
+                                            class="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"

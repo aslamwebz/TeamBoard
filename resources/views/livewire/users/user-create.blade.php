@@ -1,6 +1,5 @@
 <div class="mx-auto max-w-2xl">
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-foreground">{{ __('Create User') }}</h1>
         <p class="text-muted-foreground">{{ __('Add a new team member to your organization') }}</p>
     </div>
 

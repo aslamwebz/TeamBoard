@@ -1,18 +1,17 @@
 <div class="space-y-6">
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-3xl font-bold text-foreground">{{ __('Tasks') }}</h1>
             <p class="text-muted-foreground">{{ __('Manage your tasks across all projects') }}</p>
         </div>
         <div class="flex items-center gap-3">
             <!-- View Mode Toggle -->
             <div class="flex border border-zinc-200 dark:border-zinc-700 rounded-md p-1">
                 <button wire:click="switchViewMode('table')"
-                    class="flex-1 px-3 py-1.5 text-sm rounded-md {{ $viewMode === 'table' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' : 'text-zinc-700 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-700' }}">
+                    class="flex-1 px-3 py-1.5 text-sm rounded-md {{ $viewMode === 'table' ? 'bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400' : 'text-zinc-700 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-700' }}">
                     {{ __('Table') }}
                 </button>
                 <button wire:click="switchViewMode('board')"
-                    class="flex-1 px-3 py-1.5 text-sm rounded-md {{ $viewMode === 'board' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' : 'text-zinc-700 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-700' }}">
+                    class="flex-1 px-3 py-1.5 text-sm rounded-md {{ $viewMode === 'board' ? 'bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400' : 'text-zinc-700 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-700' }}">
                     {{ __('Board') }}
                 </button>
             </div>
@@ -33,7 +32,7 @@
         <div class="grid gap-4 md:grid-cols-3">
             <div class="relative">
                 <input type="text" wire:model.live="search" placeholder="{{ __('Search tasks...') }}"
-                    class="w-full pl-10 pr-4 py-2 border border-zinc-300 rounded-lg dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    class="w-full pl-10 pr-4 py-2 border border-zinc-300 rounded-lg dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500">
                 <svg class="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" fill="none" stroke="currentColor"
                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -42,7 +41,7 @@
             </div>
 
             <select wire:model.live="statusFilter"
-                class="w-full px-3 py-2 border border-zinc-300 rounded-lg dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                class="w-full px-3 py-2 border border-zinc-300 rounded-lg dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500">
                 <option value="">{{ __('All Status') }}</option>
                 <option value="todo">{{ __('To Do') }}</option>
                 <option value="in_progress">{{ __('In Progress') }}</option>
@@ -51,7 +50,7 @@
             </select>
 
             <select wire:model.live="projectFilter"
-                class="w-full px-3 py-2 border border-zinc-300 rounded-lg dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                class="w-full px-3 py-2 border border-zinc-300 rounded-lg dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-300 focus:ring-2 focus:ring-sky-500 focus:border-sky-500">
                 <option value="">{{ __('All Projects') }}</option>
                 @foreach ($projects as $project)
                     <option value="{{ $project->id }}">{{ $project->name }}</option>
@@ -220,7 +219,7 @@
                                     @endif>
                                     @if ($task->phase)
                                         <span
-                                            class="inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+                                            class="inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium bg-sky-100 text-sky-800 dark:bg-sky-900/30 dark:text-sky-400">
                                             {{ $task->phase->name }}
                                         </span>
                                     @endif>
@@ -361,7 +360,7 @@
                     <flux:button variant="ghost">{{ __('Close') }}</flux:button>
                 </flux:modal.close>
                 <a href="{{ $selectedTask ? route('tasks.edit', $selectedTask) : '#' }}"
-                    class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    class="inline-flex items-center px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700">
                     {{ __('Edit Task') }}
                 </a>
             </div>

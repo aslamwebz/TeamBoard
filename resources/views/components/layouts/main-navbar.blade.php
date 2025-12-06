@@ -12,13 +12,13 @@
             <!-- Desktop Navigation -->
             <div class="hidden md:block">
                 <div class="ml-10 flex items-center space-x-8">
-                    <a href="#features" @click="mobileMenuOpen = false" class="text-sm font-medium text-zinc-700 hover:text-blue-600 dark:text-zinc-300 dark:hover:text-blue-400">
+                    <a href="#features" @click="mobileMenuOpen = false" class="text-sm font-medium text-zinc-700 hover:text-sky-600 dark:text-zinc-300 dark:hover:text-sky-500">
                         {{ __('Features') }}
                     </a>
-                    <a href="#pricing" @click="mobileMenuOpen = false" class="text-sm font-medium text-zinc-700 hover:text-blue-600 dark:text-zinc-300 dark:hover:text-blue-400">
+                    <a href="#pricing" @click="mobileMenuOpen = false" class="text-sm font-medium text-zinc-700 hover:text-sky-600 dark:text-zinc-300 dark:hover:text-sky-500">
                         {{ __('Pricing') }}
                     </a>
-                    <a href="#contact" @click="mobileMenuOpen = false" class="text-sm font-medium text-zinc-700 hover:text-blue-600 dark:text-zinc-300 dark:hover:text-blue-400">
+                    <a href="#contact" @click="mobileMenuOpen = false" class="text-sm font-medium text-zinc-700 hover:text-sky-600 dark:text-zinc-300 dark:hover:text-sky-500">
                         {{ __('Contact') }}
                     </a>
                 </div>
@@ -30,13 +30,13 @@
                     <a href="{{ route('login') }}" wire:navigate class="inline-flex items-center rounded-md px-4 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-white">
                         {{ __('Sign in') }}
                     </a>
-                    <a href="{{ route('register') }}" wire:navigate class="inline-flex w-full justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900">
+                    <a href="{{ route('register') }}" wire:navigate class="inline-flex w-full justify-center rounded-md bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900">
                         {{ __('Get started') }}
                     </a>
                     <!-- Theme Toggle -->
                     <button type="button" 
                             @click="darkMode = !darkMode" 
-                            class="rounded-full p-2 text-zinc-500 hover:bg-zinc-100 hover:text-zinc-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-white">
+                            class="rounded-full p-2 text-zinc-500 hover:bg-zinc-100 hover:text-zinc-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-white">
                         <span class="sr-only">Toggle dark mode</span>
                         <svg x-show="!darkMode" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
@@ -52,7 +52,7 @@
             <div class="-mr-2 flex md:hidden">
                 <button type="button" 
                         @click="mobileMenuOpen = !mobileMenuOpen" 
-                        class="inline-flex items-center justify-center rounded-md p-2 text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-white"
+                        class="inline-flex items-center justify-center rounded-md p-2 text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-white"
                         aria-controls="mobile-menu"
                         :aria-expanded="mobileMenuOpen">
                     <span class="sr-only">Open main menu</span>

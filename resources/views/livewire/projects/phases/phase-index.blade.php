@@ -1,7 +1,6 @@
 <div class="max-w-6xl mx-auto p-6">
     <div class="flex items-center justify-between mb-6">
         <div>
-            <h1 class="text-3xl font-bold text-foreground">{{ $project->name }} Phases</h1>
             <p class="text-muted-foreground">Manage phases for this project</p>
         </div>
         <div class="flex gap-3">
@@ -50,14 +49,14 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="w-full bg-zinc-200 dark:bg-zinc-700 rounded-full h-2">
-                                        <div class="bg-blue-600 h-2 rounded-full" style="width: {{ $phase->getCompletionPercentage() }}%"></div>
+                                        <div class="bg-sky-600 h-2 rounded-full" style="width: {{ $phase->getCompletionPercentage() }}%"></div>
                                     </div>
                                     <div class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">{{ $phase->getCompletionPercentage() }}%</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <div class="flex justify-end space-x-2">
                                         <a href="{{ route('phases.edit', ['project' => $project->id, 'phase' => $phase->id]) }}"
-                                            class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                            class="text-sky-600 hover:text-sky-900 dark:text-sky-400 dark:hover:text-sky-500">
                                             Edit
                                         </a>
                                     </div>

@@ -1,7 +1,6 @@
 <div class="max-w-6xl mx-auto p-6">
     <div class="flex items-center justify-between mb-6">
         <div>
-            <h1 class="text-3xl font-bold text-foreground">Discussions</h1>
             <p class="text-muted-foreground">Engage in conversations and collaborate with your team</p>
         </div>
         <flux:button :href="route('discussions.create')" variant="primary">
@@ -25,9 +24,7 @@
             </div>
             <div>
                 <flux:select 
-                    wire:model.live="sortBy" 
-                    label="Sort by"
-                >
+                    wire:model.live="sortBy">
                     <option value="latest">Latest</option>
                     <option value="oldest">Oldest</option>
                     <option value="popular">Most Popular</option>
@@ -45,11 +42,11 @@
                         <div class="flex-1">
                             <div class="flex items-center gap-2 mb-2">
                                 <h3 class="text-lg font-semibold text-foreground">
-                                    <a href="{{ route('discussions.show', $discussion) }}" class="hover:text-blue-600 dark:hover:text-blue-400">
+                                    <a href="{{ route('discussions.show', $discussion) }}" class="hover:text-sky-600 dark:hover:text-sky-500">
                                         {{ $discussion->title }}
                                     </a>
                                 </h3>
-                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-sky-100 text-sky-800 dark:bg-sky-900/30 dark:text-sky-400">
                                     {{ ucfirst($discussion->type) }}
                                 </span>
                             </div>

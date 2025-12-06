@@ -12,7 +12,7 @@
                     <select 
                         id="vendor_id" 
                         wire:model="vendor_id" 
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                     >
                         <option value="">Select a vendor</option>
                         @foreach($vendors as $vendor)
@@ -28,7 +28,7 @@
                         type="text" 
                         id="po_number" 
                         wire:model="po_number" 
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                     />
                     @error('po_number') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
@@ -39,7 +39,7 @@
                         type="date" 
                         id="order_date" 
                         wire:model="order_date" 
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                     />
                     @error('order_date') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
@@ -50,7 +50,7 @@
                         type="date" 
                         id="required_date" 
                         wire:model="required_date" 
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                     />
                     @error('required_date') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
@@ -61,7 +61,7 @@
                         type="date" 
                         id="expected_delivery_date" 
                         wire:model="expected_delivery_date" 
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                     />
                     @error('expected_delivery_date') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
@@ -71,7 +71,7 @@
                     <select 
                         id="status" 
                         wire:model="status" 
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                     >
                         <option value="draft">Draft</option>
                         <option value="pending">Pending</option>
@@ -92,7 +92,7 @@
                         id="subtotal" 
                         wire:model="subtotal" 
                         step="0.01" 
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                     />
                     @error('subtotal') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
@@ -104,7 +104,7 @@
                         id="tax_amount" 
                         wire:model="tax_amount" 
                         step="0.01" 
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                     />
                     @error('tax_amount') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
@@ -116,7 +116,7 @@
                         id="total_amount" 
                         wire:model="total_amount" 
                         step="0.01" 
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                     />
                     @error('total_amount') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
@@ -127,7 +127,7 @@
                         id="delivery_address" 
                         wire:model="delivery_address" 
                         rows="3" 
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                     ></textarea>
                     @error('delivery_address') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
@@ -138,7 +138,7 @@
                         type="text" 
                         id="shipping_method" 
                         wire:model="shipping_method" 
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                     />
                     @error('shipping_method') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
@@ -149,7 +149,7 @@
                         type="text" 
                         id="payment_terms" 
                         wire:model="payment_terms" 
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                     />
                     @error('payment_terms') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
@@ -160,19 +160,19 @@
                         id="notes" 
                         wire:model="notes" 
                         rows="4" 
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                     ></textarea>
                     @error('notes') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
             </div>
 
             <div class="mt-6 flex justify-end space-x-3">
-                <a href="{{ route('purchase-orders') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <a href="{{ route('purchase-orders') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
                     Cancel
                 </a>
                 <button 
                     type="submit" 
-                    class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
                 >
                     Create Purchase Order
                 </button>

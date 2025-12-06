@@ -2,7 +2,6 @@
     <!-- Header -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-            <h1 class="text-3xl font-bold text-foreground">Invoice Details</h1>
             <p class="text-muted-foreground">{{ $invoice->invoice_number }}</p>
         </div>
         <div class="flex gap-3">
@@ -193,8 +192,8 @@
                 <h4 class="text-sm font-medium text-zinc-500 dark:text-zinc-400 mb-1">Tax</h4>
                 <p class="text-xl font-bold text-foreground">${{ number_format($invoice->tax, 2) }}</p>
             </div>
-            <div class="bg-blue-600 text-white p-4 rounded-lg">
-                <h4 class="text-sm font-medium text-blue-100 mb-1">Total Amount</h4>
+            <div class="bg-sky-600 text-white p-4 rounded-lg">
+                <h4 class="text-sm font-medium text-sky-500 mb-1">Total Amount</h4>
                 <p class="text-2xl font-bold">${{ number_format($invoice->total, 2) }}</p>
             </div>
         </div>

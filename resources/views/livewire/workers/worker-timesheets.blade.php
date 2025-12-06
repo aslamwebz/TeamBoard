@@ -6,7 +6,7 @@
         </div>
         <a 
             href="{{ route('workers.show', $workerId) }}" 
-            class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
         >
             Back to Worker
         </a>
@@ -25,7 +25,7 @@
                             type="date" 
                             id="date" 
                             wire:model="date" 
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white text-gray-900"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm bg-white text-gray-900"
                         />
                         @error('date') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                     </div>
@@ -39,7 +39,7 @@
                             step="0.01" 
                             min="0.01" 
                             max="24" 
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white text-gray-900"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm bg-white text-gray-900"
                             placeholder="e.g., 8.5"
                         />
                         @error('hours_worked') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
@@ -50,7 +50,7 @@
                         <select 
                             id="entry_type" 
                             wire:model="entry_type"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white text-gray-900"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm bg-white text-gray-900"
                         >
                             <option value="regular">Regular Hours</option>
                             <option value="overtime">Overtime</option>
@@ -66,7 +66,7 @@
                         <select 
                             id="project_id" 
                             wire:model="project_id"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white text-gray-900"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm bg-white text-gray-900"
                         >
                             <option value="">Select a project</option>
                             @foreach($projects as $project)
@@ -81,7 +81,7 @@
                         <select 
                             id="task_id" 
                             wire:model="task_id"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white text-gray-900"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm bg-white text-gray-900"
                         >
                             <option value="">Select a task</option>
                             @foreach($tasks as $task)
@@ -96,7 +96,7 @@
                         <select 
                             id="status" 
                             wire:model="status"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white text-gray-900"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm bg-white text-gray-900"
                         >
                             <option value="pending">Pending Approval</option>
                             <option value="approved">Approved</option>
@@ -111,7 +111,7 @@
                             id="activity_description" 
                             wire:model="activity_description" 
                             rows="3" 
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white text-gray-900"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm bg-white text-gray-900"
                             placeholder="Describe the work done..."
                         ></textarea>
                         @error('activity_description') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
@@ -123,7 +123,7 @@
                             id="notes" 
                             wire:model="notes" 
                             rows="2" 
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white text-gray-900"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm bg-white text-gray-900"
                             placeholder="Add additional notes..."
                         ></textarea>
                         @error('notes') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
@@ -132,7 +132,7 @@
                     <div class="mt-4">
                         <button 
                             wire:click="addTimesheet"
-                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
                         >
                             Add Timesheet Entry
                         </button>
@@ -148,9 +148,9 @@
                 </div>
                 <div class="p-6">
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div class="bg-blue-50 p-4 rounded-lg">
-                            <div class="text-sm font-medium text-blue-700">Regular Hours</div>
-                            <div class="mt-1 text-2xl font-semibold text-blue-900">{{ number_format($totalRegularHours, 2) }}</div>
+                        <div class="bg-sky-50 p-4 rounded-lg">
+                            <div class="text-sm font-medium text-sky-700">Regular Hours</div>
+                            <div class="mt-1 text-2xl font-semibold text-sky-900">{{ number_format($totalRegularHours, 2) }}</div>
                         </div>
                         <div class="bg-purple-50 p-4 rounded-lg">
                             <div class="text-sm font-medium text-purple-700">Overtime Hours</div>
@@ -176,7 +176,7 @@
                             wire:model.live="search" 
                             type="text" 
                             placeholder="Search activities..." 
-                            class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                            class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 bg-white text-gray-900"
                         />
                     </div>
                 </div>
@@ -185,7 +185,7 @@
                     <div class="flex flex-wrap gap-3 mb-4">
                         <select 
                             wire:model.live="entryTypeFilter" 
-                            class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                            class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 bg-white text-gray-900"
                         >
                             <option value="">All Entry Types</option>
                             <option value="regular">Regular</option>
@@ -197,7 +197,7 @@
                         
                         <select 
                             wire:model.live="statusFilter" 
-                            class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                            class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 bg-white text-gray-900"
                         >
                             <option value="">All Statuses</option>
                             <option value="pending">Pending</option>
@@ -208,13 +208,13 @@
                         <input 
                             wire:model.live="startDate" 
                             type="date" 
-                            class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                            class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 bg-white text-gray-900"
                         />
                         
                         <input 
                             wire:model.live="endDate" 
                             type="date" 
-                            class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                            class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 bg-white text-gray-900"
                         />
                     </div>
                     

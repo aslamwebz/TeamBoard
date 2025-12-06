@@ -66,14 +66,14 @@
                 hover:bg-gray-200/50 dark:hover:bg-gray-800/70 transition-colors"
             >
                 @if(Str::contains($attachment->mime_type, 'word'))
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-500 h-5 w-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-500 h-5 w-5">
                         <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
                         <polyline points="14 2 14 8 20 8"/>
                         <line x1="16" y1="13" x2="8" y2="13"/>
                         <line x1="16" y1="17" x2="8" y2="17"/>
                         <line x1="10" y1="9" x2="8" y2="9"/>
                     </svg>
-                    <span class="text-xs mt-1 text-blue-600 dark:text-blue-400">DOC</span>
+                    <span class="text-xs mt-1 text-sky-600 dark:text-sky-400">DOC</span>
                 @elseif(Str::contains($attachment->mime_type, 'excel'))
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500 h-5 w-5">
                         <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>

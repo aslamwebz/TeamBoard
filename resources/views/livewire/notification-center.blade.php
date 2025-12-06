@@ -30,7 +30,7 @@
                 @if($this->getUnreadCountProperty() > 0)
                     <button
                         wire:click="markAllAsRead"
-                        class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                        class="text-sm text-sky-600 hover:text-sky-800 dark:text-sky-400 dark:hover:text-sky-500"
                     >
                         Mark all as read
                     </button>
@@ -48,13 +48,13 @@
             <!-- Notifications List -->
             <div>
                 @forelse($this->getNotificationsProperty() as $notification)
-                    <div class="border-b border-zinc-200 dark:border-zinc-700 last:border-0 {{ $notification->isRead() ? 'bg-white dark:bg-zinc-800' : 'bg-blue-50 dark:bg-zinc-700' }}">
+                    <div class="border-b border-zinc-200 dark:border-zinc-700 last:border-0 {{ $notification->isRead() ? 'bg-white dark:bg-zinc-800' : 'bg-sky-50 dark:bg-zinc-700' }}">
                         <div class="p-3">
                             <div class="flex items-start">
                                 <div class="flex-shrink-0 pt-0.5">
                                     @switch($notification->type)
                                         @case('task_assigned')
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 17h.01" />
                                             </svg>
                                             @break
@@ -95,16 +95,16 @@
                                     
                                     @if(!empty($notification->data))
                                         @if(isset($notification->data['project_name']))
-                                            <p class="text-xs text-blue-600 dark:text-blue-400">Project: {{ $notification->data['project_name'] }}</p>
+                                            <p class="text-xs text-sky-600 dark:text-sky-400">Project: {{ $notification->data['project_name'] }}</p>
                                         @elseif(isset($notification->data['client_name']))
-                                            <p class="text-xs text-blue-600 dark:text-blue-400">Client: {{ $notification->data['client_name'] }}</p>
+                                            <p class="text-xs text-sky-600 dark:text-sky-400">Client: {{ $notification->data['client_name'] }}</p>
                                         @endif
                                     @endif
                                 </div>
                                 @unless($notification->isRead())
                                     <button
                                         wire:click="markAsRead({{ $notification->id }})"
-                                        class="ml-2 text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                                        class="ml-2 text-xs text-sky-600 hover:text-sky-800 dark:text-sky-400 dark:hover:text-sky-500"
                                     >
                                         Mark as read
                                     </button>
@@ -125,7 +125,7 @@
             
             <!-- View All Link -->
             <div class="p-3 border-t border-zinc-200 dark:border-zinc-700 text-center">
-                <a href="{{ route('notifications.index') }}" class="text-sm font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                <a href="{{ route('notifications.index') }}" class="text-sm font-medium text-sky-600 hover:text-sky-800 dark:text-sky-400 dark:hover:text-sky-500">
                     View all notifications
                 </a>
             </div>

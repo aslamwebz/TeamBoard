@@ -2,11 +2,10 @@
     <!-- Header -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-            <h1 class="text-3xl font-bold text-foreground">Reports</h1>
             <p class="text-muted-foreground">Generate and manage reports</p>
         </div>
         <a href="{{ route('reports.create') }}"
-            class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+            class="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 transition-colors font-medium">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
                 <path d="M12 5v14M5 12h14" />
@@ -27,13 +26,13 @@
                         <path d="m21 21-4.35-4.35"></path>
                     </svg>
                     <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search reports..."
-                        class="w-full pl-10 pr-4 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white">
+                        class="w-full pl-10 pr-4 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white">
                 </div>
             </div>
 
             <div class="flex gap-3">
                 <select wire:model.live="typeFilter"
-                    class="px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white">
+                    class="px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white">
                     <option value="">All Types</option>
                     @foreach ($reportTypes as $value => $label)
                         <option value="{{ $value }}">{{ $label }}</option>
@@ -41,7 +40,7 @@
                 </select>
 
                 <select wire:model.live="statusFilter"
-                    class="px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white">
+                    class="px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white">
                     <option value="">All Statuses</option>
                     @foreach ($statuses as $value => $label)
                         <option value="{{ $value }}">{{ $label }}</option>
@@ -111,7 +110,7 @@
                         <!-- Actions -->
                         <div class="flex gap-2 pt-4 border-t border-zinc-200 dark:border-zinc-700">
                             <a href="{{ route('reports.show', $report) }}"
-                                class="flex-1 text-center px-3 py-2 text-sm text-blue-600 hover:text-blue-700 font-medium">
+                                class="flex-1 text-center px-3 py-2 text-sm text-sky-600 hover:text-sky-700 font-medium">
                                 View
                             </a>
                             <a href="{{ route('reports.edit', $report) }}"
@@ -147,7 +146,7 @@
             <h3 class="text-lg font-medium text-foreground mb-2">No reports found</h3>
             <p class="text-muted-foreground mb-6">Get started by creating your first report.</p>
             <a href="{{ route('reports.create') }}"
-                class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                class="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 transition-colors font-medium">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round" class="h-5 w-5">

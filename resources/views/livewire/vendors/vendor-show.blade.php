@@ -1,7 +1,6 @@
 <div class="space-y-6">
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-3xl font-bold text-foreground">{{ $vendor->name }}</h1>
             <p class="text-muted-foreground">Vendor details and relationships</p>
         </div>
         <div class="flex gap-3">
@@ -39,7 +38,7 @@
                     <div class="text-sm text-foreground">
                         @if ($vendor->website)
                             <a href="{{ $vendor->website }}" target="_blank"
-                                class="text-blue-600 hover:text-blue-800 dark:text-blue-400">{{ $vendor->website }}</a>
+                                class="text-sky-600 hover:text-sky-800 dark:text-sky-400">{{ $vendor->website }}</a>
                         @else
                             N/A
                         @endif
@@ -129,7 +128,7 @@
                 <button wire:click="setActiveTab('contacts')"
                     class="border-b-2 font-medium text-sm whitespace-nowrap py-4 px-1 transition-colors
                     {{ $activeTab === 'contacts'
-                        ? 'border-blue-500 text-blue-600 dark:border-blue-400 dark:text-blue-400'
+                        ? 'border-sky-500 text-sky-600 dark:border-sky-400 dark:text-sky-400'
                         : 'border-transparent text-zinc-500 hover:text-foreground hover:border-zinc-300 dark:text-zinc-400 dark:hover:text-zinc-300 dark:hover:border-zinc-600' }}">
                     Contacts ({{ $vendor->contacts->count() }})
                 </button>
@@ -137,7 +136,7 @@
                 <button wire:click="setActiveTab('services')"
                     class="border-b-2 font-medium text-sm whitespace-nowrap py-4 px-1 transition-colors
                     {{ $activeTab === 'services'
-                        ? 'border-blue-500 text-blue-600 dark:border-blue-400 dark:text-blue-400'
+                        ? 'border-sky-500 text-sky-600 dark:border-sky-400 dark:text-sky-400'
                         : 'border-transparent text-zinc-500 hover:text-foreground hover:border-zinc-300 dark:text-zinc-400 dark:hover:text-zinc-300 dark:hover:border-zinc-600' }}">
                     Services ({{ $vendor->services->count() }})
                 </button>
@@ -145,7 +144,7 @@
                 <button wire:click="setActiveTab('invoices')"
                     class="border-b-2 font-medium text-sm whitespace-nowrap py-4 px-1 transition-colors
                     {{ $activeTab === 'invoices'
-                        ? 'border-blue-500 text-blue-600 dark:border-blue-400 dark:text-blue-400'
+                        ? 'border-sky-500 text-sky-600 dark:border-sky-400 dark:text-sky-400'
                         : 'border-transparent text-zinc-500 hover:text-foreground hover:border-zinc-300 dark:text-zinc-400 dark:hover:text-zinc-300 dark:hover:border-zinc-600' }}">
                     Invoices ({{ $vendor->invoices->count() }})
                 </button>
@@ -153,7 +152,7 @@
                 <button wire:click="setActiveTab('projects')"
                     class="border-b-2 font-medium text-sm whitespace-nowrap py-4 px-1 transition-colors
                     {{ $activeTab === 'projects'
-                        ? 'border-blue-500 text-blue-600 dark:border-blue-400 dark:text-blue-400'
+                        ? 'border-sky-500 text-sky-600 dark:border-sky-400 dark:text-sky-400'
                         : 'border-transparent text-zinc-500 hover:text-foreground hover:border-zinc-300 dark:text-zinc-400 dark:hover:text-zinc-300 dark:hover:border-zinc-600' }}">
                     Projects ({{ $vendor->projects->count() }})
                 </button>
@@ -161,7 +160,7 @@
                 <button wire:click="setActiveTab('tasks')"
                     class="border-b-2 font-medium text-sm whitespace-nowrap py-4 px-1 transition-colors
                     {{ $activeTab === 'tasks'
-                        ? 'border-blue-500 text-blue-600 dark:border-blue-400 dark:text-blue-400'
+                        ? 'border-sky-500 text-sky-600 dark:border-sky-400 dark:text-sky-400'
                         : 'border-transparent text-zinc-500 hover:text-foreground hover:border-zinc-300 dark:text-zinc-400 dark:hover:text-zinc-300 dark:hover:border-zinc-600' }}">
                     Tasks ({{ $vendor->tasks->count() }})
                 </button>

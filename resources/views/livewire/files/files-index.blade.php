@@ -1,6 +1,5 @@
 <div class="max-w-7xl mx-auto p-6">
     <div class="mb-6">
-        <h1 class="text-3xl font-bold text-foreground">{{ __('File Browser') }}</h1>
         <p class="text-muted-foreground">{{ __('Browse, search, and manage all project files') }}</p>
     </div>
 
@@ -70,7 +69,7 @@
                                                     <path d="M10 9H8"/>
                                                 </svg>
                                             @elseif(Str::contains($file->mime_type, 'word'))
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-blue-500 hover:opacity-80 transition-opacity">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-sky-500 hover:opacity-80 transition-opacity">
                                                     <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
                                                     <polyline points="14 2 14 8 20 8"/>
                                                     <line x1="16" y1="13" x2="8" y2="13"/>
@@ -111,7 +110,7 @@
                             <p class="text-xs text-muted-foreground">{{ $file->created_at->format('M d, Y') }}</p>
 
                             @if($file->discussion)
-                                <p class="text-xs text-blue-600 dark:text-blue-400 mt-1 truncate w-full">
+                                <p class="text-xs text-sky-600 dark:text-sky-400 mt-1 truncate w-full">
                                     From: {{ Str::limit($file->discussion->title, 20) }}
                                 </p>
                             @endif
@@ -147,7 +146,7 @@
             <p class="mt-1 text-sm text-muted-foreground">Get started by uploading a new file.</p>
             <div class="mt-6">
                 <a href="{{ route('files.upload') }}"
-                   class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                   class="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 text-white rounded-md hover:bg-sky-700">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                     </svg>

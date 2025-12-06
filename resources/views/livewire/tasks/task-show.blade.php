@@ -8,7 +8,6 @@
             </svg>
             {{ __('Back to Tasks') }}
         </a>
-        <h1 class="text-3xl font-bold text-foreground mt-2">{{ $task->title }}</h1>
     </div>
 
     <div class="bg-white dark:bg-zinc-800 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6">
@@ -26,7 +25,7 @@
             <div>
                 <h2 class="text-sm font-medium text-zinc-500 dark:text-zinc-400">{{ __('Project') }}</h2>
                 <p class="mt-1 text-foreground">
-                    <a href="{{ route('projects.show', $task->project) }}" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                    <a href="{{ route('projects.show', $task->project) }}" class="text-sky-600 hover:text-sky-800 dark:text-sky-400 dark:hover:text-sky-500">
                         {{ $task->project->name ?? 'No Project' }}
                     </a>
                 </p>
@@ -101,7 +100,7 @@
                                         {{ ucfirst(str_replace('_', ' ', $dependencyTask->status)) }}
                                     </span>
                                 </div>
-                                <a href="{{ route('tasks.show', $dependencyTask) }}" class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                                <a href="{{ route('tasks.show', $dependencyTask) }}" class="text-sm text-sky-600 hover:text-sky-800 dark:text-sky-400 dark:hover:text-sky-500">
                                     View
                                 </a>
                             </li>
@@ -125,7 +124,7 @@
                                         {{ ucfirst(str_replace('_', ' ', $dependentTask->status)) }}
                                     </span>
                                 </div>
-                                <a href="{{ route('tasks.show', $dependentTask) }}" class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                                <a href="{{ route('tasks.show', $dependentTask) }}" class="text-sm text-sky-600 hover:text-sky-800 dark:text-sky-400 dark:hover:text-sky-500">
                                     View
                                 </a>
                             </li>
@@ -149,7 +148,7 @@
                         {{ __('View All') }}
                     </a>
                     <a href="{{ route('discussions.create', ['type' => 'task', 'type_id' => $task->id]) }}"
-                        class="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        class="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-sky-600 text-white rounded-lg hover:bg-sky-700">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3">
                             <path d="M5 12h14"></path>
                             <path d="M12 5v14"></path>
@@ -168,7 +167,7 @@
                                     <div class="flex items-center gap-2 mb-1">
                                         <h3 class="font-medium text-foreground">
                                             <a href="{{ route('discussions.show', $discussion) }}"
-                                               class="hover:text-blue-600 dark:hover:text-blue-400">
+                                               class="hover:text-sky-600 dark:hover:text-sky-500">
                                                 {{ Str::limit($discussion->title, 60) }}
                                             </a>
                                         </h3>
@@ -208,7 +207,7 @@
                 @if(\App\Models\Discussion::where('type', 'task')->where('type_id', $task->id)->count() > 5)
                     <div class="mt-4 text-center">
                         <a href="{{ route('discussions.index', ['type' => 'task', 'typeId' => $task->id]) }}"
-                           class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                           class="text-sm text-sky-600 hover:text-sky-800 dark:text-sky-400 dark:hover:text-sky-500">
                             View all {{ \App\Models\Discussion::where('type', 'task')->where('type_id', $task->id)->count() }} discussions
                         </a>
                     </div>
@@ -222,7 +221,7 @@
                     <p class="mt-1 text-sm text-muted-foreground">Start a discussion about this task.</p>
                     <div class="mt-4">
                         <a href="{{ route('discussions.create', ['type' => 'task', 'type_id' => $task->id]) }}"
-                           class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm">
+                           class="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 text-white rounded-md hover:bg-sky-700 text-sm">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                             </svg>
@@ -243,7 +242,7 @@
                 {{ __('Back to Tasks') }}
             </a>
             <a href="{{ route('tasks.edit', $task) }}"
-                class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900">
+                class="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 text-white rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
                     <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
                 </svg>

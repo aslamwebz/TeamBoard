@@ -2,7 +2,6 @@
     <!-- Header -->
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-3xl font-bold text-foreground">{{ __('Contacts') }}</h1>
             <p class="text-muted-foreground">{{ __('Manage contacts for :client', ['client' => $client->name ?? $client->company_name]) }}</p>
         </div>
         <flux:button wire:click="$dispatch('open-modal', 'create-contact')" variant="primary">
@@ -56,7 +55,7 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0 h-10 w-10">
-                                        <div class="h-10 w-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-medium">
+                                        <div class="h-10 w-10 rounded-full bg-gradient-to-r from-sky-500 to-purple-600 flex items-center justify-center text-white font-medium">
                                             {{ substr($contact->first_name, 0, 1) }}
                                         </div>
                                     </div>
@@ -72,7 +71,7 @@
                                 {{ $contact->position }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-foreground">
-                                <a href="mailto:{{ $contact->email }}" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                                <a href="mailto:{{ $contact->email }}" class="text-sky-600 hover:text-sky-800 dark:text-sky-400 dark:hover:text-sky-500">
                                     {{ $contact->email }}
                                 </a>
                             </td>
@@ -82,7 +81,7 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-foreground">
                                 <div class="space-y-1">
                                     @if($contact->is_primary)
-                                        <flux:badge variant="outline" class="text-blue-700 dark:text-blue-400">Primary</flux:badge>
+                                        <flux:badge variant="outline" class="text-sky-700 dark:text-sky-400">Primary</flux:badge>
                                     @endif
                                     @if($contact->is_billing_contact)
                                         <flux:badge variant="outline" class="text-green-700 dark:text-green-400">Billing</flux:badge>

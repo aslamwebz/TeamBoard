@@ -15,7 +15,6 @@
             </svg>
             {{ __('Back to Projects') }}
         </a>
-        <h1 class="text-3xl font-bold text-foreground mt-2">{{ $project->name }}</h1>
         <p class="text-muted-foreground">{{ $project->description }}</p>
     </div>
 
@@ -39,7 +38,7 @@
                     <h3 class="text-sm font-medium text-zinc-500 dark:text-zinc-400">{{ __('Completion') }}</h3>
                     <div class="flex items-center gap-2">
                         <div class="w-full bg-zinc-200 dark:bg-zinc-700 rounded-full h-2">
-                            <div class="bg-blue-600 h-2 rounded-full"
+                            <div class="bg-sky-600 h-2 rounded-full"
                                 style="width: {{ $project->getCompletionPercentage() }}%"></div>
                         </div>
                         <span
@@ -123,7 +122,7 @@
                     </div>
                 </button>
                 <button type="button" onclick="switchTab('tasks')" id="tasks-tab"
-                    class="tab-button active py-4 px-1 border-b-2 font-medium text-sm border-blue-500 text-blue-600 dark:text-blue-400">
+                    class="tab-button active py-4 px-1 border-b-2 font-medium text-sm border-sky-500 text-sky-600 dark:text-sky-400">
                     <div class="flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
@@ -322,7 +321,7 @@
                     </div>
                     <div class="flex gap-2">
                         <a href="{{ route('tasks.create', ['project_id' => $project->id]) }}"
-                            class="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            class="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-sky-600 text-white rounded-lg hover:bg-sky-700">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3">
@@ -390,7 +389,7 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <a href="{{ route('tasks.show', $task) }}"
-                                            class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">{{ __('View') }}</a>
+                                            class="text-sky-600 hover:text-sky-900 dark:text-sky-400 dark:hover:text-sky-500">{{ __('View') }}</a>
                                     </td>
                                 </tr>
                             @empty
@@ -424,7 +423,7 @@
                             {{ __('View All') }}
                         </a>
                         <a href="{{ route('phases.create', ['project' => $project->id]) }}"
-                            class="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            class="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-sky-600 text-white rounded-lg hover:bg-sky-700">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3">
@@ -480,7 +479,7 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="w-full bg-zinc-200 dark:bg-zinc-700 rounded-full h-2">
-                                            <div class="bg-blue-600 h-2 rounded-full"
+                                            <div class="bg-sky-600 h-2 rounded-full"
                                                 style="width: {{ $phase->getCompletionPercentage() }}%"></div>
                                         </div>
                                         <div class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
@@ -488,7 +487,7 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <a href="{{ route('phases.edit', ['project' => $project->id, 'phase' => $phase->id]) }}"
-                                            class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">{{ __('Edit') }}</a>
+                                            class="text-sky-600 hover:text-sky-900 dark:text-sky-400 dark:hover:text-sky-500">{{ __('Edit') }}</a>
                                     </td>
                                 </tr>
                             @empty
@@ -522,7 +521,7 @@
                             {{ __('View All') }}
                         </a>
                         <a href="{{ route('milestones.create', ['project' => $project->id]) }}"
-                            class="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            class="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-sky-600 text-white rounded-lg hover:bg-sky-700">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3">
@@ -580,7 +579,7 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <a href="{{ route('milestones.edit', ['project' => $project->id, 'milestone' => $milestone->id]) }}"
-                                            class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">{{ __('Edit') }}</a>
+                                            class="text-sky-600 hover:text-sky-900 dark:text-sky-400 dark:hover:text-sky-500">{{ __('Edit') }}</a>
                                     </td>
                                 </tr>
                             @empty
@@ -604,7 +603,7 @@
                     </div>
                     <div class="flex gap-2">
                         <button wire:click="showAssignUserModal = true"
-                            class="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            class="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-sky-600 text-white rounded-lg hover:bg-sky-700">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3">
@@ -652,7 +651,7 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <a href="{{ route('users.show', $user) }}"
-                                            class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 mr-3">{{ __('View') }}</a>
+                                            class="text-sky-600 hover:text-sky-900 dark:text-sky-400 dark:hover:text-sky-500 mr-3">{{ __('View') }}</a>
                                         <button wire:click="removeUser({{ $user->id }})"
                                             class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300">
                                             {{ __('Remove') }}
@@ -680,7 +679,7 @@
                     </div>
                     <div class="flex gap-2">
                         <button wire:click="showAssignTeamModal = true"
-                            class="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            class="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-sky-600 text-white rounded-lg hover:bg-sky-700">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3">
@@ -731,7 +730,7 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <button
-                                            class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 mr-3">
+                                            class="text-sky-600 hover:text-sky-900 dark:text-sky-400 dark:hover:text-sky-500 mr-3">
                                             {{ __('View') }}
                                         </button>
                                         <button wire:click="removeTeam({{ $team->id }})"
@@ -762,7 +761,7 @@
                     </div>
                     <div class="flex gap-2">
                         <button
-                            class="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            class="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-sky-600 text-white rounded-lg hover:bg-sky-700">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3">
@@ -820,7 +819,7 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <a href="{{ route('invoices.show', $invoice) }}"
-                                            class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">{{ __('View') }}</a>
+                                            class="text-sky-600 hover:text-sky-900 dark:text-sky-400 dark:hover:text-sky-500">{{ __('View') }}</a>
                                     </td>
                                 </tr>
                             @empty
@@ -854,7 +853,7 @@
                             {{ __('View All') }}
                         </a>
                         <a href="{{ route('discussions.create', ['type' => 'project', 'type_id' => $project->id]) }}"
-                            class="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            class="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-sky-600 text-white rounded-lg hover:bg-sky-700">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3">
@@ -876,7 +875,7 @@
                                         <div class="flex items-center gap-2 mb-1">
                                             <h3 class="font-medium text-foreground">
                                                 <a href="{{ route('discussions.show', $discussion) }}"
-                                                    class="hover:text-blue-600 dark:hover:text-blue-400">
+                                                    class="hover:text-sky-600 dark:hover:text-sky-500">
                                                     {{ Str::limit($discussion->title, 60) }}
                                                 </a>
                                             </h3>
@@ -920,7 +919,7 @@
                     @if ($project->discussions()->count() > 5)
                         <div class="mt-4 text-center">
                             <a href="{{ route('discussions.index', ['type' => 'project', 'typeId' => $project->id]) }}"
-                                class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                                class="text-sm text-sky-600 hover:text-sky-800 dark:text-sky-400 dark:hover:text-sky-500">
                                 View all {{ $project->discussions()->count() }} discussions
                             </a>
                         </div>
@@ -936,7 +935,7 @@
                         <p class="mt-1 text-sm text-muted-foreground">Get started by creating a new discussion.</p>
                         <div class="mt-6">
                             <a href="{{ route('discussions.create', ['type' => 'project', 'type_id' => $project->id]) }}"
-                                class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                                class="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 text-white rounded-md hover:bg-sky-700">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -961,7 +960,7 @@
 
             // Remove active class from all tabs
             document.querySelectorAll('.tab-button').forEach(tab => {
-                tab.classList.remove('active', 'border-blue-500', 'text-blue-600', 'dark:text-blue-400');
+                tab.classList.remove('active', 'border-sky-500', 'text-sky-600', 'dark:text-sky-400');
                 tab.classList.add('border-transparent', 'text-zinc-500', 'hover:text-zinc-700',
                     'hover:border-zinc-300', 'dark:text-zinc-400', 'dark:hover:text-zinc-300');
             });
@@ -971,7 +970,7 @@
 
             // Add active class to selected tab
             const activeTab = document.getElementById(tabName + '-tab');
-            activeTab.classList.add('active', 'border-blue-500', 'text-blue-600', 'dark:text-blue-400');
+            activeTab.classList.add('active', 'border-sky-500', 'text-sky-600', 'dark:text-sky-400');
             activeTab.classList.remove('border-transparent', 'text-zinc-500', 'hover:text-zinc-700',
                 'hover:border-zinc-300', 'dark:text-zinc-400', 'dark:hover:text-zinc-300');
         }

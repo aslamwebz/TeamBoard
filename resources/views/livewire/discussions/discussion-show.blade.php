@@ -14,7 +14,6 @@
             <div class="bg-white dark:bg-zinc-800 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6 mb-6">
                 <div class="flex items-start justify-between">
                     <div>
-                        <h1 class="text-3xl font-bold text-foreground">{{ $discussion->title }}</h1>
                         <div class="flex items-center gap-4 mt-3 text-sm text-muted-foreground">
                             <div class="flex items-center gap-2">
                                 <img src="{{ $discussion->user->profile_photo_url ?? 'https://ui-avatars.com/api/?name=' . urlencode($discussion->user->name) }}" 
@@ -27,22 +26,22 @@
                             <span>
                                 Related to {{ $typeLabels[$discussion->type] ?? ucfirst($discussion->type) }}:
                                 @if($discussion->type === 'project')
-                                    <a href="{{ route('projects.show', $discussion->project) }}" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                                    <a href="{{ route('projects.show', $discussion->project) }}" class="text-sky-600 hover:text-sky-800 dark:text-sky-400 dark:hover:text-sky-500">
                                         {{ $discussion->project->name ?? 'Unknown Project' }}
                                     </a>
                                 @elseif($discussion->type === 'task')
-                                    <a href="{{ route('tasks.show', $discussion->type_id) }}" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                                    <a href="{{ route('tasks.show', $discussion->type_id) }}" class="text-sky-600 hover:text-sky-800 dark:text-sky-400 dark:hover:text-sky-500">
                                         {{ \App\Models\Task::find($discussion->type_id)?->title ?? 'Unknown Task' }}
                                     </a>
                                 @elseif($discussion->type === 'client')
-                                    <a href="{{ route('clients.show', $discussion->type_id) }}" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                                    <a href="{{ route('clients.show', $discussion->type_id) }}" class="text-sky-600 hover:text-sky-800 dark:text-sky-400 dark:hover:text-sky-500">
                                         {{ \App\Models\Client::find($discussion->type_id)?->name ?? 'Unknown Client' }}
                                     </a>
                                 @endif
                             </span>
                         </div>
                         @if($discussion->phase)
-                            <div class="mt-2 inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+                            <div class="mt-2 inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-medium bg-sky-100 text-sky-800 dark:bg-sky-900/30 dark:text-sky-400">
                                 Phase: {{ $discussion->phase->name }}
                             </div>
                         @endif
@@ -91,7 +90,7 @@
                                     <p class="text-xs font-medium text-foreground truncate" title="{{ $attachment->original_name }}">{{ $attachment->original_name }}</p>
                                     <p class="text-xs text-muted-foreground">{{ $attachment->getFormattedSize() }}</p>
                                 </div>
-                                <a href="{{ route('tenant.file.preview.page', ['filename' => $attachment->filename]) }}" target="_blank" class="mt-2 text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                                <a href="{{ route('tenant.file.preview.page', ['filename' => $attachment->filename]) }}" target="_blank" class="mt-2 text-xs text-sky-600 hover:text-sky-800 dark:text-sky-400 dark:hover:text-sky-500">
                                     Preview
                                 </a>
                             </div>
@@ -135,10 +134,10 @@
                                             file:mr-4 file:py-1 file:px-2
                                             file:rounded-md file:border-0
                                             file:text-sm file:font-semibold
-                                            file:bg-blue-50 file:text-blue-700
-                                            hover:file:bg-blue-100
-                                            dark:file:bg-blue-900/30 dark:file:text-blue-400
-                                            dark:hover:file:bg-blue-800/30"
+                                            file:bg-sky-50 file:text-sky-700
+                                            hover:file:bg-sky-100
+                                            dark:file:bg-sky-500/30 dark:file:text-sky-500
+                                            dark:hover:file:bg-sky-500/30"
                                     />
                                     <span class="text-xs text-muted-foreground">Max file size: 10MB each</span>
                                 </div>
@@ -182,7 +181,7 @@
                                                     @include('livewire.components.file-preview-inline', ['attachment' => $attachment, 'size' => 'small'])
                                                     <div class="mt-1 text-center w-full">
                                                         <span class="truncate block">{{ $attachment->original_name }}</span>
-                                                        <a href="{{ route('tenant.file.preview.page', ['filename' => $attachment->filename]) }}" target="_blank" class="mt-1 text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                                                        <a href="{{ route('tenant.file.preview.page', ['filename' => $attachment->filename]) }}" target="_blank" class="mt-1 text-xs text-sky-600 hover:text-sky-800 dark:text-sky-400 dark:hover:text-sky-500">
                                                             Preview
                                                         </a>
                                                     </div>
@@ -196,7 +195,7 @@
                                 <div class="mt-3">
                                     <button 
                                         wire:click="startReply({{ $comment->id }})"
-                                        class="text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                                        class="text-xs text-sky-600 hover:text-sky-800 dark:text-sky-400 dark:hover:text-sky-500">
                                         Reply
                                     </button>
                                 </div>
@@ -221,10 +220,10 @@
                                                         file:mr-4 file:py-1 file:px-2
                                                         file:rounded-md file:border-0
                                                         file:text-sm file:font-semibold
-                                                        file:bg-blue-50 file:text-blue-700
-                                                        hover:file:bg-blue-100
-                                                        dark:file:bg-blue-900/30 dark:file:text-blue-400
-                                                        dark:hover:file:bg-blue-800/30"
+                                                        file:bg-sky-50 file:text-sky-700
+                                                        hover:file:bg-sky-100
+                                                        dark:file:bg-sky-500/30 dark:file:text-sky-500
+                                                        dark:hover:file:bg-sky-500/30"
                                                 />
                                                 <span class="text-xs text-muted-foreground">Max 10MB each</span>
                                             </div>
@@ -317,7 +316,7 @@
                     <div>
                         <h4 class="text-sm font-medium text-zinc-500 dark:text-zinc-400">Project</h4>
                         <p class="mt-1">
-                            <a href="{{ route('projects.show', $discussion->project) }}" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                            <a href="{{ route('projects.show', $discussion->project) }}" class="text-sky-600 hover:text-sky-800 dark:text-sky-400 dark:hover:text-sky-500">
                                 {{ $discussion->project->name }}
                             </a>
                         </p>
@@ -340,7 +339,7 @@
                                     <p class="text-sm font-medium text-foreground truncate">{{ $attachment->original_name }}</p>
                                     <p class="text-xs text-muted-foreground">{{ $attachment->getFormattedSize() }}</p>
                                 </div>
-                                <a href="{{ route('tenant.file.preview.page', ['filename' => $attachment->filename]) }}" target="_blank" class="ml-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                                <a href="{{ route('tenant.file.preview.page', ['filename' => $attachment->filename]) }}" target="_blank" class="ml-1 text-sky-600 hover:text-sky-800 dark:text-sky-400 dark:hover:text-sky-500">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3">
                                         <eye class="lucide lucide-eye h-3 w-3"/>
                                     </svg>
@@ -361,7 +360,7 @@
                         @foreach($relatedDiscussions as $related)
                             @if($related->id !== $discussion->id)
                                 <div>
-                                    <a href="{{ route('discussions.show', $related) }}" class="text-sm font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 block truncate">
+                                    <a href="{{ route('discussions.show', $related) }}" class="text-sm font-medium text-sky-600 hover:text-sky-800 dark:text-sky-400 dark:hover:text-sky-500 block truncate">
                                         {{ $related->title }}
                                     </a>
                                     <p class="text-xs text-muted-foreground">{{ $related->created_at->diffForHumans() }}</p>

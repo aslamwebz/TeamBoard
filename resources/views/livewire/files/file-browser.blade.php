@@ -17,10 +17,10 @@
                         file:mr-4 file:py-2 file:px-4
                         file:rounded-md file:border-0
                         file:text-sm file:font-semibold
-                        file:bg-blue-50 file:text-blue-700
-                        hover:file:bg-blue-100
-                        dark:file:bg-blue-900/30 dark:file:text-blue-400
-                        dark:hover:file:bg-blue-800/30"
+                        file:bg-sky-50 file:text-sky-700
+                        hover:file:bg-sky-100
+                        dark:file:bg-sky-500/30 dark:file:text-sky-500
+                        dark:hover:file:bg-sky-500/30"
                 />
                 <p class="mt-1 text-sm text-muted-foreground">Max file size: {{ $maxFileSize / 1024 / 1024 }}MB each</p>
             </flux:field>
@@ -49,9 +49,9 @@
                             $attachment = $this->getAttachment($fileId);
                         @endphp
                         @if($attachment)
-                            <div class="flex items-center justify-between p-2 bg-blue-50 dark:bg-blue-900/20 rounded">
+                            <div class="flex items-center justify-between p-2 bg-sky-50 dark:bg-sky-900/20 rounded">
                                 <div class="flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-blue-500 mr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-sky-500 mr-2">
                                         <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/>
                                     </svg>
                                     <span class="text-sm">{{ $attachment->original_name }}</span>

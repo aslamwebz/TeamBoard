@@ -6,7 +6,7 @@
         </div>
         <a 
             href="{{ route('vendors.show', $vendorId) }}" 
-            class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
         >
             Back to Vendor
         </a>
@@ -18,7 +18,7 @@
                 wire:model.live="search" 
                 type="text" 
                 placeholder="Search tasks..." 
-                class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 bg-white text-gray-900"
             />
         </div>
     </div>
@@ -55,7 +55,7 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
                                     {{ $task->status === App\Models\Task::STATUS_TODO ? 'bg-gray-100 text-gray-800' :
-                                       ($task->status === App\Models\Task::STATUS_IN_PROGRESS ? 'bg-blue-100 text-blue-800' :
+                                       ($task->status === App\Models\Task::STATUS_IN_PROGRESS ? 'bg-sky-100 text-sky-800' :
                                           ($task->status === App\Models\Task::STATUS_COMPLETED ? 'bg-green-100 text-green-800' :
                                              ($task->status === App\Models\Task::STATUS_ON_HOLD ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-800'))) }}">
                                     {{ ucfirst(str_replace('_', ' ', $task->status)) }}

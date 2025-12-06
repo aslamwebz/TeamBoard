@@ -1,7 +1,6 @@
 <div class="space-y-6">
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-3xl font-bold text-foreground">{{ __('Edit User') }}</h1>
             <p class="text-muted-foreground">{{ __('Update user information and manage assignments') }}</p>
         </div>
         <flux:button wire:navigate href="/users" variant="outline">

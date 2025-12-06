@@ -1,11 +1,9 @@
 <flux:header class="[grid-area:header] z-10 min-h-14 flex items-center px-6 pt-4 lg:px-8" data-flux-header="">
     <flux:sidebar.toggle class="lg:hidden" icon="bars-2" />
 
-    <!-- Logo - Hidden on mobile, visible on large screens -->
-    <div class="hidden lg:flex lg:items-center lg:mr-6">
-        <a href="{{ route('dashboard') }}" class="flex items-center">
-            <x-application-logo class="h-8 w-auto" />
-        </a>
+    <!-- Page Title -->
+    <div class="flex-1 lg:flex-initial">
+        <livewire:page-title />
     </div>
 
     <!-- Spacer to push notification and profile to the right -->

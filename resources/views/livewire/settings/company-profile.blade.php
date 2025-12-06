@@ -2,7 +2,6 @@
     <!-- Header -->
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-3xl font-bold text-foreground">{{ __('Company Profile') }}</h1>
             <p class="text-muted-foreground">{{ __('Manage your company information and settings') }}</p>
         </div>
     </div>

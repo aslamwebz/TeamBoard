@@ -1,7 +1,6 @@
 <div class="space-y-6">
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-3xl font-bold text-foreground">{{ __('Users') }}</h1>
             <p class="text-muted-foreground">{{ __('Manage team members and their assignments') }}</p>
         </div>
         <flux:button wire:navigate href="/users/create" class="gap-2">
@@ -59,7 +58,7 @@
                                 <div class="flex items-center gap-3">
                                     <div class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-lg">
                                         <div
-                                            class="flex h-full w-full items-center justify-center rounded-lg bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
+                                            class="flex h-full w-full items-center justify-center rounded-lg bg-sky-100 text-sky-800 dark:bg-sky-900/30 dark:text-sky-500">
                                             {{ $user->initials() }}
                                         </div>
                                     </div>
@@ -83,7 +82,7 @@
                                 <div class="text-sm text-foreground">
                                     <div class="font-medium">{{ $user->tasks_count }}</div>
                                     @if ($user->tasks_count > 0)
-                                        <div class="text-xs text-blue-600 dark:text-blue-400">
+                                        <div class="text-xs text-sky-600 dark:text-sky-400">
                                             {{ round(($user->completed_tasks / $user->tasks_count) * 100) }}%
                                             {{ __('done') }}
                                         </div>
@@ -97,7 +96,7 @@
                                 <div class="flex items-center justify-end space-x-2">
                                     <flux:button wire:navigate href="/users/{{ $user->id }}" variant="outline"
                                         size="sm"
-                                        class="hover:bg-blue-50 dark:hover:bg-blue-900/20 border-blue-200 dark:border-blue-800 whitespace-nowrap">
+                                        class="hover:bg-sky-50 dark:hover:bg-sky-500/20 border-sky-500 dark:border-sky-500 whitespace-nowrap">
                                         <svg class="w-3 h-3 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                             stroke-linejoin="round">
@@ -108,7 +107,7 @@
                                     </flux:button>
                                     <flux:button wire:navigate href="/users/{{ $user->id }}/edit" variant="outline"
                                         size="sm"
-                                        class="hover:bg-blue-50 dark:hover:bg-blue-900/20 border-blue-200 dark:border-blue-800 whitespace-nowrap">
+                                        class="hover:bg-sky-50 dark:hover:bg-sky-500/20 border-sky-500 dark:border-sky-500 whitespace-nowrap">
                                         <svg class="w-3 h-3 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                             stroke-linejoin="round">

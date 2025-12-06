@@ -1,35 +1,43 @@
 <div class="space-y-6">
     <div>
-        <h1 class="text-3xl font-bold text-foreground">{{ __('Client Dashboard') }}</h1>
-        <p class="text-muted-foreground">{{ __('Welcome back, ') }}{{ $clientInfo['name'] ?? auth()->user()->name }}! {{ __('Here\'s an overview of your projects and account.') }}</p>
+        <p class="text-muted-foreground">{{ __('Welcome back, ') }}{{ $clientInfo['name'] ?? auth()->user()->name }}!
+            {{ __('Here\'s an overview of your projects and account.') }}</p>
     </div>
 
     <!-- Client Stats Grid -->
     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         <!-- Active Projects Card -->
-        <div class="relative overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800">
+        <div
+            class="relative overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800">
             <div class="flex items-center justify-between p-6 pb-2">
                 <h3 class="text-sm font-medium text-zinc-500 dark:text-zinc-400">{{ __('Active Projects') }}</h3>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-blue-600">
-                    <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-5 w-5 text-sky-600">
+                    <path
+                        d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
                 </svg>
             </div>
             <div class="p-6 pt-0">
                 <div class="text-2xl font-bold text-foreground">{{ count($projectProgress) }}</div>
                 <p class="text-xs text-zinc-500 dark:text-zinc-400">
-                    @if(count($projectProgress) > 0)
-                        <span class="text-green-600">{{ number_format($avgProjectProgress, 0) }}%</span> {{ __('avg completion') }}
+                    @if (count($projectProgress) > 0)
+                        <span class="text-green-600">{{ number_format($avgProjectProgress, 0) }}%</span>
+                        {{ __('avg completion') }}
                     @endif
                 </p>
             </div>
         </div>
 
         <!-- Outstanding Invoices Card -->
-        <div class="relative overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800">
+        <div
+            class="relative overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800">
             <div class="flex items-center justify-between p-6 pb-2">
                 <h3 class="text-sm font-medium text-zinc-500 dark:text-zinc-400">{{ __('Outstanding Invoices') }}</h3>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-green-600">
-                    <path d="M12 2v20M5 12h14M5 6h14M5 18h14"/>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-5 w-5 text-green-600">
+                    <path d="M12 2v20M5 12h14M5 6h14M5 18h14" />
                 </svg>
             </div>
             <div class="p-6 pt-0">
@@ -41,12 +49,15 @@
         </div>
 
         <!-- Files Shared Card -->
-        <div class="relative overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800">
+        <div
+            class="relative overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800">
             <div class="flex items-center justify-between p-6 pb-2">
                 <h3 class="text-sm font-medium text-zinc-500 dark:text-zinc-400">{{ __('Files Shared') }}</h3>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-purple-600">
-                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
-                    <polyline points="14 2 14 8 20 8"/>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-5 w-5 text-purple-600">
+                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                    <polyline points="14 2 14 8 20 8" />
                 </svg>
             </div>
             <div class="p-6 pt-0">
@@ -58,17 +69,20 @@
         </div>
 
         <!-- Project Requests Card -->
-        <div class="relative overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800">
+        <div
+            class="relative overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800">
             <div class="flex items-center justify-between p-6 pb-2">
                 <h3 class="text-sm font-medium text-zinc-500 dark:text-zinc-400">{{ __('Project Requests') }}</h3>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-orange-600">
-                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="h-5 w-5 text-orange-600">
+                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
                 </svg>
             </div>
             <div class="p-6 pt-0">
                 <div class="text-2xl font-bold text-foreground">{{ $projectRequestsCount }}</div>
                 <p class="text-xs text-zinc-500 dark:text-zinc-400">
-                    @if($projectRequestsCount > 0)
+                    @if ($projectRequestsCount > 0)
                         <span class="text-green-600">{{ $pendingProjectRequestsCount }} {{ __('pending') }}</span>
                     @endif
                 </p>
@@ -79,31 +93,37 @@
     <!-- Project Progress and Invoices Row -->
     <div class="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
         <!-- Project Progress Section -->
-        <div class="relative h-full flex-1 overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">
+        <div
+            class="relative h-full flex-1 overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">
             <div class="p-6">
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="text-xl font-semibold text-foreground">{{ __('Project Progress') }}</h2>
-                    <a href="{{ route('projects') }}" class="text-sm text-blue-600 hover:underline">{{ __('View All') }}</a>
+                    <a href="{{ route('projects') }}"
+                        class="text-sm text-sky-600 hover:underline">{{ __('View All') }}</a>
                 </div>
-                
-                @if(count($projectProgress) > 0)
+
+                @if (count($projectProgress) > 0)
                     <div class="space-y-4">
-                        @foreach($projectProgress as $project)
+                        @foreach ($projectProgress as $project)
                             <a href="{{ route('projects.show', $project['id']) }}" class="block space-y-2">
                                 <div class="flex items-center justify-between">
                                     <div>
-                                        <p class="font-medium text-foreground hover:underline">{{ $project['name'] }}</p>
+                                        <p class="font-medium text-foreground hover:underline">{{ $project['name'] }}
+                                        </p>
                                         <p class="text-sm text-zinc-500 dark:text-zinc-400">
-                                            {{ $project['tasks_completed'] }}/{{ $project['total_tasks'] }} {{ __('tasks completed') }}
+                                            {{ $project['tasks_completed'] }}/{{ $project['total_tasks'] }}
+                                            {{ __('tasks completed') }}
                                         </p>
                                     </div>
                                     <div class="text-right">
                                         <p class="text-sm font-medium text-foreground">{{ $project['progress'] }}%</p>
-                                        <p class="text-xs text-zinc-500 dark:text-zinc-400 capitalize">{{ $project['status'] }}</p>
+                                        <p class="text-xs text-zinc-500 dark:text-zinc-400 capitalize">
+                                            {{ $project['status'] }}</p>
                                     </div>
                                 </div>
                                 <div class="h-2 overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-700">
-                                    <div class="h-full bg-blue-500 transition-all" style="width: {{ $project['progress'] }}%"></div>
+                                    <div class="h-full bg-sky-500transition-all"
+                                        style="width: {{ $project['progress'] }}%"></div>
                                 </div>
                             </a>
                         @endforeach
@@ -117,27 +137,32 @@
         </div>
 
         <!-- Invoices Section -->
-        <div class="relative h-full flex-1 overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">
+        <div
+            class="relative h-full flex-1 overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">
             <div class="p-6">
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="text-xl font-semibold text-foreground">{{ __('Recent Invoices') }}</h2>
-                    <a href="{{ route('invoices.index') }}" class="text-sm text-blue-600 hover:underline">{{ __('View All') }}</a>
+                    <a href="{{ route('invoices.index') }}"
+                        class="text-sm text-sky-600 hover:underline">{{ __('View All') }}</a>
                 </div>
-                
-                @if(count($invoices) > 0)
+
+                @if (count($invoices) > 0)
                     <div class="space-y-4">
-                        @foreach($invoices as $invoice)
+                        @foreach ($invoices as $invoice)
                             <a href="{{ route('invoices.show', $invoice->id) }}" class="block space-y-2">
                                 <div class="flex items-center justify-between">
                                     <div>
-                                        <p class="font-medium text-foreground hover:underline">#{{ $invoice->id }} - {{ $invoice->project->name ?? 'Project' }}</p>
+                                        <p class="font-medium text-foreground hover:underline">#{{ $invoice->id }} -
+                                            {{ $invoice->project->name ?? 'Project' }}</p>
                                         <p class="text-sm text-zinc-500 dark:text-zinc-400">
                                             {{ __('Due: ') }}{{ $invoice->due_date?->format('M d, Y') ?? 'N/A' }}
                                         </p>
                                     </div>
                                     <div class="text-right">
-                                        <p class="text-sm font-medium text-foreground">${{ number_format($invoice->amount, 2) }}</p>
-                                        <span class="text-xs font-medium px-2 py-0.5 rounded-full bg-{{ $invoice->status === 'paid' ? 'green' : ($invoice->status === 'overdue' ? 'red' : 'yellow') }}-100 text-{{ $invoice->status === 'paid' ? 'green' : ($invoice->status === 'overdue' ? 'red' : 'yellow') }}-800 dark:bg-{{ $invoice->status === 'paid' ? 'green' : ($invoice->status === 'overdue' ? 'red' : 'yellow') }}-900 dark:text-{{ $invoice->status === 'paid' ? 'green' : ($invoice->status === 'overdue' ? 'red' : 'yellow') }}-200">
+                                        <p class="text-sm font-medium text-foreground">
+                                            ${{ number_format($invoice->amount, 2) }}</p>
+                                        <span
+                                            class="text-xs font-medium px-2 py-0.5 rounded-full bg-{{ $invoice->status === 'paid' ? 'green' : ($invoice->status === 'overdue' ? 'red' : 'yellow') }}-100 text-{{ $invoice->status === 'paid' ? 'green' : ($invoice->status === 'overdue' ? 'red' : 'yellow') }}-800 dark:bg-{{ $invoice->status === 'paid' ? 'green' : ($invoice->status === 'overdue' ? 'red' : 'yellow') }}-900 dark:text-{{ $invoice->status === 'paid' ? 'green' : ($invoice->status === 'overdue' ? 'red' : 'yellow') }}-200">
                                             {{ ucfirst($invoice->status) }}
                                         </span>
                                     </div>
@@ -157,20 +182,25 @@
     <!-- Files/Documents and Project Requests Row -->
     <div class="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
         <!-- Files/Documents Section -->
-        <div class="relative h-full flex-1 overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">
+        <div
+            class="relative h-full flex-1 overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">
             <div class="p-6">
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="text-xl font-semibold text-foreground">{{ __('Files & Documents') }}</h2>
-                    <a href="{{ route('files.index') }}" class="text-sm text-blue-600 hover:underline">{{ __('View All') }}</a>
+                    <a href="{{ route('files.index') }}"
+                        class="text-sm text-sky-600 hover:underline">{{ __('View All') }}</a>
                 </div>
-                
+
                 <div class="space-y-4">
-                    <div class="flex items-center justify-between p-3 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">
+                    <div
+                        class="flex items-center justify-between p-3 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-blue-600">
-                                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
-                                    <polyline points="14 2 14 8 20 8"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-sky-600">
+                                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                                    <polyline points="14 2 14 8 20 8" />
                                 </svg>
                             </div>
                             <div class="ml-3">
@@ -179,18 +209,21 @@
                             </div>
                         </div>
                         <div>
-                            <a href="#" class="text-sm text-blue-600 hover:underline">
+                            <a href="#" class="text-sm text-sky-600 hover:underline">
                                 {{ __('Download') }}
                             </a>
                         </div>
                     </div>
-                    
-                    <div class="flex items-center justify-between p-3 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">
+
+                    <div
+                        class="flex items-center justify-between p-3 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-green-600">
-                                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
-                                    <polyline points="14 2 14 8 20 8"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-green-600">
+                                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                                    <polyline points="14 2 14 8 20 8" />
                                 </svg>
                             </div>
                             <div class="ml-3">
@@ -199,18 +232,21 @@
                             </div>
                         </div>
                         <div>
-                            <a href="#" class="text-sm text-blue-600 hover:underline">
+                            <a href="#" class="text-sm text-sky-600 hover:underline">
                                 {{ __('Download') }}
                             </a>
                         </div>
                     </div>
-                    
-                    <div class="flex items-center justify-between p-3 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">
+
+                    <div
+                        class="flex items-center justify-between p-3 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-purple-600">
-                                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
-                                    <polyline points="14 2 14 8 20 8"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-purple-600">
+                                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                                    <polyline points="14 2 14 8 20 8" />
                                 </svg>
                             </div>
                             <div class="ml-3">
@@ -219,15 +255,16 @@
                             </div>
                         </div>
                         <div>
-                            <a href="#" class="text-sm text-blue-600 hover:underline">
+                            <a href="#" class="text-sm text-sky-600 hover:underline">
                                 {{ __('Download') }}
                             </a>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="mt-4 pt-4 border-t border-zinc-200 dark:border-zinc-700">
-                    <a href="{{ route('files.upload') }}" class="w-full block py-2 px-4 rounded-md text-sm font-medium text-zinc-700 dark:text-zinc-200 bg-white dark:bg-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-600 border border-zinc-300 dark:border-zinc-600 text-center">
+                    <a href="{{ route('files.upload') }}"
+                        class="w-full block py-2 px-4 rounded-md text-sm font-medium text-zinc-700 dark:text-zinc-200 bg-white dark:bg-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-600 border border-zinc-300 dark:border-zinc-600 text-center">
                         {{ __('Upload New File') }}
                     </a>
                 </div>
@@ -235,26 +272,31 @@
         </div>
 
         <!-- Project Requests Section -->
-        <div class="relative h-full flex-1 overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">
+        <div
+            class="relative h-full flex-1 overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">
             <div class="p-6">
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="text-xl font-semibold text-foreground">{{ __('Project Requests') }}</h2>
-                    <a href="{{ route('discussions.index') }}" class="text-sm text-blue-600 hover:underline">{{ __('View All') }}</a>
+                    <a href="{{ route('discussions.index') }}"
+                        class="text-sm text-sky-600 hover:underline">{{ __('View All') }}</a>
                 </div>
-                
-                @if($projectRequestsCount > 0)
+
+                @if ($projectRequestsCount > 0)
                     <div class="space-y-4">
-                        @foreach($projectRequests as $request)
-                            <div class="p-4 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">
+                        @foreach ($projectRequests as $request)
+                            <div
+                                class="p-4 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">
                                 <div class="flex justify-between">
                                     <div>
-                                        <p class="font-medium text-foreground">{{ $request->title ?? $request->name ?? 'Project Request' }}</p>
+                                        <p class="font-medium text-foreground">
+                                            {{ $request->title ?? ($request->name ?? 'Project Request') }}</p>
                                         <p class="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-                                            {{ \Illuminate\Support\Str::limit($request->description ?? $request->message ?? 'No description', 80) }}
+                                            {{ \Illuminate\Support\Str::limit($request->description ?? ($request->message ?? 'No description'), 80) }}
                                         </p>
                                     </div>
                                     <div class="text-right">
-                                        <span class="text-xs font-medium px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                                        <span
+                                            class="text-xs font-medium px-2 py-0.5 rounded-full bg-sky-100 text-sky-800 dark:bg-sky-900 dark:text-sky-500">
                                             {{ $request->status ?? 'Pending' }}
                                         </span>
                                     </div>
@@ -263,7 +305,8 @@
                                     <span class="text-xs text-zinc-500 dark:text-zinc-400">
                                         {{ $request->created_at?->diffForHumans() ?? 'Unknown date' }}
                                     </span>
-                                    <a href="{{ route('discussions.show', $request->id) }}" class="text-sm text-blue-600 hover:underline">
+                                    <a href="{{ route('discussions.show', $request->id) }}"
+                                        class="text-sm text-sky-600 hover:underline">
                                         {{ __('View') }}
                                     </a>
                                 </div>
@@ -275,9 +318,10 @@
                         {{ __('No project requests') }}
                     </div>
                 @endif
-                
+
                 <div class="mt-4 pt-4 border-t border-zinc-200 dark:border-zinc-700">
-                    <a href="{{ route('discussions.create') }}" class="w-full block py-2 px-4 rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 text-center">
+                    <a href="{{ route('discussions.create') }}"
+                        class="w-full block py-2 px-4 rounded-md text-sm font-medium text-white bg-sky-600 hover:bg-sky-700 text-center">
                         {{ __('Submit New Request') }}
                     </a>
                 </div>
@@ -286,16 +330,18 @@
     </div>
 
     <!-- Team Chat Section -->
-    <div class="relative h-full flex-1 overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">
+    <div
+        class="relative h-full flex-1 overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">
         <div class="p-6">
             <h2 class="text-xl font-semibold text-foreground mb-4">{{ __('Team Communication') }}</h2>
-            
+
             <div class="flex flex-col h-96">
                 <!-- Chat Messages -->
                 <div class="flex-1 overflow-y-auto mb-4 space-y-4">
                     <div class="flex items-start space-x-3">
                         <div class="flex-shrink-0">
-                            <div class="h-8 w-8 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center">
+                            <div
+                                class="h-8 w-8 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center">
                                 <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">PM</span>
                             </div>
                         </div>
@@ -309,9 +355,9 @@
                             </p>
                         </div>
                     </div>
-                    
+
                     <div class="flex items-start space-x-3 justify-end">
-                        <div class="flex-1 bg-blue-100 dark:bg-blue-900 rounded-lg p-3 max-w-[80%]">
+                        <div class="flex-1 bg-sky-100 dark:bg-sky-900 rounded-lg p-3 max-w-[80%]">
                             <div class="flex items-center justify-between">
                                 <span class="font-medium text-foreground">{{ auth()->user()->name }}</span>
                                 <span class="text-xs text-zinc-500 dark:text-zinc-400">10:32 AM</span>
@@ -321,15 +367,18 @@
                             </p>
                         </div>
                         <div class="flex-shrink-0">
-                            <div class="h-8 w-8 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center">
-                                <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span>
+                            <div
+                                class="h-8 w-8 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center">
+                                <span
+                                    class="text-sm font-medium text-zinc-700 dark:text-zinc-300">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="flex items-start space-x-3">
                         <div class="flex-shrink-0">
-                            <div class="h-8 w-8 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center">
+                            <div
+                                class="h-8 w-8 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center">
                                 <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">DS</span>
                             </div>
                         </div>
@@ -344,15 +393,12 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Chat Input -->
                 <div class="flex items-center space-x-2">
-                    <input 
-                        type="text" 
-                        placeholder="{{ __('Type your message here...') }}" 
-                        class="flex-1 border border-zinc-300 dark:border-zinc-600 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-700 dark:text-white"
-                    >
-                    <button class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700">
+                    <input type="text" placeholder="{{ __('Type your message here...') }}"
+                        class="flex-1 border border-zinc-300 dark:border-zinc-600 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 dark:bg-zinc-700 dark:text-white">
+                    <button class="px-4 py-2 bg-sky-600 text-white rounded-md text-sm font-medium hover:bg-sky-700">
                         {{ __('Send') }}
                     </button>
                 </div>

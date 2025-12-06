@@ -1,7 +1,6 @@
 <div class="space-y-6">
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-3xl font-bold text-foreground">{{ $client->company_name }}</h1>
             @if ($client->name)
                 <p class="text-muted-foreground">{{ $client->name }}</p>
             @endif
@@ -22,7 +21,7 @@
             <div class="flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="h-5 w-5 text-blue-600">
+                    class="h-5 w-5 text-sky-600">
                     <path d="M22 19h-4.5a2.5 2.5 0 0 1-2.5-2.5V12a2.5 2.5 0 0 1 2.5-2.5H22"></path>
                     <path d="M2 19h4.5a2.5 2.5 0 0 0 2.5-2.5V12a2.5 2.5 0 0 0-2.5-2.5H2"></path>
                     <path d="M12 19h0"></path>
@@ -126,7 +125,7 @@
                                             <path d="M12 8h.01"></path>
                                         </svg>
                                         <a href="{{ $client->website }}" target="_blank"
-                                            class="text-blue-600 hover:text-blue-800 dark:text-blue-400">{{ $client->website }}</a>
+                                            class="text-sky-600 hover:text-sky-800 dark:text-sky-400">{{ $client->website }}</a>
                                     </div>
                                 @endif
                                 @if ($client->description)
@@ -163,7 +162,7 @@
                                             <path d="m22 7-10 5L2 7"></path>
                                         </svg>
                                         <a href="mailto:{{ $client->email }}"
-                                            class="text-blue-600 hover:text-blue-800 dark:text-blue-400">{{ $client->email }}</a>
+                                            class="text-sky-600 hover:text-sky-800 dark:text-sky-400">{{ $client->email }}</a>
                                     </div>
                                 @endif
                                 @if ($client->phone)
@@ -177,7 +176,7 @@
                                             </path>
                                         </svg>
                                         <a href="tel:{{ $client->phone }}"
-                                            class="text-blue-600 hover:text-blue-800 dark:text-blue-400">{{ $client->phone }}</a>
+                                            class="text-sky-600 hover:text-sky-800 dark:text-sky-400">{{ $client->phone }}</a>
                                     </div>
                                 @endif
                             </div>
@@ -270,7 +269,7 @@
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm font-medium text-foreground">
                                                     <a href="{{ route('projects.show', $project) }}"
-                                                        class="hover:text-blue-600 dark:hover:text-blue-400">
+                                                        class="hover:text-sky-600 dark:hover:text-sky-500">
                                                         {{ $project->name }}
                                                     </a>
                                                 </div>
@@ -386,7 +385,7 @@
                                     <div class="flex items-center justify-between">
                                         <div>
                                             <a href="{{ route('tasks.show', $task) }}"
-                                                class="font-medium text-foreground hover:text-blue-600 dark:hover:text-blue-400">
+                                                class="font-medium text-foreground hover:text-sky-600 dark:hover:text-sky-500">
                                                 {{ $task->title }}
                                             </a>
                                             <p class="text-sm text-zinc-500 dark:text-zinc-400">
@@ -428,7 +427,7 @@
                     <div>
                         <flux:field label="Select Project" for="selectedProjectId">
                             <select id="selectedProjectId" wire:model.live="selectedProjectId"
-                                class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+                                class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
                                 <option value="">Choose a project...</option>
                                 @foreach ($availableProjects as $project)
                                     <option value="{{ $project['id'] }}">{{ $project['name'] }}</option>

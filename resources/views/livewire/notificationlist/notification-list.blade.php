@@ -1,7 +1,6 @@
 <div>
     <div class="max-w-7xl mx-auto px-4 py-8">
         <div class="mb-6">
-            <h1 class="text-3xl font-bold text-foreground">Notifications</h1>
             <p class="text-muted-foreground">Manage and view all your notifications</p>
         </div>
 
@@ -11,11 +10,11 @@
                 class="border-b border-zinc-200 dark:border-zinc-700 p-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div class="flex space-x-4">
                     <button wire:click="switchTab('all')"
-                        class="px-4 py-2 text-sm font-medium rounded-md {{ $activeTab === 'all' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400' : 'text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-zinc-700' }}">
+                        class="px-4 py-2 text-sm font-medium rounded-md {{ $activeTab === 'all' ? 'bg-sky-100 text-sky-800 dark:bg-sky-900/30 dark:text-sky-400' : 'text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-zinc-700' }}">
                         All Notifications
                     </button>
                     <button wire:click="switchTab('unread')"
-                        class="px-4 py-2 text-sm font-medium rounded-md {{ $activeTab === 'unread' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400' : 'text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-zinc-700' }}">
+                        class="px-4 py-2 text-sm font-medium rounded-md {{ $activeTab === 'unread' ? 'bg-sky-100 text-sky-800 dark:bg-sky-900/30 dark:text-sky-400' : 'text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-zinc-700' }}">
                         Unread
                         @if ($unreadCount > 0)
                             <span
@@ -25,14 +24,14 @@
                         @endif
                     </button>
                     <button wire:click="switchTab('read')"
-                        class="px-4 py-2 text-sm font-medium rounded-md {{ $activeTab === 'read' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400' : 'text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-zinc-700' }}">
+                        class="px-4 py-2 text-sm font-medium rounded-md {{ $activeTab === 'read' ? 'bg-sky-100 text-sky-800 dark:bg-sky-900/30 dark:text-sky-400' : 'text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-zinc-700' }}">
                         Read
                     </button>
                 </div>
 
                 @if ($activeTab !== 'read')
                     <button wire:click="markAllAsRead"
-                        class="px-4 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                        class="px-4 py-2 text-sm bg-sky-600 text-white rounded-md hover:bg-sky-700">
                         Mark All as Read
                     </button>
                 @endif
@@ -42,12 +41,12 @@
             <div class="divide-y divide-zinc-200 dark:divide-zinc-700">
                 @forelse($notifications as $notification)
                     <div
-                        class="p-4 {{ $notification->read_at ? 'bg-white dark:bg-zinc-800' : 'bg-blue-50 dark:bg-zinc-700/50' }}">
+                        class="p-4 {{ $notification->read_at ? 'bg-white dark:bg-zinc-800' : 'bg-sky-50 dark:bg-zinc-700/50' }}">
                         <div class="flex items-start">
                             <div class="flex-shrink-0 mt-1">
                                 @switch($notification->type)
                                     @case('task_assigned')
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" fill="none"
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7.5L14.5 2z" />
@@ -110,13 +109,13 @@
 
                                 @if (!empty($notification->data))
                                     @if (isset($notification->data['project_name']))
-                                        <p class="text-xs text-blue-600 dark:text-blue-400 mt-1">Project:
+                                        <p class="text-xs text-sky-600 dark:text-sky-400 mt-1">Project:
                                             {{ $notification->data['project_name'] }}</p>
                                     @elseif(isset($notification->data['client_name']))
-                                        <p class="text-xs text-blue-600 dark:text-blue-400 mt-1">Client:
+                                        <p class="text-xs text-sky-600 dark:text-sky-400 mt-1">Client:
                                             {{ $notification->data['client_name'] }}</p>
                                     @elseif(isset($notification->data['task_title']))
-                                        <p class="text-xs text-blue-600 dark:text-blue-400 mt-1">Task:
+                                        <p class="text-xs text-sky-600 dark:text-sky-400 mt-1">Task:
                                             {{ $notification->data['task_title'] }}</p>
                                     @endif
                                 @endif
@@ -124,7 +123,7 @@
                             <div class="ml-4 flex flex-shrink-0">
                                 @if (!$notification->read_at)
                                     <button wire:click="markAsRead({{ $notification->id }})"
-                                        class="text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                                        class="text-xs text-sky-600 hover:text-sky-800 dark:text-sky-400 dark:hover:text-sky-500">
                                         Mark as read
                                     </button>
                                 @endif

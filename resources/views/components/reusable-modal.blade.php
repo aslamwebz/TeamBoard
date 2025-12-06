@@ -28,7 +28,7 @@
                         <input type="checkbox"
                                :wire:model{{ sprintf("=\"%s\"", $selectedItemsProperty) }}
                                :value="{{ $item->id }}"
-                               class="rounded text-blue-600">
+                               class="rounded text-sky-600">
                         <div class="flex-1">
                             <h4 class="font-medium text-foreground">{{ $item->name ?? $item->title ?? $item->email ?? $item->id }}</h4>
                             @if(isset($item->description))

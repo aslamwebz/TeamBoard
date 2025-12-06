@@ -6,7 +6,7 @@
         </div>
         <a 
             href="{{ route('workers.show', $workerId) }}" 
-            class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
         >
             Back to Worker
         </a>
@@ -24,7 +24,7 @@
                         <select 
                             id="certification_id" 
                             wire:model="certification_id"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white text-gray-900"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm bg-white text-gray-900"
                         >
                             <option value="">Select a certification</option>
                             @foreach($allCertifications as $cert)
@@ -41,7 +41,7 @@
                                 type="date" 
                                 id="date_obtained" 
                                 wire:model="date_obtained" 
-                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white text-gray-900"
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm bg-white text-gray-900"
                             />
                             @error('date_obtained') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                         </div>
@@ -52,7 +52,7 @@
                                 type="date" 
                                 id="expiry_date" 
                                 wire:model="expiry_date" 
-                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white text-gray-900"
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm bg-white text-gray-900"
                             />
                             @error('expiry_date') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                         </div>
@@ -65,7 +65,7 @@
                             id="attachment" 
                             wire:model="attachment"
                             accept=".pdf,.jpg,.jpeg,.png"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                         />
                         @error('attachment') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                         @if($attachment)
@@ -78,7 +78,7 @@
                         <select 
                             id="status" 
                             wire:model="status"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white text-gray-900"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm bg-white text-gray-900"
                         >
                             <option value="active">Active</option>
                             <option value="expired">Expired</option>
@@ -94,7 +94,7 @@
                             id="notes" 
                             wire:model="notes" 
                             rows="3" 
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white text-gray-900"
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm bg-white text-gray-900"
                             placeholder="Add notes about this certification..."
                         ></textarea>
                         @error('notes') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
@@ -103,7 +103,7 @@
                     <div class="mt-4">
                         <button 
                             wire:click="addCertification"
-                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
                         >
                             Add Certification
                         </button>
@@ -161,7 +161,7 @@
                                             {{ $cert->pivot->status === 'active' ? 'bg-green-100 text-green-800' :
                                                ($cert->pivot->status === 'expired' ? 'bg-red-100 text-red-800' :
                                                   ($cert->pivot->status === 'suspended' ? 'bg-yellow-100 text-yellow-800' :
-                                                     ($cert->pivot->status === 'pending_verification' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'))) }}">
+                                                     ($cert->pivot->status === 'pending_verification' ? 'bg-sky-100 text-sky-800' : 'bg-gray-100 text-gray-800'))) }}">
                                             {{ ucfirst(str_replace('_', ' ', $cert->pivot->status)) }}
                                         </span>
                                     </td>

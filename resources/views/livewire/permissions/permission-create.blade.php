@@ -32,7 +32,7 @@
                         type="text"
                         id="name"
                         wire:model="name"
-                        class="w-full px-4 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white"
+                        class="w-full px-4 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white"
                         placeholder="Enter permission name (e.g., view reports, create invoices)"
                     />
                     @error('name') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
@@ -46,7 +46,7 @@
                         type="text"
                         id="guard_name"
                         wire:model="guard_name"
-                        class="w-full px-4 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white"
+                        class="w-full px-4 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white"
                         placeholder="Guard name (default: web)"
                     />
                     @error('guard_name') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
@@ -56,7 +56,7 @@
             <div class="pt-4">
                 <button
                     type="submit"
-                    class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    class="px-6 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
                 >
                     Create Permission
                 </button>

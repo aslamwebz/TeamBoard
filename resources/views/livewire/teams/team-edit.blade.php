@@ -14,7 +14,7 @@
                             Team Name <span class="text-red-500">*</span>
                         </label>
                         <input type="text" id="name" wire:model="name" placeholder="Development Team"
-                            class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('name') border-red-500 @enderror">
+                            class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('name') border-red-500 @enderror">
                         @error('name')
                             <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                         @enderror
@@ -28,7 +28,7 @@
                         </label>
                         <textarea id="description" wire:model="description" rows="4"
                             placeholder="Brief description of the team's purpose and responsibilities..."
-                            class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('description') border-red-500 @enderror"></textarea>
+                            class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('description') border-red-500 @enderror"></textarea>
                         @error('description')
                             <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                         @enderror
@@ -44,7 +44,7 @@
                         Cancel
                     </a>
                     <button type="submit"
-                        class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900">
+                        class="px-4 py-2 text-sm font-medium text-white bg-sky-600 rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900">
                         Update Team
                     </button>
                 </div>

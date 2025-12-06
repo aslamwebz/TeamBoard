@@ -1,10 +1,13 @@
 <flux:sidebar sticky collapsible
     class="in-data-flux-sidebar-on-desktop:not-in-data-flux-sidebar-collapsed-desktop:-mr-2 border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
     <flux:sidebar.header>
-        <flux:sidebar.brand href="#" logo="https://fluxui.dev/img/demo/logo.png"
-            logo:dark="https://fluxui.dev/img/demo/dark-mode-logo.png" name="{{ config('app.name') }}" />
-        <flux:sidebar.collapse
-            class="in-data-flux-sidebar-on-desktop:not-in-data-flux-sidebar-collapsed-desktop:-mr-2" />
+        <!-- Logo - Hidden on mobile, visible on large screens -->
+        <div class="hidden lg:flex lg:items-center lg:mr-6">
+            <a href="{{ route('dashboard') }}" class="flex items-center">
+                <x-application-logo class="h-6 w-auto" />
+            </a>
+        </div>
+
     </flux:sidebar.header>
 
     <flux:sidebar.nav>

@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Enums;
 
@@ -25,7 +23,7 @@ enum PhaseStatus: string
     {
         return match ($this) {
             self::NOT_STARTED => 'bg-gray-500/10 text-gray-700 dark:text-gray-400',
-            self::IN_PROGRESS => 'bg-blue-500/10 text-blue-700 dark:text-blue-400',
+            self::IN_PROGRESS => 'bg-sky-500/10 text-blue-700 dark:text-blue-400',
             self::COMPLETED => 'bg-green-500/10 text-green-700 dark:text-green-400',
             self::ON_HOLD => 'bg-red-500/10 text-red-700 dark:text-red-400',
         };

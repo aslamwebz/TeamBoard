@@ -10,8 +10,8 @@
     <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         <!-- Feature 1 -->
         <div class="relative overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800 p-6">
-            <div class="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center mb-4 dark:bg-blue-900/30">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-blue-600">
+            <div class="w-12 h-12 rounded-lg bg-sky-100 flex items-center justify-center mb-4 dark:bg-sky-900/30">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-sky-600">
                     <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
                     <path d="M3 6h18"></path>
                     <path d="M16 10a4 4 0 0 1-8 0"></path>
@@ -131,7 +131,7 @@
                 </ul>
             </div>
             <div class="relative aspect-video overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-700">
-                <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 flex items-center justify-center">
+                <div class="absolute inset-0 bg-gradient-to-br from-sky-500 to-indigo-50 dark:from-sky-500/20 dark:to-indigo-900/20 flex items-center justify-center">
                     <div class="grid gap-4 w-full h-full p-6">
                         <div class="h-4 bg-zinc-200 rounded dark:bg-zinc-700 w-3/4 mx-auto"></div>
                         <div class="grid grid-cols-4 gap-4">

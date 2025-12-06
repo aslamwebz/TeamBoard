@@ -31,7 +31,7 @@
                 <div class="space-y-2 max-h-60 overflow-y-auto">
                     @foreach($availableTasks as $availableTask)
                         @if(in_array($availableTask->id, $selectedDependencies))
-                            <div class="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg border border-blue-200 dark:border-blue-800">
+                            <div class="flex items-center justify-between p-3 bg-sky-50 dark:bg-sky-900/30 rounded-lg border border-sky-500 dark:border-sky-500">
                                 <span class="text-sm text-foreground">{{ $availableTask->title }}</span>
                                 <flux:button size="sm" variant="outline" color="red" type="button" wire:click="removeDependency({{ $availableTask->id }})">
                                     Remove

@@ -10,18 +10,22 @@
     <div class="flex items-center justify-center">
         <div class="relative inline-flex items-center rounded-xl bg-zinc-100 p-1 dark:bg-zinc-800">
             <span class="text-sm font-medium text-zinc-500 dark:text-zinc-400 px-4 py-1.5">{{ __('Monthly') }}</span>
-            <button class="relative ml-1 inline-flex h-8 w-14 items-center rounded-lg bg-white shadow-sm transition-transform dark:bg-zinc-700" aria-pressed="false">
-                <span class="ml-1 size-6 translate-x-0 rounded-full bg-zinc-900 transition-transform dark:bg-white"></span>
+            <button
+                class="relative ml-1 inline-flex h-8 w-14 items-center rounded-lg bg-white shadow-sm transition-transform dark:bg-zinc-700"
+                aria-pressed="false">
+                <span
+                    class="ml-1 size-6 translate-x-0 rounded-full bg-zinc-900 transition-transform dark:bg-white"></span>
             </button>
             <span class="text-sm font-medium text-zinc-900 dark:text-white px-4 py-1.5">{{ __('Yearly') }}</span>
-            <span class="ml-2 rounded-full bg-blue-500 px-2 py-0.5 text-xs text-white">{{ __('Save 20%') }}</span>
+            <span class="ml-2 rounded-full bg-sky-500px-2 py-0.5 text-xs text-white">{{ __('Save 20%') }}</span>
         </div>
     </div>
 
     <!-- Pricing Plans -->
     <div class="grid gap-8 md:grid-cols-3">
         <!-- Basic Plan -->
-        <div class="relative overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800 p-6">
+        <div
+            class="relative overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800 p-6">
             <h2 class="text-xl font-semibold text-foreground mb-2">{{ __('Basic') }}</h2>
             <p class="text-zinc-500 dark:text-zinc-400 mb-6">{{ __('Perfect for individuals and small teams') }}</p>
             <div class="flex items-baseline gap-2 mb-6">
@@ -30,28 +34,36 @@
             </div>
             <ul class="space-y-3 mb-8">
                 <li class="flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-green-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="h-4 w-4 text-green-600">
                         <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"></path>
                         <path d="m9 12 2 2 4-4"></path>
                     </svg>
                     <span>{{ __('Up to 5 projects') }}</span>
                 </li>
                 <li class="flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-green-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="h-4 w-4 text-green-600">
                         <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"></path>
                         <path d="m9 12 2 2 4-4"></path>
                     </svg>
                     <span>{{ __('3 team members') }}</span>
                 </li>
                 <li class="flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-green-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="h-4 w-4 text-green-600">
                         <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"></path>
                         <path d="m9 12 2 2 4-4"></path>
                     </svg>
                     <span>{{ __('Basic reporting') }}</span>
                 </li>
                 <li class="flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-green-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="h-4 w-4 text-green-600">
                         <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"></path>
                         <path d="m9 12 2 2 4-4"></path>
                     </svg>
@@ -64,8 +76,9 @@
         </div>
 
         <!-- Professional Plan (Popular) -->
-        <div class="relative overflow-hidden rounded-xl border-2 border-blue-500 bg-white dark:bg-zinc-800 p-6">
-            <div class="absolute top-0 right-0 rounded-bl-xl rounded-tr-xl bg-blue-500 px-4 py-1.5 text-sm font-medium text-white dark:bg-blue-600">
+        <div class="relative overflow-hidden rounded-xl border-2 border-sky-500 bg-white dark:bg-zinc-800 p-6">
+            <div
+                class="absolute top-0 right-0 rounded-bl-xl rounded-tr-xl bg-sky-500px-4 py-1.5 text-sm font-medium text-white dark:bg-sky-600">
                 {{ __('Most Popular') }}
             </div>
             <h2 class="text-xl font-semibold text-foreground mb-2">{{ __('Professional') }}</h2>
@@ -76,48 +89,59 @@
             </div>
             <ul class="space-y-3 mb-8">
                 <li class="flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-green-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="h-4 w-4 text-green-600">
                         <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"></path>
                         <path d="m9 12 2 2 4-4"></path>
                     </svg>
                     <span>{{ __('Unlimited projects') }}</span>
                 </li>
                 <li class="flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-green-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="h-4 w-4 text-green-600">
                         <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"></path>
                         <path d="m9 12 2 2 4-4"></path>
                     </svg>
                     <span>{{ __('Up to 20 team members') }}</span>
                 </li>
                 <li class="flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-green-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="h-4 w-4 text-green-600">
                         <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"></path>
                         <path d="m9 12 2 2 4-4"></path>
                     </svg>
                     <span>{{ __('Advanced reporting') }}</span>
                 </li>
                 <li class="flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-green-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="h-4 w-4 text-green-600">
                         <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"></path>
                         <path d="m9 12 2 2 4-4"></path>
                     </svg>
                     <span>{{ __('Priority support') }}</span>
                 </li>
                 <li class="flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-green-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="h-4 w-4 text-green-600">
                         <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"></path>
                         <path d="m9 12 2 2 4-4"></path>
                     </svg>
                     <span>{{ __('API access') }}</span>
                 </li>
             </ul>
-            <flux:button class="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700">
+            <flux:button class="w-full bg-sky-600 hover:bg-sky-700 dark:bg-sky-600 dark:hover:bg-sky-700">
                 {{ __('Start Free Trial') }}
             </flux:button>
         </div>
 
         <!-- Enterprise Plan -->
-        <div class="relative overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800 p-6">
+        <div
+            class="relative overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800 p-6">
             <h2 class="text-xl font-semibold text-foreground mb-2">{{ __('Enterprise') }}</h2>
             <p class="text-zinc-500 dark:text-zinc-400 mb-6">{{ __('For large organizations with custom needs') }}</p>
             <div class="flex items-baseline gap-2 mb-6">
@@ -126,35 +150,45 @@
             </div>
             <ul class="space-y-3 mb-8">
                 <li class="flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-green-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="h-4 w-4 text-green-600">
                         <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"></path>
                         <path d="m9 12 2 2 4-4"></path>
                     </svg>
                     <span>{{ __('Unlimited projects') }}</span>
                 </li>
                 <li class="flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-green-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="h-4 w-4 text-green-600">
                         <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"></path>
                         <path d="m9 12 2 2 4-4"></path>
                     </svg>
                     <span>{{ __('Unlimited team members') }}</span>
                 </li>
                 <li class="flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-green-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="h-4 w-4 text-green-600">
                         <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"></path>
                         <path d="m9 12 2 2 4-4"></path>
                     </svg>
                     <span>{{ __('Advanced analytics') }}</span>
                 </li>
                 <li class="flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-green-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="h-4 w-4 text-green-600">
                         <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"></path>
                         <path d="m9 12 2 2 4-4"></path>
                     </svg>
                     <span>{{ __('24/7 dedicated support') }}</span>
                 </li>
                 <li class="flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-green-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="h-4 w-4 text-green-600">
                         <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"></path>
                         <path d="m9 12 2 2 4-4"></path>
                     </svg>
@@ -184,7 +218,8 @@
                 </p>
             </div>
             <div>
-                <h3 class="text-lg font-semibold text-foreground mb-2">{{ __('Do you offer discounts for non-profits?') }}</h3>
+                <h3 class="text-lg font-semibold text-foreground mb-2">
+                    {{ __('Do you offer discounts for non-profits?') }}</h3>
                 <p class="text-zinc-500 dark:text-zinc-400">
                     {{ __('Yes, we offer special pricing for non-profit organizations. Please contact our sales team for more information.') }}
                 </p>

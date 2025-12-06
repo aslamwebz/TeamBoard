@@ -7,11 +7,10 @@
 
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-3xl font-bold text-foreground">Roles Management</h1>
             <p class="text-muted-foreground">Manage user roles and permissions</p>
         </div>
         <div class="flex gap-3">
-            <a href="{{ route('roles.create') }}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+            <a href="{{ route('roles.create') }}" class="px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700">
                 Create Role
             </a>
         </div>
@@ -26,7 +25,7 @@
                         wire:model.live="search"
                         type="text"
                         placeholder="Search roles..."
-                        class="w-full px-4 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white"
+                        class="w-full px-4 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white"
                     >
                 </div>
             </div>
@@ -61,7 +60,7 @@
                                     @if($role->permissions->count() > 0)
                                         <div class="flex flex-wrap gap-1">
                                             @foreach($role->permissions->take(5) as $permission)
-                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-sky-100 text-sky-800 dark:bg-sky-900/30 dark:text-sky-400">
                                                     {{ $permission->name }}
                                                 </span>
                                             @endforeach

@@ -1,7 +1,6 @@
 <div class="max-w-6xl mx-auto p-6">
     <div class="flex items-center justify-between mb-6">
         <div>
-            <h1 class="text-3xl font-bold text-foreground">{{ $project->name }} Milestones</h1>
             <p class="text-muted-foreground">Track important milestones for this project</p>
         </div>
         <div class="flex gap-3">
@@ -50,7 +49,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <div class="flex justify-end space-x-2">
                                         <a href="{{ route('milestones.edit', ['project' => $project->id, 'milestone' => $milestone->id]) }}"
-                                            class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                            class="text-sky-600 hover:text-sky-900 dark:text-sky-400 dark:hover:text-sky-500">
                                             Edit
                                         </a>
                                     </div>

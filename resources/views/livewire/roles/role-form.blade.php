@@ -32,7 +32,7 @@
                         type="text"
                         id="name"
                         wire:model="name"
-                        class="w-full px-4 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white"
+                        class="w-full px-4 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white"
                         placeholder="Enter role name"
                     />
                     @error('name') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
@@ -48,7 +48,7 @@
 
                     <!-- Debug information -->
                     @if($role)
-                        <div class="mb-3 p-3 bg-blue-50 dark:bg-blue-900/20 text-sm">
+                        <div class="mb-3 p-3 bg-sky-50 dark:bg-sky-900/20 text-sm">
                             <strong>Debug:</strong>
                             Current permissions IDs: {{ implode(', ', $permissions) }}
                             | Role permissions count: {{ $role->permissions->count() }}
@@ -69,7 +69,7 @@
                                             value="{{ $permission->id }}"
                                             wire:model.live="permissions"
                                             wire:key="permission-{{ $permission->id }}"
-                                            class="mt-1 h-4 w-4 text-blue-600 border-zinc-300 rounded focus:ring-blue-500"
+                                            class="mt-1 h-4 w-4 text-sky-600 border-zinc-300 rounded focus:ring-sky-500"
                                         />
                                         <div>
                                             <span class="block text-sm font-medium text-foreground">{{ $permission->name }}</span>
@@ -87,7 +87,7 @@
             <div class="pt-4">
                 <button
                     type="submit"
-                    class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    class="px-6 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
                 >
                     {{ $role ? 'Update Role' : 'Create Role' }}
                 </button>

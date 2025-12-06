@@ -90,10 +90,10 @@
                                     file:mr-4 file:py-2 file:px-4
                                     file:rounded-md file:border-0
                                     file:text-sm file:font-semibold
-                                    file:bg-blue-50 file:text-blue-700
-                                    hover:file:bg-blue-100
-                                    dark:file:bg-blue-900/30 dark:file:text-blue-400
-                                    dark:hover:file:bg-blue-800/30"
+                                    file:bg-sky-50 file:text-sky-700
+                                    hover:file:bg-sky-100
+                                    dark:file:bg-sky-500/30 dark:file:text-sky-500
+                                    dark:hover:file:bg-sky-500/30"
                             />
                         </flux:field>
                     </div>

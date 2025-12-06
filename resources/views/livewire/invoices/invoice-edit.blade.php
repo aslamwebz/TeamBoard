@@ -2,7 +2,6 @@
     <!-- Header -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-            <h1 class="text-3xl font-bold text-foreground">Edit Invoice</h1>
             <p class="text-muted-foreground">Update invoice details for {{ $invoice->invoice_number }}</p>
         </div>
         <div class="flex gap-3">
@@ -29,7 +28,7 @@
                             Client <span class="text-red-500">*</span>
                         </label>
                         <select id="client_id" wire:model="client_id"
-                            class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('client_id') border-red-500 @enderror">
+                            class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('client_id') border-red-500 @enderror">
                             <option value="">Select a client</option>
                             @foreach ($clients as $client)
                                 <option value="{{ $client->id }}">{{ $client->name }} ({{ $client->email }})</option>
@@ -46,7 +45,7 @@
                             Project
                         </label>
                         <select id="project_id" wire:model="project_id"
-                            class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('project_id') border-red-500 @enderror">
+                            class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('project_id') border-red-500 @enderror">
                             <option value="">Select a project (optional)</option>
                             @foreach ($projects as $project)
                                 <option value="{{ $project->id }}">{{ $project->name }}</option>
@@ -64,7 +63,7 @@
                             Invoice Number <span class="text-red-500">*</span>
                         </label>
                         <input type="text" id="invoice_number" wire:model="invoice_number" placeholder="INV-001"
-                            class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('invoice_number') border-red-500 @enderror">
+                            class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('invoice_number') border-red-500 @enderror">
                         @error('invoice_number')
                             <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                         @enderror
@@ -78,7 +77,7 @@
                                 Issue Date <span class="text-red-500">*</span>
                             </label>
                             <input type="date" id="issue_date" wire:model="issue_date"
-                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('issue_date') border-red-500 @enderror">
+                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('issue_date') border-red-500 @enderror">
                             @error('issue_date')
                                 <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                             @enderror
@@ -89,7 +88,7 @@
                                 Due Date <span class="text-red-500">*</span>
                             </label>
                             <input type="date" id="due_date" wire:model="due_date"
-                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('due_date') border-red-500 @enderror">
+                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('due_date') border-red-500 @enderror">
                             @error('due_date')
                                 <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                             @enderror
@@ -120,7 +119,7 @@
                                     <span class="absolute left-3 top-2 text-zinc-500">$</span>
                                     <input type="number" id="amount" wire:model="amount" step="0.01"
                                         placeholder="0.00"
-                                        class="w-full pl-8 pr-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('amount') border-red-500 @enderror">
+                                        class="w-full pl-8 pr-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('amount') border-red-500 @enderror">
                                 </div>
                                 @error('amount')
                                     <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
@@ -136,13 +135,13 @@
                                     <span class="absolute left-3 top-2 text-zinc-500">$</span>
                                     <input type="number" id="tax" wire:model="tax" step="0.01"
                                         placeholder="0.00"
-                                        class="w-full pl-8 pr-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('tax') border-red-500 @enderror">
+                                        class="w-full pl-8 pr-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('tax') border-red-500 @enderror">
                                 </div>
                                 @error('tax')
                                     <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                                 @enderror
                                 <button type="button" wire:click="calculateTotal"
-                                    class="mt-2 text-sm text-blue-600 hover:text-blue-700 font-medium">
+                                    class="mt-2 text-sm text-sky-600 hover:text-sky-700 font-medium">
                                     Calculate Total
                                 </button>
                             </div>
@@ -170,7 +169,7 @@
                             Status <span class="text-red-500">*</span>
                         </label>
                         <select id="status" wire:model="status"
-                            class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('status') border-red-500 @enderror">
+                            class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('status') border-red-500 @enderror">
                             <option value="draft">Draft</option>
                             <option value="sent">Sent</option>
                             <option value="paid">Paid</option>
@@ -191,7 +190,7 @@
                 </label>
                 <textarea id="description" wire:model="description" rows="4"
                     placeholder="Add any additional notes or details about this invoice..."
-                    class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('description') border-red-500 @enderror"></textarea>
+                    class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('description') border-red-500 @enderror"></textarea>
                 @error('description')
                     <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                 @enderror
@@ -208,7 +207,7 @@
                     Cancel
                 </a>
                 <button type="submit"
-                    class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                    class="px-6 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 transition-colors font-medium">
                     Update Invoice
                 </button>
             </div>

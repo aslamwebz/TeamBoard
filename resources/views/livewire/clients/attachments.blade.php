@@ -99,7 +99,7 @@
                                     <div class="flex items-center">
                                         <div class="flex-shrink-0 h-8 w-8">
                                             @if(str_contains($attachment->mime_type, 'image'))
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-blue-500">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-sky-500">
                                                     <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
                                                     <circle cx="9" cy="9" r="2" />
                                                     <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
@@ -113,7 +113,7 @@
                                                     <path d="M10 9H8" />
                                                 </svg>
                                             @elseif(str_contains($attachment->mime_type, 'wordprocessing'))
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-blue-500">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-sky-500">
                                                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                                                     <polyline points="14 2 14 8 20 8" />
                                                     <line x1="16" y1="13" x2="8" y2="13" />
@@ -137,7 +137,7 @@
                                         </div>
                                         <div class="ml-4">
                                             <div class="text-sm font-medium text-foreground">{{ $attachment->name }}</div>
-                                            <a href="{{ $attachment->download_url }}" target="_blank" class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                                            <a href="{{ $attachment->download_url }}" target="_blank" class="text-sm text-sky-600 hover:text-sky-800 dark:text-sky-400 dark:hover:text-sky-500">
                                                 {{ __('Download') }}
                                             </a>
                                         </div>
