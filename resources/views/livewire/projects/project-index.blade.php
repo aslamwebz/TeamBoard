@@ -2,6 +2,7 @@
     <!-- Header -->
     <div class="flex items-center justify-between">
         <div>
+            <h1 class="text-3xl font-bold text-foreground">{{ __('Projects') }}</h1>
             <p class="text-muted-foreground">{{ __('Manage your team projects and milestones') }}</p>
         </div>
         <a href="{{ route('projects.create') }}"

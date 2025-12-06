@@ -3,7 +3,7 @@
 
     <!-- Page Title -->
     <div class="flex-1 lg:flex-initial">
-        <livewire:page-title />
+        <h1 class="text-xl font-semibold text-gray-900 dark:text-white" x-data="{ pageTitle: document.title ? document.title.split(' - ')[0] : 'Dashboard' }" x-text="pageTitle"></h1>
     </div>
 
     <!-- Spacer to push notification and profile to the right -->

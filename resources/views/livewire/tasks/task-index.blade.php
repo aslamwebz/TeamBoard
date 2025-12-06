@@ -1,6 +1,7 @@
 <div class="space-y-6">
     <div class="flex items-center justify-between">
         <div>
+            <h1 class="text-3xl font-bold text-foreground">{{ __('Tasks') }}</h1>
             <p class="text-muted-foreground">{{ __('Manage your tasks across all projects') }}</p>
         </div>
         <div class="flex items-center gap-3">

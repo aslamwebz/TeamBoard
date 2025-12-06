@@ -1,4 +1,4 @@
-<div class="flex items-center mt-2">
+<div class="flex items-center mt-2 in-data-flux-sidebar-collapsed-desktop:hidden">
     @if (function_exists('tenant') && tenant() && isset(tenant()->logo))
         <img src="{{ tenant()->logo }}" alt="{{ tenant()->getCompanyName() ?? config('app.name') }}" class="h-8 w-auto" />
     @elseif(function_exists('tenant') && tenant() && isset(tenant()->legal_name))

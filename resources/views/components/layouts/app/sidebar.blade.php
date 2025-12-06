@@ -1,13 +1,9 @@
 <flux:sidebar sticky collapsible
     class="in-data-flux-sidebar-on-desktop:not-in-data-flux-sidebar-collapsed-desktop:-mr-2 border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
     <flux:sidebar.header>
-        <!-- Logo - Hidden on mobile, visible on large screens -->
-        <div class="hidden lg:flex lg:items-center lg:mr-6">
-            <a href="{{ route('dashboard') }}" class="flex items-center">
-                <x-application-logo class="h-6 w-auto" />
-            </a>
-        </div>
-
+        <x-application-logo />
+        <flux:sidebar.collapse
+            class="in-data-flux-sidebar-on-desktop:not-in-data-flux-sidebar-collapsed-desktop:-mr-2" />
     </flux:sidebar.header>
 
     <flux:sidebar.nav>
@@ -43,7 +39,7 @@
         </flux:sidebar.item>
 
         <flux:sidebar.group expandable
-            :expanded="request()->routeIs('projects') || request()->routeIs('tasks') || request()->routeIs('teams*') || request()->routeIs('discussions*') || request()->routeIs('files*')"
+            :expanded="request()->routeIs(['projects*', 'tasks*', 'teams*', 'discussions*', 'files*'])"
             icon="folder-open" heading="WORK" class="grid">
 
             <flux:sidebar.item icon="briefcase" href="{{ route('projects') }}"
@@ -82,8 +78,7 @@
                 {{ __('Clients') }}
             </flux:sidebar.item>
         </flux:sidebar.group>
-        <flux:sidebar.group expandable
-            :expanded="(request()->routeIs('users') || request()->routeIs('roles*') || request()->routeIs('permissions*')) ? true : false"
+        <flux:sidebar.group expandable :expanded="request()->routeIs(['users*', 'roles*', 'permissions*'])"
             icon="user-circle" heading="USERS" class="grid">
             @canany(['view users', 'view roles', 'view permissions'])
                 @can('view users')
@@ -113,7 +108,7 @@
             @endcanany
         </flux:sidebar.group>
         <flux:sidebar.group expandable
-            :expanded="(request()->routeIs('invoices*') || request()->routeIs('expenses*') || request()->routeIs('payments*') || request()->routeIs('payment-reminders*')) ? true : false"
+            :expanded="request()->routeIs(['invoices*', 'expenses*', 'payments*', 'payment-reminders*'])"
             icon="currency-dollar" heading="FINANCE" class="grid">
             @can('view invoices')
                 <flux:sidebar.item icon="document-currency-dollar" href="{{ route('invoices.index') }}"
@@ -141,9 +136,8 @@
                 {{ __('Payment Reminders') }}
             </flux:sidebar.item>
         </flux:sidebar.group>
-        <flux:sidebar.group expandable
-            :expanded="(request()->routeIs('vendors*') || request()->routeIs('purchase-orders*')) ? true : false"
-            icon="shopping-cart" heading="PROCUREMENT" class="grid">
+        <flux:sidebar.group expandable :expanded="request()->routeIs('vendors*')" icon="shopping-cart"
+            heading="PROCUREMENT" class="grid">
 
             <flux:sidebar.item icon="building-office" href="{{ route('vendors') }}"
                 :current="request()->routeIs('vendors*')" wire:navigate.hover
@@ -157,8 +151,7 @@
                 {{ __('Purchase Orders') }}
             </flux:sidebar.item>
         </flux:sidebar.group>
-        <flux:sidebar.group expandable :expanded="(request()->routeIs('reports*')) ? true : false" icon="chart-bar"
-            heading="REPORTS" class="grid">
+        <flux:sidebar.group expandable :expanded="request()->routeIs('reports*')" icon="chart-bar" heading="REPORTS" class="grid">
             @can('view reports')
                 <flux:sidebar.item icon="chart-pie" href="{{ route('reports.index') }}"
                     :current="request()->routeIs('reports*')" wire:navigate.hover

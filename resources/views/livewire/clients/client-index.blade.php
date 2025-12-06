@@ -2,6 +2,7 @@
     <div class="space-y-6">
         <div class="flex items-center justify-between">
             <div>
+                <h1 class="text-3xl font-bold text-foreground">Clients</h1>
                 <p class="text-muted-foreground">Manage your clients and their projects</p>
             </div>
             <flux:button :href="route('clients.create')" class="flex items-center gap-2">

@@ -1,6 +1,7 @@
 <div class="space-y-6">
     <div class="flex items-center justify-between">
         <div>
+            <h1 class="text-3xl font-bold text-foreground">Invoices</h1>
             <p class="text-muted-foreground">Manage your invoices and payments</p>
         </div>
         <flux:button :href="route('invoices.create')" class="flex items-center gap-2">
