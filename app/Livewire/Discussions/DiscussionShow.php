@@ -173,13 +173,20 @@ final class DiscussionShow extends Component
     public function render(): \Illuminate\Contracts\View\View
     {
         $typeColors = [
-            'project' => 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
-            'task' => 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
-            'client' => 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400',
+            'project' => \App\Enums\DiscussionType::PROJECT->getColorClass(),
+            'task' => \App\Enums\DiscussionType::TASK->getColorClass(),
+            'client' => \App\Enums\DiscussionType::CLIENT->getColorClass(),
+        ];
+
+        $typeLabels = [
+            'project' => 'Project',
+            'task' => 'Task',
+            'client' => 'Client'
         ];
 
         return view('livewire.discussions.discussion-show', [
             'typeColors' => $typeColors,
+            'typeLabels' => $typeLabels,
         ]);
     }
 

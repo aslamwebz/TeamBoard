@@ -73,11 +73,7 @@
                                 </span>
                             </div>
                             <span
-                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                @if ($report->status === 'draft') bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300
-                                @elseif($report->status === 'generated') bg-green-100 text-green-800 dark:bg-green-700 dark:text-green-300
-                                @elseif($report->status === 'archived') bg-purple-100 text-purple-800 dark:bg-purple-700 dark:text-purple-300 @endif
-                            ">
+                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $this->getStatusBadgeClass($report->status) }}">
                                 {{ ucfirst($report->status) }}
                             </span>
                         </div>

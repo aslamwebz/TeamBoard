@@ -24,15 +24,8 @@
                             </div>
                             <span>{{ $discussion->created_at->format('M d, Y \a\t g:i A') }}</span>
                             <span>•</span>
-                            @php
-                                $typeLabels = [
-                                    'project' => 'Project',
-                                    'task' => 'Task', 
-                                    'client' => 'Client'
-                                ];
-                            @endphp
                             <span>
-                                Related to {{ $typeLabels[$discussion->type] ?? ucfirst($discussion->type) }}: 
+                                Related to {{ $typeLabels[$discussion->type] ?? ucfirst($discussion->type) }}:
                                 @if($discussion->type === 'project')
                                     <a href="{{ route('projects.show', $discussion->project) }}" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
                                         {{ $discussion->project->name ?? 'Unknown Project' }}

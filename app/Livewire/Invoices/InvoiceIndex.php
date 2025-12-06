@@ -81,4 +81,14 @@ final class InvoiceIndex extends Component
         $this->confirmingDelete = false;
         $this->invoiceToDeleteId = null;
     }
+
+    public function getInvoiceStatusBadgeClass(string $status): string
+    {
+        $invoiceStatus = \App\Enums\InvoiceStatus::tryFrom($status);
+        if ($invoiceStatus) {
+            return $invoiceStatus->getColorClass();
+        }
+
+        return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
+    }
 }

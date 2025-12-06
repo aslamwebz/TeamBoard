@@ -24,4 +24,14 @@ final class MilestoneShow extends Component
     {
         return view('livewire.projects.milestones.milestone-show');
     }
+
+    public function getMilestoneStatusBadgeClass(string $status): string
+    {
+        $milestoneStatus = \App\Enums\PhaseStatus::tryFrom($status); // Milestones use the same statuses as phases
+        if ($milestoneStatus) {
+            return $milestoneStatus->getColorClass();
+        }
+
+        return 'bg-zinc-100 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-300';
+    }
 }

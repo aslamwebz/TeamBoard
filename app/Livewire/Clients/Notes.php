@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire\Clients;
 
 use App\Models\Client;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 final class Notes extends Component
@@ -30,7 +31,7 @@ final class Notes extends Component
         session()->flash('message', 'Notes updated successfully.');
     }
 
-    public function render(): \Illuminate\Contracts\View\View
+    public function render(): View
     {
         return view('livewire.clients.notes');
     }

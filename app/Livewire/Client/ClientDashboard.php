@@ -6,6 +6,7 @@ namespace App\Livewire\Client;
 
 use App\Models\Client;
 use App\Models\Discussion;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Illuminate\View\View;
 
@@ -23,6 +24,7 @@ final class ClientDashboard extends Component
     public $latestFileDate = null;
     public $projectRequestsCount = 0;
     public $pendingProjectRequestsCount = 0;
+    public $avgProjectProgress = 0;
 
     public function mount(): void
     {
@@ -31,7 +33,7 @@ final class ClientDashboard extends Component
 
     public function loadDashboardData(): void
     {
-        $user = auth()->user();
+        $user = Auth::user();
         $client = $this->getClientForUser($user);
 
         if (!$client) {
@@ -39,7 +41,7 @@ final class ClientDashboard extends Component
         }
 
         // Load project progress for the client
-        $this->projectProgress = $client->projects()
+        $projectProgressCollection = $client->projects()
             ->with(['tasks', 'phases', 'milestones'])
             ->get()
             ->map(function ($project) {
@@ -52,8 +54,16 @@ final class ClientDashboard extends Component
                     'progress' => $totalTasks > 0 ? round(($completedTasks / $totalTasks) * 100) : 0,
                     'status' => $project->status,
                 ];
-            })
-            ->toArray();
+            });
+
+        $this->projectProgress = $projectProgressCollection->toArray();
+
+        // Calculate average project progress
+        if ($projectProgressCollection->count() > 0) {
+            $this->avgProjectProgress = $projectProgressCollection->avg('progress');
+        } else {
+            $this->avgProjectProgress = 0;
+        }
 
         // Load invoices for the client and compute related statistics
         $invoicesCollection = $client->invoices()

@@ -191,4 +191,45 @@ final class WorkerDashboard extends Component
     {
         return view('livewire.worker.worker-dashboard');
     }
+
+    public function getTaskDeadlineInfo($task)
+    {
+        $isOverdue = $task->due_date->isBefore(now()->startOfDay());
+        $dateClass = $isOverdue ? 'text-red-600 dark:text-red-400' : ($task->due_date->isToday() ? 'text-amber-600 dark:text-amber-400' : 'text-zinc-500 dark:text-zinc-400');
+        $bgClass = $isOverdue ? 'bg-red-50 dark:bg-red-900/20' : ($task->due_date->isToday() ? 'bg-amber-50 dark:bg-amber-900/20' : 'bg-blue-50 dark:bg-blue-900/20');
+
+        return [
+            'isOverdue' => $isOverdue,
+            'dateClass' => $dateClass,
+            'bgClass' => $bgClass
+        ];
+    }
+
+    public function render() : View
+    {
+        $this->loadDashboardData();
+
+        // Precompute task deadline info for upcoming deadlines
+        $upcomingDeadlinesWithInfo = $this->upcomingDeadlines->map(function($task) {
+            $deadlineInfo = $this->getTaskDeadlineInfo($task);
+            $task->deadlineInfo = $deadlineInfo;
+            return $task;
+        });
+
+        return view('livewire.worker.worker-dashboard', [
+            'myTasks' => $this->myTasks,
+            'myProjects' => $this->myProjects,
+            'upcomingDeadlines' => $upcomingDeadlinesWithInfo,
+            'teamActivity' => $this->teamActivity,
+            'importantAnnouncements' => $this->importantAnnouncements,
+            'notifications' => $this->notifications,
+            'quickActions' => $this->quickActions,
+            'myTasksCount' => $this->myTasksCount,
+            'completedTasksCount' => $this->completedTasksCount,
+            'myProjectsCount' => $this->myProjectsCount,
+            'avgProjectCompletion' => $this->avgProjectCompletion,
+            'upcomingDeadlinesCount' => $this->upcomingDeadlinesCount,
+            'overdueDeadlinesCount' => $this->overdueDeadlinesCount,
+        ]);
+    }
 }

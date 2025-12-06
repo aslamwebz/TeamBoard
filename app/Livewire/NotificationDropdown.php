@@ -14,6 +14,8 @@ final class NotificationDropdown extends Component
 
     public $showDropdown = false;
 
+    public $unreadNotificationsCount = 0;
+
     protected $listeners = [
         'refreshNotifications' => 'refresh',
         'notificationRead' => 'decrementUnreadCount',
@@ -37,6 +39,8 @@ final class NotificationDropdown extends Component
             ->latest()
             ->limit(10)
             ->get();
+
+        $this->unreadNotificationsCount = $this->notifications->filter(fn($n) => !$n->isRead())->count();
     }
 
     public function markAsRead($notificationId): void

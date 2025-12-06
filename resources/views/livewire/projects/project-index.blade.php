@@ -98,14 +98,6 @@
                                 {{ $project->client?->name ?? 'N/A' }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                @php
-                                    $statusColors = [
-                                        'planning' => 'bg-yellow-500/10 text-yellow-700 dark:text-yellow-400',
-                                        'in_progress' => 'bg-blue-500/10 text-blue-700 dark:text-blue-400',
-                                        'completed' => 'bg-green-500/10 text-green-700 dark:text-green-400',
-                                        'on_hold' => 'bg-red-500/10 text-red-700 dark:text-red-400',
-                                    ];
-                                @endphp
                                 <flux:badge
                                     class="{{ $statusColors[$project->status] ?? 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400' }}">
                                     {{ ucfirst(str_replace('_', ' ', $project->status)) }}

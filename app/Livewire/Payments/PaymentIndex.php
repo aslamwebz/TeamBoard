@@ -114,4 +114,14 @@ final class PaymentIndex extends Component
             $this->dispatch('payment-deleted');
         }
     }
+
+    public function getStatusBadgeClass(string $status): string
+    {
+        $paymentStatus = \App\Enums\PaymentStatus::tryFrom($status);
+        if ($paymentStatus) {
+            return $paymentStatus->getColorClass();
+        }
+
+        return 'bg-gray-100 text-gray-800';
+    }
 }

@@ -55,7 +55,8 @@ final class UserIndex extends Component
         }
 
         $users = $query
-            ->with(['projects', 'tasks', 'clients', 'roles.permissions', 'permissions'])
+            ->withCount(['projects', 'tasks', 'clients'])
+            ->with(['roles.permissions', 'permissions'])
             ->orderBy('name', 'asc')
             ->paginate($this->perPage);
 

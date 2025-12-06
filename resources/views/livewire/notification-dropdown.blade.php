@@ -31,7 +31,7 @@
         <div class="p-2">
             <div class="flex items-center justify-between p-2">
                 <h3 class="font-medium text-foreground">Notifications</h3>
-                @if(collect($notifications)->filter(fn($n) => !$n->isRead())->count() > 0)
+                @if($unreadNotificationsCount > 0)
                     <button 
                         wire:click="markAllAsRead" 
                         class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"

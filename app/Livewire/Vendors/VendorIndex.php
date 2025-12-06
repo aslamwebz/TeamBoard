@@ -49,11 +49,11 @@ final class VendorIndex extends Component
 
     public function getStatusBadgeClass(string $status): string
     {
-        return match ($status) {
-            'active' => 'bg-green-100 text-green-800',
-            'inactive' => 'bg-red-100 text-red-800',
-            'pending' => 'bg-yellow-100 text-yellow-800',
-            default => 'bg-gray-100 text-gray-800',
-        };
+        $vendorStatus = \App\Enums\VendorStatus::tryFrom($status);
+        if ($vendorStatus) {
+            return $vendorStatus->getColorClass();
+        }
+
+        return 'bg-gray-100 text-gray-800';
     }
 }

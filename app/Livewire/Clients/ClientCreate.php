@@ -1,12 +1,12 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Livewire\Clients;
 
+use App\Events\ClientAddedNotification;
 use App\Models\Client;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -15,77 +15,44 @@ use Livewire\Component;
 #[Title('Create Client')]
 final class ClientCreate extends Component
 {
-    public $company_name = '';
-
-    public $name = '';
-
-    public $email = '';
-
-    public $phone = '';
-
-    public $address = '';
-
-    public $city = '';
-
-    public $state = '';
-
-    public $zip_code = '';
-
-    public $country = '';
-
-    public $vat_number = '';
-
-    public $logo = '';
-
-    public $registration_number = '';
-
-    public $tax_id = '';
-
-    public $website = '';
-
-    public $industry = '';
-
-    public $description = '';
-
-    public $billing_plan = '';
-
-    public $subscription_start_date = '';
-
-    public $subscription_end_date = '';
-
-    public $subscription_status = '';
+    public Client $client;
 
     protected $rules = [
-        'company_name' => 'required|string|max:255|unique:clients,company_name',
-        'name' => 'nullable|string|max:255',
-        'email' => 'required|email|unique:clients,email',
-        'phone' => 'nullable|string|max:20',
-        'address' => 'nullable|string|max:500',
-        'city' => 'nullable|string|max:100',
-        'state' => 'nullable|string|max:100',
-        'zip_code' => 'nullable|string|max:20',
-        'country' => 'nullable|string|max:100',
-        'vat_number' => 'nullable|string|max:50',
-        'logo' => 'nullable|string|max:255',
-        'registration_number' => 'nullable|string|max:100',
-        'tax_id' => 'nullable|string|max:50',
-        'website' => 'nullable|url|max:255',
-        'industry' => 'nullable|string|max:100',
-        'description' => 'nullable|string',
-        'billing_plan' => 'nullable|string|max:50',
-        'subscription_start_date' => 'nullable|date',
-        'subscription_end_date' => 'nullable|date',
-        'subscription_status' => 'nullable|string|max:50',
+        'client.company_name' => 'required|string|max:255|unique:clients,company_name',
+        'client.name' => 'nullable|string|max:255',
+        'client.email' => 'required|email|unique:clients,email',
+        'client.phone' => 'nullable|string|max:20',
+        'client.address' => 'nullable|string|max:500',
+        'client.city' => 'nullable|string|max:100',
+        'client.state' => 'nullable|string|max:100',
+        'client.zip_code' => 'nullable|string|max:20',
+        'client.country' => 'nullable|string|max:100',
+        'client.vat_number' => 'nullable|string|max:50',
+        'client.logo' => 'nullable|string|max:255',
+        'client.registration_number' => 'nullable|string|max:100',
+        'client.tax_id' => 'nullable|string|max:50',
+        'client.website' => 'nullable|url|max:255',
+        'client.industry' => 'nullable|string|max:100',
+        'client.description' => 'nullable|string',
+        'client.billing_plan' => 'nullable|string|max:50',
+        'client.subscription_start_date' => 'nullable|date',
+        'client.subscription_end_date' => 'nullable|date',
+        'client.subscription_status' => 'nullable|string|max:50',
     ];
+
+    public function mount(): void
+    {
+        $this->client = new Client();
+    }
 
     public function createClient(): RedirectResponse
     {
         $validated = $this->validate();
 
-        $client = Client::create($validated);
+        $client = Client::create($validated['client']);
 
         // Dispatch notification when client is added
-        \App\Events\ClientAddedNotification::dispatch($client, auth()->user());
+        ClientAddedNotification::dispatch($client, Auth::user());
 
         return redirect()->route('clients.index');
     }

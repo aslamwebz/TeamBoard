@@ -62,4 +62,9 @@ final class FilesIndex extends Component
             'files' => $files,
         ]);
     }
+
+    public function getAttachment($fileId)
+    {
+        return DiscussionAttachment::find($fileId);
+    }
 }

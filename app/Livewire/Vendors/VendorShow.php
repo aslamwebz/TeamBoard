@@ -23,23 +23,21 @@ final class VendorShow extends Component
 
     public function getVendorStatusBadgeClass(string $status): string
     {
-        return match ($status) {
-            'active' => 'bg-green-100 text-green-800',
-            'inactive' => 'bg-red-100 text-red-800',
-            'pending' => 'bg-yellow-100 text-yellow-800',
-            default => 'bg-gray-100 text-gray-800',
-        };
+        $vendorStatus = \App\Enums\VendorStatus::tryFrom($status);
+        if ($vendorStatus) {
+            return $vendorStatus->getColorClass();
+        }
+
+        return 'bg-gray-100 text-gray-800';
     }
 
     public function getInvoiceStatusBadgeClass(string $status): string
     {
-        return match ($status) {
-            'paid' => 'bg-green-100 text-green-800',
-            'overdue' => 'bg-red-100 text-red-800',
-            'cancelled' => 'bg-gray-100 text-gray-800',
-            'draft' => 'bg-blue-100 text-blue-800',
-            'sent' => 'bg-purple-100 text-purple-800',
-            default => 'bg-yellow-100 text-yellow-800',
-        };
+        $invoiceStatus = \App\Enums\InvoiceStatus::tryFrom($status);
+        if ($invoiceStatus) {
+            return $invoiceStatus->getColorClass();
+        }
+
+        return 'bg-yellow-100 text-yellow-800';
     }
 }

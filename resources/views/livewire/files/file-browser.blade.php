@@ -46,7 +46,7 @@
                 <div class="mt-2 space-y-2">
                     @foreach($selectedFiles as $index => $fileId)
                         @php
-                            $attachment = \App\Models\DiscussionAttachment::find($fileId);
+                            $attachment = $this->getAttachment($fileId);
                         @endphp
                         @if($attachment)
                             <div class="flex items-center justify-between p-2 bg-blue-50 dark:bg-blue-900/20 rounded">

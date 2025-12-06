@@ -54,16 +54,6 @@
                 </thead>
                 <tbody class="divide-y divide-zinc-200 dark:divide-zinc-600">
                     @forelse($users as $user)
-                        @php
-                            $projectCount = $user->projects()->count();
-                            $activeProjects = $user
-                                ->projects()
-                                ->whereIn('status', ['planning', 'in_progress'])
-                                ->count();
-                            $taskCount = $user->tasks()->count();
-                            $completedTasks = $user->tasks()->where('status', 'completed')->count();
-                            $clientCount = $user->clients()->count();
-                        @endphp
                         <tr class="hover:bg-zinc-50 dark:hover:bg-zinc-700/50 transition-colors">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center gap-3">
@@ -81,19 +71,19 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm text-foreground">
-                                    <div class="font-medium">{{ $projectCount }}</div>
-                                    @if ($activeProjects > 0)
-                                        <div class="text-xs text-green-600 dark:text-green-400">{{ $activeProjects }}
+                                    <div class="font-medium">{{ $user->projects_count }}</div>
+                                    @if ($user->active_projects > 0)
+                                        <div class="text-xs text-green-600 dark:text-green-400">{{ $user->active_projects }}
                                             {{ __('active') }}</div>
                                     @endif
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm text-foreground">
-                                    <div class="font-medium">{{ $taskCount }}</div>
-                                    @if ($taskCount > 0)
+                                    <div class="font-medium">{{ $user->tasks_count }}</div>
+                                    @if ($user->tasks_count > 0)
                                         <div class="text-xs text-blue-600 dark:text-blue-400">
-                                            {{ round(($completedTasks / $taskCount) * 100) }}% {{ __('done') }}
+                                            {{ round(($user->completed_tasks / $user->tasks_count) * 100) }}% {{ __('done') }}
                                         </div>
                                     @endif
                                 </div>

@@ -37,9 +37,21 @@ final class UserShow extends Component
         $userPermissions = $this->user->getAllPermissions();
         $userPermissionsCount = $userPermissions->count();
 
+        // Group permissions by category
+        $groupedPermissions = [];
+        foreach ($userPermissions as $permission) {
+            $category = \App\Enums\PermissionCategory::getCategoryForPermission($permission->name)->value;
+
+            if (!isset($groupedPermissions[$category])) {
+                $groupedPermissions[$category] = [];
+            }
+            $groupedPermissions[$category][] = $permission;
+        }
+
         return view('livewire.users.user-show', [
             'userPermissions' => $userPermissions,
             'userPermissionsCount' => $userPermissionsCount,
+            'groupedPermissions' => $groupedPermissions,
         ]);
     }
 }

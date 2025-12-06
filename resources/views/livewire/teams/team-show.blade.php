@@ -101,14 +101,6 @@
                     @if ($team->projects->count() > 0)
                         <div class="space-y-3">
                             @foreach ($team->projects as $project)
-                                @php
-                                    $statusColors = [
-                                        'planning' => 'bg-yellow-500/10 text-yellow-700 dark:text-yellow-400',
-                                        'in_progress' => 'bg-blue-500/10 text-blue-700 dark:text-blue-400',
-                                        'completed' => 'bg-green-500/10 text-green-700 dark:text-green-400',
-                                        'on_hold' => 'bg-red-500/10 text-red-700 dark:text-red-400',
-                                    ];
-                                @endphp
                                 <div
                                     class="border border-zinc-200 dark:border-zinc-700 rounded-lg p-4 hover:bg-zinc-50 dark:hover:bg-zinc-700/50 transition-colors">
                                     <div class="flex items-start justify-between">
@@ -150,7 +142,7 @@
                                         </div>
                                         <div class="flex items-center gap-2">
                                             <span
-                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $statusColors[$project->status] ?? 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400' }}">
+                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $this->getProjectStatusBadgeClass($project->status) }}">
                                                 {{ ucfirst(str_replace('_', ' ', $project->status)) }}
                                             </span>
                                             <button wire:click="removeProject({{ $project->id }})"
@@ -200,25 +192,9 @@
                         </button>
                     </div>
 
-                    @php
-                        $teamTasks = collect();
-                        foreach ($team->projects as $project) {
-                            $teamTasks = $teamTasks->merge($project->tasks);
-                        }
-                        $recentTasks = $teamTasks->take(10);
-                    @endphp
-
                     @if ($recentTasks->count() > 0)
                         <div class="space-y-3">
                             @foreach ($recentTasks as $task)
-                                @php
-                                    $statusColors = [
-                                        'todo' => 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400',
-                                        'in_progress' => 'bg-blue-500/10 text-blue-700 dark:text-blue-400',
-                                        'completed' => 'bg-green-500/10 text-green-700 dark:text-green-400',
-                                        'on_hold' => 'bg-red-500/10 text-red-700 dark:text-red-400',
-                                    ];
-                                @endphp
                                 <div
                                     class="flex items-center justify-between p-3 border border-zinc-200 dark:border-zinc-700 rounded-lg">
                                     <div class="flex-1">
@@ -236,7 +212,7 @@
                                         </div>
                                     </div>
                                     <flux:badge
-                                        class="{{ $statusColors[$task->status] ?? 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400' }}">
+                                        class="{{ $this->getTaskStatusBadgeClass($task->status) }}">
                                         {{ ucfirst(str_replace('_', ' ', $task->status)) }}
                                     </flux:badge>
                                 </div>

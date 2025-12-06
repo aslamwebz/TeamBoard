@@ -40,15 +40,7 @@
                                     {{ $milestone->phase?->name ?? 'No Phase' }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    @php
-                                        $statusColors = [
-                                            'not_started' => 'bg-zinc-100 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-300',
-                                            'in_progress' => 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
-                                            'completed' => 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
-                                            'on_hold' => 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
-                                        ];
-                                    @endphp
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $statusColors[$milestone->status] ?? 'bg-zinc-100 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-300' }}">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $this->getMilestoneStatusBadgeClass($milestone->status) }}">
                                         {{ ucfirst(str_replace('_', ' ', $milestone->status)) }}
                                     </span>
                                 </td>

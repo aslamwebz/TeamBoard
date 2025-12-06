@@ -6,6 +6,7 @@ namespace App\Livewire\Clients;
 
 use App\Models\Client;
 use App\Models\Contact;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -28,7 +29,7 @@ final class ContactList extends Component
         $this->client = $client;
     }
 
-    public function render(): \Illuminate\Contracts\View\View
+    public function render(): View
     {
         $contacts = $this->client->contacts()
             ->where(function ($query) {

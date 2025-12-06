@@ -122,4 +122,14 @@ final class ExpenseIndex extends Component
             $this->dispatch('expense-rejected');
         }
     }
+
+    public function getStatusBadgeClass(string $status): string
+    {
+        $expenseStatus = \App\Enums\ExpenseStatus::tryFrom($status);
+        if ($expenseStatus) {
+            return $expenseStatus->getColorClass();
+        }
+
+        return 'bg-gray-100 text-gray-800';
+    }
 }

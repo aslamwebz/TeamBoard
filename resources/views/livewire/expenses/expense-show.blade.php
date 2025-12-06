@@ -58,13 +58,7 @@
                             <label class="block text-sm font-medium text-gray-900 sm:mt-px sm:pt-2">Status</label>
                             <div class="mt-1 sm:col-span-2 sm:mt-0">
                                 <p class="block max-w-lg rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-xs sm:text-sm sm:leading-6">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                        @if($expense->status === 'pending') bg-yellow-100 text-yellow-800
-                                        @elseif($expense->status === 'approved') bg-green-100 text-green-800
-                                        @elseif($expense->status === 'rejected') bg-red-100 text-red-800
-                                        @elseif($expense->status === 'paid') bg-blue-100 text-blue-800
-                                        @else bg-gray-100 text-gray-800
-                                        @endif">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $this->getExpenseStatusBadgeClass($expense->status) }}">
                                         {{ ucfirst(str_replace('_', ' ', $expense->status)) }}
                                     </span>
                                 </p>

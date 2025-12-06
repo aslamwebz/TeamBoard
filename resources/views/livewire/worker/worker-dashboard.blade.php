@@ -183,23 +183,18 @@
                 @if($upcomingDeadlinesCount > 0)
                     <div class="space-y-4">
                         @foreach($upcomingDeadlines->take(5) as $task)
-                            @php
-                                $isOverdue = $task->due_date->isBefore(now()->startOfDay());
-                                $dateClass = $isOverdue ? 'text-red-600 dark:text-red-400' : ($task->due_date->isToday() ? 'text-amber-600 dark:text-amber-400' : 'text-zinc-500 dark:text-zinc-400');
-                                $bgClass = $isOverdue ? 'bg-red-50 dark:bg-red-900/20' : ($task->due_date->isToday() ? 'bg-amber-50 dark:bg-amber-900/20' : 'bg-blue-50 dark:bg-blue-900/20');
-                            @endphp
-                            <div class="p-4 rounded-lg {{ $bgClass }}">
+                            <div class="p-4 rounded-lg {{ $task->deadlineInfo['bgClass'] }}">
                                 <div class="flex justify-between items-center">
                                     <div>
                                         <p class="font-medium text-foreground">{{ $task->title }}</p>
-                                        <p class="text-sm {{ $dateClass }}">{{ $task->project->name ?? __('No Project') }}</p>
+                                        <p class="text-sm {{ $task->deadlineInfo['dateClass'] }}">{{ $task->project->name ?? __('No Project') }}</p>
                                     </div>
-                                    <span class="text-sm font-medium {{ $dateClass }}">
+                                    <span class="text-sm font-medium {{ $task->deadlineInfo['dateClass'] }}">
                                         {{ $task->due_date->format('M d') }}
-                                        @if($isOverdue)({{ $task->due_date->diffForHumans() }})@endif
+                                        @if($task->deadlineInfo['isOverdue'])({{ $task->due_date->diffForHumans() }})@endif
                                     </span>
                                 </div>
-                                @if($isOverdue)
+                                @if($task->deadlineInfo['isOverdue'])
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
                                         {{ __('Overdue') }}
                                     </span>

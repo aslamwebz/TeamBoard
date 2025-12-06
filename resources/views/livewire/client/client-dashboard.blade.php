@@ -18,7 +18,7 @@
                 <div class="text-2xl font-bold text-foreground">{{ count($projectProgress) }}</div>
                 <p class="text-xs text-zinc-500 dark:text-zinc-400">
                     @if(count($projectProgress) > 0)
-                        <span class="text-green-600">{{ number_format(collect($projectProgress)->avg('progress'), 0) }}%</span> {{ __('avg completion') }}
+                        <span class="text-green-600">{{ number_format($avgProjectProgress, 0) }}%</span> {{ __('avg completion') }}
                     @endif
                 </p>
             </div>

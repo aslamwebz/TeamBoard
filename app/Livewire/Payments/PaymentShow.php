@@ -20,4 +20,14 @@ final class PaymentShow extends Component
     {
         return view('livewire.payments.payment-show')->layout('components.layouts.app');
     }
+
+    public function getPaymentStatusBadgeClass(string $status): string
+    {
+        $paymentStatus = \App\Enums\PaymentStatus::tryFrom($status);
+        if ($paymentStatus) {
+            return $paymentStatus->getColorClass();
+        }
+
+        return 'bg-gray-100 text-gray-800';
+    }
 }

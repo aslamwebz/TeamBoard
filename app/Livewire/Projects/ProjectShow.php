@@ -20,6 +20,7 @@ final class ProjectShow extends Component
     use ModalTrait;
 
     public Project $project;
+    public $projectDiscussions = [];
 
     public $showAssignUserModal = false;
 
@@ -64,6 +65,9 @@ final class ProjectShow extends Component
             'discussions', // Load discussions for the project
             'phases.tasks', // Load tasks for each phase
         ]);
+
+        // Load recent project discussions
+        $this->projectDiscussions = $this->project->discussions()->latest()->limit(5)->get();
     }
 
     public function getAvailableUsersProperty()
@@ -151,5 +155,55 @@ final class ProjectShow extends Component
         return view('livewire.projects.project-show', [
             'project' => $this->project,
         ]);
+    }
+
+    public function getProjectStatusBadgeClass(string $status): string
+    {
+        $projectStatus = \App\Enums\ProjectStatus::tryFrom($status);
+        if ($projectStatus) {
+            return $projectStatus->getColorClass();
+        }
+
+        return 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400';
+    }
+
+    public function getTaskStatusBadgeClass(string $status): string
+    {
+        $taskStatus = \App\Enums\TaskStatus::tryFrom($status);
+        if ($taskStatus) {
+            return $taskStatus->getDarkColorClass();
+        }
+
+        return 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400';
+    }
+
+    public function getPhaseStatusBadgeClass(string $status): string
+    {
+        $phaseStatus = \App\Enums\PhaseStatus::tryFrom($status);
+        if ($phaseStatus) {
+            return $phaseStatus->getDarkColorClass();
+        }
+
+        return 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400';
+    }
+
+    public function getMilestoneStatusBadgeClass(string $status): string
+    {
+        $milestoneStatus = \App\Enums\PhaseStatus::tryFrom($status); // Milestones use the same statuses as phases
+        if ($milestoneStatus) {
+            return $milestoneStatus->getDarkColorClass();
+        }
+
+        return 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400';
+    }
+
+    public function getInvoiceStatusBadgeClass(string $status): string
+    {
+        $invoiceStatus = \App\Enums\InvoiceStatus::tryFrom($status);
+        if ($invoiceStatus) {
+            return $invoiceStatus->getDarkColorClass();
+        }
+
+        return 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400';
     }
 }

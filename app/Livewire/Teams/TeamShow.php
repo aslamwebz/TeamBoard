@@ -22,6 +22,8 @@ final class TeamShow extends Component
     use ModalTrait;
 
     public Team $team;
+    public $recentTasks = [];
+    public array $statusColors = [];
 
     public $showAssignMemberModal = false;
 
@@ -62,6 +64,21 @@ final class TeamShow extends Component
         $this->allTasks = Task::all();
         $this->allProjects = Project::all();
         $this->allUsers = User::all();
+
+        // Get recent tasks from team projects
+        $teamTasks = collect();
+        foreach ($this->team->projects as $project) {
+            $teamTasks = $teamTasks->merge($project->tasks);
+        }
+        $this->recentTasks = $teamTasks->take(10);
+
+        // Define status colors for presentation using enum
+        $this->statusColors = [
+            'planning' => \App\Enums\ProjectStatus::PLANNING->getColorClass(),
+            'in_progress' => \App\Enums\ProjectStatus::IN_PROGRESS->getColorClass(),
+            'completed' => \App\Enums\ProjectStatus::COMPLETED->getColorClass(),
+            'on_hold' => \App\Enums\ProjectStatus::ON_HOLD->getColorClass(),
+        ];
     }
 
     public function getAvailableUsersProperty()
@@ -242,5 +259,25 @@ final class TeamShow extends Component
         return view('livewire.teams.team-show', [
             'team' => $this->team,
         ]);
+    }
+
+    public function getProjectStatusBadgeClass(string $status): string
+    {
+        $projectStatus = \App\Enums\ProjectStatus::tryFrom($status);
+        if ($projectStatus) {
+            return $projectStatus->getDarkColorClass();
+        }
+
+        return 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400';
+    }
+
+    public function getTaskStatusBadgeClass(string $status): string
+    {
+        $taskStatus = \App\Enums\TaskStatus::tryFrom($status);
+        if ($taskStatus) {
+            return $taskStatus->getDarkColorClass();
+        }
+
+        return 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400';
     }
 }

@@ -94,7 +94,7 @@ final class Attachments extends Component
 
         // Delete the physical file
         if (Storage::exists($attachment->path)) {
-            \Storage::delete($attachment->path);
+            Storage::delete($attachment->path);
         }
 
         // Refresh attachments

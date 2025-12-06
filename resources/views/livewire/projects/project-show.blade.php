@@ -28,11 +28,7 @@
                     <h3 class="text-sm font-medium text-zinc-500 dark:text-zinc-400">{{ __('Status') }}</h3>
                     <div class="flex items-center gap-2">
                         <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                            @if ($project->status === 'planning') bg-zinc-100 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-300
-                            @elseif ($project->status === 'in_progress') bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300
-                            @elseif ($project->status === 'completed') bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300
-                            @elseif ($project->status === 'on_hold') bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300 @endif">
+                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $this->getProjectStatusBadgeClass($project->status) }}">
                             {{ ucfirst(str_replace('_', ' ', $project->status)) }}
                         </span>
                     </div>
@@ -256,11 +252,7 @@
                                         {{ $phase->end_date ? $phase->end_date->format('M d, Y') : 'N/A' }}</div>
                                     <div class="w-1/4">
                                         <span
-                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                            @if ($phase->status === 'not_started') bg-zinc-100 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-300
-                                            @elseif ($phase->status === 'in_progress') bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300
-                                            @elseif ($phase->status === 'completed') bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300
-                                            @elseif ($phase->status === 'on_hold') bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300 @endif">
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $this->getPhaseStatusBadgeClass($phase->status) }}">
                                             {{ ucfirst(str_replace('_', ' ', $phase->status)) }}
                                         </span>
                                     </div>
@@ -278,11 +270,7 @@
                                         <div class="w-1/4 text-sm text-muted-foreground">N/A</div>
                                         <div class="w-1/4">
                                             <span
-                                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium
-                                                @if ($task->status === 'todo') bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300
-                                                @elseif ($task->status === 'in_progress') bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300
-                                                @elseif ($task->status === 'completed') bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300
-                                                @elseif ($task->status === 'on_hold') bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300 @endif">
+                                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium {{ $this->getTaskStatusBadgeClass($task->status) }}">
                                                 {{ ucfirst(str_replace('_', ' ', $task->status)) }}
                                             </span>
                                         </div>
@@ -313,11 +301,7 @@
                                         <div class="w-1/4 text-sm text-foreground">N/A</div>
                                         <div class="w-1/4">
                                             <span
-                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                                @if ($milestone->status === 'not_started') bg-zinc-100 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-300
-                                                @elseif ($milestone->status === 'in_progress') bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300
-                                                @elseif ($milestone->status === 'completed') bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300
-                                                @elseif ($milestone->status === 'on_hold') bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300 @endif">
+                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $this->getMilestoneStatusBadgeClass($milestone->status) }}">
                                                 {{ ucfirst(str_replace('_', ' ', $milestone->status)) }}
                                             </span>
                                         </div>
@@ -389,16 +373,8 @@
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        @php
-                                            $taskStatusColors = [
-                                                'todo' => 'bg-gray-500/10 text-gray-700 dark:text-gray-400',
-                                                'in_progress' => 'bg-blue-500/10 text-blue-700 dark:text-blue-400',
-                                                'completed' => 'bg-green-500/10 text-green-700 dark:text-green-400',
-                                                'on_hold' => 'bg-red-500/10 text-red-700 dark:text-red-400',
-                                            ];
-                                        @endphp
                                         <flux:badge
-                                            class="{{ $taskStatusColors[$task->status] ?? 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400' }}">
+                                            class="{{ $this->getTaskStatusBadgeClass($task->status) }}">
                                             {{ ucfirst(str_replace('_', ' ', $task->status)) }}
                                         </flux:badge>
                                     </td>
@@ -491,16 +467,8 @@
                                             {{ $phase->name }}</div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        @php
-                                            $phaseStatusColors = [
-                                                'not_started' => 'bg-gray-500/10 text-gray-700 dark:text-gray-400',
-                                                'in_progress' => 'bg-blue-500/10 text-blue-700 dark:text-blue-400',
-                                                'completed' => 'bg-green-500/10 text-green-700 dark:text-green-400',
-                                                'on_hold' => 'bg-red-500/10 text-red-700 dark:text-red-400',
-                                            ];
-                                        @endphp
                                         <flux:badge
-                                            class="{{ $phaseStatusColors[$phase->status] ?? 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400' }}">
+                                            class="{{ $this->getPhaseStatusBadgeClass($phase->status) }}">
                                             {{ ucfirst(str_replace('_', ' ', $phase->status)) }}
                                         </flux:badge>
                                     </td>
@@ -602,16 +570,8 @@
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        @php
-                                            $milestoneStatusColors = [
-                                                'not_started' => 'bg-gray-500/10 text-gray-700 dark:text-gray-400',
-                                                'in_progress' => 'bg-blue-500/10 text-blue-700 dark:text-blue-400',
-                                                'completed' => 'bg-green-500/10 text-green-700 dark:text-green-400',
-                                                'on_hold' => 'bg-red-500/10 text-red-700 dark:text-red-400',
-                                            ];
-                                        @endphp
                                         <flux:badge
-                                            class="{{ $milestoneStatusColors[$milestone->status] ?? 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400' }}">
+                                            class="{{ $this->getMilestoneStatusBadgeClass($milestone->status) }}">
                                             {{ ucfirst(str_replace('_', ' ', $milestone->status)) }}
                                         </flux:badge>
                                     </td>
@@ -853,16 +813,8 @@
                                             ${{ number_format($invoice->amount, 2) }}</div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        @php
-                                            $invoiceStatusColors = [
-                                                'draft' => 'bg-gray-500/10 text-gray-700 dark:text-gray-400',
-                                                'sent' => 'bg-blue-500/10 text-blue-700 dark:text-blue-400',
-                                                'paid' => 'bg-green-500/10 text-green-700 dark:text-green-400',
-                                                'overdue' => 'bg-red-500/10 text-red-700 dark:text-red-400',
-                                            ];
-                                        @endphp
                                         <flux:badge
-                                            class="{{ $invoiceStatusColors[$invoice->status] ?? 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400' }}">
+                                            class="{{ $this->getInvoiceStatusBadgeClass($invoice->status) }}">
                                             {{ ucfirst($invoice->status) }}
                                         </flux:badge>
                                     </td>
@@ -913,10 +865,6 @@
                         </a>
                     </div>
                 </div>
-
-                @php
-                    $projectDiscussions = $project->discussions()->latest()->limit(5)->get();
-                @endphp
 
                 @if ($projectDiscussions->count() > 0)
                     <div class="space-y-4">

@@ -20,4 +20,14 @@ final class ExpenseShow extends Component
     {
         return view('livewire.expenses.expense-show')->layout('components.layouts.app');
     }
+
+    public function getExpenseStatusBadgeClass(string $status): string
+    {
+        $expenseStatus = \App\Enums\ExpenseStatus::tryFrom($status);
+        if ($expenseStatus) {
+            return $expenseStatus->getColorClass();
+        }
+
+        return 'bg-gray-100 text-gray-800';
+    }
 }

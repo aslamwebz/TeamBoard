@@ -38,4 +38,25 @@ final class FilePreviewModal extends Component
         // This component now opens the preview page in a new tab, so no need to render anything
         return view('livewire.components.file-preview-modal');
     }
+
+    public function getFilePreviewData($file)
+    {
+        if (!$file) {
+            return [];
+        }
+
+        $filePath = 'discussions/' . $file->filename;
+        $fileUrl = $file->getUrl();
+        $fileName = $file->original_name;
+        $type = \Illuminate\Support\Facades\Storage::disk('public')->mimeType($filePath);
+
+        // Determine the appropriate view based on file type
+        $viewData = [
+            'fileName' => $fileName,
+            'fileUrl' => $fileUrl,
+            'type' => $type,
+        ];
+
+        return $viewData;
+    }
 }

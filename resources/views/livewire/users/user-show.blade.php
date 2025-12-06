@@ -296,43 +296,6 @@
                 <div>
                     @if($userPermissions->count() > 0)
                         <!-- Group permissions by category -->
-                        @php
-                            $groupedPermissions = [];
-                            foreach($userPermissions as $permission) {
-                                // Extract the category from the permission name (before the first dot or first word)
-                                $parts = explode(' ', $permission->name);
-                                $category = 'Other'; // Default category
-
-                                // Determine category based on permission pattern
-                                if (strpos($permission->name, 'user') !== false) {
-                                    $category = 'User Management';
-                                } elseif (strpos($permission->name, 'role') !== false) {
-                                    $category = 'Role Management';
-                                } elseif (strpos($permission->name, 'team') !== false) {
-                                    $category = 'Team Management';
-                                } elseif (strpos($permission->name, 'project') !== false) {
-                                    $category = 'Project Management';
-                                } elseif (strpos($permission->name, 'task') !== false) {
-                                    $category = 'Task Management';
-                                } elseif (strpos($permission->name, 'client') !== false) {
-                                    $category = 'Client Management';
-                                } elseif (strpos($permission->name, 'invoice') !== false) {
-                                    $category = 'Invoice Management';
-                                } else {
-                                    // Try to get first part of permission name
-                                    $firstPart = $parts[0];
-                                    if (strpos($firstPart, '_') !== false) {
-                                        $firstPart = explode('_', $firstPart)[0];
-                                    }
-                                    $category = ucfirst($firstPart) . ' Management';
-                                }
-
-                                if (!isset($groupedPermissions[$category])) {
-                                    $groupedPermissions[$category] = [];
-                                }
-                                $groupedPermissions[$category][] = $permission;
-                            }
-                        @endphp
 
                         @foreach($groupedPermissions as $category => $permissions)
                             <div class="mb-6">

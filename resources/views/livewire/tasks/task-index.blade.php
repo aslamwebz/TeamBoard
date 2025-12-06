@@ -91,15 +91,7 @@
                                     <div class="text-sm text-foreground">{{ $task->phase->name ?? 'No Phase' }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    @php
-                                        $statusColors = [
-                                            'todo' => 'bg-white text-zinc-800  dark:text-zinc-300',
-                                            'in_progress' => ' text-blue-800 dark:text-blue-400',
-                                            'completed' => ' text-green-800 0 dark:text-green-400',
-                                            'on_hold' => ' text-red-800 dark:text-red-400',
-                                        ];
-                                    @endphp
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusColors[$task->status] ?? 'bg-zinc-100 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-300' }}">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $this->getTaskStatusBadgeClass($task->status) }}">
                                         {{ ucfirst(str_replace('_', ' ', $task->status)) }}
                                     </span>
                                 </td>
@@ -145,14 +137,6 @@
     @else
         <!-- Kanban Board View -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-            @php
-                $statusColumns = [
-                    'todo' => ['title' => __('To Do'), 'color' => 'bg-zinc-100 dark:bg-zinc-700'],
-                    'in_progress' => ['title' => __('In Progress'), 'color' => 'bg-blue-100 dark:bg-blue-900/30'],
-                    'completed' => ['title' => __('Completed'), 'color' => 'bg-green-100 dark:bg-green-900/30'],
-                    'on_hold' => ['title' => __('On Hold'), 'color' => 'bg-red-100 dark:bg-red-900/30'],
-                ];
-            @endphp
 
             @foreach($statusColumns as $status => $column)
                 <div class="{{ $column['color'] }} rounded-lg p-4 min-h-[500px]">
@@ -311,15 +295,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <flux:subheading>{{ __('Status') }}</flux:subheading>
-                        @php
-                            $statusColors = [
-                                'todo' => 'bg-zinc-100 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-300',
-                                'in_progress' => 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
-                                'completed' => 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
-                                'on_hold' => 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
-                            ];
-                        @endphp
-                        <flux:badge class="{{ $statusColors[$selectedTask?->status] ?? 'bg-zinc-100 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-300' }}">
+                        <flux:badge class="{{ $this->getTaskStatusBadgeClass($selectedTask?->status ?? '') }}">
                             {{ $selectedTask?->status ? ucfirst(str_replace('_', ' ', $selectedTask?->status)) : 'N/A' }}
                         </flux:badge>
                     </div>

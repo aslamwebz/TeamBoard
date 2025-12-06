@@ -25,4 +25,14 @@ final class ReportShow extends Component
     {
         return view('livewire.reports.report-show');
     }
+
+    public function getReportStatusBadgeClass(string $status): string
+    {
+        $reportStatus = \App\Enums\ReportStatus::tryFrom($status);
+        if ($reportStatus) {
+            return $reportStatus->getColorClass();
+        }
+
+        return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
+    }
 }

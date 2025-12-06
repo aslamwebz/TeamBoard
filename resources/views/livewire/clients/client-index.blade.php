@@ -93,20 +93,6 @@
                     </thead>
                     <tbody class="divide-y divide-zinc-200 dark:divide-zinc-600">
                         @forelse($clients as $client)
-                            @php
-                                $projectCount = $client->projects()->count();
-                                $activeProjects = $client
-                                    ->projects()
-                                    ->whereIn('status', ['planning', 'in_progress'])
-                                    ->count();
-                                $totalTasks = $client->projects()->withCount('tasks')->get()->sum('tasks_count');
-                                $completedTasks = $client
-                                    ->projects()
-                                    ->whereHas('tasks', function ($query) {
-                                        $query->where('status', 'completed');
-                                    })
-                                    ->count();
-                            @endphp
                             <tr class="hover:bg-zinc-50 dark:hover:bg-zinc-700/50 transition-colors">
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div>
@@ -148,20 +134,20 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-foreground">
-                                        <div class="font-medium">{{ $projectCount }}</div>
-                                        @if ($activeProjects > 0)
+                                        <div class="font-medium">{{ $client->projects_count }}</div>
+                                        @if ($client->active_projects > 0)
                                             <div class="text-xs text-green-600 dark:text-green-400">
-                                                {{ $activeProjects }}
+                                                {{ $client->active_projects }}
                                                 active</div>
                                         @endif
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-foreground">
-                                        <div class="font-medium">{{ $totalTasks }}</div>
-                                        @if ($totalTasks > 0)
+                                        <div class="font-medium">{{ $client->total_tasks }}</div>
+                                        @if ($client->total_tasks > 0)
                                             <div class="text-xs text-blue-600 dark:text-blue-400">
-                                                {{ round(($completedTasks / $totalTasks) * 100) }}% done
+                                                {{ round(($client->completed_tasks / $client->total_tasks) * 100) }}% done
                                             </div>
                                         @endif
                                     </div>

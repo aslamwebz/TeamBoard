@@ -31,13 +31,7 @@
                 </svg>
             </div>
             <span
-                class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium
-                @if ($invoice->status === 'draft') bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200
-                @elseif($invoice->status === 'sent') bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400
-                @elseif($invoice->status === 'paid') bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400
-                @elseif($invoice->status === 'overdue') bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400
-                @elseif($invoice->status === 'cancelled') bg-gray-300 text-gray-800 dark:bg-gray-600 dark:text-gray-300 @endif
-            ">
+                class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium {{ $this->getInvoiceStatusBadgeClass($invoice->status) }}">
                 {{ ucfirst($invoice->status) }}
             </span>
         </div>
@@ -135,7 +129,7 @@
                                 <circle cx="12" cy="10" r="3"></circle>
                             </svg>
                             <span class="text-zinc-600 dark:text-zinc-400">
-                                {{ collect([$invoice->client->address, $invoice->client->city, $invoice->client->state, $invoice->client->zip_code, $invoice->client->country])->filter()->implode(', ') }}
+                                {{ $clientAddressString }}
                             </span>
                         </div>
                     @endif

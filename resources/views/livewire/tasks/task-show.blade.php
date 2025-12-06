@@ -16,17 +16,9 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <div>
                 <h2 class="text-sm font-medium text-zinc-500 dark:text-zinc-400">{{ __('Status') }}</h2>
-                @php
-                    $statusColors = [
-                        'todo' => 'bg-white text-zinc-800 dark:text-zinc-300',
-                        'in_progress' => 'text-blue-800 dark:text-blue-400',
-                        'completed' => 'text-green-800 dark:text-green-400',
-                        'on_hold' => 'text-red-800 dark:text-red-400',
-                    ];
-                @endphp
                 <p class="mt-1">
                     <span
-                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusColors[$task->status] ?? 'text-zinc-800 dark:text-zinc-300' }}">
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $this->getTaskStatusBadgeClass($task->status) }}">
                         {{ ucfirst(str_replace('_', ' ', $task->status)) }}
                     </span>
                 </p>
@@ -105,11 +97,7 @@
                             <li class="flex justify-between items-center p-2 bg-white dark:bg-zinc-800 rounded-md">
                                 <div>
                                     <span class="font-medium">{{ $dependencyTask->title }}</span>
-                                    <span class="ml-2 text-xs px-2 py-1 rounded-full
-                                        @if($dependencyTask->status === 'completed') bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400
-                                        @elseif($dependencyTask->status === 'in_progress') bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400
-                                        @elseif($dependencyTask->status === 'todo') bg-zinc-100 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-300
-                                        @else bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400 @endif">
+                                    <span class="ml-2 text-xs px-2 py-1 rounded-full {{ $this->getTaskStatusBadgeClass($dependencyTask->status) }}">
                                         {{ ucfirst(str_replace('_', ' ', $dependencyTask->status)) }}
                                     </span>
                                 </div>
@@ -124,9 +112,6 @@
         @endif>
 
         <!-- Tasks Dependent on This -->
-        @php
-            $dependents = $task->getTaskDependents;
-        @endphp
         @if(count($dependents) > 0)
             <div class="mb-8">
                 <h2 class="text-lg font-semibold text-foreground mb-3">{{ __('Tasks Dependent on This') }}</h2>
@@ -136,11 +121,7 @@
                             <li class="flex justify-between items-center p-2 bg-white dark:bg-zinc-800 rounded-md">
                                 <div>
                                     <span class="font-medium">{{ $dependentTask->title }}</span>
-                                    <span class="ml-2 text-xs px-2 py-1 rounded-full
-                                        @if($dependentTask->status === 'completed') bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400
-                                        @elseif($dependentTask->status === 'in_progress') bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400
-                                        @elseif($dependentTask->status === 'todo') bg-zinc-100 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-300
-                                        @else bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400 @endif">
+                                    <span class="ml-2 text-xs px-2 py-1 rounded-full {{ $this->getTaskStatusBadgeClass($dependentTask->status) }}">
                                         {{ ucfirst(str_replace('_', ' ', $dependentTask->status)) }}
                                     </span>
                                 </div>
@@ -177,10 +158,6 @@
                     </a>
                 </div>
             </div>
-
-            @php
-                $taskDiscussions = \App\Models\Discussion::where('type', 'task')->where('type_id', $task->id)->latest()->limit(5)->get();
-            @endphp
 
             @if($taskDiscussions->count() > 0)
                 <div class="space-y-4">

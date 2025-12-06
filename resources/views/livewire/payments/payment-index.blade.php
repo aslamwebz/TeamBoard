@@ -150,13 +150,7 @@
                                 {{ $payment->payment_date->format('M d, Y') }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                                    @if($payment->status === 'pending' || $payment->status === 'processing') bg-yellow-100 text-yellow-800
-                                    @elseif($payment->status === 'completed') bg-green-100 text-green-800
-                                    @elseif($payment->status === 'failed' || $payment->status === 'cancelled') bg-red-100 text-red-800
-                                    @elseif($payment->status === 'refunded') bg-blue-100 text-blue-800
-                                    @else bg-gray-100 text-gray-800
-                                    @endif">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $this->getStatusBadgeClass($payment->status) }}">
                                     {{ ucfirst(str_replace('_', ' ', $payment->status)) }}
                                 </span>
                             </td>

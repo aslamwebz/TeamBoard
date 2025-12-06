@@ -30,4 +30,14 @@ final class PhaseIndex extends Component
 
         return view('livewire.projects.phases.index', compact('phases'));
     }
+
+    public function getPhaseStatusBadgeClass(string $status): string
+    {
+        $phaseStatus = \App\Enums\PhaseStatus::tryFrom($status);
+        if ($phaseStatus) {
+            return $phaseStatus->getColorClass();
+        }
+
+        return 'bg-zinc-100 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-300';
+    }
 }

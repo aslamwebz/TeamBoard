@@ -27,13 +27,28 @@ final class ClientIndex extends Component
 
     public function render(): View
     {
-        $clients = Client::query()
+        $clientsQuery = Client::query()
             ->where(function ($query) {
                 $query
                     ->where('name', 'like', '%'.$this->search.'%')
                     ->orWhere('email', 'like', '%'.$this->search.'%')
                     ->orWhere('company_name', 'like', '%'.$this->search.'%');
-            })
+            });
+
+        // Add subqueries for project counts
+        $clients = $clientsQuery
+            ->withCount(['projects', 'projects as active_projects' => function ($query) {
+                $query->whereIn('status', ['planning', 'in_progress']);
+            }])
+            ->selectRaw('clients.*,
+                (SELECT COUNT(tasks.id)
+                 FROM projects
+                 LEFT JOIN tasks ON projects.id = tasks.project_id
+                 WHERE projects.client_id = clients.id) as total_tasks,
+                 (SELECT COUNT(tasks.id)
+                  FROM projects
+                  LEFT JOIN tasks ON projects.id = tasks.project_id
+                  WHERE projects.client_id = clients.id AND tasks.status = "completed") as completed_tasks')
             ->orderBy('name')
             ->paginate(10);
 

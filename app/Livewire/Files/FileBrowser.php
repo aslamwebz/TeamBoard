@@ -133,4 +133,9 @@ final class FileBrowser extends Component
     {
         return view('livewire.files.file-browser');
     }
+
+    public function getAttachment($fileId)
+    {
+        return DiscussionAttachment::find($fileId);
+    }
 }
