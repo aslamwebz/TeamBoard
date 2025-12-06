@@ -237,81 +237,104 @@
                     </div>
 
                     @if ($projects->count() > 0)
-                        <div class="space-y-3">
-                            @foreach ($projects as $project)
-                                <div
-                                    class="border border-zinc-200 dark:border-zinc-700 rounded-lg p-4 hover:bg-zinc-50 dark:hover:bg-zinc-700/50 transition-colors">
-                                    <div class="flex items-start justify-between">
-                                        <div class="flex-1">
-                                            <h3 class="font-medium text-foreground mb-1">
-                                                <a href="{{ route('projects.show', $project) }}"
-                                                    class="hover:text-blue-600 dark:hover:text-blue-400">
-                                                    {{ $project->name }}
-                                                </a>
-                                            </h3>
-                                            @if ($project->description)
-                                                <p class="text-sm text-zinc-500 dark:text-zinc-400 mb-2">
-                                                    {{ Str::limit($project->description, 80) }}</p>
-                                            @endif
-                                            <div
-                                                class="flex items-center gap-4 text-sm text-zinc-500 dark:text-zinc-400">
-                                                <div class="flex items-center gap-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                        height="16" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" class="h-4 w-4">
-                                                        <path d="M9 11l3 3L22 4"></path>
-                                                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11">
-                                                        </path>
-                                                    </svg>
-                                                    {{ $projectTaskCounts[$project->id]['taskCount'] }} tasks
-                                                    @if ($projectTaskCounts[$project->id]['taskCount'] > 0)
-                                                        <span
-                                                            class="text-green-600 dark:text-green-400">({{ $projectTaskCounts[$project->id]['completedTaskCount'] }}
-                                                            done)</span>
-                                                    @endif
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead
+                                    class="bg-zinc-50 dark:bg-zinc-700/50 border-b border-zinc-200 dark:border-zinc-600">
+                                    <tr>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                                            Project Name
+                                        </th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                                            Status
+                                        </th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                                            Tasks
+                                        </th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                                            Due Date
+                                        </th>
+                                        <th
+                                            class="px-6 py-3 text-right text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                                            Actions
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-zinc-200 dark:divide-zinc-600">
+                                    @foreach ($projects as $project)
+                                        <tr class="hover:bg-zinc-50 dark:hover:bg-zinc-700/50 transition-colors">
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm font-medium text-foreground">
+                                                    <a href="{{ route('projects.show', $project) }}"
+                                                        class="hover:text-blue-600 dark:hover:text-blue-400">
+                                                        {{ $project->name }}
+                                                    </a>
                                                 </div>
-                                                @if ($project->due_date)
-                                                    <div class="flex items-center gap-1">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                            height="16" viewBox="0 0 24 24" fill="none"
-                                                            stroke="currentColor" stroke-width="2"
-                                                            stroke-linecap="round" stroke-linejoin="round"
-                                                            class="h-4 w-4">
-                                                            <path d="M8 2v4"></path>
-                                                            <path d="M16 2v4"></path>
-                                                            <rect width="18" height="18" x="3" y="4"
-                                                                rx="2"></rect>
-                                                            <path d="M3 10h18"></path>
-                                                        </svg>
-                                                        {{ $project->due_date->format('M d, Y') }}
+                                                @if ($project->description)
+                                                    <div class="text-sm text-zinc-500 dark:text-zinc-400">
+                                                        {{ Str::limit($project->description, 50) }}
                                                     </div>
                                                 @endif
-                                            </div>
-                                        </div>
-                                        <flux:badge class="{{ $this->getProjectStatusBadgeClass($project->status) }}">
-                                            {{ ucfirst(str_replace('_', ' ', $project->status)) }}
-                                        </flux:badge>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <flux:tooltip content="Unassign Project" position="left">
-                                            <flux:button variant="outline" size="sm" color="red"
-                                                type="button" wire:click="unassignProject({{ $project->id }})"
-                                                class="h-8 w-8 p-0" title="Unassign Project">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="h-4 w-4">
-                                                    <line x1="18" y1="6" x2="6"
-                                                        y2="18"></line>
-                                                    <line x1="6" y1="6" x2="18"
-                                                        y2="18"></line>
-                                                </svg>
-                                            </flux:button>
-                                        </flux:tooltip>
-                                    </div>
-                                </div>
-                            @endforeach
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <flux:badge
+                                                    class="{{ $this->getProjectStatusBadgeClass($project->status) }}">
+                                                    {{ ucfirst(str_replace('_', ' ', $project->status)) }}
+                                                </flux:badge>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-foreground">
+                                                {{ $projectTaskCounts[$project->id]['taskCount'] }} tasks
+                                                @if ($projectTaskCounts[$project->id]['taskCount'] > 0)
+                                                    <span class="text-green-600 dark:text-green-400">
+                                                        ({{ $projectTaskCounts[$project->id]['completedTaskCount'] }}
+                                                        done)
+                                                    </span>
+                                                @endif
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-foreground">
+                                                @if ($project->due_date)
+                                                    {{ $project->due_date->format('M d, Y') }}
+                                                @else
+                                                    <span class="text-zinc-400">No due date</span>
+                                                @endif
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <div class="flex items-center justify-end gap-2">
+                                                    <flux:button variant="outline" size="sm"
+                                                        :href="route('projects.show', $project)">
+                                                        View
+                                                    </flux:button>
+                                                    <flux:button variant="outline" size="sm"
+                                                        :href="route('projects.edit', $project)">
+                                                        Edit
+                                                    </flux:button>
+                                                    <flux:tooltip content="Unassign Project">
+                                                        <flux:button variant="outline" size="sm" color="red"
+                                                            type="button"
+                                                            wire:click="unassignProject({{ $project->id }})"
+                                                            class="h-8 w-8 p-0">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                height="16" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="h-4 w-4">
+                                                                <line x1="18" y1="6" x2="6"
+                                                                    y2="18"></line>
+                                                                <line x1="6" y1="6" x2="18"
+                                                                    y2="18"></line>
+                                                            </svg>
+                                                        </flux:button>
+                                                    </flux:tooltip>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     @else
                         <div class="text-center py-8">
@@ -352,14 +375,14 @@
                             <h2 class="text-lg font-semibold text-foreground">Recent Tasks</h2>
                             <flux:button variant="outline" size="sm"
                                 :href="route('tasks')
-                                    .'?client_id=' . $client->id">
+                                                                    .'?client_id=' . $client->id">
                                 View All
                             </flux:button>
                         </div>
 
                         <div class="space-y-3">
                             @foreach ($recentTasks as $task)
-<div class="border border-zinc-200 dark:border-zinc-700 rounded-lg p-3">
+                                <div class="border border-zinc-200 dark:border-zinc-700 rounded-lg p-3">
                                     <div class="flex items-center justify-between">
                                         <div>
                                             <a href="{{ route('tasks.show', $task) }}"
@@ -376,7 +399,7 @@
                                         </div>
                                     </div>
                                 </div>
-@endforeach
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -408,8 +431,8 @@
                                 class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
                                 <option value="">Choose a project...</option>
                                 @foreach ($availableProjects as $project)
-<option value="{{ $project['id'] }}">{{ $project['name'] }}</option>
-@endforeach
+                                    <option value="{{ $project['id'] }}">{{ $project['name'] }}</option>
+                                @endforeach
                             </select>
                         </flux:field>
                     </div>
@@ -417,36 +440,35 @@
                     <div class="flex gap-2">
                         <flux:spacer />
                         <flux:button variant="ghost" wire:click="$toggle('showAssignProjectModal ')">
-                                Cancel
+                            Cancel
+                        </flux:button>
+                        @if ($selectedProjectId)
+                            <flux:button wire:click="assignProject">
+                                Assign Project
                             </flux:button>
-                            @if ($selectedProjectId)
-                                <flux:button wire:click="assignProject">
-                                    Assign Project
-                                </flux:button>
-                            @endif
-                        </div>
-                    @else
-                        <div class="text-center py-8">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round"
-                                class="mx-auto h-12 w-12 text-zinc-400">
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                            <h3 class="mt-2 text-sm font-medium text-zinc-900 dark:text-zinc-100">No projects available
-                            </h3>
-                            <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">There are no projects available to
-                                assign to this client.</p>
-                        </div>
+                        @endif
+                    </div>
+                @else
+                    <div class="text-center py-8">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="mx-auto h-12 w-12 text-zinc-400">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <h3 class="mt-2 text-sm font-medium text-zinc-900 dark:text-zinc-100">No projects available
+                        </h3>
+                        <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">There are no projects available to
+                            assign to this client.</p>
+                    </div>
 
-                        <div class="flex gap-2">
-                            <flux:spacer />
-                            <flux:button variant="ghost" wire:click="$toggle('showAssignProjectModal')">Close
-                            </flux:button>
-                        </div>
-            @endif
+                    <div class="flex gap-2">
+                        <flux:spacer />
+                        <flux:button variant="ghost" wire:click="$toggle('showAssignProjectModal')">Close
+                        </flux:button>
+                    </div>
+                @endif
+            </div>
         </div>
-    </div>
     </flux:modal>
 </div>

@@ -97,6 +97,9 @@ final class ClientShow extends Component
             if ($project) {
                 $project->update(['client_id' => $this->client->id]);
 
+                // Refresh the projects list
+                $this->projects = $this->client->projects()->latest()->get();
+
                 // Refresh the available projects list
                 $this->loadAvailableProjects();
 
@@ -114,6 +117,9 @@ final class ClientShow extends Component
         $project = Project::find($projectId);
         if ($project && $project->client_id === $this->client->id) {
             $project->update(['client_id' => null]);
+
+            // Refresh the projects list
+            $this->projects = $this->client->projects()->latest()->get();
 
             // Refresh the available projects list
             $this->loadAvailableProjects();
