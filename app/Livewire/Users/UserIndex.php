@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Livewire\Users;
 
@@ -41,22 +39,31 @@ final class UserIndex extends Component
         if ($this->search) {
             $query->where(function ($q) {
                 $q
-                    ->where('name', 'like', '%'.$this->search.'%')
-                    ->orWhere('email', 'like', '%'.$this->search.'%');
+                    ->where('name', 'like', '%' . $this->search . '%')
+                    ->orWhere('email', 'like', '%' . $this->search . '%');
             });
         }
 
         if ($this->role === 'with-permissions') {
-            $query->whereHas('roles.permissions') // Users with roles that have permissions
-                ->orWhereHas('permissions'); // Or users with direct permissions
+            $query
+                ->whereHas('roles.permissions')  // Users with roles that have permissions
+                ->orWhereHas('permissions');  // Or users with direct permissions
         } elseif ($this->role === 'without-permissions') {
-            $query->whereDoesntHave('roles.permissions') // Users without roles that have permissions
-                ->whereDoesntHave('permissions'); // And without direct permissions
+            $query
+                ->whereDoesntHave('roles.permissions')  // Users without roles that have permissions
+                ->whereDoesntHave('permissions');  // And without direct permissions
         }
 
         $users = $query
             ->withCount(['projects', 'tasks', 'clients'])
             ->with(['roles.permissions', 'permissions'])
+            ->selectRaw('users.*,
+                (SELECT COUNT(*) FROM projects 
+                 INNER JOIN user_projects ON projects.id = user_projects.project_id 
+                 WHERE user_projects.user_id = users.id AND projects.status IN ("planning", "in_progress")) as active_projects,
+                (SELECT COUNT(*) FROM tasks 
+                 INNER JOIN user_tasks ON tasks.id = user_tasks.task_id 
+                 WHERE user_tasks.user_id = users.id AND tasks.status = "completed") as completed_tasks')
             ->orderBy('name', 'asc')
             ->paginate($this->perPage);
 

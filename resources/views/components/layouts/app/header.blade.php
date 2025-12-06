@@ -1,4 +1,4 @@
-<flux:header class="[grid-area:header] z-10 min-h-14 flex items-center px-6 lg:px-8" data-flux-header="">
+<flux:header class="[grid-area:header] z-10 min-h-14 flex items-center px-6 pt-4 lg:px-8" data-flux-header="">
     <flux:sidebar.toggle class="lg:hidden" icon="bars-2" />
 
     <!-- Logo - Hidden on mobile, visible on large screens -->
@@ -7,28 +7,6 @@
             <x-application-logo class="h-8 w-auto" />
         </a>
     </div>
-
-    <!-- Desktop Navigation - Hidden on mobile, visible on large screens -->
-    <nav class="hidden lg:flex lg:items-center lg:space-x-8 lg:flex-1">
-        <a href="{{ route('dashboard') }}" class="text-sm font-medium {{ request()->routeIs('dashboard') ? 'text-blue-600 dark:text-blue-400' : 'text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-300' }}" wire:navigate>
-            Dashboard
-        </a>
-        <a href="{{ route('projects') }}" class="text-sm font-medium {{ request()->routeIs('projects') ? 'text-blue-600 dark:text-blue-400' : 'text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-300' }}" wire:navigate>
-            Projects
-        </a>
-        <a href="{{ route('tasks') }}" class="text-sm font-medium {{ request()->routeIs('tasks') ? 'text-blue-600 dark:text-blue-400' : 'text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-300' }}" wire:navigate>
-            Tasks
-        </a>
-        <a href="{{ route('users') }}" class="text-sm font-medium {{ request()->routeIs('users') ? 'text-blue-600 dark:text-blue-400' : 'text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-300' }}" wire:navigate>
-            Team
-        </a>
-        <a href="{{ route('discussions.index') }}" class="text-sm font-medium {{ request()->routeIs('discussions*') ? 'text-blue-600 dark:text-blue-400' : 'text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-300' }}" wire:navigate>
-            Discussions
-        </a>
-        <a href="{{ route('files.index') }}" class="text-sm font-medium {{ request()->routeIs('files*') ? 'text-blue-600 dark:text-blue-400' : 'text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-300' }}" wire:navigate>
-            Files
-        </a>
-    </nav>
 
     <!-- Spacer to push notification and profile to the right -->
     <flux:spacer />
