@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Livewire\Clients;
 
@@ -30,9 +28,9 @@ final class ClientIndex extends Component
         $clientsQuery = Client::query()
             ->where(function ($query) {
                 $query
-                    ->where('name', 'like', '%'.$this->search.'%')
-                    ->orWhere('email', 'like', '%'.$this->search.'%')
-                    ->orWhere('company_name', 'like', '%'.$this->search.'%');
+                    ->where('name', 'like', '%' . $this->search . '%')
+                    ->orWhere('email', 'like', '%' . $this->search . '%')
+                    ->orWhere('company_name', 'like', '%' . $this->search . '%');
             });
 
         // Add subqueries for project counts

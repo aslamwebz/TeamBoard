@@ -187,11 +187,6 @@ final class WorkerDashboard extends Component
         }
     }
 
-    public function render() : View
-    {
-        return view('livewire.worker.worker-dashboard');
-    }
-
     public function getTaskDeadlineInfo($task)
     {
         $isOverdue = $task->due_date->isBefore(now()->startOfDay());

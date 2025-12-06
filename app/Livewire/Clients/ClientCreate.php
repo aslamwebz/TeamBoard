@@ -9,47 +9,78 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 #[Layout('components.layouts.app')]
 #[Title('Create Client')]
 final class ClientCreate extends Component
 {
-    public Client $client;
+    #[Validate('required|string|max:255|unique:clients,company_name')]
+    public string $company_name = '';
 
-    protected $rules = [
-        'client.company_name' => 'required|string|max:255|unique:clients,company_name',
-        'client.name' => 'nullable|string|max:255',
-        'client.email' => 'required|email|unique:clients,email',
-        'client.phone' => 'nullable|string|max:20',
-        'client.address' => 'nullable|string|max:500',
-        'client.city' => 'nullable|string|max:100',
-        'client.state' => 'nullable|string|max:100',
-        'client.zip_code' => 'nullable|string|max:20',
-        'client.country' => 'nullable|string|max:100',
-        'client.vat_number' => 'nullable|string|max:50',
-        'client.logo' => 'nullable|string|max:255',
-        'client.registration_number' => 'nullable|string|max:100',
-        'client.tax_id' => 'nullable|string|max:50',
-        'client.website' => 'nullable|url|max:255',
-        'client.industry' => 'nullable|string|max:100',
-        'client.description' => 'nullable|string',
-        'client.billing_plan' => 'nullable|string|max:50',
-        'client.subscription_start_date' => 'nullable|date',
-        'client.subscription_end_date' => 'nullable|date',
-        'client.subscription_status' => 'nullable|string|max:50',
-    ];
+    #[Validate('nullable|string|max:255')]
+    public string $name = '';
 
-    public function mount(): void
-    {
-        $this->client = new Client();
-    }
+    #[Validate('required|email|unique:clients,email')]
+    public string $email = '';
+
+    #[Validate('nullable|string|max:20')]
+    public string $phone = '';
+
+    #[Validate('nullable|string|max:500')]
+    public string $address = '';
+
+    #[Validate('nullable|string|max:100')]
+    public string $city = '';
+
+    #[Validate('nullable|string|max:100')]
+    public string $state = '';
+
+    #[Validate('nullable|string|max:20')]
+    public string $zip_code = '';
+
+    #[Validate('nullable|string|max:100')]
+    public string $country = '';
+
+    #[Validate('nullable|string|max:50')]
+    public string $vat_number = '';
+
+    #[Validate('nullable|string|max:255')]
+    public string $logo = '';
+
+    #[Validate('nullable|string|max:100')]
+    public string $registration_number = '';
+
+    #[Validate('nullable|string|max:50')]
+    public string $tax_id = '';
+
+    #[Validate('nullable|url|max:255')]
+    public string $website = '';
+
+    #[Validate('nullable|string|max:100')]
+    public string $industry = '';
+
+    #[Validate('nullable|string')]
+    public string $description = '';
+
+    #[Validate('nullable|string|max:50')]
+    public string $billing_plan = '';
+
+    #[Validate('nullable|date')]
+    public string $subscription_start_date = '';
+
+    #[Validate('nullable|date')]
+    public string $subscription_end_date = '';
+
+    #[Validate('nullable|string|max:50')]
+    public string $subscription_status = '';
 
     public function createClient(): RedirectResponse
     {
         $validated = $this->validate();
 
-        $client = Client::create($validated['client']);
+        $client = Client::create($validated);
 
         // Dispatch notification when client is added
         ClientAddedNotification::dispatch($client, Auth::user());

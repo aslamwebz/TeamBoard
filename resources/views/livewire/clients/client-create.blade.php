@@ -34,10 +34,10 @@
                                 class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                                 Company Name <span class="text-red-500">*</span>
                             </label>
-                            <input type="text" id="company_name" wire:model="client.company_name"
+                            <input type="text" id="company_name" wire:model="company_name"
                                 placeholder="Acme Corporation"
-                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('client.company_name') border-red-500 @enderror">
-                            @error('client.company_name')
+                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('company_name') border-red-500 @enderror">
+                            @error('company_name')
                                 <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -48,9 +48,9 @@
                                 class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                                 Contact Name
                             </label>
-                            <input type="text" id="name" wire:model="client.name" placeholder="John Doe"
-                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('client.name') border-red-500 @enderror">
-                            @error('client.name')
+                            <input type="text" id="name" wire:model="name" placeholder="John Doe"
+                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('name') border-red-500 @enderror">
+                            @error('name')
                                 <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -61,10 +61,9 @@
                                 class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                                 Email <span class="text-red-500">*</span>
                             </label>
-                            <input type="email" id="email" wire:model="client.email"
-                                placeholder="john@company.com"
-                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('client.email') border-red-500 @enderror">
-                            @error('client.email')
+                            <input type="email" id="email" wire:model="email" placeholder="john@company.com"
+                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('email') border-red-500 @enderror">
+                            @error('email')
                                 <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -75,10 +74,9 @@
                                 class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                                 Phone
                             </label>
-                            <input type="text" id="phone" wire:model="client.phone"
-                                placeholder="+1 (555) 123-4567"
-                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('client.phone') border-red-500 @enderror">
-                            @error('client.phone')
+                            <input type="text" id="phone" wire:model="phone" placeholder="+1 (555) 123-4567"
+                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('phone') border-red-500 @enderror">
+                            @error('phone')
                                 <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -89,9 +87,9 @@
                                 class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                                 Industry
                             </label>
-                            <input type="text" id="industry" wire:model="client.industry" placeholder="Technology"
-                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('client.industry') border-red-500 @enderror">
-                            @error('client.industry')
+                            <input type="text" id="industry" wire:model="industry" placeholder="Technology"
+                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('industry') border-red-500 @enderror">
+                            @error('industry')
                                 <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -102,10 +100,9 @@
                                 class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                                 Website
                             </label>
-                            <input type="url" id="website" wire:model="client.website"
-                                placeholder="https://acmecorp.com"
-                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('client.website') border-red-500 @enderror">
-                            @error('client.website')
+                            <input type="url" id="website" wire:model="website" placeholder="https://acmecorp.com"
+                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('website') border-red-500 @enderror">
+                            @error('website')
                                 <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -116,10 +113,10 @@
                                 class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                                 Registration Number
                             </label>
-                            <input type="text" id="registration_number" wire:model="client.registration_number"
+                            <input type="text" id="registration_number" wire:model="registration_number"
                                 placeholder="AB12345678"
-                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('client.registration_number') border-red-500 @enderror">
-                            @error('client.registration_number')
+                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('registration_number') border-red-500 @enderror">
+                            @error('registration_number')
                                 <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -130,9 +127,9 @@
                                 class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                                 Tax ID
                             </label>
-                            <input type="text" id="tax_id" wire:model="client.tax_id" placeholder="12-3456789"
-                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('client.tax_id') border-red-500 @enderror">
-                            @error('client.tax_id')
+                            <input type="text" id="tax_id" wire:model="tax_id" placeholder="12-3456789"
+                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('tax_id') border-red-500 @enderror">
+                            @error('tax_id')
                                 <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -143,10 +140,9 @@
                                 class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                                 VAT Number
                             </label>
-                            <input type="text" id="vat_number" wire:model="client.vat_number"
-                                placeholder="FR12345678901"
-                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('client.vat_number') border-red-500 @enderror">
-                            @error('client.vat_number')
+                            <input type="text" id="vat_number" wire:model="vat_number" placeholder="FR12345678901"
+                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('vat_number') border-red-500 @enderror">
+                            @error('vat_number')
                                 <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -157,10 +153,9 @@
                                 class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                                 Billing Plan
                             </label>
-                            <input type="text" id="billing_plan" wire:model="client.billing_plan"
-                                placeholder="Premium"
-                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('client.billing_plan') border-red-500 @enderror">
-                            @error('client.billing_plan')
+                            <input type="text" id="billing_plan" wire:model="billing_plan" placeholder="Premium"
+                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('billing_plan') border-red-500 @enderror">
+                            @error('billing_plan')
                                 <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -172,10 +167,9 @@
                             class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                             Description
                         </label>
-                        <textarea id="description" wire:model="client.description" rows="3"
-                            placeholder="Brief description of the company..."
-                            class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('client.description') border-red-500 @enderror"></textarea>
-                        @error('client.description')
+                        <textarea id="description" wire:model="description" rows="3" placeholder="Brief description of the company..."
+                            class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('description') border-red-500 @enderror"></textarea>
+                        @error('description')
                             <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                         @enderror
                     </div>
@@ -200,9 +194,9 @@
                                 class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                                 Address
                             </label>
-                            <textarea id="address" wire:model="client.address" rows="3" placeholder="123 Main Street, Suite 100"
-                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('client.address') border-red-500 @enderror"></textarea>
-                            @error('client.address')
+                            <textarea id="address" wire:model="address" rows="3" placeholder="123 Main Street, Suite 100"
+                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('address') border-red-500 @enderror"></textarea>
+                            @error('address')
                                 <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -213,9 +207,9 @@
                                 class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                                 City
                             </label>
-                            <input type="text" id="city" wire:model="client.city" placeholder="New York"
-                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('client.city') border-red-500 @enderror">
-                            @error('client.city')
+                            <input type="text" id="city" wire:model="city" placeholder="New York"
+                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('city') border-red-500 @enderror">
+                            @error('city')
                                 <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -226,9 +220,9 @@
                                 class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                                 State/Province
                             </label>
-                            <input type="text" id="state" wire:model="client.state" placeholder="NY"
-                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('client.state') border-red-500 @enderror">
-                            @error('client.state')
+                            <input type="text" id="state" wire:model="state" placeholder="NY"
+                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('state') border-red-500 @enderror">
+                            @error('state')
                                 <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -239,9 +233,9 @@
                                 class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                                 ZIP/Postal Code
                             </label>
-                            <input type="text" id="zip_code" wire:model="client.zip_code" placeholder="10001"
-                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('client.zip_code') border-red-500 @enderror">
-                            @error('client.zip_code')
+                            <input type="text" id="zip_code" wire:model="zip_code" placeholder="10001"
+                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('zip_code') border-red-500 @enderror">
+                            @error('zip_code')
                                 <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -252,10 +246,9 @@
                                 class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                                 Country
                             </label>
-                            <input type="text" id="country" wire:model="client.country"
-                                placeholder="United States"
-                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('client.country') border-red-500 @enderror">
-                            @error('client.country')
+                            <input type="text" id="country" wire:model="country" placeholder="United States"
+                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('country') border-red-500 @enderror">
+                            @error('country')
                                 <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -281,10 +274,9 @@
                                 class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                                 Billing Plan
                             </label>
-                            <input type="text" id="billing_plan" wire:model="client.billing_plan"
-                                placeholder="Premium"
-                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('client.billing_plan') border-red-500 @enderror">
-                            @error('client.billing_plan')
+                            <input type="text" id="billing_plan" wire:model="billing_plan" placeholder="Premium"
+                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('billing_plan') border-red-500 @enderror">
+                            @error('billing_plan')
                                 <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -295,15 +287,15 @@
                                 class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                                 Subscription Status
                             </label>
-                            <select id="subscription_status" wire:model="client.subscription_status"
-                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('client.subscription_status') border-red-500 @enderror">
+                            <select id="subscription_status" wire:model="subscription_status"
+                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('subscription_status') border-red-500 @enderror">
                                 <option value="">Select Status</option>
                                 <option value="active">Active</option>
                                 <option value="pending">Pending</option>
                                 <option value="cancelled">Cancelled</option>
                                 <option value="expired">Expired</option>
                             </select>
-                            @error('client.subscription_status')
+                            @error('subscription_status')
                                 <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -314,10 +306,9 @@
                                 class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                                 Start Date
                             </label>
-                            <input type="date" id="subscription_start_date"
-                                wire:model="client.subscription_start_date"
-                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('client.subscription_start_date') border-red-500 @enderror">
-                            @error('client.subscription_start_date')
+                            <input type="date" id="subscription_start_date" wire:model="subscription_start_date"
+                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('subscription_start_date') border-red-500 @enderror">
+                            @error('subscription_start_date')
                                 <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -328,10 +319,9 @@
                                 class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                                 End Date
                             </label>
-                            <input type="date" id="subscription_end_date"
-                                wire:model="client.subscription_end_date"
-                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('client.subscription_end_date') border-red-500 @enderror">
-                            @error('client.subscription_end_date')
+                            <input type="date" id="subscription_end_date" wire:model="subscription_end_date"
+                                class="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white @error('subscription_end_date') border-red-500 @enderror">
+                            @error('subscription_end_date')
                                 <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                             @enderror
                         </div>

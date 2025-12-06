@@ -96,7 +96,8 @@
                             <tr class="hover:bg-zinc-50 dark:hover:bg-zinc-700/50 transition-colors">
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div>
-                                        <div class="text-sm font-medium text-foreground">{{ $client->company_name }}</div>
+                                        <div class="text-sm font-medium text-foreground">{{ $client->company_name }}
+                                        </div>
                                         @if ($client->name)
                                             <div class="text-sm text-muted-foreground">{{ $client->name }}</div>
                                         @endif
@@ -147,7 +148,8 @@
                                         <div class="font-medium">{{ $client->total_tasks }}</div>
                                         @if ($client->total_tasks > 0)
                                             <div class="text-xs text-blue-600 dark:text-blue-400">
-                                                {{ round(($client->completed_tasks / $client->total_tasks) * 100) }}% done
+                                                {{ round(($client->completed_tasks / $client->total_tasks) * 100) }}%
+                                                done
                                             </div>
                                         @endif
                                     </div>
@@ -163,29 +165,21 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <div class="flex items-center justify-end gap-2">
-                                        <flux:button
-                                            variant="outline"
-                                            size="sm"
+                                        <flux:button variant="outline" size="sm"
                                             :href="route('clients.show', $client)">
                                             View
                                         </flux:button>
-                                        <flux:button
-                                            variant="outline"
-                                            size="sm"
+                                        <flux:button variant="outline" size="sm"
                                             :href="route('clients.edit', $client)">
                                             Edit
                                         </flux:button>
                                         <flux:tooltip content="Delete Client">
-                                            <flux:button
-                                                variant="outline"
-                                                size="sm"
-                                                color="red"
-                                                type="button"
-                                                wire:click="deleteClient({{ $client->id }})"
-                                                class="h-8 w-8 p-0"
-                                                title="Delete Client">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            <flux:button variant="outline" size="sm" color="red"
+                                                type="button" wire:click="deleteClient({{ $client->id }})"
+                                                class="h-8 w-8 p-0" title="Delete Client">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                                     class="h-4 w-4">
                                                     <path d="M3 6h18"></path>
                                                     <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
@@ -255,7 +249,8 @@
         <div class="space-y-6">
             <div>
                 <flux:heading size="lg">Delete Client</flux:heading>
-                <flux:text class="mt-2">Are you sure you want to delete this client? This action cannot be undone and will also delete all associated projects and tasks.</flux:text>
+                <flux:text class="mt-2">Are you sure you want to delete this client? This action cannot be undone and
+                    will also delete all associated projects and tasks.</flux:text>
             </div>
 
             <div class="flex gap-2">

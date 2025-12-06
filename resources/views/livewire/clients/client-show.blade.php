@@ -225,16 +225,11 @@
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-lg font-semibold text-foreground">Projects</h2>
                         <div class="flex items-center gap-2">
-                            <flux:button
-                                variant="outline"
-                                size="sm"
-                                type="button"
+                            <flux:button variant="outline" size="sm" type="button"
                                 wire:click="$toggle('showAssignProjectModal')">
                                 + Assign Project
                             </flux:button>
-                            <flux:button
-                                variant="outline"
-                                size="sm"
+                            <flux:button variant="outline" size="sm"
                                 :href="route('projects.create', ['client_id' => $client->id])">
                                 + Add Project
                             </flux:button>
@@ -269,10 +264,10 @@
                                                         <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11">
                                                         </path>
                                                     </svg>
-                                                    {{ $taskCount }} tasks
-                                                    @if ($taskCount > 0)
+                                                    {{ $projectTaskCounts[$project->id]['taskCount'] }} tasks
+                                                    @if ($projectTaskCounts[$project->id]['taskCount'] > 0)
                                                         <span
-                                                            class="text-green-600 dark:text-green-400">({{ $completedTaskCount }}
+                                                            class="text-green-600 dark:text-green-400">({{ $projectTaskCounts[$project->id]['completedTaskCount'] }}
                                                             done)</span>
                                                     @endif
                                                 </div>
@@ -294,8 +289,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <flux:badge
-                                            class="{{ $this->getProjectStatusBadgeClass($project->status) }}">
+                                        <flux:badge class="{{ $this->getProjectStatusBadgeClass($project->status) }}">
                                             {{ ucfirst(str_replace('_', ' ', $project->status)) }}
                                         </flux:badge>
                                     </div>
@@ -356,7 +350,7 @@
                     <div class="p-6">
                         <div class="flex items-center justify-between mb-4">
                             <h2 class="text-lg font-semibold text-foreground">Recent Tasks</h2>
-                            <a href="{{ route('tasks.index') }}?client_id={{ $client->id }}"
+                            <a href="{{ route('tasks') }}?client_id={{ $client->id }}"
                                 class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400">View All</a>
                         </div>
 
@@ -373,8 +367,7 @@
                                                 {{ $task->project->name }}</p>
                                         </div>
                                         <div class="flex items-center gap-2">
-                                            <flux:badge
-                                                class="{{ $this->getTaskStatusBadgeClass($task->status) }}">
+                                            <flux:badge class="{{ $this->getTaskStatusBadgeClass($task->status) }}">
                                                 {{ ucfirst(str_replace('_', ' ', $task->status)) }}
                                             </flux:badge>
                                         </div>
@@ -420,8 +413,9 @@
 
                     <div class="flex gap-2">
                         <flux:spacer />
-                        <flux:button variant="ghost" wire:click="$toggle('showAssignProjectModal')">Cancel</flux:button>
-                        @if($selectedProjectId)
+                        <flux:button variant="ghost" wire:click="$toggle('showAssignProjectModal')">Cancel
+                        </flux:button>
+                        @if ($selectedProjectId)
                             <flux:button wire:click="assignProject">
                                 Assign Project
                             </flux:button>
@@ -429,21 +423,22 @@
                     </div>
                 @else
                     <div class="text-center py-8">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round"
-                            class="mx-auto h-12 w-12 text-zinc-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="mx-auto h-12 w-12 text-zinc-400">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                             <circle cx="12" cy="7" r="4"></circle>
                         </svg>
-                        <h3 class="mt-2 text-sm font-medium text-zinc-900 dark:text-zinc-100">No projects available</h3>
+                        <h3 class="mt-2 text-sm font-medium text-zinc-900 dark:text-zinc-100">No projects available
+                        </h3>
                         <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">There are no projects available to
                             assign to this client.</p>
                     </div>
 
                     <div class="flex gap-2">
                         <flux:spacer />
-                        <flux:button variant="ghost" wire:click="$toggle('showAssignProjectModal')">Close</flux:button>
+                        <flux:button variant="ghost" wire:click="$toggle('showAssignProjectModal')">Close
+                        </flux:button>
                     </div>
                 @endif
             </div>

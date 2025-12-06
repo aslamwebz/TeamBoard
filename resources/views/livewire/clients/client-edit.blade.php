@@ -28,11 +28,11 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <flux:field label="Company Name *" for="company_name">
-                                    <input type="text" id="company_name" wire:model="client.company_name"
+                                    <input type="text" id="company_name" wire:model="company_name"
                                         placeholder="Enter company name"
                                         class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
                                         required>
-                                    @error('client.company_name')
+                                    @error('company_name')
                                         <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                     @enderror
                                 </flux:field>
@@ -40,10 +40,10 @@
 
                             <div>
                                 <flux:field label="Contact Name" for="name">
-                                    <input type="text" id="name" wire:model="client.name"
+                                    <input type="text" id="name" wire:model="name"
                                         placeholder="Enter contact name"
                                         class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                                    @error('client.name')
+                                    @error('name')
                                         <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                     @enderror
                                 </flux:field>
@@ -65,11 +65,11 @@
                         <div class="space-y-4">
                             <div>
                                 <flux:field label="Email *" for="email">
-                                    <input type="email" id="email" wire:model="client.email"
+                                    <input type="email" id="email" wire:model="email"
                                         placeholder="Enter email address"
                                         class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
                                         required>
-                                    @error('client.email')
+                                    @error('email')
                                         <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                     @enderror
                                 </flux:field>
@@ -77,10 +77,10 @@
 
                             <div>
                                 <flux:field label="Phone" for="phone">
-                                    <input type="text" id="phone" wire:model="client.phone"
+                                    <input type="text" id="phone" wire:model="phone"
                                         placeholder="Enter phone number"
                                         class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                                    @error('client.phone')
+                                    @error('phone')
                                         <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                     @enderror
                                 </flux:field>
@@ -102,9 +102,9 @@
                         <div class="space-y-4">
                             <div>
                                 <flux:field label="Street Address" for="address">
-                                    <textarea id="address" wire:model="client.address" rows="2" placeholder="123 Main Street"
+                                    <textarea id="address" wire:model="address" rows="2" placeholder="123 Main Street"
                                         class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"></textarea>
-                                    @error('client.address')
+                                    @error('address')
                                         <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                     @enderror
                                 </flux:field>
@@ -113,10 +113,9 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <flux:field label="City" for="city">
-                                        <input type="text" id="city" wire:model="client.city"
-                                            placeholder="New York"
+                                        <input type="text" id="city" wire:model="city" placeholder="New York"
                                             class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                                        @error('client.city')
+                                        @error('city')
                                             <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                         @enderror
                                     </flux:field>
@@ -124,10 +123,9 @@
 
                                 <div>
                                     <flux:field label="State/Province" for="state">
-                                        <input type="text" id="state" wire:model="client.state"
-                                            placeholder="NY"
+                                        <input type="text" id="state" wire:model="state" placeholder="NY"
                                             class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                                        @error('client.state')
+                                        @error('state')
                                             <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                         @enderror
                                     </flux:field>
@@ -137,10 +135,10 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <flux:field label="ZIP/Postal Code" for="zip_code">
-                                        <input type="text" id="zip_code" wire:model="client.zip_code"
+                                        <input type="text" id="zip_code" wire:model="zip_code"
                                             placeholder="ZIP/Postal Code"
                                             class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                                        @error('client.zip_code')
+                                        @error('zip_code')
                                             <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                         @enderror
                                     </flux:field>
@@ -148,10 +146,10 @@
 
                                 <div>
                                     <flux:field label="Country" for="country">
-                                        <input type="text" id="country" wire:model="client.country"
+                                        <input type="text" id="country" wire:model="country"
                                             placeholder="United States"
                                             class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                                        @error('client.country')
+                                        @error('country')
                                             <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                         @enderror
                                     </flux:field>
@@ -173,10 +171,10 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <flux:field label="Industry" for="industry">
-                                    <input type="text" id="industry" wire:model="client.industry"
+                                    <input type="text" id="industry" wire:model="industry"
                                         placeholder="e.g. Technology, Finance, Healthcare"
                                         class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                                    @error('client.industry')
+                                    @error('industry')
                                         <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                     @enderror
                                 </flux:field>
@@ -184,10 +182,10 @@
 
                             <div>
                                 <flux:field label="Website" for="website">
-                                    <input type="url" id="website" wire:model="client.website"
+                                    <input type="url" id="website" wire:model="website"
                                         placeholder="https://example.com"
                                         class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                                    @error('client.website')
+                                    @error('website')
                                         <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                     @enderror
                                 </flux:field>
@@ -195,10 +193,10 @@
 
                             <div>
                                 <flux:field label="Registration Number" for="registration_number">
-                                    <input type="text" id="registration_number"
-                                        wire:model="client.registration_number" placeholder="Registration Number"
+                                    <input type="text" id="registration_number" wire:model="registration_number"
+                                        placeholder="Registration Number"
                                         class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                                    @error('client.registration_number')
+                                    @error('registration_number')
                                         <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                     @enderror
                                 </flux:field>
@@ -206,10 +204,9 @@
 
                             <div>
                                 <flux:field label="Tax ID" for="tax_id">
-                                    <input type="text" id="tax_id" wire:model="client.tax_id"
-                                        placeholder="Tax ID"
+                                    <input type="text" id="tax_id" wire:model="tax_id" placeholder="Tax ID"
                                         class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                                    @error('client.tax_id')
+                                    @error('tax_id')
                                         <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                     @enderror
                                 </flux:field>
@@ -217,10 +214,10 @@
 
                             <div>
                                 <flux:field label="VAT Number" for="vat_number">
-                                    <input type="text" id="vat_number" wire:model="client.vat_number"
+                                    <input type="text" id="vat_number" wire:model="vat_number"
                                         placeholder="VAT Number"
                                         class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                                    @error('client.vat_number')
+                                    @error('vat_number')
                                         <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                     @enderror
                                 </flux:field>
@@ -228,10 +225,10 @@
 
                             <div>
                                 <flux:field label="Billing Plan" for="billing_plan">
-                                    <input type="text" id="billing_plan" wire:model="client.billing_plan"
+                                    <input type="text" id="billing_plan" wire:model="billing_plan"
                                         placeholder="e.g. Basic, Pro, Enterprise"
                                         class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                                    @error('client.billing_plan')
+                                    @error('billing_plan')
                                         <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                     @enderror
                                 </flux:field>
@@ -240,10 +237,9 @@
 
                         <div class="mt-4">
                             <flux:field label="Description" for="description">
-                                <textarea id="description" wire:model="client.description" rows="3"
-                                    placeholder="Brief description of the company..."
+                                <textarea id="description" wire:model="description" rows="3" placeholder="Brief description of the company..."
                                     class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"></textarea>
-                                @error('client.description')
+                                @error('description')
                                     <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                 @enderror
                             </flux:field>
@@ -266,7 +262,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
                                 <flux:field label="Status" for="subscription_status">
-                                    <select id="subscription_status" wire:model="client.subscription_status"
+                                    <select id="subscription_status" wire:model="subscription_status"
                                         class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
                                         <option value="">Select Status</option>
                                         <option value="active">Active</option>
@@ -274,7 +270,7 @@
                                         <option value="cancelled">Cancelled</option>
                                         <option value="expired">Expired</option>
                                     </select>
-                                    @error('client.subscription_status')
+                                    @error('subscription_status')
                                         <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                     @enderror
                                 </flux:field>
@@ -283,9 +279,9 @@
                             <div>
                                 <flux:field label="Start Date" for="subscription_start_date">
                                     <input type="date" id="subscription_start_date"
-                                        wire:model="client.subscription_start_date"
+                                        wire:model="subscription_start_date"
                                         class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                                    @error('client.subscription_start_date')
+                                    @error('subscription_start_date')
                                         <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                     @enderror
                                 </flux:field>
@@ -294,9 +290,9 @@
                             <div>
                                 <flux:field label="End Date" for="subscription_end_date">
                                     <input type="date" id="subscription_end_date"
-                                        wire:model="client.subscription_end_date"
+                                        wire:model="subscription_end_date"
                                         class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                                    @error('client.subscription_end_date')
+                                    @error('subscription_end_date')
                                         <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                     @enderror
                                 </flux:field>

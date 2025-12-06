@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Livewire\Clients;
 
@@ -24,12 +22,19 @@ final class ClientShow extends Component
     public $availableProjects = [];
 
     public int $projectCount = 0;
+
     public int $activeProjects = 0;
+
     public int $completedProjects = 0;
+
     public int $totalTasks = 0;
+
     public int $completedTasks = 0;
+
     public int $inProgressTasks = 0;
+
     public $recentTasks = [];
+
     public $projects = [];
 
     public function mount(Client $client): void
@@ -51,7 +56,8 @@ final class ClientShow extends Component
         $this->projects = $this->client->projects()->latest()->get();
 
         // Get recent tasks from projects belonging to this client
-        $this->recentTasks = $this->client
+        $this->recentTasks = $this
+            ->client
             ->projects()
             ->with([
                 'tasks' => function ($query) {
@@ -121,18 +127,18 @@ final class ClientShow extends Component
     {
         $clientStats = $this->getClientStats($this->client);
 
-        // Enhance projects with task counts using a method that doesn't rely on dynamic properties
-        $enhancedProjects = [];
-        foreach ($this->client->projects as $project) {
+        // Get projects with their task counts
+        $projects = $this->client->projects()->get();
+        $projectTaskCounts = [];
+
+        foreach ($projects as $project) {
             $taskCounts = $this->getProjectTaskCounts($project);
-            $project->taskCount = $taskCounts['taskCount'];
-            $project->completedTaskCount = $taskCounts['completedTaskCount'];
-            $enhancedProjects[] = $project;
+            $projectTaskCounts[$project->id] = $taskCounts;
         }
-        $projectsWithTaskCounts = collect($enhancedProjects);
 
         // Load recent tasks for the client
-        $recentTasks = $this->client
+        $recentTasks = $this
+            ->client
             ->projects()
             ->with([
                 'tasks' => function ($query) {
@@ -145,7 +151,8 @@ final class ClientShow extends Component
 
         return view('livewire.clients.client-show', [
             'client' => $this->client,
-            'projects' => $projectsWithTaskCounts,
+            'projects' => $projects,
+            'projectTaskCounts' => $projectTaskCounts,
             'recentTasks' => $recentTasks,
             'projectCount' => $clientStats['projectCount'],
             'activeProjects' => $clientStats['activeProjects'],
@@ -198,11 +205,11 @@ final class ClientShow extends Component
         $totalTasks = $projects->sum('tasks_count');
 
         // For completed and in-progress tasks counts, count projects that have such tasks
-        $completedTaskProjects = $projects->filter(function($project) {
+        $completedTaskProjects = $projects->filter(function ($project) {
             return $project->tasks()->where('status', 'completed')->exists();
         })->count();
 
-        $inProgressTaskProjects = $projects->filter(function($project) {
+        $inProgressTaskProjects = $projects->filter(function ($project) {
             return $project->tasks()->where('status', 'in_progress')->exists();
         })->count();
 
@@ -211,8 +218,8 @@ final class ClientShow extends Component
             'activeProjects' => $activeProjects,
             'completedProjects' => $completedProjects,
             'totalTasks' => $totalTasks,
-            'completedTasks' => $completedTaskProjects, // Note: This logic might be different based on requirement
-            'inProgressTasks' => $inProgressTaskProjects // Note: This logic might be different based on requirement
+            'completedTasks' => $completedTaskProjects,  // Note: This logic might be different based on requirement
+            'inProgressTasks' => $inProgressTaskProjects  // Note: This logic might be different based on requirement
         ];
     }
 

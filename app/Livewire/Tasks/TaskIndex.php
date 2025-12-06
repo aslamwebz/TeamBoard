@@ -44,39 +44,6 @@ final class TaskIndex extends Component
         $this->refreshTasksByStatus();
     }
 
-    public function render(): View
-    {
-        // Set status colors for presentation using enum
-        $this->statusColors = [
-            'todo' => \App\Enums\TaskStatus::TODO->getColorClass(),
-            'in_progress' => \App\Enums\TaskStatus::IN_PROGRESS->getColorClass(),
-            'completed' => \App\Enums\TaskStatus::COMPLETED->getColorClass(),
-            'on_hold' => \App\Enums\TaskStatus::ON_HOLD->getColorClass(),
-        ];
-
-        // Always provide both datasets to the view to prevent issues
-        if ($this->viewMode === 'board') {
-            $this->refreshTasksByStatus();
-            $tasks = collect(); // Not used in board view but provided to prevent issues
-        } else {
-            $tasks = Task::query()
-                ->where('title', 'like', '%'.$this->search.'%')
-                ->when($this->statusFilter, function ($query) {
-                    $query->where('status', $this->statusFilter);
-                })
-                ->with(['project', 'users', 'phase', 'user']) // Eager load relationships
-                ->paginate(10);
-            // Only refresh for board when needed
-            if ($this->search || $this->statusFilter) {
-                $this->refreshTasksByStatus();
-            }
-        }
-
-        return view('livewire.tasks.task-index', [
-            'tasks' => $tasks,
-            'tasksByStatus' => $this->tasksByStatus,
-        ]);
-    }
 
     public function getTaskStatusBadgeClass(string $status): string
     {
