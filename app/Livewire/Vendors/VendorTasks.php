@@ -1,10 +1,9 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Livewire\Vendors;
 
 use App\Models\Task;
+use App\Models\Vendor;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -20,9 +19,9 @@ final class VendorTasks extends Component
 
     protected $queryString = ['search'];
 
-    public function mount($vendorId): void
+    public function mount($vendor): void
     {
-        $this->vendorId = $vendorId;
+        $this->vendorId = $vendor;
     }
 
     public function updatingSearch(): void
@@ -32,18 +31,22 @@ final class VendorTasks extends Component
 
     public function render(): \Illuminate\Contracts\View\View
     {
+        $vendor = Vendor::findOrFail($this->vendorId);
+
         $query = Task::where('vendor_id', $this->vendorId)->with(['project']);
 
         if ($this->search) {
-            $query->where('title', 'like', '%'.$this->search.'%')
+            $query
+                ->where('title', 'like', '%' . $this->search . '%')
                 ->orWhereHas('project', function ($q) {
-                    $q->where('name', 'like', '%'.$this->search.'%');
+                    $q->where('name', 'like', '%' . $this->search . '%');
                 });
         }
 
         $tasks = $query->orderBy('title')->paginate($this->perPage);
 
         return view('livewire.vendors.vendor-tasks', [
+            'vendor' => $vendor,
             'tasks' => $tasks,
         ]);
     }

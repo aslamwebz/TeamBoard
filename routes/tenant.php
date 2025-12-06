@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 use App\Livewire\Auth\ResetPassword;
 use App\Livewire\Billing\BillingIndex;
@@ -9,7 +7,6 @@ use App\Livewire\Clients\ClientCreate;
 use App\Livewire\Clients\ClientEdit;
 use App\Livewire\Clients\ClientIndex;
 use App\Livewire\Clients\ClientShow;
-use App\Livewire\Dashboard;
 use App\Livewire\Expenses\ExpenseApprovals;
 use App\Livewire\Expenses\ExpenseAttachments;
 use App\Livewire\Expenses\ExpenseCreate;
@@ -56,15 +53,10 @@ use App\Livewire\Users\UserCreate;
 use App\Livewire\Users\UserEdit;
 use App\Livewire\Users\UserIndex;
 use App\Livewire\Users\UserShow;
-use App\Livewire\Vendors\VendorContacts;
 use App\Livewire\Vendors\VendorCreate;
 use App\Livewire\Vendors\VendorEdit;
 use App\Livewire\Vendors\VendorIndex;
-use App\Livewire\Vendors\VendorInvoices;
-use App\Livewire\Vendors\VendorProjects;
-use App\Livewire\Vendors\VendorServices;
 use App\Livewire\Vendors\VendorShow;
-use App\Livewire\Vendors\VendorTasks;
 use App\Livewire\Worker\WorkerDashboard;
 use App\Livewire\Workers\Timesheets;
 use App\Livewire\Workers\WorkerCertifications;
@@ -72,6 +64,7 @@ use App\Livewire\Workers\WorkerEdit;
 use App\Livewire\Workers\WorkerIndex;
 use App\Livewire\Workers\WorkerShow;
 use App\Livewire\Workers\WorkerSkills;
+use App\Livewire\Dashboard;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -184,13 +177,6 @@ Route::middleware([
         Route::get('/vendors/{vendor}/edit', VendorEdit::class)->name('vendors.edit');
         Route::get('/vendors/{vendor}', VendorShow::class)->name('vendors.show');
 
-        // Vendor relationship routes
-        Route::get('/vendors/{vendor}/contacts', VendorContacts::class)->name('vendor.contacts');
-        Route::get('/vendors/{vendor}/services', VendorServices::class)->name('vendor.services');
-        Route::get('/vendors/{vendor}/invoices', VendorInvoices::class)->name('vendor.invoices');
-        Route::get('/vendors/{vendor}/projects', VendorProjects::class)->name('vendor.projects');
-        Route::get('/vendors/{vendor}/tasks', VendorTasks::class)->name('vendor.tasks');
-
         // Purchase Orders routes
         Route::get('/purchase-orders', PurchaseOrderIndex::class)->name('purchase-orders');
         Route::get('/purchase-orders/create', PurchaseOrderCreate::class)->name('purchase-orders.create');
@@ -275,7 +261,7 @@ Route::middleware([
         ->name('notifications.index')
         ->middleware(['auth']);
 
-    require __DIR__.'/auth.php';
+    require __DIR__ . '/auth.php';
 });
 
 Route::get('reset-password/{token}', ResetPassword::class)->name('password.reset');

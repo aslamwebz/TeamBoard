@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Livewire\Vendors;
 
@@ -11,9 +9,22 @@ final class VendorShow extends Component
 {
     public Vendor $vendor;
 
+    public string $activeTab = 'contacts';
+
     public function mount(Vendor $vendor): void
     {
-        $this->vendor = $vendor->load(['contacts', 'services', 'invoices']);
+        $this->vendor = $vendor->load([
+            'contacts',
+            'services',
+            'invoices',
+            'projects',
+            'tasks'
+        ]);
+    }
+
+    public function setActiveTab(string $tab): void
+    {
+        $this->activeTab = $tab;
     }
 
     public function render(): \Illuminate\Contracts\View\View

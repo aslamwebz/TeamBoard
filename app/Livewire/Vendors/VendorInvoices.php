@@ -1,9 +1,8 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Livewire\Vendors;
 
+use App\Models\Vendor;
 use App\Models\VendorInvoice;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -22,9 +21,9 @@ final class VendorInvoices extends Component
 
     protected $queryString = ['search', 'status'];
 
-    public function mount($vendorId): void
+    public function mount($vendor): void
     {
-        $this->vendorId = $vendorId;
+        $this->vendorId = $vendor;
     }
 
     public function updatingSearch(): void
@@ -34,10 +33,12 @@ final class VendorInvoices extends Component
 
     public function render(): \Illuminate\Contracts\View\View
     {
+        $vendor = Vendor::findOrFail($this->vendorId);
+
         $query = VendorInvoice::where('vendor_id', $this->vendorId);
 
         if ($this->search) {
-            $query->where('invoice_number', 'like', '%'.$this->search.'%');
+            $query->where('invoice_number', 'like', '%' . $this->search . '%');
         }
 
         if ($this->status) {
@@ -47,6 +48,7 @@ final class VendorInvoices extends Component
         $invoices = $query->orderBy('invoice_date', 'desc')->paginate($this->perPage);
 
         return view('livewire.vendors.vendor-invoices', [
+            'vendor' => $vendor,
             'invoices' => $invoices,
         ]);
     }

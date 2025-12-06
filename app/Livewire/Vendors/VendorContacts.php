@@ -1,9 +1,8 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Livewire\Vendors;
 
+use App\Models\Vendor;
 use App\Models\VendorContact;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -20,9 +19,9 @@ final class VendorContacts extends Component
 
     protected $queryString = ['search'];
 
-    public function mount($vendorId): void
+    public function mount($vendor): void
     {
-        $this->vendorId = $vendorId;
+        $this->vendorId = $vendor;
     }
 
     public function updatingSearch(): void
@@ -32,17 +31,21 @@ final class VendorContacts extends Component
 
     public function render(): \Illuminate\Contracts\View\View
     {
+        $vendor = Vendor::findOrFail($this->vendorId);
+
         $query = VendorContact::where('vendor_id', $this->vendorId);
 
         if ($this->search) {
-            $query->where('first_name', 'like', '%'.$this->search.'%')
-                ->orWhere('last_name', 'like', '%'.$this->search.'%')
-                ->orWhere('email', 'like', '%'.$this->search.'%');
+            $query
+                ->where('first_name', 'like', '%' . $this->search . '%')
+                ->orWhere('last_name', 'like', '%' . $this->search . '%')
+                ->orWhere('email', 'like', '%' . $this->search . '%');
         }
 
         $contacts = $query->orderBy('is_primary', 'desc')->orderBy('first_name')->paginate($this->perPage);
 
         return view('livewire.vendors.vendor-contacts', [
+            'vendor' => $vendor,
             'contacts' => $contacts,
         ]);
     }
