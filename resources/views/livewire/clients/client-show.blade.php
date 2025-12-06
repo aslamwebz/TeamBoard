@@ -350,13 +350,16 @@
                     <div class="p-6">
                         <div class="flex items-center justify-between mb-4">
                             <h2 class="text-lg font-semibold text-foreground">Recent Tasks</h2>
-                            <a href="{{ route('tasks') }}?client_id={{ $client->id }}"
-                                class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400">View All</a>
+                            <flux:button variant="outline" size="sm"
+                                :href="route('tasks')
+                                    .'?client_id=' . $client->id">
+                                View All
+                            </flux:button>
                         </div>
 
                         <div class="space-y-3">
                             @foreach ($recentTasks as $task)
-                                <div class="border border-zinc-200 dark:border-zinc-700 rounded-lg p-3">
+<div class="border border-zinc-200 dark:border-zinc-700 rounded-lg p-3">
                                     <div class="flex items-center justify-between">
                                         <div>
                                             <a href="{{ route('tasks.show', $task) }}"
@@ -373,7 +376,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
+@endforeach
                         </div>
                     </div>
                 </div>
@@ -405,43 +408,45 @@
                                 class="w-full px-4 py-2 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
                                 <option value="">Choose a project...</option>
                                 @foreach ($availableProjects as $project)
-                                    <option value="{{ $project['id'] }}">{{ $project['name'] }}</option>
-                                @endforeach
+<option value="{{ $project['id'] }}">{{ $project['name'] }}</option>
+@endforeach
                             </select>
                         </flux:field>
                     </div>
 
                     <div class="flex gap-2">
                         <flux:spacer />
-                        <flux:button variant="ghost" wire:click="$toggle('showAssignProjectModal')">Cancel
-                        </flux:button>
-                        @if ($selectedProjectId)
-                            <flux:button wire:click="assignProject">
-                                Assign Project
+                        <flux:button variant="ghost" wire:click="$toggle('showAssignProjectModal ')">
+                                Cancel
                             </flux:button>
-                        @endif
-                    </div>
-                @else
-                    <div class="text-center py-8">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="mx-auto h-12 w-12 text-zinc-400">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                        <h3 class="mt-2 text-sm font-medium text-zinc-900 dark:text-zinc-100">No projects available
-                        </h3>
-                        <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">There are no projects available to
-                            assign to this client.</p>
-                    </div>
+                            @if ($selectedProjectId)
+                                <flux:button wire:click="assignProject">
+                                    Assign Project
+                                </flux:button>
+                            @endif
+                        </div>
+                    @else
+                        <div class="text-center py-8">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="mx-auto h-12 w-12 text-zinc-400">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            <h3 class="mt-2 text-sm font-medium text-zinc-900 dark:text-zinc-100">No projects available
+                            </h3>
+                            <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">There are no projects available to
+                                assign to this client.</p>
+                        </div>
 
-                    <div class="flex gap-2">
-                        <flux:spacer />
-                        <flux:button variant="ghost" wire:click="$toggle('showAssignProjectModal')">Close
-                        </flux:button>
-                    </div>
-                @endif
-            </div>
+                        <div class="flex gap-2">
+                            <flux:spacer />
+                            <flux:button variant="ghost" wire:click="$toggle('showAssignProjectModal')">Close
+                            </flux:button>
+                        </div>
+            @endif
         </div>
+    </div>
     </flux:modal>
 </div>

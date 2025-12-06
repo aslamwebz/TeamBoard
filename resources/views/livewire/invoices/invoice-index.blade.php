@@ -4,15 +4,14 @@
             <h1 class="text-3xl font-bold text-foreground">Invoices</h1>
             <p class="text-muted-foreground">Manage your invoices and payments</p>
         </div>
-        <a href="{{ route('invoices.create') }}"
-            class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900">
+        <flux:button :href="route('invoices.create')" class="flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
                 <path d="M5 12h14"></path>
                 <path d="M12 5v14"></path>
             </svg>
             Add Invoice
-        </a>
+        </flux:button>
     </div>
 
     <!-- Filters -->
@@ -125,39 +124,29 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex items-center justify-end gap-2">
-                                    <a href="{{ route('invoices.show', $invoice) }}"
-                                        class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
-                                        title="View">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
-                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                                            <circle cx="12" cy="12" r="3" />
-                                        </svg>
-                                    </a>
-                                    <a href="{{ route('invoices.edit', $invoice) }}"
-                                        class="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-300"
-                                        title="Edit">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
-                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                        </svg>
-                                    </a>
-                                    <button type="button" wire:click="deleteInvoice({{ $invoice->id }})"
-                                        class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
-                                        title="Delete">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                            class="h-4 w-4">
-                                            <path d="M3 6h18"></path>
-                                            <path
-                                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                            </path>
-                                        </svg>
-                                    </button>
+                                    <flux:button variant="outline" size="sm"
+                                        :href="route('invoices.show', $invoice)">
+                                        View
+                                    </flux:button>
+                                    <flux:button variant="outline" size="sm"
+                                        :href="route('invoices.edit', $invoice)">
+                                        Edit
+                                    </flux:button>
+                                    <flux:tooltip content="Delete Invoice">
+                                        <flux:button variant="outline" size="sm" color="red" type="button"
+                                            wire:click="deleteInvoice({{ $invoice->id }})" class="h-8 w-8 p-0"
+                                            title="Delete Invoice">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                class="h-4 w-4">
+                                                <path d="M3 6h18"></path>
+                                                <path
+                                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                                </path>
+                                            </svg>
+                                        </flux:button>
+                                    </flux:tooltip>
                                 </div>
                             </td>
                         </tr>
@@ -177,8 +166,7 @@
                                 <h3 class="text-lg font-medium text-foreground mb-2">No invoices found</h3>
                                 <p class="text-zinc-500 dark:text-zinc-400 mb-6">Get started by creating your first
                                     invoice.</p>
-                                <a href="{{ route('invoices.create') }}"
-                                    class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900">
+                                <flux:button :href="route('invoices.create')" class="inline-flex items-center gap-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
@@ -186,7 +174,7 @@
                                         <path d="M12 5v14"></path>
                                     </svg>
                                     Create Invoice
-                                </a>
+                                </flux:button>
                             </td>
                         </tr>
                     @endforelse

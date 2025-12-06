@@ -6,14 +6,12 @@
             <p class="text-muted-foreground">{{ $invoice->invoice_number }}</p>
         </div>
         <div class="flex gap-3">
-            <a href="{{ route('invoices.index') }}"
-                class="px-4 py-2 border border-zinc-200 rounded-lg text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-700">
+            <flux:button :href="route('invoices.index')" variant="outline">
                 Back to Invoices
-            </a>
-            <a href="{{ route('invoices.edit', $invoice) }}"
-                class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+            </flux:button>
+            <flux:button :href="route('invoices.edit', $invoice)">
                 Edit Invoice
-            </a>
+            </flux:button>
         </div>
     </div>
 
@@ -85,10 +83,9 @@
                     </svg>
                     Bill To
                 </h3>
-                <a href="{{ route('clients.show', $invoice->client) }}"
-                    class="text-blue-600 hover:text-blue-700 text-sm font-medium">
+                <flux:button variant="outline" size="sm" :href="route('clients.show', $invoice->client)">
                     View Client
-                </a>
+                </flux:button>
             </div>
             <div class="space-y-4">
                 <div>
@@ -167,8 +164,9 @@
                 @if ($invoice->project)
                     <div class="flex justify-between items-center py-2 border-b border-zinc-100 dark:border-zinc-700">
                         <span class="text-sm text-zinc-500 dark:text-zinc-400">Project</span>
-                        <a href="{{ route('projects.show', $invoice->project) }}"
-                            class="font-medium text-blue-600 hover:text-blue-700">{{ $invoice->project->name }}</a>
+                        <flux:button variant="ghost" size="sm" :href="route('projects.show', $invoice->project)">
+                            {{ $invoice->project->name }}
+                        </flux:button>
                     </div>
                 @endif
             </div>
