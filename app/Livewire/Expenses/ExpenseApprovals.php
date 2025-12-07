@@ -84,7 +84,7 @@ final class ExpenseApprovals extends Component
     {
         // Only show expenses that are pending approval and the current user has permission to approve
         $expenses = Expense::with(['category', 'project', 'vendor', 'user'])
-            ->where('status', Expense::STATUS_PENDING)
+            ->where('status', ExpenseStatus::PENDING->value)
             ->where(function ($query) {
                 // This is a simplified check - in a real app, you might have specific approval permissions
                 $query->where('user_id', '!=', Auth::id());  // Don't show expenses created by current user

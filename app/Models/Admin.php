@@ -9,7 +9,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use Carbon\CarbonInterface;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property CarbonInterface $email_verified_at
+ * @property string $remember_token
+ */ 
 final class Admin extends Authenticatable
 {
     use HasFactory, Notifiable;

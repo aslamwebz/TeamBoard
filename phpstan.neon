@@ -14,7 +14,7 @@ parameters:
 
 
     # Level 10 is the highest level
-    level: max
+    level: 6
 
 #    ignoreErrors:
 #        - '#PHPDoc tag @var#'

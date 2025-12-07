@@ -35,9 +35,6 @@
                 TeamBoard is a powerful project management platform that helps you organize, track, and collaborate on your projects with your team.
             </p>
             <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
-                <a href="{{ route('register') }}" wire:navigate class="inline-flex items-center justify-center rounded-lg bg-sky-600 px-6 py-3 text-white transition-colors hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-900">
-                    {{ __('Get Started') }}
-                </a>
                 <a href="{{ route('login') }}" wire:navigate class="inline-flex items-center justify-center rounded-lg border border-zinc-300 px-6 py-3 text-foreground transition-colors hover:bg-zinc-100 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2 dark:border-zinc-700 dark:hover:bg-zinc-800 dark:focus:ring-offset-zinc-900">
                     {{ __('Sign In') }}
                 </a>
@@ -108,11 +105,6 @@
                 <p class="mt-4 text-lg text-sky-500">
                     Join thousands of teams already using TeamBoard to streamline their workflow.
                 </p>
-                <div class="mt-8">
-                    <a href="{{ route('register') }}" wire:navigate class="inline-flex items-center justify-center rounded-lg bg-white px-6 py-3 text-sky-600 transition-colors hover:bg-zinc-100 focus:outline-hidden focus:ring-2 focus:ring-white focus:ring-offset-2 dark:focus:ring-offset-zinc-900">
-                        Start Your Free Trial
-                    </a>
-                </div>
             </div>
         </div>
     </section>

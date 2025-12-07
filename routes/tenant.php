@@ -67,7 +67,9 @@ use App\Livewire\Workers\WorkerEdit;
 use App\Livewire\Workers\WorkerIndex;
 use App\Livewire\Workers\WorkerShow;
 use App\Livewire\Workers\WorkerSkills;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Livewire\Livewire;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
@@ -197,7 +199,7 @@ Route::middleware([
 
         // Worker-specific timesheets route for their own profile
         Route::get('/my-timesheets', function () {
-            $user = auth()->user();
+            $user = Auth::user();
             $workerProfile = $user->workerProfile;
             if ($workerProfile) {
                 return Livewire::mount(Timesheets::class, ['workerId' => $workerProfile->id]);
@@ -207,7 +209,7 @@ Route::middleware([
 
         // Worker-specific skills route for their own profile
         Route::get('/my-skills', function () {
-            $user = auth()->user();
+            $user = Auth::user();
             $workerProfile = $user->workerProfile;
             if ($workerProfile) {
                 return Livewire::mount(WorkerSkills::class, ['workerId' => $workerProfile->id]);

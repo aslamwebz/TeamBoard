@@ -5,7 +5,6 @@
             <div class="flex-shrink-0">
                 <a href="{{ route('home') }}" wire:navigate class="flex items-center">
                     <x-application-logo class="h-8 w-auto" />
-                    <span class="ml-2 text-xl font-bold text-zinc-900 dark:text-white">{{ config('app.name') }}</span>
                 </a>
             </div>
 
@@ -29,9 +28,6 @@
                 <div class="ml-4 flex items-center space-x-4 md:ml-6">
                     <a href="{{ route('login') }}" wire:navigate class="inline-flex items-center rounded-md px-4 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-white">
                         {{ __('Sign in') }}
-                    </a>
-                    <a href="{{ route('register') }}" wire:navigate class="inline-flex w-full justify-center rounded-md bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900">
-                        {{ __('Get started') }}
                     </a>
                     <!-- Theme Toggle -->
                     <button type="button" 
@@ -104,11 +100,6 @@
                         {{ __('Sign in') }}
                     </a>
                 </div>
-            </div>
-            <div class="mt-3 space-y-1">
-                <a href="{{ route('register') }}" class="block w-full px-4 py-2 text-base font-medium text-zinc-500 hover:bg-zinc-100 hover:text-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-white">
-                    {{ __('Create account') }}
-                </a>
             </div>
         </div>
     </div>
