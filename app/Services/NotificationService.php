@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Actions\Notifications\CreateNotification;
+use App\Actions\Notifications\SendEmailNotification;
 use App\Jobs\SendPushNotification;
-use App\Models\Notification as NotificationModel;
+use App\Models\Notification;
 use App\Models\User;
-use App\Notifications\GenericNotification;
-use Exception;
-use Illuminate\Support\Facades\Bus;
-use Illuminate\Support\Facades\Mail;
-use Log;
 
 final class NotificationService
 {
@@ -44,7 +41,7 @@ final class NotificationService
      */
     public function markAsRead(int $notificationId, int $userId): bool
     {
-        $notification = NotificationModel::where('id', $notificationId)
+        $notification = Notification::where('id', $notificationId)
             ->where('user_id', $userId)
             ->first();
 
@@ -78,21 +75,16 @@ final class NotificationService
         bool $sendEmail = true,
         bool $sendPush = false
     ): Notification {
-        $notification = NotificationModel::create([
-            'user_id' => $user->id,
-            'type' => $type,
-            'message' => $message,
-            'data' => $data,
-        ]);
+        $notification = (new CreateNotification())->execute($user, $type, $message, $data);
 
         // Optionally send email notification
         if ($sendEmail) {
-            $this->sendEmailNotification($user, $notification);
+            (new SendEmailNotification())->execute($user, $notification);
         }
 
         // Optionally send push notification
         if ($sendPush) {
-            $this->sendPushNotification($user, $notification);
+            (new SendPushNotification())->execute($user, $notification);
         }
 
         return $notification;
@@ -204,30 +196,6 @@ final class NotificationService
             ]
         );
     }
-
-    /**
-     * Send email notification
-     */
-    private function sendEmailNotification(User $user, Notification $notification): void
-    {
-        try {
-            Mail::to($user)->send(new GenericNotification($notification));
-            $notification->update(['email_sent_at' => now()]);
-        } catch (Exception $e) {
-            Log::error('Failed to send email notification: '.$e->getMessage());
-        }
-    }
-
-    /**
-     * Send push notification
-     */
-    private function sendPushNotification(User $user, Notification $notification): void
-    {
-        try {
-            Bus::dispatch(new SendPushNotification($user, $notification));
-            $notification->update(['push_sent_at' => now()]);
-        } catch (Exception $e) {
-            Log::error('Failed to send push notification: '.$e->getMessage());
-        }
-    }
 }
+
+

@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Livewire\Clients;
 
+use App\Enums\ProjectStatus;
+use App\Enums\TaskStatus;
 use App\Models\Client;
 use App\Models\Project;
+use App\Models\Task;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -41,18 +44,27 @@ final class ClientShow extends Component
 
     public function mount(Client $client): void
     {
+        $this->authorize('view', $client);
         $this->client = $client;
 
         // Calculate client statistics
         $clientProjectIds = $this->client->projects()->pluck('id');
         $this->projectCount = $this->client->projects()->count();
-        $this->activeProjects = $this->client->projects()->whereIn('status', ['planning', 'in_progress'])->count();
-        $this->completedProjects = $this->client->projects()->where('status', 'completed')->count();
+        $this->activeProjects = $this->client->projects()
+            ->whereIn('status', ['planning', 'in_progress'])
+            ->count();
+        $this->completedProjects = $this->client->projects()
+            ->where('status', 'completed')
+            ->count();
 
         // Calculate task statistics
-        $this->totalTasks = \App\Models\Task::whereIn('project_id', $clientProjectIds)->count();
-        $this->completedTasks = \App\Models\Task::whereIn('project_id', $clientProjectIds)->where('status', 'completed')->count();
-        $this->inProgressTasks = \App\Models\Task::whereIn('project_id', $clientProjectIds)->where('status', 'in_progress')->count();
+        $this->totalTasks = Task::whereIn('project_id', $clientProjectIds)->count();
+        $this->completedTasks = Task::whereIn('project_id', $clientProjectIds)
+            ->where('status', 'completed')
+            ->count();
+        $this->inProgressTasks = Task::whereIn('project_id', $clientProjectIds)
+            ->where('status', 'in_progress')
+            ->count();
 
         // Get projects for this client
         $this->projects = $this->client->projects()->latest()->get();
@@ -114,14 +126,17 @@ final class ClientShow extends Component
         }
     }
 
-    public function unassignProject($projectId): void
+    public function unassignProject(int $projectId): void
     {
         $project = Project::find($projectId);
         if ($project && $project->client_id === $this->client->id) {
             $project->update(['client_id' => null]);
 
             // Refresh the projects list
-            $this->projects = $this->client->projects()->latest()->get();
+            $this->projects = $this->client
+                ->projects()
+                ->latest()
+                ->get();
 
             // Refresh the available projects list
             $this->loadAvailableProjects();
@@ -129,6 +144,115 @@ final class ClientShow extends Component
             // Refresh the component to update the UI
             $this->dispatch('$refresh');
         }
+    }
+
+    public function getProjectStatusBadgeClass(string $status): string
+    {
+        $projectStatus = ProjectStatus::tryFrom($status);
+        if ($projectStatus) {
+            return $projectStatus->getColorClass();
+        }
+
+        return 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400';
+    }
+
+    public function getTaskStatusBadgeClass(string $status): string
+    {
+        $taskStatus = TaskStatus::tryFrom($status);
+        if ($taskStatus) {
+            return $taskStatus->getDarkColorClass();
+        }
+
+        return 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400';
+    }
+
+    public function getProjectTaskCounts(Project $project)
+    {
+        $taskCount = $project->tasks()->count();
+        $completedTaskCount = $project
+            ->tasks()
+            ->where('status', 'completed')
+            ->count();
+
+        return [
+            'taskCount' => $taskCount,
+            'completedTaskCount' => $completedTaskCount,
+        ];
+    }
+
+    public function getClientStats(Client $client)
+    {
+        // Execute all related queries efficiently in one go
+        $projects = $client->projects()
+            ->withCount(['tasks', 'tasks as completed_tasks_count' => function ($query) {
+                $query->where('status', 'completed');
+            }, 'tasks as in_progress_tasks_count' => function ($query) {
+                $query->where('status', 'in_progress');
+            }])
+            ->get();
+
+        $projectCount = $projects->count();
+        $activeProjects = $projects->whereIn('status', [
+            ProjectStatus::PLANNING->value,
+            ProjectStatus::IN_PROGRESS->value
+        ])->count();
+        $completedProjects = $projects->where('status', ProjectStatus::COMPLETED->value)->count();
+        $totalTasks = $projects->sum('tasks_count');
+        
+        $completedTaskProjects = $projects->filter(fn($p) => $p->completed_tasks_count > 0)->count();
+        $inProgressTaskProjects = $projects->filter(fn($p) => $p->in_progress_tasks_count > 0)->count();
+
+        return [
+            'projectCount' => $projectCount,
+            'activeProjects' => $activeProjects,
+            'completedProjects' => $completedProjects,
+            'totalTasks' => $totalTasks,
+            'completedTasks' => $completedTaskProjects,
+            'inProgressTasks' => $inProgressTaskProjects,
+        ];
+    }
+
+    public function getClientProjectCount(Client $client)
+    {
+        return $client->projects()->count();
+    }
+
+    public function getClientActiveProjectsCount(Client $client)
+    {
+        return $client->projects()->whereIn('status', [
+            ProjectStatus::PLANNING->value,
+            ProjectStatus::IN_PROGRESS->value
+        ])->count();
+    }
+
+    public function getClientCompletedProjectsCount(Client $client)
+    {
+        return $client->projects()->where('status', ProjectStatus::COMPLETED->value)->count();
+    }
+
+    public function getClientTotalTasksCount(Client $client)
+    {
+        return $client->projects()->withCount('tasks')->get()->sum('tasks_count');
+    }
+
+    public function getClientCompletedTasksCount(Client $client)
+    {
+        return $client
+            ->projects()
+            ->whereHas('tasks', function ($query) {
+                $query->where('status', 'completed');
+            })
+            ->count();
+    }
+
+    public function getClientInProgressTasksCount(Client $client)
+    {
+        return $client
+            ->projects()
+            ->whereHas('tasks', function ($query) {
+                $query->where('status', 'in_progress');
+            })
+            ->count();
     }
 
     public function render(): View
@@ -169,105 +293,5 @@ final class ClientShow extends Component
             'completedTasks' => $clientStats['completedTasks'],
             'inProgressTasks' => $clientStats['inProgressTasks'],
         ]);
-    }
-
-    public function getProjectStatusBadgeClass(string $status): string
-    {
-        $projectStatus = \App\Enums\ProjectStatus::tryFrom($status);
-        if ($projectStatus) {
-            return $projectStatus->getColorClass();
-        }
-
-        return 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400';
-    }
-
-    public function getTaskStatusBadgeClass(string $status): string
-    {
-        $taskStatus = \App\Enums\TaskStatus::tryFrom($status);
-        if ($taskStatus) {
-            return $taskStatus->getDarkColorClass();
-        }
-
-        return 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400';
-    }
-
-    public function getProjectTaskCounts($project)
-    {
-        $taskCount = $project->tasks()->count();
-        $completedTaskCount = $project->tasks()->where('status', 'completed')->count();
-
-        return [
-            'taskCount' => $taskCount,
-            'completedTaskCount' => $completedTaskCount,
-        ];
-    }
-
-    public function getClientStats($client)
-    {
-        // Execute all related queries efficiently in one go
-        $projects = $client->projects()->withCount('tasks')->get();
-
-        $projectCount = $projects->count();
-        $activeProjects = $projects->whereIn('status', ['planning', 'in_progress'])->count();
-        $completedProjects = $projects->where('status', 'completed')->count();
-        $totalTasks = $projects->sum('tasks_count');
-
-        // For completed and in-progress tasks counts, count projects that have such tasks
-        $completedTaskProjects = $projects->filter(function ($project) {
-            return $project->tasks()->where('status', 'completed')->exists();
-        })->count();
-
-        $inProgressTaskProjects = $projects->filter(function ($project) {
-            return $project->tasks()->where('status', 'in_progress')->exists();
-        })->count();
-
-        return [
-            'projectCount' => $projectCount,
-            'activeProjects' => $activeProjects,
-            'completedProjects' => $completedProjects,
-            'totalTasks' => $totalTasks,
-            'completedTasks' => $completedTaskProjects,  // Note: This logic might be different based on requirement
-            'inProgressTasks' => $inProgressTaskProjects,  // Note: This logic might be different based on requirement
-        ];
-    }
-
-    public function getClientProjectCount($client)
-    {
-        return $client->projects()->count();
-    }
-
-    public function getClientActiveProjectsCount($client)
-    {
-        return $client->projects()->whereIn('status', ['planning', 'in_progress'])->count();
-    }
-
-    public function getClientCompletedProjectsCount($client)
-    {
-        return $client->projects()->where('status', 'completed')->count();
-    }
-
-    public function getClientTotalTasksCount($client)
-    {
-        return $client->projects()->withCount('tasks')->get()->sum('tasks_count');
-    }
-
-    public function getClientCompletedTasksCount($client)
-    {
-        return $client
-            ->projects()
-            ->whereHas('tasks', function ($query) {
-                $query->where('status', 'completed');
-            })
-            ->count();
-    }
-
-    public function getClientInProgressTasksCount($client)
-    {
-        return $client
-            ->projects()
-            ->whereHas('tasks', function ($query) {
-                $query->where('status', 'in_progress');
-            })
-            ->count();
     }
 }

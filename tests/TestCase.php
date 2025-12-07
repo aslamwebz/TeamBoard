@@ -6,9 +6,11 @@ namespace Tests;
 
 use App\Models\Tenant;
 use App\Models\User;
-use DB;
+use Database\Seeders\webz\RolePermissionSeeder;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use URL;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
+use Spatie\Permission\PermissionRegistrar;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -23,6 +25,7 @@ abstract class TestCase extends BaseTestCase
     protected function setUp(): void
     {
         parent::setup();
+        \Illuminate\Database\Eloquent\Model::unguard();
         $this->withoutVite();
 
         DB::statement('DROP DATABASE IF EXISTS tenantwebz_testing');
@@ -32,13 +35,13 @@ abstract class TestCase extends BaseTestCase
         config(['app.url' => 'http://test.teamboard.test:8000']);
         URL::forceRootUrl(config('app.url'));
 
-        $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+        $this->app->make(PermissionRegistrar::class)->forgetCachedPermissions();
 
-        $this->seed(\Database\Seeders\webz\RolePermissionSeeder::class);
+        $this->seed(RolePermissionSeeder::class);
 
         $this->user = $this->createUser();
         $this->admin = $this->createUser(isAdmin: true);
-        $this->unverifiedUser = $this->CreateUnverifiedUser();
+        $this->unverifiedUser = $this->createUnverifiedUser();
     }
 
     final public function initializeTenancy()
@@ -59,14 +62,14 @@ abstract class TestCase extends BaseTestCase
     {
         $user = User::factory()->create();
 
-        // if ($isAdmin) {
-        $user->assignRole('admin');
-        // }
+        if ($isAdmin) {
+            $user->assignRole('admin');
+        }
 
         return $user;
     }
 
-    private function CreateUnverifiedUser(): User
+    private function createUnverifiedUser(): User
     {
         return User::factory()->unverified()->create();
     }

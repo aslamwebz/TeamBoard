@@ -7,6 +7,8 @@ namespace App\Livewire\Workers;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\Timesheet;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -55,9 +57,15 @@ final class Timesheets extends Component
         'notes' => 'nullable|string',
     ];
 
-    public function mount($workerId): void
+    public function mount(int $workerId): void
     {
         $this->workerId = $workerId;
+
+        // Authorization check
+        if (Auth::user()->workerProfile?->id != $workerId && ! Auth::user()->hasRole(['admin', 'manager'])) {
+            abort(403, 'Unauthorized access to timesheets.');
+        }
+
         $this->date = now()->format('Y-m-d');
     }
 
@@ -77,22 +85,33 @@ final class Timesheets extends Component
         $timesheet->notes = $this->notes;
         $timesheet->save();
 
-        $this->reset(['date', 'hours_worked', 'activity_description', 'entry_type', 'project_id', 'task_id', 'notes']);
+        $this->reset([
+            'date', 
+            'hours_worked', 
+            'activity_description', 
+            'entry_type', 
+            'project_id', 
+            'task_id', 
+            'notes'
+        ]);
         $this->date = now()->format('Y-m-d');
 
         session()->flash('message', 'Timesheet entry added successfully.');
     }
 
-    public function deleteTimesheet($timesheetId): void
+    public function deleteTimesheet(int $timesheetId): void
     {
-        $timesheet = Timesheet::find($timesheetId);
-        if ($timesheet && $timesheet->worker_profile_id === $this->workerId) {
+        $timesheet = Timesheet::findOrFail($timesheetId);
+        
+        $this->authorize('delete', $timesheet);
+
+        if ($timesheet->worker_profile_id === $this->workerId) {
             $timesheet->delete();
             session()->flash('message', 'Timesheet entry deleted successfully.');
         }
     }
 
-    public function render(): \Illuminate\Contracts\View\View
+    public function render(): View
     {
         $query = Timesheet::where('worker_profile_id', $this->workerId)
             ->with(['project', 'task']);
@@ -120,8 +139,8 @@ final class Timesheets extends Component
 
         $timesheets = $query->orderBy('date', 'desc')->paginate(10);
 
-        $projects = Project::orderBy('name')->get();
-        $tasks = Task::orderBy('title')->get();
+        $projects = Project::select('id', 'name')->orderBy('name')->limit(100)->get();
+        $tasks = Task::select('id', 'title')->orderBy('title')->limit(100)->get();
 
         // Calculate totals
         $totalRegularHours = $query->where('entry_type', 'regular')->sum('hours_worked');

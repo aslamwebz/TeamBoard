@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\ProjectStatus;
 use App\Helpers\TenantHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
