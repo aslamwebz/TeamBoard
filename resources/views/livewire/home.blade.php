@@ -1,397 +1,543 @@
-<div class="bg-white dark:bg-zinc-900 font-sans" x-data="{ scrolled: false }" @scroll.window="scrolled = (window.pageYOffset > 20)">
+<div class="bg-white dark:bg-zinc-950 font-sans selection:bg-indigo-500 selection:text-white"
+     x-data="{ 
+         theme: localStorage.getItem('theme') || 'system',
+         scrolled: false, 
+         activeFeature: 0,
+         init() {
+            this.applyTheme(this.theme);
+            window.addEventListener('scroll', () => {
+                this.scrolled = window.scrollY > 20;
+            });
+         },
+         applyTheme(val) {
+            this.theme = val;
+            localStorage.setItem('theme', val);
+            if (val === 'dark' || (val === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+         },
+         toggleTheme() {
+            const modes = ['light', 'dark', 'system'];
+            const next = modes[(modes.indexOf(this.theme) + 1) % modes.length];
+            this.applyTheme(next);
+         }
+     }">
     
+    <!-- Custom Scroll Styles -->
     <style>
-        @keyframes fade-in-up {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .fade-mask {
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
-        .animate-fade-in-up {
-            animation: fade-in-up 0.8s ease-out forwards;
-        }
-        .delay-100 { animation-delay: 0.1s; }
-        .delay-200 { animation-delay: 0.2s; }
-        .delay-300 { animation-delay: 0.3s; }
+        
+        [x-cloak] { display: none !important; }
     </style>
 
-    <!-- Sticky Header -->
-    <header class="fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-in-out" :class="{ 'bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md shadow-sm': scrolled, 'bg-transparent': !scrolled }">
-        <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+    <!-- Sticky Header (Glassmorphism) -->
+    <header class="fixed inset-x-0 top-0 z-50 transition-all duration-500 border-b border-transparent" 
+            :class="{ 'bg-white/80 dark:bg-zinc-950/80 backdrop-blur-xl border-zinc-200/50 dark:border-zinc-800/50': scrolled }">
+        <nav class="flex items-center justify-between p-6 lg:px-8 max-w-7xl mx-auto" aria-label="Global">
             <div class="flex lg:flex-1">
-                <a href="#" class="-m-1.5 p-1.5 flex items-center gap-x-2">
-                    <span class="sr-only">TeamBoard</span>
-                    <!-- Logo Icon -->
-                    <div class="h-8 w-8 rounded-lg bg-indigo-600 flex items-center justify-center">
-                        <svg class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <a href="#" class="-m-1.5 p-1.5 flex items-center gap-x-2 group">
+                    <div class="h-8 w-8 rounded-lg bg-indigo-600 flex items-center justify-center transition-transform group-hover:scale-110 group-hover:rotate-3 shadow-lg shadow-indigo-500/30">
+                        <svg class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                         </svg>
                     </div>
                     <span class="text-xl font-bold tracking-tight text-zinc-900 dark:text-white">TeamBoard</span>
                 </a>
             </div>
-            <div class="flex lg:hidden">
-                <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-zinc-700 dark:text-zinc-200">
-                    <span class="sr-only">Open main menu</span>
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            <div class="hidden lg:flex lg:gap-x-8">
+                <a href="#customers" class="text-sm font-semibold leading-6 text-zinc-900 dark:text-zinc-100 hover:text-indigo-600 dark:hover:text-indigo-400 transition">Customers</a>
+                <a href="#pricing" class="text-sm font-semibold leading-6 text-zinc-900 dark:text-zinc-100 hover:text-indigo-600 dark:hover:text-indigo-400 transition">Pricing</a>
+                <a href="#company" class="text-sm font-semibold leading-6 text-zinc-900 dark:text-zinc-100 hover:text-indigo-600 dark:hover:text-indigo-400 transition">Company</a>
+            </div>
+            <div class="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4 items-center">
+                 <!-- Theme Toggle -->
+                <button
+                    @click="toggleTheme()"
+                    class="relative p-2 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200 focus:outline-none transition-colors duration-200"
+                    title="Toggle theme">
+                    <svg x-show="theme === 'light'" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <svg x-show="theme === 'dark'" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                    <svg x-show="theme === 'system'" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                 </button>
-            </div>
-            <div class="hidden lg:flex lg:gap-x-12">
-                <a href="#features" class="text-sm font-semibold leading-6 text-zinc-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition">Features</a>
-                <a href="#pricing" class="text-sm font-semibold leading-6 text-zinc-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition">Pricing</a>
-                <a href="#company" class="text-sm font-semibold leading-6 text-zinc-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition">Company</a>
-            </div>
-            <div class="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4">
-                <a href="/login" class="text-sm font-semibold leading-6 text-zinc-900 dark:text-white my-auto px-4">Log in</a>
-                <a href="/register" class="rounded-full bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all hover:scale-105">Get started</a>
+
+                <div class="h-6 w-px bg-zinc-200 dark:bg-zinc-800 mx-2"></div>
+
+                <a href="/login" class="text-sm font-semibold leading-6 text-zinc-900 dark:text-white my-auto px-2 hover:text-indigo-600 dark:hover:text-indigo-400 transition">Log in</a>
+                <a href="/register" class="rounded-full bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 hover:bg-indigo-500 hover:shadow-indigo-500/40 hover:-translate-y-0.5 transition-all duration-300">Get started</a>
             </div>
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <div class="relative isolate pt-14">
-        <!-- Background decorative elements -->
-        <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
-            <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
-        </div>
+    <main>
+        <!-- Hero Section -->
+        <div class="relative isolate pt-32 pb-24 sm:pt-40 sm:pb-32 overflow-hidden">
+             <!-- Abstract Background -->
+             <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
+                <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-indigo-500 to-purple-500 opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"></div>
+            </div>
 
-        <div class="py-24 sm:py-32 lg:pb-40">
-            <div class="mx-auto max-w-7xl px-6 lg:px-8">
-                <div class="mx-auto max-w-2xl text-center">
-                    <h1 class="text-4xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-6xl animate-fade-in-up">
-                        Business <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">management</span>, simplified.
-                    </h1>
-                    <p class="mt-6 text-lg leading-8 text-zinc-600 dark:text-zinc-300 animate-fade-in-up delay-100">
-                        One platform to manage projects, coordinate with vendors, and track your team's success. Stop switching apps and start shipping work.
-                    </p>
-                    <div class="mt-10 flex items-center justify-center gap-x-6 animate-fade-in-up delay-200">
-                        <a href="/register" class="rounded-full bg-indigo-600 px-8 py-3.5 text-sm font-semibold text-white shadow-xl hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-all hover:scale-105 active:scale-95">Start for free</a>
-                        <a href="#features" class="text-sm font-semibold leading-6 text-zinc-900 dark:text-white flex items-center gap-x-1 group">
-                            Learn more <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">→</span>
-                        </a>
-                    </div>
+            <div class="mx-auto max-w-7xl px-6 lg:px-8 text-center">
+                <!-- Badge -->
+                <div class="inline-flex items-center rounded-full border border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-950/30 px-3 py-1 text-sm font-medium text-indigo-600 dark:text-indigo-300 mb-8 backdrop-blur-sm animate-fade-in-up">
+                    <span class="flex h-2 w-2 rounded-full bg-indigo-600 mr-2 animate-pulse"></span>
+                    Now with AI-Powered Insights
                 </div>
                 
-                <!-- Hero Mockup (CSS Only for robustness) -->
-                <div class="mt-16 flow-root sm:mt-24 animate-fade-in-up delay-300">
-                    <div class="-m-2 rounded-xl bg-zinc-900/5 p-2 ring-1 ring-inset ring-zinc-900/10 dark:bg-white/5 dark:ring-white/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-                        <div class="relative rounded-md shadow-2xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 overflow-hidden aspect-[16/9] flex flex-col">
-                            <!-- Fake Browser Header -->
-                            <div class="h-10 bg-zinc-100 dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700 flex items-center px-4 space-x-2">
-                                <div class="w-3 h-3 rounded-full bg-red-400"></div>
-                                <div class="w-3 h-3 rounded-full bg-amber-400"></div>
-                                <div class="w-3 h-3 rounded-full bg-green-400"></div>
-                                <div class="ml-4 h-6 w-96 bg-zinc-200 dark:bg-zinc-700 rounded-md opacity-50"></div>
-                            </div>
-                            <!-- Fake UI Body -->
-                            <div class="flex-1 flex font-sans">
-                                <!-- Sidebar -->
-                                <div class="w-64 border-r border-zinc-200 dark:border-zinc-700 p-4 space-y-4 hidden md:block">
-                                    <div class="h-8 w-3/4 bg-zinc-100 dark:bg-zinc-700 rounded animate-pulse"></div>
-                                    <div class="space-y-2">
-                                         <div class="h-4 w-full bg-zinc-50 dark:bg-zinc-700/50 rounded"></div>
-                                         <div class="h-4 w-5/6 bg-zinc-50 dark:bg-zinc-700/50 rounded"></div>
-                                         <div class="h-4 w-4/6 bg-zinc-50 dark:bg-zinc-700/50 rounded"></div>
-                                    </div>
-                                    <div class="pt-8 space-y-2">
-                                         <div class="h-4 w-full bg-zinc-50 dark:bg-zinc-700/50 rounded"></div>
-                                         <div class="h-4 w-5/6 bg-zinc-50 dark:bg-zinc-700/50 rounded"></div>
-                                    </div>
-                                </div>
-                                <!-- Main Content -->
-                                <div class="flex-1 p-6 md:p-8 bg-zinc-50 dark:bg-zinc-900/50">
-                                    <div class="flex justify-between items-center mb-8">
-                                        <div class="h-8 w-1/3 bg-zinc-200 dark:bg-zinc-700 rounded"></div>
-                                        <div class="h-8 w-24 bg-indigo-600 rounded"></div>
-                                    </div>
-                                    <!-- Kanban/Grid -->
-                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                        <!-- Column 1 -->
-                                        <div class="bg-zinc-100 dark:bg-zinc-800/80 rounded-lg p-4 space-y-4">
-                                            <div class="h-4 w-24 bg-zinc-300 dark:bg-zinc-600 rounded mb-2"></div>
-                                            <div class="bg-white dark:bg-zinc-700 p-3 rounded shadow-sm h-24"></div>
-                                            <div class="bg-white dark:bg-zinc-700 p-3 rounded shadow-sm h-20"></div>
-                                            <div class="bg-white dark:bg-zinc-700 p-3 rounded shadow-sm h-24"></div>
-                                        </div>
-                                         <!-- Column 2 -->
-                                        <div class="bg-zinc-100 dark:bg-zinc-800/80 rounded-lg p-4 space-y-4">
-                                            <div class="h-4 w-24 bg-zinc-300 dark:bg-zinc-600 rounded mb-2"></div>
-                                            <div class="bg-white dark:bg-zinc-700 p-3 rounded shadow-sm h-32"></div>
-                                            <div class="bg-white dark:bg-zinc-700 p-3 rounded shadow-sm h-16"></div>
-                                        </div>
-                                         <!-- Column 3 -->
-                                        <div class="bg-zinc-100 dark:bg-zinc-800/80 rounded-lg p-4 space-y-4">
-                                            <div class="h-4 w-24 bg-zinc-300 dark:bg-zinc-600 rounded mb-2"></div>
-                                            <div class="bg-white dark:bg-zinc-700 p-3 rounded shadow-sm h-24"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Decor -->
-        <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]" aria-hidden="true">
-             <div class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
-        </div>
-    </div>
-
-    <!-- Feature Section (Alternating) -->
-    <div id="features" class="overflow-hidden bg-white py-24 sm:py-32 dark:bg-zinc-900">
-        <div class="mx-auto max-w-7xl px-6 lg:px-8">
-            <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-center">
-                <div class="lg:pr-8 lg:pt-4">
-                    <div class="lg:max-w-lg">
-                        <h2 class="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400 uppercase tracking-wide">Optimization</h2>
-                         <p class="mt-2 text-3xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">Work smarter, not harder</p>
-                        <p class="mt-6 text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-                            TeamBoard brings all your operational data into one view. Track deliverables, monitor vendor performance, and approve invoices without email chains.
-                        </p>
-                        <dl class="mt-10 max-w-xl space-y-8 text-base leading-7 text-zinc-600 dark:text-zinc-400">
-                            <div class="relative pl-9">
-                                <dt class="inline font-semibold text-zinc-900 dark:text-white">
-                                    <svg class="absolute left-1 top-1 h-5 w-5 text-indigo-600 dark:text-indigo-400" viewBox="0 0 20 20" fill="currentColor"><path d="M4.632 3.533A2 2 0 016.577 2h6.846a2 2 0 011.945 1.533l1.976 8.234A3.489 3.489 0 0016 11.5H4c-.476 0-.93.095-1.344.267l1.976-8.234z" /><path fill-rule="evenodd" d="M4 13a2 2 0 100 4h12a2 2 0 100-4H4zm11.24 2a.75.75 0 01.75-.75H16a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75h-.01a.75.75 0 01-.75-.75V15zm-2.25-.75a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75H13a.75.75 0 00.75-.75V15a.75.75 0 00-.75-.75h-.01z" clip-rule="evenodd" /></svg>
-                                    Automated Invoices.
-                                </dt>
-                                <dd class="inline">Generate invoices from approved timesheets instantly.</dd>
-                            </div>
-                            <div class="relative pl-9">
-                                <dt class="inline font-semibold text-zinc-900 dark:text-white">
-                                    <svg class="absolute left-1 top-1 h-5 w-5 text-indigo-600 dark:text-indigo-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M2.5 4A1.5 1.5 0 001 5.5V6h18v-.5A1.5 1.5 0 0017.5 4h-15zM19 8.5H1v6A1.5 1.5 0 002.5 16h15a1.5 1.5 0 001.5-1.5v-6zM3 13.25a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5h-1.5a.75.75 0 01-.75-.75zm4.75-.75a.75.75 0 000 1.5h1.5a.75.75 0 000-1.5h-1.5z" clip-rule="evenodd" /></svg>
-                                    Cost Tracking.
-                                </dt>
-                                <dd class="inline">See where every dollar goes in real-time.</dd>
-                            </div>
-                        </dl>
-                        <div class="mt-10">
-                             <a href="#" class="text-sm font-semibold leading-6 text-indigo-600 dark:text-indigo-400 hover:text-indigo-500">Explore modules <span aria-hidden="true">→</span></a>
-                        </div>
-                    </div>
-                </div>
-                 <!-- CSS-only Abstract Representation of "Work" -->
-                 <div class="relative flex items-center justify-center p-8 lg:p-0">
-                    <div class="w-full max-w-lg bg-white dark:bg-zinc-800 rounded-2xl shadow-2xl p-6 ring-1 ring-zinc-200 dark:ring-zinc-700">
-                        <!-- Header -->
-                        <div class="flex justify-between items-center mb-6">
-                            <div class="space-y-1">
-                                <div class="h-5 w-32 bg-zinc-200 dark:bg-zinc-600 rounded"></div>
-                                <div class="h-3 w-20 bg-zinc-100 dark:bg-zinc-700 rounded"></div>
-                            </div>
-                            <div class="h-10 w-10 bg-indigo-100 dark:bg-indigo-900/50 rounded-full flex items-center justify-center text-indigo-600 dark:text-indigo-400">
-                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                            </div>
-                        </div>
-                        <!-- List Items -->
-                        <div class="space-y-4">
-                            <!-- Item 1 -->
-                            <div class="flex items-center justify-between p-3 bg-zinc-50 dark:bg-zinc-700/30 rounded-lg border border-zinc-100 dark:border-zinc-700/50">
-                                <div class="flex items-center gap-3">
-                                    <div class="h-8 w-8 bg-green-100 dark:bg-green-900/30 text-green-600 rounded-md flex items-center justify-center">
-                                         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
-                                    </div>
-                                    <div>
-                                        <div class="h-3 w-24 bg-zinc-200 dark:bg-zinc-600 rounded mb-1"></div>
-                                        <div class="h-2 w-16 bg-zinc-100 dark:bg-zinc-700 rounded"></div>
-                                    </div>
-                                </div>
-                                <div class="h-3 w-12 bg-zinc-200 dark:bg-zinc-600 rounded"></div>
-                            </div>
-                             <!-- Item 2 -->
-                             <div class="flex items-center justify-between p-3 bg-zinc-50 dark:bg-zinc-700/30 rounded-lg border border-zinc-100 dark:border-zinc-700/50">
-                                <div class="flex items-center gap-3">
-                                    <div class="h-8 w-8 bg-amber-100 dark:bg-amber-900/30 text-amber-600 rounded-md flex items-center justify-center">
-                                         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                    </div>
-                                    <div>
-                                        <div class="h-3 w-32 bg-zinc-200 dark:bg-zinc-600 rounded mb-1"></div>
-                                        <div class="h-2 w-20 bg-zinc-100 dark:bg-zinc-700 rounded"></div>
-                                    </div>
-                                </div>
-                                <div class="h-3 w-12 bg-zinc-200 dark:bg-zinc-600 rounded"></div>
-                            </div>
-                             <!-- Item 3 -->
-                             <div class="flex items-center justify-between p-3 bg-zinc-50 dark:bg-zinc-700/30 rounded-lg border border-zinc-100 dark:border-zinc-700/50">
-                                <div class="flex items-center gap-3">
-                                    <div class="h-8 w-8 bg-blue-100 dark:bg-blue-900/30 text-blue-600 rounded-md flex items-center justify-center">
-                                         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-                                    </div>
-                                    <div>
-                                        <div class="h-3 w-28 bg-zinc-200 dark:bg-zinc-600 rounded mb-1"></div>
-                                        <div class="h-2 w-16 bg-zinc-100 dark:bg-zinc-700 rounded"></div>
-                                    </div>
-                                </div>
-                                <div class="h-3 w-12 bg-zinc-200 dark:bg-zinc-600 rounded"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bento Grid Section -->
-    <div class="bg-zinc-50 py-24 sm:py-32 dark:bg-zinc-800/50">
-        <div class="mx-auto max-w-7xl px-6 lg:px-8">
-            <div class="mx-auto max-w-2xl lg:text-center text-center">
-                <h2 class="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">Modular Power</h2>
-                <p class="mt-2 text-3xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">Everything connected</p>
-                <p class="mt-6 text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-                    A suite of modules designed to work together seamlessly.
+                <h1 class="mx-auto max-w-5xl text-5xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-7xl animate-fade-in-up delay-100 leading-[1.1]">
+                    Orchestrate your entire <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">business ecosystem.</span>
+                </h1>
+                
+                <p class="mx-auto mt-6 max-w-2xl text-lg leading-8 text-zinc-600 dark:text-zinc-400 animate-fade-in-up delay-200">
+                    Connect projects, vendors, and teams in one unified operating system. 
+                    Stop managing chaos and start managing value.
                 </p>
-            </div>
-             <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-                <div class="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:grid-rows-2">
-                    <!-- Project Card -->
-                    <div class="relative lg:col-span-2 lg:row-span-2 rounded-3xl bg-white p-8 shadow-sm ring-1 ring-zinc-200 hover:shadow-lg transition-all duration-300 dark:bg-zinc-900 dark:ring-zinc-800 group overflow-hidden">
-                         <div class="absolute top-0 right-0 -mr-6 -mt-6 h-24 w-24 rounded-full bg-indigo-50 blur-2xl opacity-50 dark:bg-indigo-900/30 group-hover:opacity-100 transition-opacity"></div>
-                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-600 mb-6 text-white shadow-md group-hover:scale-110 transition-transform">
-                             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" /></svg>
-                        </div>
-                        <h3 class="text-xl font-bold leading-8 text-zinc-900 dark:text-white">Project Command Center</h3>
-                         <p class="mt-4 text-base leading-7 text-zinc-600 dark:text-zinc-400 max-w-lg">
-                            Visualize timelines, manage resources, and track progress across all your initiatives. The command center gives you the big picture and the small details.
-                        </p>
-                         <!-- Mock Project UI -->
-                         <div class="mt-8 rounded-xl bg-zinc-50 dark:bg-zinc-800 border border-zinc-100 dark:border-zinc-700 h-64 p-4 relative overflow-hidden">
-                             <div class="absolute top-4 left-4 right-4 h-6 bg-zinc-200 dark:bg-zinc-700 rounded-full w-1/3"></div>
-                             <div class="absolute top-14 left-4 right-4 space-y-3">
-                                 <div class="h-12 bg-white dark:bg-zinc-700/50 rounded-lg shadow-sm border border-zinc-200 dark:border-zinc-600 flex items-center px-4 gap-4">
-                                     <div class="h-2 w-24 bg-indigo-400 rounded-full"></div>
-                                     <div class="h-2 w-full bg-zinc-100 dark:bg-zinc-600 rounded-full overflow-hidden"><div class="h-full w-2/3 bg-indigo-500"></div></div>
+
+                <div class="mt-10 flex items-center justify-center gap-x-6 animate-fade-in-up delay-300">
+                    <a href="/register" class="rounded-full bg-zinc-900 dark:bg-white px-8 py-3.5 text-sm font-semibold text-white dark:text-zinc-900 shadow-xl hover:bg-zinc-800 dark:hover:bg-zinc-200 hover:-translate-y-1 transition-all duration-300">Start free trial</a>
+                    <a href="#" class="text-sm font-semibold leading-6 text-zinc-900 dark:text-white hover:text-indigo-600 transition flex items-center gap-2">
+                        <svg class="w-5 h-5 text-indigo-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" /></svg>
+                        Watch the film <span class="text-zinc-400 ml-1">2:14</span>
+                    </a>
+                </div>
+
+                <!-- Hero Visual (Parallax/Tilt effect) -->
+                <div class="mt-20 flow-root sm:mt-24 perspective-1000 animate-fade-in-up delay-300" 
+                     x-data="{ x: 0, y: 0 }" 
+                     @mousemove.window="x = ($event.clientX - window.innerWidth / 2) / 50; y = ($event.clientY - window.innerHeight / 2) / 50"
+                     :style="`transform: rotateX(${-y}deg) rotateY(${x}deg)`">
+                    <div class="-m-2 rounded-xl bg-zinc-900/5 p-2 ring-1 ring-inset ring-zinc-900/10 dark:bg-white/5 dark:ring-white/10 lg:-m-4 lg:rounded-2xl lg:p-4 transition-transform duration-75 ease-out">
+                         <div class="relative rounded-lg shadow-2xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 overflow-hidden aspect-[16/9] sm:aspect-[21/9] flex flex-col group">
+                             <!-- Header -->
+                             <div class="h-12 border-b border-zinc-200 dark:border-zinc-800 flex items-center px-4 justify-between bg-white dark:bg-zinc-900">
+                                 <div class="flex items-center gap-2">
+                                     <div class="h-3 w-3 rounded-full bg-red-400"></div>
+                                     <div class="h-3 w-3 rounded-full bg-amber-400"></div>
+                                     <div class="h-3 w-3 rounded-full bg-green-400"></div>
                                  </div>
-                                  <div class="h-12 bg-white dark:bg-zinc-700/50 rounded-lg shadow-sm border border-zinc-200 dark:border-zinc-600 flex items-center px-4 gap-4 ml-6">
-                                     <div class="h-2 w-20 bg-emerald-400 rounded-full"></div>
-                                     <div class="h-2 w-full bg-zinc-100 dark:bg-zinc-600 rounded-full overflow-hidden"><div class="h-full w-full bg-emerald-500"></div></div>
+                                 <div class="h-6 w-1/3 bg-zinc-100 dark:bg-zinc-800 rounded-md mx-auto flex items-center justify-center text-xs text-zinc-400 font-mono">teamboard.app/dashboard</div>
+                                 <div class="flex gap-3">
+                                     <div class="h-8 w-8 rounded-full bg-zinc-200 dark:bg-zinc-800"></div>
                                  </div>
-                                  <div class="h-12 bg-white dark:bg-zinc-700/50 rounded-lg shadow-sm border border-zinc-200 dark:border-zinc-600 flex items-center px-4 gap-4">
-                                     <div class="h-2 w-28 bg-amber-400 rounded-full"></div>
-                                     <div class="h-2 w-full bg-zinc-100 dark:bg-zinc-600 rounded-full overflow-hidden"><div class="h-full w-1/4 bg-amber-500"></div></div>
+                             </div>
+                             <!-- Body -->
+                             <div class="flex-1 flex overflow-hidden">
+                                 <!-- Sidebar -->
+                                 <div class="w-64 border-r border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 p-4 hidden md:block">
+                                     <div class="space-y-4">
+                                         <div class="h-8 w-full bg-zinc-200 dark:bg-zinc-800 rounded-lg"></div>
+                                         <div class="space-y-2 pt-4">
+                                            <div class="h-4 w-full bg-zinc-100 dark:bg-zinc-800/50 rounded-md"></div>
+                                            <div class="h-4 w-3/4 bg-zinc-100 dark:bg-zinc-800/50 rounded-md"></div>
+                                            <div class="h-4 w-5/6 bg-zinc-100 dark:bg-zinc-800/50 rounded-md"></div>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <!-- Content -->
+                                 <div class="flex-1 p-8 bg-white dark:bg-zinc-950 relative overflow-hidden">
+                                     <div class="absolute inset-0 bg-gradient-to-tr from-indigo-50/50 to-purple-50/50 dark:from-indigo-900/10 dark:to-purple-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                                     <!-- Dashboard Grid -->
+                                     <div class="grid grid-cols-3 gap-6 h-full relative z-10">
+                                         <!-- Card 1 -->
+                                         <div class="col-span-2 bg-gradient-to-br from-white to-zinc-50 dark:from-zinc-900 dark:to-zinc-900/50 rounded-xl p-6 border border-zinc-100 dark:border-zinc-800 shadow-sm">
+                                             <div class="flex justify-between items-center mb-6">
+                                                 <div class="h-5 w-32 bg-zinc-200 dark:bg-zinc-800 rounded"></div>
+                                                 <div class="h-8 w-24 bg-indigo-600 rounded-lg shadow-lg shadow-indigo-500/20"></div>
+                                             </div>
+                                             <div class="space-y-4">
+                                                 <div class="h-24 w-full bg-zinc-100 dark:bg-zinc-800 rounded-lg animate-pulse"></div>
+                                                 <div class="h-24 w-full bg-zinc-100 dark:bg-zinc-800 rounded-lg animate-pulse delay-75"></div>
+                                             </div>
+                                         </div>
+                                          <!-- Card 2 -->
+                                         <div class="bg-gradient-to-br from-white to-zinc-50 dark:from-zinc-900 dark:to-zinc-900/50 rounded-xl p-6 border border-zinc-100 dark:border-zinc-800 shadow-sm flex flex-col items-center justify-center text-center">
+                                             <div class="h-24 w-24 rounded-full border-4 border-emerald-500/20 border-t-emerald-500 mb-4"></div>
+                                              <div class="h-4 w-16 bg-zinc-200 dark:bg-zinc-700 rounded mb-2"></div>
+                                              <div class="h-8 w-24 bg-zinc-100 dark:bg-zinc-800 rounded"></div>
+                                         </div>
+                                     </div>
                                  </div>
                              </div>
                          </div>
                     </div>
-                     <!-- Vendor Card -->
-                    <div class="relative rounded-3xl bg-white p-8 shadow-sm ring-1 ring-zinc-200 hover:shadow-md transition-all duration-300 dark:bg-zinc-900 dark:ring-zinc-800">
-                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600 mb-6 text-white">
-                             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
-                        </div>
-                        <h3 class="text-lg font-bold leading-8 text-zinc-900 dark:text-white">Vendor Portal</h3>
-                        <p class="mt-2 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
-                            Streamlined onboarding and management for all external partners.
-                        </p>
-                    </div>
-                     <!-- HR Card -->
-                    <div class="relative rounded-3xl bg-white p-8 shadow-sm ring-1 ring-zinc-200 hover:shadow-md transition-all duration-300 dark:bg-zinc-900 dark:ring-zinc-800">
-                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600 mb-6 text-white">
-                             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                        </div>
-                        <h3 class="text-lg font-bold leading-8 text-zinc-900 dark:text-white">Team & HR</h3>
-                        <p class="mt-2 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
-                            Manage profiles, skills, and certifications in one secure vault.
-                        </p>
-                    </div>
                 </div>
-             </div>
-        </div>
-    </div>
-    
-    <!-- Pricing Section -->
-    <div id="pricing" class="bg-white py-24 sm:py-32 dark:bg-zinc-900">
-        <div class="mx-auto max-w-7xl px-6 lg:px-8">
-             <div class="mx-auto max-w-2xl sm:text-center">
-                <h2 class="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">Pricing</h2>
-                <p class="mt-6 text-lg leading-8 text-zinc-600 dark:text-zinc-400">Transparent costs. No hidden fees.</p>
             </div>
-            <div class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-y-16 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-                 <!-- Starter -->
-                <div class="flex flex-col justify-between rounded-3xl bg-white p-8 ring-1 ring-zinc-200 xl:p-10 dark:bg-zinc-900 dark:ring-zinc-800 hover:ring-indigo-600/50 transition-all cursor-pointer">
-                    <div>
-                        <h3 class="text-lg font-semibold leading-8 text-zinc-900 dark:text-white">Starter</h3>
-                        <p class="mt-4 text-sm leading-6 text-zinc-600 dark:text-zinc-400">Essential tools for small teams.</p>
-                        <p class="mt-6 flex items-baseline gap-x-1">
-                            <span class="text-4xl font-bold tracking-tight text-zinc-900 dark:text-white">$29</span>
-                            <span class="text-sm font-semibold leading-6 text-zinc-600 dark:text-zinc-400">/mo</span>
-                        </p>
-                        <ul class="mt-8 space-y-3 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
-                            <li class="flex gap-x-3"><span class="text-indigo-600">✓</span> 5 Users</li>
-                            <li class="flex gap-x-3"><span class="text-indigo-600">✓</span> Basic Projects</li>
-                        </ul>
-                    </div>
-                    <a href="/register?plan=starter" class="mt-8 block rounded-md bg-indigo-50 px-3 py-2 text-center text-sm font-semibold leading-6 text-indigo-600 hover:bg-indigo-100 dark:bg-indigo-900/20 dark:text-indigo-400 transition-colors">Start Trial</a>
-                </div>
-                 <!-- Growth (Highlighted) -->
-                <div class="flex flex-col justify-between rounded-3xl bg-zinc-900 p-8 ring-1 ring-zinc-900 xl:p-10 dark:bg-zinc-800 dark:ring-zinc-700 shadow-xl scale-105 z-10">
-                    <div>
-                         <div class="flex justify-between items-center">
-                            <h3 class="text-lg font-semibold leading-8 text-white">Growth</h3>
-                             <span class="rounded-full bg-indigo-500/10 px-2.5 py-1 text-xs font-semibold leading-5 text-indigo-400 ring-1 ring-inset ring-indigo-500/20">Popular</span>
+            
+             <!-- Trusted By Marquee -->
+            <div class="mt-24 sm:mt-32 fade-mask relative" id="customers">
+                <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                     <div class="mt-10 overflow-hidden flex gap-12 select-none" style="mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
+                         <div class="flex gap-12 min-w-full animate-[marquee_30s_linear_infinite]">
+                             <img class="max-h-12 w-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500 dark:invert" src="https://tailwindui.com/img/logos/158x48/transistor-logo-gray-900.svg" alt="Transistor">
+                             <img class="max-h-12 w-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500 dark:invert" src="https://tailwindui.com/img/logos/158x48/reform-logo-gray-900.svg" alt="Reform">
+                             <img class="max-h-12 w-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500 dark:invert" src="https://tailwindui.com/img/logos/158x48/tuple-logo-gray-900.svg" alt="Tuple">
+                             <img class="max-h-12 w-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500 dark:invert" src="https://tailwindui.com/img/logos/158x48/savvycal-logo-gray-900.svg" alt="SavvyCal">
+                             <img class="max-h-12 w-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500 dark:invert" src="https://tailwindui.com/img/logos/158x48/statamic-logo-gray-900.svg" alt="Statamic">
+                             <!-- Repeat -->
+                             <img class="max-h-12 w-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500 dark:invert" src="https://tailwindui.com/img/logos/158x48/transistor-logo-gray-900.svg" alt="Transistor">
+                             <img class="max-h-12 w-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500 dark:invert" src="https://tailwindui.com/img/logos/158x48/reform-logo-gray-900.svg" alt="Reform">
+                             <img class="max-h-12 w-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500 dark:invert" src="https://tailwindui.com/img/logos/158x48/tuple-logo-gray-900.svg" alt="Tuple">
                          </div>
-                        <p class="mt-4 text-sm leading-6 text-zinc-300">Scale your operations securely.</p>
-                        <p class="mt-6 flex items-baseline gap-x-1">
-                            <span class="text-4xl font-bold tracking-tight text-white">$79</span>
-                            <span class="text-sm font-semibold leading-6 text-zinc-300">/mo</span>
-                        </p>
-                        <ul class="mt-8 space-y-3 text-sm leading-6 text-zinc-300">
-                            <li class="flex gap-x-3"><span class="text-indigo-400">✓</span> 20 Users</li>
-                            <li class="flex gap-x-3"><span class="text-indigo-400">✓</span> Vendor Portal</li>
-                            <li class="flex gap-x-3"><span class="text-indigo-400">✓</span> Financials</li>
-                        </ul>
-                    </div>
-                    <a href="/register?plan=growth" class="mt-8 block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold leading-6 text-white hover:bg-indigo-500 shadow-md transition-colors">Get Started</a>
-                </div>
-                 <!-- Enterprise -->
-                <div class="flex flex-col justify-between rounded-3xl bg-white p-8 ring-1 ring-zinc-200 xl:p-10 dark:bg-zinc-900 dark:ring-zinc-800 hover:ring-indigo-600/50 transition-all cursor-pointer">
-                    <div>
-                        <h3 class="text-lg font-semibold leading-8 text-zinc-900 dark:text-white">Enterprise</h3>
-                        <p class="mt-4 text-sm leading-6 text-zinc-600 dark:text-zinc-400">Custom solutions for big orgs.</p>
-                        <p class="mt-6 flex items-baseline gap-x-1">
-                            <span class="text-4xl font-bold tracking-tight text-zinc-900 dark:text-white">$199</span>
-                            <span class="text-sm font-semibold leading-6 text-zinc-600 dark:text-zinc-400">/mo</span>
-                        </p>
-                        <ul class="mt-8 space-y-3 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
-                            <li class="flex gap-x-3"><span class="text-indigo-600">✓</span> Unlimited Users</li>
-                            <li class="flex gap-x-3"><span class="text-indigo-600">✓</span> 24/7 Support</li>
-                        </ul>
-                    </div>
-                    <a href="/contact" class="mt-8 block rounded-md bg-indigo-50 px-3 py-2 text-center text-sm font-semibold leading-6 text-indigo-600 hover:bg-indigo-100 dark:bg-indigo-900/20 dark:text-indigo-400 transition-colors">Contact Sales</a>
+                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Contact Section -->
-    <div class="bg-white py-24 sm:py-32 dark:bg-zinc-900">
-         <div class="mx-auto max-w-7xl px-6 lg:px-8">
-             <div class="mx-auto max-w-2xl bg-zinc-50 dark:bg-zinc-800/50 rounded-3xl p-8 sm:p-16 ring-1 ring-zinc-200 dark:ring-zinc-700">
-                  <div class="text-center">
-                    <h2 class="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">Join the waiting list</h2>
-                    <p class="mt-4 text-lg leading-8 text-zinc-600 dark:text-zinc-400">Get early access to new features.</p>
-                  </div>
-                 <form class="mt-10 max-w-md mx-auto">
-                     <div class="flex gap-x-4">
-                         <label for="email-address" class="sr-only">Email address</label>
-                         <input id="email-address" name="email" type="email" autocomplete="email" required class="min-w-0 flex-auto rounded-md border-0 bg-white dark:bg-zinc-700 px-3.5 py-2 text-zinc-900 dark:text-white shadow-sm ring-1 ring-inset ring-zinc-300 dark:ring-zinc-600 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Enter your email">
-                         <button type="submit" class="flex-none rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Subscribe</button>
-                     </div>
-                 </form>
+        <!-- Scroll-Telling Section -->
+        <div class="bg-zinc-50 dark:bg-zinc-900 py-24 sm:py-32 relative overflow-hidden">
+             <!-- Background Pattern -->
+            <div class="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]" style="background-image: radial-gradient(#6366f1 1px, transparent 1px); background-size: 32px 32px;"></div>
+
+             <div class="mx-auto max-w-7xl px-6 lg:px-8 relative">
+                 <div class="mx-auto max-w-2xl lg:text-center mb-16">
+                    <h2 class="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">Streamlined Workflow</h2>
+                    <p class="mt-2 text-3xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-5xl">From request to revenue</p>
+                </div>
+                
+                <div class="lg:flex gap-16 items-start relative">
+                    <!-- Sticky Text Sidebar -->
+                    <div class="lg:w-1/3 lg:sticky lg:top-32 space-y-8">
+                         <!-- Step 1 -->
+                         <div class="group cursor-pointer p-6 rounded-2xl transition-all duration-300" 
+                              @mouseenter="activeFeature = 0" 
+                              :class="{ 'bg-white dark:bg-zinc-800 shadow-xl ring-1 ring-zinc-900/5 dark:ring-white/10 scale-105': activeFeature === 0, 'opacity-60 hover:opacity-100': activeFeature !== 0 }">
+                             <div class="flex items-center gap-4 mb-4">
+                                 <div class="h-10 w-10 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold">1</div>
+                                 <h3 class="text-xl font-bold text-zinc-900 dark:text-white">Ingest</h3>
+                             </div>
+                             <p class="text-zinc-600 dark:text-zinc-400">Capture requests from email, Slack, and forms automatically. Centralize demand in one inbox.</p>
+                         </div>
+
+                         <!-- Step 2 -->
+                         <div class="group cursor-pointer p-6 rounded-2xl transition-all duration-300" 
+                              @mouseenter="activeFeature = 1" 
+                              :class="{ 'bg-white dark:bg-zinc-800 shadow-xl ring-1 ring-zinc-900/5 dark:ring-white/10 scale-105': activeFeature === 1, 'opacity-60 hover:opacity-100': activeFeature !== 1 }">
+                             <div class="flex items-center gap-4 mb-4">
+                                 <div class="h-10 w-10 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold">2</div>
+                                 <h3 class="text-xl font-bold text-zinc-900 dark:text-white">Plan</h3>
+                             </div>
+                             <p class="text-zinc-600 dark:text-zinc-400">Assign resources, set dependencies, and visualize timelines with drag-and-drop Gantt charts.</p>
+                         </div>
+
+                         <!-- Step 3 -->
+                         <div class="group cursor-pointer p-6 rounded-2xl transition-all duration-300" 
+                              @mouseenter="activeFeature = 2" 
+                              :class="{ 'bg-white dark:bg-zinc-800 shadow-xl ring-1 ring-zinc-900/5 dark:ring-white/10 scale-105': activeFeature === 2, 'opacity-60 hover:opacity-100': activeFeature !== 2 }">
+                             <div class="flex items-center gap-4 mb-4">
+                                 <div class="h-10 w-10 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold">3</div>
+                                 <h3 class="text-xl font-bold text-zinc-900 dark:text-white">Settle</h3>
+                             </div>
+                             <p class="text-zinc-600 dark:text-zinc-400">Automate invoicing and payments upon milestone completion. Keep vendors happy and paid.</p>
+                         </div>
+                    </div>
+
+                    <!-- Dynamic Visual Side -->
+                    <div class="lg:w-2/3 mt-12 lg:mt-0 sticky top-32">
+                         <div class="aspect-[4/3] w-full rounded-3xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-2xl overflow-hidden relative" x-cloak>
+                             
+                             <!-- Visual 1: Ingest -->
+                             <div x-show="activeFeature === 0" 
+                                  x-transition:enter="transition ease-out duration-500 transform"
+                                  x-transition:enter-start="opacity-0 scale-95 translate-y-4"
+                                  x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                                  x-transition:leave="transition ease-in duration-300 transform"
+                                  x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                                  x-transition:leave-end="opacity-0 scale-95 -translate-y-4"
+                                  class="absolute inset-0 p-12 flex items-center justify-center bg-zinc-50/50 dark:bg-zinc-900/50">
+                                  <div class="w-full max-w-lg space-y-6">
+                                      <!-- Message Item -->
+                                      <div class="bg-white dark:bg-zinc-800 p-6 rounded-2xl shadow-lg border border-zinc-100 dark:border-zinc-700 flex gap-4 items-start transform translate-x-8 opacity-80 scale-95">
+                                          <div class="h-10 w-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xl">📧</div>
+                                          <div class="flex-1">
+                                              <div class="flex justify-between items-center mb-2">
+                                                  <div class="h-4 w-32 bg-zinc-200 dark:bg-zinc-600 rounded"></div>
+                                                  <div class="h-3 w-12 bg-zinc-100 dark:bg-zinc-700 rounded"></div>
+                                              </div>
+                                              <div class="h-3 w-full bg-zinc-100 dark:bg-zinc-700 rounded mb-2"></div>
+                                              <div class="h-3 w-4/6 bg-zinc-100 dark:bg-zinc-700 rounded"></div>
+                                          </div>
+                                      </div>
+                                      <!-- Active Message Item -->
+                                      <div class="bg-white dark:bg-zinc-800 p-6 rounded-2xl shadow-xl border-l-4 border-l-indigo-500 border-y border-r border-zinc-100 dark:border-zinc-700 flex gap-4 items-start transform scale-105 z-10 relative">
+                                          <div class="h-10 w-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl">⚡</div>
+                                          <div class="flex-1">
+                                              <div class="flex justify-between items-center mb-2">
+                                                  <div class="h-4 w-40 bg-zinc-900 dark:bg-zinc-400 rounded"></div>
+                                                  <div class="px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold">NEW</div>
+                                              </div>
+                                              <div class="h-3 w-full bg-zinc-200 dark:bg-zinc-600 rounded mb-2"></div>
+                                              <div class="h-3 w-5/6 bg-zinc-200 dark:bg-zinc-600 rounded"></div>
+                                              <div class="mt-4 flex gap-2">
+                                                  <div class="px-3 py-1 rounded-md bg-zinc-100 dark:bg-zinc-700 text-xs font-semibold">Project A</div>
+                                                  <div class="px-3 py-1 rounded-md bg-zinc-100 dark:bg-zinc-700 text-xs font-semibold">Urgent</div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                       <!-- Message Item -->
+                                      <div class="bg-white dark:bg-zinc-800 p-6 rounded-2xl shadow-lg border border-zinc-100 dark:border-zinc-700 flex gap-4 items-start transform translate-x-4 opacity-80 scale-95">
+                                          <div class="h-10 w-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-xl">💬</div>
+                                          <div class="flex-1">
+                                              <div class="flex justify-between items-center mb-2">
+                                                  <div class="h-4 w-24 bg-zinc-200 dark:bg-zinc-600 rounded"></div>
+                                                  <div class="h-3 w-12 bg-zinc-100 dark:bg-zinc-700 rounded"></div>
+                                              </div>
+                                              <div class="h-3 w-5/6 bg-zinc-100 dark:bg-zinc-700 rounded"></div>
+                                          </div>
+                                      </div>
+                                  </div>
+                             </div>
+                              <!-- Visual 2: Plan -->
+                             <div x-show="activeFeature === 1"
+                                  x-transition:enter="transition ease-out duration-500 transform"
+                                  x-transition:enter-start="opacity-0 translate-y-8"
+                                  x-transition:enter-end="opacity-100 translate-y-0"
+                                  x-transition:leave="transition ease-in duration-300 transform"
+                                  x-transition:leave-start="opacity-100 translate-y-0"
+                                  x-transition:leave-end="opacity-0 -translate-y-8"
+                                  class="absolute inset-0 p-8 flex flex-col justify-center bg-[#f8fafc] dark:bg-[#09090b]">
+                                   <!-- Complex Gantt UI -->
+                                   <div class="w-full bg-white dark:bg-zinc-900 rounded-xl shadow-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
+                                       <div class="h-10 border-b border-zinc-200 dark:border-zinc-800 flex items-center px-4 bg-zinc-50 dark:bg-zinc-800/50">
+                                           <div class="flex gap-4 text-xs font-semibold text-zinc-400">
+                                               <span>NOV</span>
+                                               <span>DEC</span>
+                                               <span>JAN</span>
+                                               <span>FEB</span>
+                                           </div>
+                                       </div>
+                                       <div class="p-4 space-y-6 relative">
+                                           <!-- Grid Lines -->
+                                           <div class="absolute inset-0 flex justify-between px-4 pointer-events-none opacity-10">
+                                               <div class="w-px h-full bg-zinc-900"></div><div class="w-px h-full bg-zinc-900"></div><div class="w-px h-full bg-zinc-900"></div><div class="w-px h-full bg-zinc-900"></div>
+                                           </div>
+
+                                           <div class="flex items-center gap-4 group">
+                                               <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-xs font-bold text-indigo-700">EM</div>
+                                               <div class="flex-1 h-2 bg-zinc-100 dark:bg-zinc-800 rounded-full relative overflow-hidden">
+                                                   <div class="absolute inset-y-0 left-0 w-2/3 bg-indigo-500 rounded-full group-hover:w-3/4 transition-all duration-700"></div>
+                                               </div>
+                                           </div>
+                                           <div class="flex items-center gap-4 pl-8 group">
+                                               <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-xs font-bold text-purple-700">JD</div>
+                                               <div class="flex-1 h-2 bg-zinc-100 dark:bg-zinc-800 rounded-full relative overflow-hidden">
+                                                   <div class="absolute inset-y-0 left-1/3 w-1/3 bg-purple-500 rounded-full group-hover:left-1/4 group-hover:w-1/2 transition-all duration-700"></div>
+                                               </div>
+                                           </div>
+                                            <div class="flex items-center gap-4 pl-4 group">
+                                               <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-xs font-bold text-emerald-700">AS</div>
+                                               <div class="flex-1 h-2 bg-zinc-100 dark:bg-zinc-800 rounded-full relative overflow-hidden">
+                                                   <div class="absolute inset-y-0 right-0 w-1/4 bg-emerald-500 rounded-full group-hover:w-1/2 transition-all duration-700"></div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                             </div>
+                         </div>
+                    </div>
+                </div>
              </div>
-         </div>
-    </div>
+        </div>
 
-    <!-- Simple Footer -->
-    <footer class="bg-white dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-800">
-        <div class="mx-auto max-w-7xl px-6 py-12 md:flex md:items-center md:justify-between lg:px-8">
-            <div class="mt-8 md:order-1 md:mt-0">
-                <p class="text-center text-xs leading-5 text-zinc-500 dark:text-zinc-400">&copy; 2026 TeamBoard Inc. All rights reserved.</p>
+        <!-- Customer Stories (Spotlight) -->
+        <div class="bg-zinc-900 dark:bg-black py-24 sm:py-32 relative overflow-hidden">
+             <!-- Decor -->
+             <div class="absolute top-0 right-0 -mr-24 -mt-24 w-96 h-96 rounded-full bg-indigo-600 blur-[128px] opacity-20"></div>
+             <div class="absolute bottom-0 left-0 -ml-24 -mb-24 w-96 h-96 rounded-full bg-purple-600 blur-[128px] opacity-20"></div>
+
+             <div class="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
+                 <h2 class="text-3xl font-bold tracking-tight text-white mb-16">Customer Spotlight</h2>
+                 
+                 <div class="grid lg:grid-cols-2 gap-12 items-center rounded-3xl bg-white/5 border border-white/10 p-8 lg:p-12 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-pointer group">
+                     <div>
+                         <img class="h-8 mb-8 brightness-0 invert" src="https://tailwindui.com/img/logos/tuple-logo-white.svg" alt="Tuple">
+                         <blockquote class="text-xl font-medium leading-8 text-white">
+                            "TeamBoard transformed how we handle vendor contracts. We went from email chaos to a streamlined, automated workflow in less than a week."
+                        </blockquote>
+                        <div class="mt-8 flex items-center gap-4">
+                            <img class="h-12 w-12 rounded-full ring-2 ring-indigo-500" src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="CEO">
+                            <div>
+                                <div class="font-semibold text-white">Michael Foster</div>
+                                <div class="text-zinc-400 text-sm">CTO of Tuple</div>
+                            </div>
+                        </div>
+                     </div>
+                     <div class="relative h-64 lg:h-full min-h-[300px] rounded-2xl overflow-hidden shadow-2xl">
+                         <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1770&q=80" 
+                              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Office working">
+                         <div class="absolute inset-0 bg-indigo-900/20 group-hover:bg-transparent transition-colors duration-500"></div>
+                     </div>
+                 </div>
+             </div>
+        </div>
+
+        <!-- Bento Grid "Everything you need" -->
+        <div class="bg-white dark:bg-zinc-950 py-24 sm:py-32">
+             <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                <div class="mx-auto max-w-2xl text-center mb-16">
+                    <h2 class="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">All-in-One Platform</h2>
+                    <p class="mt-2 text-3xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-5xl">Building blocks for success</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 auto-rows-[300px]">
+                    <!-- Large Card -->
+                    <div class="lg:col-span-2 group relative overflow-hidden rounded-3xl bg-zinc-50 dark:bg-zinc-900 p-8 border border-zinc-200 dark:border-zinc-800 transition-all hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-1">
+                        <div class="relative z-10">
+                            <h3 class="text-2xl font-bold text-zinc-900 dark:text-white">Project Intelligence</h3>
+                            <p class="mt-2 text-zinc-600 dark:text-zinc-400 max-w-md">Real-time dashboards that show exactly where your resources are allocated and when.</p>
+                        </div>
+                        <div class="absolute right-0 bottom-0 top-16 w-2/3 bg-white dark:bg-zinc-950 rounded-tl-2xl border-l border-t border-zinc-200 dark:border-zinc-800 shadow-2xl transition-transform group-hover:scale-105 group-hover:-translate-x-2 group-hover:-translate-y-2 p-4">
+                             <!-- Mock Chart -->
+                             <div class="flex items-end gap-2 h-full pb-4 px-4">
+                                 <div class="w-full bg-indigo-100 dark:bg-indigo-900/20 h-[40%] rounded-t-lg relative group-hover:h-[60%] transition-all duration-700"></div>
+                                 <div class="w-full bg-purple-100 dark:bg-purple-900/20 h-[70%] rounded-t-lg relative group-hover:h-[80%] transition-all duration-700 delay-100"></div>
+                                 <div class="w-full bg-indigo-500 h-[50%] rounded-t-lg relative group-hover:h-[90%] transition-all duration-700 delay-200 shadow-lg shadow-indigo-500/30"></div>
+                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Small Card -->
+                    <div class="group relative overflow-hidden rounded-3xl bg-zinc-900 dark:bg-white p-8 border border-zinc-800 dark:border-zinc-200 transition-all hover:shadow-xl hover:-translate-y-1">
+                         <div class="relative z-10">
+                            <h3 class="text-2xl font-bold text-white dark:text-zinc-900">Team Sync</h3>
+                            <p class="mt-2 text-zinc-400 dark:text-zinc-600">Keep everyone aligned with zero friction.</p>
+                        </div>
+                        <div class="absolute -right-10 -bottom-10 h-40 w-40 rounded-full bg-indigo-500 blur-3xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                    </div>
+
+                    <!-- Small Card -->
+                    <div class="group relative overflow-hidden rounded-3xl bg-indigo-600 p-8 border border-indigo-500 transition-all hover:shadow-xl hover:-translate-y-1">
+                         <div class="relative z-10">
+                            <h3 class="text-2xl font-bold text-white">Vendor Portal</h3>
+                            <p class="mt-2 text-indigo-100">Secure access for external partners.</p>
+                        </div>
+                         <div class="absolute right-4 bottom-4">
+                            <svg class="h-24 w-24 text-indigo-400/30 rotate-12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                        </div>
+                    </div>
+
+                     <!-- Large Card -->
+                    <div class="lg:col-span-2 group relative overflow-hidden rounded-3xl bg-white dark:bg-zinc-900 p-8 border border-zinc-200 dark:border-zinc-800 transition-all hover:shadow-2xl hover:shadow-purple-500/10 hover:-translate-y-1">
+                         <div class="relative z-10">
+                            <h3 class="text-2xl font-bold text-zinc-900 dark:text-white">Smart Financials</h3>
+                            <p class="mt-2 text-zinc-600 dark:text-zinc-400">Automate approvals and track spend in real-time.</p>
+                        </div>
+                        <div class="mt-8 grid grid-cols-2 gap-4">
+                            <div class="bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl">
+                                <div class="text-sm text-zinc-500">Total Spend</div>
+                                <div class="text-2xl font-bold text-zinc-900 dark:text-white mt-1">$124,500</div>
+                                <div class="text-xs text-green-600 mt-2 flex items-center">
+                                    <svg class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+                                    +12% vs last month
+                                </div>
+                            </div>
+                             <div class="bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl">
+                                <div class="text-sm text-zinc-500">Outstanding</div>
+                                <div class="text-2xl font-bold text-zinc-900 dark:text-white mt-1">$8,230</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="relative isolate overflow-hidden bg-zinc-900 dark:bg-black py-24 sm:py-32">
+            <svg viewBox="0 0 1024 1024" class="absolute left-1/2 top-1/2 -z-10 h-[64rem] w-[64rem] -translate-x-1/2 [mask-image:radial-gradient(closest-side,white,transparent)]" aria-hidden="true">
+                <circle cx="512" cy="512" r="512" fill="url(#8d958450-c69f-4251-94bc-4e091a323369)" fill-opacity="0.7" />
+                <defs>
+                    <radialGradient id="8d958450-c69f-4251-94bc-4e091a323369">
+                        <stop stop-color="#7775D6" />
+                        <stop offset="1" stop-color="#E935C1" />
+                    </radialGradient>
+                </defs>
+            </svg>
+             <div class="mx-auto max-w-7xl px-6 lg:px-8 text-center">
+                 <h2 class="text-3xl font-bold tracking-tight text-white sm:text-5xl">Ready to transform your business?</h2>
+                 <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-zinc-300">Join thousands of high-performing teams using TeamBoard.</p>
+                 <div class="mt-10 flex items-center justify-center gap-x-6">
+                    <a href="/register" class="rounded-full bg-white px-8 py-3.5 text-sm font-semibold text-zinc-900 shadow-sm hover:bg-zinc-100 hover:scale-105 transition-transform duration-200">Get started today</a>
+                </div>
+             </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-zinc-50 dark:bg-black border-t border-zinc-200 dark:border-zinc-800" aria-labelledby="footer-heading">
+        <h2 id="footer-heading" class="sr-only">Footer</h2>
+        <div class="mx-auto max-w-7xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
+            <div class="xl:grid xl:grid-cols-3 xl:gap-8">
+                <div class="space-y-8">
+                    <span class="text-2xl font-bold text-zinc-900 dark:text-white">TeamBoard</span>
+                    <p class="text-sm leading-6 text-zinc-600 dark:text-zinc-400">
+                        Making business management effortless for teams of all sizes.
+                    </p>
+                    <div class="flex space-x-6">
+                         <a href="#" class="text-zinc-400 hover:text-zinc-500">
+                             <span class="sr-only">Twitter</span>
+                             <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg>
+                         </a>
+                         <a href="#" class="text-zinc-400 hover:text-zinc-500">
+                             <span class="sr-only">GitHub</span>
+                             <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" /></svg>
+                         </a>
+                    </div>
+                </div>
+                <div class="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
+                    <div class="md:grid md:grid-cols-2 md:gap-8">
+                        <div>
+                            <h3 class="text-sm font-semibold leading-6 text-zinc-900 dark:text-white">Solutions</h3>
+                             <ul role="list" class="mt-6 space-y-4">
+                                <li><a href="#" class="text-sm leading-6 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">Project Management</a></li>
+                                <li><a href="#" class="text-sm leading-6 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">Vendor Portal</a></li>
+                                <li><a href="#" class="text-sm leading-6 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">HR & Time</a></li>
+                            </ul>
+                        </div>
+                        <div class="mt-10 md:mt-0">
+                            <h3 class="text-sm font-semibold leading-6 text-zinc-900 dark:text-white">Support</h3>
+                            <ul role="list" class="mt-6 space-y-4">
+                                <li><a href="#" class="text-sm leading-6 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">Documentation</a></li>
+                                <li><a href="#" class="text-sm leading-6 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">Guides</a></li>
+                                <li><a href="#" class="text-sm leading-6 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">API Status</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="md:grid md:grid-cols-2 md:gap-8">
+                        <div>
+                            <h3 class="text-sm font-semibold leading-6 text-zinc-900 dark:text-white">Company</h3>
+                            <ul role="list" class="mt-6 space-y-4">
+                                <li><a href="#" class="text-sm leading-6 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">About</a></li>
+                                <li><a href="#" class="text-sm leading-6 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">Blog</a></li>
+                                <li><a href="#" class="text-sm leading-6 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">Jobs</a></li>
+                            </ul>
+                        </div>
+                        <div class="mt-10 md:mt-0">
+                            <h3 class="text-sm font-semibold leading-6 text-zinc-900 dark:text-white">Legal</h3>
+                            <ul role="list" class="mt-6 space-y-4">
+                                <li><a href="#" class="text-sm leading-6 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">Privacy</a></li>
+                                <li><a href="#" class="text-sm leading-6 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">Terms</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-             <div class="flex justify-center space-x-6 md:order-2">
-                <a href="#" class="text-zinc-400 hover:text-zinc-500">
-                    <span class="sr-only">GitHub</span>
-                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" /></svg>
-                </a>
+            <div class="mt-16 border-t border-zinc-900/10 dark:border-white/10 pt-8 sm:mt-20 lg:mt-24">
+                 <p class="text-xs leading-5 text-zinc-500 text-center">&copy; 2026 TeamBoard Inc. All rights reserved.</p>
             </div>
         </div>
     </footer>
