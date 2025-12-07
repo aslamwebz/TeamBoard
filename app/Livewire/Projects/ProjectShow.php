@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Livewire\Projects;
 
@@ -21,29 +19,17 @@ final class ProjectShow extends Component
 
     public Project $project;
     public $projectDiscussions = [];
-
     public $showAssignUserModal = false;
-
     public $showAssignTeamModal = false;
-
     public $showAssignPhaseModal = false;
-
     public $showAssignMilestoneModal = false;
-
     public $selectedUsers = [];
-
     public $selectedTeams = [];
-
     public $selectedPhases = [];
-
     public $selectedMilestones = [];
-
     public $availableUsers = [];
-
     public $availableTeams = [];
-
     public $availablePhases = [];
-
     public $availableMilestones = [];
 
     public function mount(Project $project): void
@@ -62,12 +48,12 @@ final class ProjectShow extends Component
             },
             'phases',
             'milestones',
-            'discussions', // Load discussions for the project
-            'phases.tasks', // Load tasks for each phase
+            'discussions',  // Load discussions for the project
+            'phases.tasks',  // Load tasks for each phase
         ]);
 
         // Load recent project discussions
-        $this->projectDiscussions = $this->project->discussions()->latest()->limit(5)->get();
+        $this->projectDiscussions = $this->project->discussions()->with('user', 'attachments')->latest()->limit(5)->get();
     }
 
     public function getAvailableUsersProperty()
@@ -122,14 +108,14 @@ final class ProjectShow extends Component
 
     public function updatedShowAssignUserModal($value): void
     {
-        if (! $value) {
+        if (!$value) {
             $this->selectedUsers = [];
         }
     }
 
     public function updatedShowAssignTeamModal($value): void
     {
-        if (! $value) {
+        if (!$value) {
             $this->selectedTeams = [];
         }
     }
@@ -189,7 +175,7 @@ final class ProjectShow extends Component
 
     public function getMilestoneStatusBadgeClass(string $status): string
     {
-        $milestoneStatus = \App\Enums\PhaseStatus::tryFrom($status); // Milestones use the same statuses as phases
+        $milestoneStatus = \App\Enums\PhaseStatus::tryFrom($status);  // Milestones use the same statuses as phases
         if ($milestoneStatus) {
             return $milestoneStatus->getDarkColorClass();
         }

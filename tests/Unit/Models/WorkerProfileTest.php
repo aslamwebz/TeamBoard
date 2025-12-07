@@ -5,7 +5,10 @@ declare(strict_types=1);
 use App\Models\WorkerProfile;
 
 it('to array', function () {
-    $workerProfile = WorkerProfile::factory()->create()->refresh();
+    $workerProfile =  WorkerProfile::factory()->create([
+                'user_id' => $this->user->id,
+                'employee_id' => 'EMP000-' . $this->user->id,
+            ])->refresh();
 
     expect(array_keys($workerProfile->toArray()))->toBe([
         'id',

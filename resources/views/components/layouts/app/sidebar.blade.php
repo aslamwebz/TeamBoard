@@ -1,5 +1,17 @@
 <flux:sidebar sticky collapsible
-    class="in-data-flux-sidebar-on-desktop:not-in-data-flux-sidebar-collapsed-desktop:-mr-2 border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+    class="in-data-flux-sidebar-on-desktop:not-in-data-flux-sidebar-collapsed-desktop:-mr-2 border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 w-64"
+    style="width: 16rem !important; scrollbar-width: none; -ms-overflow-style: none;">
+    <style>
+        [data-flux-sidebar]::-webkit-scrollbar {
+            display: none;
+        }
+
+        [data-flux-sidebar] {
+            width: 16rem !important;
+            max-width: 16rem !important;
+            min-width: 16rem !important;
+        }
+    </style>
     <flux:sidebar.header>
         <x-application-logo />
         <flux:sidebar.collapse
@@ -151,7 +163,8 @@
                 {{ __('Purchase Orders') }}
             </flux:sidebar.item>
         </flux:sidebar.group>
-        <flux:sidebar.group expandable :expanded="request()->routeIs('reports*')" icon="chart-bar" heading="REPORTS" class="grid">
+        <flux:sidebar.group expandable :expanded="request()->routeIs('reports*')" icon="chart-bar" heading="REPORTS"
+            class="grid">
             @can('view reports')
                 <flux:sidebar.item icon="chart-pie" href="{{ route('reports.index') }}"
                     :current="request()->routeIs('reports*')" wire:navigate.hover
