@@ -183,16 +183,36 @@
             <div class="mt-24 sm:mt-32 fade-mask relative" id="customers">
                 <div class="mx-auto max-w-7xl px-6 lg:px-8">
                      <div class="mt-10 overflow-hidden flex gap-12 select-none" style="mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
-                         <div class="flex gap-12 min-w-full animate-[marquee_30s_linear_infinite]">
-                             <img class="max-h-12 w-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500 dark:invert" src="https://tailwindui.com/img/logos/158x48/transistor-logo-gray-900.svg" alt="Transistor">
-                             <img class="max-h-12 w-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500 dark:invert" src="https://tailwindui.com/img/logos/158x48/reform-logo-gray-900.svg" alt="Reform">
-                             <img class="max-h-12 w-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500 dark:invert" src="https://tailwindui.com/img/logos/158x48/tuple-logo-gray-900.svg" alt="Tuple">
-                             <img class="max-h-12 w-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500 dark:invert" src="https://tailwindui.com/img/logos/158x48/savvycal-logo-gray-900.svg" alt="SavvyCal">
-                             <img class="max-h-12 w-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500 dark:invert" src="https://tailwindui.com/img/logos/158x48/statamic-logo-gray-900.svg" alt="Statamic">
-                             <!-- Repeat -->
-                             <img class="max-h-12 w-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500 dark:invert" src="https://tailwindui.com/img/logos/158x48/transistor-logo-gray-900.svg" alt="Transistor">
-                             <img class="max-h-12 w-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500 dark:invert" src="https://tailwindui.com/img/logos/158x48/reform-logo-gray-900.svg" alt="Reform">
-                             <img class="max-h-12 w-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500 dark:invert" src="https://tailwindui.com/img/logos/158x48/tuple-logo-gray-900.svg" alt="Tuple">
+                         <div class="flex gap-12 min-w-full animate-[marquee_30s_linear_infinite] items-center">
+                             <!-- Transistor -->
+                             <svg class="h-12 w-auto opacity-60 hover:opacity-100 transition-all duration-500 text-zinc-900 dark:text-white" viewBox="0 0 158 48" fill="currentColor">
+                                 <path d="M0 24.3c0-2.6 2.1-4.7 4.7-4.7h9.5c8.3 0 11.8 5.7 13.5 11.2l.2.8c1 3.2 1.4 4.5 3.3 4.5 1.8 0 2.3-1.3 3.3-4.5l.2-.8C36.4 25.3 40 19.6 48.3 19.6H153.3c2.6 0 4.7 2.1 4.7 4.7s-2.1 4.7-4.7 4.7H48.3c-1.8 0-2.3 1.3-3.3 4.5l-.2.8c-1.7 5.5-5.2 11.2-13.5 11.2-8.3 0-11.8-5.7-13.5-11.2l-.2-.8c-1-3.2-1.4-4.5-3.3-4.5-1.8 0-2.3 1.3-3.3 4.5l-.2.8c-1.7 5.5-5.2 11.2-13.5 11.2H4.7C2.1 40.3 0 38.2 0 35.6v-11.3z"/>
+                             </svg>
+                             <!-- Reform -->
+                             <svg class="h-10 w-auto opacity-60 hover:opacity-100 transition-all duration-500 text-zinc-900 dark:text-white" viewBox="0 0 148 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <path d="M51.921 16.518C50.29 11.378 45.47 7.647 39.805 7.647c-7.394 0-13.388 6.36-13.388 14.205 0 7.846 5.994 14.206 13.388 14.206 5.665 0 10.485-3.731 12.116-8.871H39.805c-2.358 0-4.27-2.062-4.27-4.606 0-2.544 1.912-4.606 4.27-4.606h12.116z" fill="currentColor"/>
+                                 <path d="M14.588 7.647h-5.47v28.412h5.47V25.34c0-3.376 2.585-6.115 5.774-6.115 1.055 0 1.986.302 2.76.817V13.88c-.966-.525-2.071-.823-3.242-.823-3.41 0-6.172 3.018-6.172 6.74v-6.693h.88zm81.47-5.59v5.59h-5.47v17.693 c0 3.377-2.585 6.115-5.773 6.115-1.055 0-1.987-.302-2.761-.817v6.16c.966.526 2.072.824 3.242.824 5.95 0 10.772-5.266 10.772-11.765V2.058h-.01zm29.824 34.001h5.47V7.645h-5.47v28.411z" fill="currentColor"/>
+                             </svg>
+                             <!-- Tuple -->
+                             <svg class="h-10 w-auto opacity-60 hover:opacity-100 transition-all duration-500 text-zinc-900 dark:text-white" viewBox="0 0 138 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <path d="M43.987 11.78a6.565 6.565 0 00-9.284 0l-5.656 5.656-5.657-5.657a6.565 6.565 0 10-9.284 9.285l5.657 5.656-5.657 5.657a6.565 6.565 0 009.284 9.284l5.657-5.656 5.656 5.657a6.565 6.565 0 009.284-9.284l-5.657-5.657 5.657-5.657a6.563 6.563 0 000-9.284z" fill="currentColor"/>
+                             </svg>
+                             <!-- SavvyCal -->
+                             <svg class="h-10 w-auto opacity-60 hover:opacity-100 transition-all duration-500 text-zinc-900 dark:text-white" viewBox="0 0 168 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M14.588 22.059c0-2.31 1.76-4.14 4.076-4.382l.06-.006H33.09v-5.47H18.724a9.853 9.853 0 00-6.726 17.065l13.623 13.064c1.155 1.108.971 3.037-.48 3.037l-15.688-.002v5.47h15.688c5.44 0 9.853-4.413 9.853-9.853 0-2.31-1.76-4.14-4.076-4.382l-.06-.006H14.588v-14.54z" fill="currentColor"/>
+                             </svg>
+                             <!-- Statamic -->
+                             <svg class="h-10 w-auto opacity-60 hover:opacity-100 transition-all duration-500 text-zinc-900 dark:text-white" viewBox="0 0 178 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <path d="M21.529 14.204v5.47h-11.47v17.412h11.47v5.47H4.588V14.204h16.941zM66.412 14.204v5.47h-6.794v23.161h-5.47V19.674h-6.795v-5.47h19.059zm43.585 0v28.632h-5.47v-2.736c-1.636 2.01-4.116 3.283-6.852 3.283-5.264 0-9.529-4.72-9.529-10.543 0-5.823 4.265-10.543 9.53-10.543 2.735 0 5.215 1.272 6.852 3.283v-11.376h5.47zm32.176 9.846v5.47h-6.794v13.316h-5.47V29.52h-6.794v-5.47h19.058zm-72.298 2.057c-2.39-1.32-5.424-1.32-7.815 0l2.735 4.738c.846-.467 1.918-.467 2.765 0 .846.467 1.382 1.396 1.382 2.395v1.376h-5.47c-4.529 0-8.235 4.1-8.235 9.11 0 5.013 3.706 9.112 8.235 9.112 2.738 0 5.22-1.275 6.853-3.287v2.737h5.47v-16.78c0-4.634-2.486-8.234-5.92-9.401zm72.71 8.812c-.848-.467-1.383-1.396-1.383-2.395 0-1 1-1.928 2.4-1.928h5.835v4.92h-6.852v-.6zm-41.53 5.47v-3.826h3.647c1.37 0 2.403-.681 2.403-1.85 0-.585-.256-1.127-.706-1.493-1.077-.872-3.14-.381-3.647 1.26l-4.706-1.926c1.177-3.687 5.727-4.225 8.353-2.096 1.706 1.384 2.176 3.195 2.176 4.67 0 3.32-2.912 4.102-4.144 4.19.827.604 1.367 1.406 1.367 2.308 0 1.09-.765 2.023-1.747 2.48l1.747 3.03h5.753l-3.226-5.594c1.915-.656 3.226-2.528 3.226-4.659h-5.47c0 1.288-1.559 1.83-2.618 1.83-1.059 0-2.617-.466-2.617-1.755 0-.742.508-1.369 1.109-1.637l2.1-.01v5.278h-.002z" fill="currentColor"/>
+                             </svg>
+                             <!-- Repeat for loop -->
+                             <svg class="h-12 w-auto opacity-60 hover:opacity-100 transition-all duration-500 text-zinc-900 dark:text-white" viewBox="0 0 158 48" fill="currentColor">
+                                 <path d="M0 24.3c0-2.6 2.1-4.7 4.7-4.7h9.5c8.3 0 11.8 5.7 13.5 11.2l.2.8c1 3.2 1.4 4.5 3.3 4.5 1.8 0 2.3-1.3 3.3-4.5l.2-.8C36.4 25.3 40 19.6 48.3 19.6H153.3c2.6 0 4.7 2.1 4.7 4.7s-2.1 4.7-4.7 4.7H48.3c-1.8 0-2.3 1.3-3.3 4.5l-.2.8c-1.7 5.5-5.2 11.2-13.5 11.2-8.3 0-11.8-5.7-13.5-11.2l-.2-.8c-1-3.2-1.4-4.5-3.3-4.5-1.8 0-2.3 1.3-3.3 4.5l-.2.8c-1.7 5.5-5.2 11.2-13.5 11.2H4.7C2.1 40.3 0 38.2 0 35.6v-11.3z"/>
+                             </svg>
+                             <svg class="h-10 w-auto opacity-60 hover:opacity-100 transition-all duration-500 text-zinc-900 dark:text-white" viewBox="0 0 148 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M51.921 16.518C50.29 11.378 45.47 7.647 39.805 7.647c-7.394 0-13.388 6.36-13.388 14.205 0 7.846 5.994 14.206 13.388 14.206 5.665 0 10.485-3.731 12.116-8.871H39.805c-2.358 0-4.27-2.062-4.27-4.606 0-2.544 1.912-4.606 4.27-4.606h12.116z" fill="currentColor"/>
+                                <path d="M14.588 7.647h-5.47v28.412h5.47V25.34c0-3.376 2.585-6.115 5.774-6.115 1.055 0 1.986.302 2.76.817V13.88c-.966-.525-2.071-.823-3.242-.823-3.41 0-6.172 3.018-6.172 6.74v-6.693h.88zm81.47-5.59v5.59h-5.47v17.693 c0 3.377-2.585 6.115-5.773 6.115-1.055 0-1.987-.302-2.761-.817v6.16c.966.526 2.072.824 3.242.824 5.95 0 10.772-5.266 10.772-11.765V2.058h-.01zm29.824 34.001h5.47V7.645h-5.47v28.411z" fill="currentColor"/>
+                            </svg>
                          </div>
                      </div>
                 </div>
@@ -365,7 +385,10 @@
                  
                  <div class="grid lg:grid-cols-2 gap-12 items-center rounded-3xl bg-white/5 border border-white/10 p-8 lg:p-12 backdrop-blur-sm hover:bg-white/10 transition-colors cursor-pointer group">
                      <div>
-                         <img class="h-8 mb-8 brightness-0 invert" src="https://tailwindui.com/img/logos/tuple-logo-white.svg" alt="Tuple">
+                         <svg class="h-8 mb-8 text-white" viewBox="0 0 138 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                             <path d="M43.987 11.78a6.565 6.565 0 00-9.284 0l-5.656 5.656-5.657-5.657a6.565 6.565 0 10-9.284 9.285l5.657 5.656-5.657 5.657a6.565 6.565 0 009.284 9.284l5.657-5.656 5.656 5.657a6.565 6.565 0 009.284-9.284l-5.657-5.657 5.657-5.657a6.563 6.563 0 000-9.284z" fill="currentColor"/>
+                             <path d="M60 12h-4v24h20v-4H60V12zm26 0h-4v24h20v-4H86V12z" fill="currentColor"/>
+                         </svg>
                          <blockquote class="text-xl font-medium leading-8 text-white">
                             "TeamBoard transformed how we handle vendor contracts. We went from email chaos to a streamlined, automated workflow in less than a week."
                         </blockquote>
