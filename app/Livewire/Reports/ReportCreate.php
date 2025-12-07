@@ -1,12 +1,12 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Livewire\Reports;
 
+use App\Enums\ReportStatus;
 use App\Models\Report;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -34,7 +34,7 @@ final class ReportCreate extends Component
         $validated = $this->validate();
 
         $validated['user_id'] = auth()->id();
-        $validated['status'] = Report::STATUS_GENERATED;
+        $validated['status'] = ReportStatus::GENERATED->value;
         $validated['generated_at'] = now();
 
         // Add sample data based on report type
@@ -76,7 +76,7 @@ final class ReportCreate extends Component
 
         Report::create($validated);
 
-        return $this->redirectRoute('reports.index', navigate: true);
+        return redirect()->route('reports.index');
     }
 
     public function render(): View

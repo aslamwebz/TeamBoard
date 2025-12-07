@@ -4,22 +4,16 @@
             <h2 class="text-2xl font-bold text-gray-900">Vendor Tasks</h2>
             <p class="text-gray-600">Tasks assigned to {{ $vendor->name }}</p>
         </div>
-        <a 
-            href="{{ route('vendors.show', $vendorId) }}" 
-            class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
-        >
+        <a href="{{ route('vendors.show', $vendorId) }}"
+            class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
             Back to Vendor
         </a>
     </div>
 
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <div>
-            <input 
-                wire:model.live="search" 
-                type="text" 
-                placeholder="Search tasks..." 
-                class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 bg-white text-gray-900"
-            />
+            <input wire:model.live="search" type="text" placeholder="Search tasks..."
+                class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 bg-white text-gray-900" />
         </div>
     </div>
 
@@ -28,16 +22,20 @@
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Task
                         </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Project
                         </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Status
                         </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Due Date
                         </th>
                     </tr>
@@ -47,17 +45,25 @@
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm font-medium text-gray-900">{{ $task->title }}</div>
-                                <div class="text-sm text-gray-500">{{ $task->description ? \Illuminate\Support\Str::limit($task->description, 50) : 'No description' }}</div>
+                                <div class="text-sm text-gray-500">
+                                    {{ $task->description ? \Illuminate\Support\Str::limit($task->description, 50) : 'No description' }}
+                                </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {{ $task->project->name ?? 'N/A' }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                    {{ $task->status === App\Models\Task::STATUS_TODO ? 'bg-gray-100 text-gray-800' :
-                                       ($task->status === App\Models\Task::STATUS_IN_PROGRESS ? 'bg-sky-100 text-sky-800' :
-                                          ($task->status === App\Models\Task::STATUS_COMPLETED ? 'bg-green-100 text-green-800' :
-                                             ($task->status === App\Models\Task::STATUS_ON_HOLD ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-800'))) }}">
+                                <span
+                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                    {{ $task->status === \App\Enums\TaskStatus::TODO->value
+                                        ? 'bg-gray-100 text-gray-800'
+                                        : ($task->status === \App\Enums\TaskStatus::IN_PROGRESS->value
+                                            ? 'bg-sky-100 text-sky-800'
+                                            : ($task->status === \App\Enums\TaskStatus::COMPLETED->value
+                                                ? 'bg-green-100 text-green-800'
+                                                : ($task->status === \App\Enums\TaskStatus::ON_HOLD->value
+                                                    ? 'bg-yellow-100 text-yellow-800'
+                                                    : 'bg-gray-100 text-gray-800'))) }}">
                                     {{ ucfirst(str_replace('_', ' ', $task->status)) }}
                                 </span>
                             </td>
@@ -75,7 +81,7 @@
                 </tbody>
             </table>
         </div>
-        
+
         <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
             {{ $tasks->links() }}
         </div>

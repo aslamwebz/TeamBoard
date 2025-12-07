@@ -1,46 +1,16 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\PaymentMethod;
+use App\Enums\PaymentStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Model;
 
 final class Payment extends Model
 {
     use HasFactory;
-
-    // Payment statuses
-    public const STATUS_PENDING = 'pending';
-
-    public const STATUS_PROCESSING = 'processing';
-
-    public const STATUS_COMPLETED = 'completed';
-
-    public const STATUS_FAILED = 'failed';
-
-    public const STATUS_REFUNDED = 'refunded';
-
-    public const STATUS_CANCELLED = 'cancelled';
-
-    // Payment methods
-    public const PAYMENT_CASH = 'cash';
-
-    public const PAYMENT_CREDIT_CARD = 'credit_card';
-
-    public const PAYMENT_DEBIT_CARD = 'debit_card';
-
-    public const PAYMENT_BANK_TRANSFER = 'bank_transfer';
-
-    public const PAYMENT_CHECK = 'check';
-
-    public const PAYMENT_PAYPAL = 'paypal';
-
-    public const PAYMENT_STRIPE = 'stripe';
-
-    public const PAYMENT_OTHER = 'other';
 
     protected $fillable = [
         'invoice_id',
@@ -98,7 +68,7 @@ final class Payment extends Model
      */
     public function isCompleted(): bool
     {
-        return $this->status === self::STATUS_COMPLETED;
+        return $this->status === PaymentStatus::COMPLETED->value;
     }
 
     /**
@@ -106,7 +76,7 @@ final class Payment extends Model
      */
     public function isPending(): bool
     {
-        return $this->status === self::STATUS_PENDING;
+        return $this->status === PaymentStatus::PENDING->value;
     }
 
     /**
@@ -114,6 +84,6 @@ final class Payment extends Model
      */
     public function isFailed(): bool
     {
-        return $this->status === self::STATUS_FAILED;
+        return $this->status === PaymentStatus::FAILED->value;
     }
 }

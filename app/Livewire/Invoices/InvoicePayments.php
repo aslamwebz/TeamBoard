@@ -1,13 +1,16 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Livewire\Invoices;
 
+use App\Enums\PaymentMethod;
+use App\Enums\PaymentStatus;
 use App\Models\Invoice;
 use App\Models\Payment;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 
+#[Layout('components.layouts.app')]
 final class InvoicePayments extends Component
 {
     public Invoice $invoice;
@@ -22,29 +25,20 @@ final class InvoicePayments extends Component
 
     public $notes;
 
-    public $payment_methods;
+    public $paymentMethods;
 
     public function mount(Invoice $invoice)
     {
         $this->invoice = $invoice;
         $this->paymentAmount = $invoice->getRemainingBalance();
         $this->paymentDate = now()->format('Y-m-d');
-        $this->payment_methods = [
-            Payment::PAYMENT_CASH => 'Cash',
-            Payment::PAYMENT_CREDIT_CARD => 'Credit Card',
-            Payment::PAYMENT_DEBIT_CARD => 'Debit Card',
-            Payment::PAYMENT_BANK_TRANSFER => 'Bank Transfer',
-            Payment::PAYMENT_CHECK => 'Check',
-            Payment::PAYMENT_PAYPAL => 'PayPal',
-            Payment::PAYMENT_STRIPE => 'Stripe',
-            Payment::PAYMENT_OTHER => 'Other',
-        ];
+        $this->paymentMethods = PaymentMethod::toArray();
     }
 
     public function addPayment()
     {
         $this->validate([
-            'paymentAmount' => 'required|numeric|min:0.01|max:'.$this->invoice->getRemainingBalance(),
+            'paymentAmount' => 'required|numeric|min:0.01|max:' . $this->invoice->getRemainingBalance(),
             'paymentDate' => 'required|date',
             'paymentMethod' => 'required|string|max:255',
         ]);
@@ -56,7 +50,7 @@ final class InvoicePayments extends Component
             'transaction_reference' => $this->transactionReference,
             'payment_date' => $this->paymentDate,
             'notes' => $this->notes,
-            'status' => Payment::STATUS_COMPLETED,
+            'status' => PaymentStatus::COMPLETED->value,
             'currency' => $this->invoice->getDefaultCurrency(),
             'user_id' => auth()->id(),
         ]);
@@ -78,7 +72,7 @@ final class InvoicePayments extends Component
 
         return view('livewire.invoices.invoice-payments', [
             'payments' => $payments,
-        ])->layout('components.layouts.app');
+        ]);
     }
 
     public function getPaymentStatusBadgeClass(string $status): string

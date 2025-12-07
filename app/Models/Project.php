@@ -1,28 +1,18 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\ProjectStatus;
 use App\Helpers\TenantHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Model;
 
 final class Project extends Model
 {
     use HasFactory;
-
-    // Define project statuses
-    public const STATUS_PLANNING = 'planning';
-
-    public const STATUS_IN_PROGRESS = 'in_progress';
-
-    public const STATUS_COMPLETED = 'completed';
-
-    public const STATUS_ON_HOLD = 'on_hold';
 
     protected $fillable = [
         'name',
@@ -114,14 +104,14 @@ final class Project extends Model
             }
 
             $completedTasks = $tasks->filter(function ($task) {
-                return $task->status === Task::STATUS_COMPLETED;
+                return $task->status === \App\Enums\TaskStatus::COMPLETED->value;
             });
 
             return (int) round(($completedTasks->count() / $tasks->count()) * 100);
         }
 
         $completedPhases = $phases->filter(function ($phase) {
-            return $phase->status === ProjectPhase::STATUS_COMPLETED;
+            return $phase->status === \App\Enums\PhaseStatus::COMPLETED->value;
         });
 
         return (int) round(($completedPhases->count() / $phases->count()) * 100);
@@ -140,7 +130,8 @@ final class Project extends Model
      */
     public function workers()
     {
-        return $this->belongsToMany(WorkerProfile::class, 'timesheets', 'project_id', 'worker_profile_id')
+        return $this
+            ->belongsToMany(WorkerProfile::class, 'timesheets', 'project_id', 'worker_profile_id')
             ->withPivot('total_hours', 'entry_type')
             ->withTimestamps();
     }

@@ -1,13 +1,12 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\ReportStatus;
 use App\Helpers\TenantHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Model;
 
 final class Report extends Model
 {
@@ -20,12 +19,6 @@ final class Report extends Model
     public const TYPE_INVOICE = 'invoice';
 
     public const TYPE_CLIENT = 'client';
-
-    public const STATUS_DRAFT = 'draft';
-
-    public const STATUS_GENERATED = 'generated';
-
-    public const STATUS_ARCHIVED = 'archived';
 
     protected $fillable = [
         'user_id',

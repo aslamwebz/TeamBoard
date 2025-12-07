@@ -1,32 +1,35 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Livewire\Payments;
 
+use App\Enums\InvoiceStatus;
 use App\Models\Invoice;
+use Illuminate\Support\Facades\Log;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Log;
 
+#[Layout('components.layouts.app')]
 final class PaymentReminders extends Component
 {
     use WithPagination;
 
-    public $filter = 'overdue'; // overdue, upcoming, all
+    public $filter = 'overdue';  // overdue, upcoming, all
 
     public function render()
     {
         $invoices = Invoice::with(['client', 'payments'])
-            ->where('status', '!=', Invoice::STATUS_PAID)
-            ->where('status', '!=', Invoice::STATUS_CANCELLED);
+            ->where('status', '!=', InvoiceStatus::PAID->value)
+            ->where('status', '!=', InvoiceStatus::CANCELLED->value);
 
         switch ($this->filter) {
             case 'overdue':
-                $invoices = $invoices->where('due_date', '<', now())
+                $invoices = $invoices
+                    ->where('due_date', '<', now())
                     ->where(function ($query) {
-                        $query->where('status', '!=', Invoice::STATUS_PAID)
-                            ->orWhere('status', Invoice::STATUS_PARTIALLY_PAID);
+                        $query
+                            ->where('status', '!=', InvoiceStatus::PAID->value)
+                            ->orWhere('status', InvoiceStatus::PARTIALLY_PAID->value);
                     });
                 break;
             case 'upcoming':
@@ -43,20 +46,22 @@ final class PaymentReminders extends Component
         // Get statistics
         $totalOverdue = Invoice::where('due_date', '<', now())
             ->where(function ($query) {
-                $query->where('status', '!=', Invoice::STATUS_PAID)
-                    ->where('status', '!=', Invoice::STATUS_CANCELLED);
+                $query
+                    ->where('status', '!=', InvoiceStatus::PAID->value)
+                    ->where('status', '!=', InvoiceStatus::CANCELLED->value);
             })
             ->sum('total');
 
         $totalUpcoming = Invoice::where('due_date', '>=', now())
-            ->where('status', '!=', Invoice::STATUS_PAID)
-            ->where('status', '!=', Invoice::STATUS_CANCELLED)
+            ->where('status', '!=', InvoiceStatus::PAID->value)
+            ->where('status', '!=', InvoiceStatus::CANCELLED->value)
             ->sum('total');
 
         $overdueCount = Invoice::where('due_date', '<', now())
             ->where(function ($query) {
-                $query->where('status', '!=', Invoice::STATUS_PAID)
-                    ->where('status', '!=', Invoice::STATUS_CANCELLED);
+                $query
+                    ->where('status', '!=', InvoiceStatus::PAID->value)
+                    ->where('status', '!=', InvoiceStatus::CANCELLED->value);
             })
             ->count();
 

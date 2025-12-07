@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Enums;
 
@@ -12,6 +10,7 @@ enum PaymentMethod: string
     case BANK_TRANSFER = 'bank_transfer';
     case CHECK = 'check';
     case PAYPAL = 'paypal';
+    case STRIPE = 'stripe';
     case OTHER = 'other';
 
     /**
@@ -35,6 +34,7 @@ enum PaymentMethod: string
             self::BANK_TRANSFER => 'Bank Transfer',
             self::CHECK => 'Check',
             self::PAYPAL => 'PayPal',
+            self::STRIPE => 'Stripe',
             self::OTHER => 'Other',
         };
     }

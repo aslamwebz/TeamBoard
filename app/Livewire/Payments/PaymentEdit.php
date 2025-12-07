@@ -1,14 +1,16 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Livewire\Payments;
 
+use App\Enums\ExpenseStatus;
+use App\Enums\PaymentMethod;
 use App\Models\Expense;
 use App\Models\Invoice;
 use App\Models\Payment;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 
+#[Layout('components.layouts.app')]
 final class PaymentEdit extends Component
 {
     public Payment $payment;
@@ -53,16 +55,7 @@ final class PaymentEdit extends Component
 
         $this->invoices = Invoice::orderBy('invoice_number')->get();
         $this->expenses = Expense::orderBy('title')->get();
-        $this->payment_methods = [
-            Payment::PAYMENT_CASH => 'Cash',
-            Payment::PAYMENT_CREDIT_CARD => 'Credit Card',
-            Payment::PAYMENT_DEBIT_CARD => 'Debit Card',
-            Payment::PAYMENT_BANK_TRANSFER => 'Bank Transfer',
-            Payment::PAYMENT_CHECK => 'Check',
-            Payment::PAYMENT_PAYPAL => 'PayPal',
-            Payment::PAYMENT_STRIPE => 'Stripe',
-            Payment::PAYMENT_OTHER => 'Other',
-        ];
+        $this->payment_methods = PaymentMethod::toArray();
     }
 
     public function update()
@@ -74,7 +67,7 @@ final class PaymentEdit extends Component
         ]);
 
         // Either invoice_id or expense_id must be provided
-        if (! $this->invoice_id && ! $this->expense_id) {
+        if (!$this->invoice_id && !$this->expense_id) {
             $this->addError('invoice_id', 'Either Invoice or Expense must be selected');
             $this->addError('expense_id', 'Either Invoice or Expense must be selected');
 
@@ -98,7 +91,7 @@ final class PaymentEdit extends Component
             if ($this->payment->isForInvoice() && $this->payment->invoice) {
                 $this->payment->invoice->updateStatusFromPayment();
             } elseif ($this->payment->isForExpense() && $this->payment->expense) {
-                $this->payment->expense->update(['status' => Expense::STATUS_PAID]);
+                $this->payment->expense->update(['status' => ExpenseStatus::PAID->value]);
             }
         }
 

@@ -1,25 +1,15 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\PhaseStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Model;
 
 final class Milestone extends Model
 {
     use HasFactory;
-
-    // Define milestone statuses
-    public const STATUS_NOT_STARTED = 'not_started';
-
-    public const STATUS_IN_PROGRESS = 'in_progress';
-
-    public const STATUS_COMPLETED = 'completed';
-
-    public const STATUS_ON_HOLD = 'on_hold';
 
     protected $fillable = [
         'name',
@@ -52,7 +42,7 @@ final class Milestone extends Model
      */
     public function isOverdue(): bool
     {
-        return $this->due_date && $this->due_date->isPast() && $this->status !== self::STATUS_COMPLETED;
+        return $this->due_date && $this->due_date->isPast() && $this->status !== PhaseStatus::COMPLETED->value;
     }
 
     /**

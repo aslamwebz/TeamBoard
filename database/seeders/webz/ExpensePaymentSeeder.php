@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Database\Seeders\webz;
 
@@ -41,13 +39,13 @@ final class ExpensePaymentSeeder extends Seeder
 
                 Payment::create([
                     'expense_id' => $expense->id,
-                    'user_id' => $expense->user_id ?? 1, // Use expense's user_id or default to 1
+                    'user_id' => $expense->user_id ?? 1,  // Use expense's user_id or default to 1
                     'amount' => $paymentAmount,
                     'payment_method' => fake()->randomElement(['credit_card', 'bank_transfer', 'check', 'paypal', 'cash', 'debit_card']),
                     'payment_date' => fake()->dateTimeBetween($expense->expense_date, now()),
-                    'transaction_reference' => 'EXP-PAY-'.mb_strtoupper(fake()->bothify('?????-#####')),
+                    'transaction_reference' => 'EXP-PAY-' . mb_strtoupper(fake()->bothify('?????-#####')),
                     'notes' => fake()->sentence(),
-                    'status' => Payment::STATUS_COMPLETED,
+                    'status' => PaymentStatus::COMPLETED->value,
                     'currency' => $expense->currency ?? 'USD',
                 ]);
 

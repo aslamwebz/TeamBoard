@@ -1,30 +1,18 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\InvoiceStatus;
+use App\Enums\PaymentStatus;
 use App\Helpers\TenantHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Model;
 
 final class Invoice extends Model
 {
     use HasFactory;
-
-    public const STATUS_DRAFT = 'draft';
-
-    public const STATUS_SENT = 'sent';
-
-    public const STATUS_PARTIALLY_PAID = 'partially_paid';
-
-    public const STATUS_PAID = 'paid';
-
-    public const STATUS_OVERDUE = 'overdue';
-
-    public const STATUS_CANCELLED = 'cancelled';
 
     protected $fillable = [
         'client_id',
@@ -59,7 +47,7 @@ final class Invoice extends Model
         return $this->belongsTo(Project::class);
     }
 
-    public function users(): BelongsToMany
+    public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(User::class);
     }
@@ -98,7 +86,7 @@ final class Invoice extends Model
      */
     public function getTotalPaidAmount(): float
     {
-        return $this->payments()->where('status', Payment::STATUS_COMPLETED)->sum('amount');
+        return $this->payments()->where('status', PaymentStatus::COMPLETED->value)->sum('amount');
     }
 
     /**
@@ -147,13 +135,13 @@ final class Invoice extends Model
     public function updateStatusFromPayment(): string
     {
         if ($this->isFullyPaid()) {
-            $this->status = self::STATUS_PAID;
+            $this->status = InvoiceStatus::PAID->value;
         } elseif ($this->isPartiallyPaid()) {
-            $this->status = self::STATUS_PARTIALLY_PAID;
-        } elseif ($this->status === self::STATUS_DRAFT) {
-            $this->status = self::STATUS_SENT; // Default to sent when not drafted
-        } elseif ($this->status === self::STATUS_SENT && $this->due_date->isPast()) {
-            $this->status = self::STATUS_OVERDUE;
+            $this->status = InvoiceStatus::PARTIALLY_PAID->value;
+        } elseif ($this->status === InvoiceStatus::DRAFT->value) {
+            $this->status = InvoiceStatus::SENT->value;  // Default to sent when not drafted
+        } elseif ($this->status === InvoiceStatus::SENT->value && $this->due_date->isPast()) {
+            $this->status = InvoiceStatus::OVERDUE->value;
         }
 
         $this->save();
@@ -166,7 +154,7 @@ final class Invoice extends Model
      */
     public function getLatestPaymentDate()
     {
-        $latestPayment = $this->payments()->where('status', Payment::STATUS_COMPLETED)->latest('payment_date')->first();
+        $latestPayment = $this->payments()->where('status', PaymentStatus::COMPLETED->value)->latest('payment_date')->first();
 
         return $latestPayment ? $latestPayment->payment_date : null;
     }

@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Enums;
 
@@ -19,5 +17,26 @@ enum ProjectStatus: string
             self::COMPLETED => 'bg-green-500/10 text-green-700 dark:text-green-400',
             self::ON_HOLD => 'bg-red-500/10 text-red-700 dark:text-red-400',
         };
+    }
+
+    public function getLabel(): string
+    {
+        return match ($this) {
+            self::PLANNING => 'Planning',
+            self::IN_PROGRESS => 'In Progress',
+            self::COMPLETED => 'Completed',
+            self::ON_HOLD => 'On Hold',
+        };
+    }
+
+    /**
+     * Get all statuses as array for form selects
+     */
+    public static function toArray(): array
+    {
+        return array_reduce(self::cases(), function ($carry, $case) {
+            $carry[$case->value] = $case->getLabel();
+            return $carry;
+        }, []);
     }
 }

@@ -1,14 +1,12 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Models;
 
 use App\Enums\ExpenseStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 final class Expense extends Model
@@ -77,7 +75,7 @@ final class Expense extends Model
      */
     public function getTotalPaidAmount(): float
     {
-        return $this->payments()->where('status', Payment::STATUS_COMPLETED)->sum('amount');
+        return $this->payments()->where('status', PaymentStatus::COMPLETED->value)->sum('amount');
     }
 
     /**

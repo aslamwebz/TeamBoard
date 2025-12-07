@@ -1,26 +1,17 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\PhaseStatus;
+use App\Enums\TaskStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Model;
 
 final class ProjectPhase extends Model
 {
     use HasFactory;
-
-    // Define phase statuses
-    public const STATUS_NOT_STARTED = 'not_started';
-
-    public const STATUS_IN_PROGRESS = 'in_progress';
-
-    public const STATUS_COMPLETED = 'completed';
-
-    public const STATUS_ON_HOLD = 'on_hold';
 
     protected $fillable = [
         'name',
@@ -63,14 +54,14 @@ final class ProjectPhase extends Model
         if ($tasks->count() === 0) {
             // If no tasks, check if phase has been started based on dates
             if ($this->start_date && $this->start_date->isPast()) {
-                return $this->status === self::STATUS_COMPLETED ? 100 : 0;
+                return $this->status === PhaseStatus::COMPLETED->value ? 100 : 0;
             }
 
             return 0;
         }
 
         $completedTasks = $tasks->filter(function ($task) {
-            return $task->status === Task::STATUS_COMPLETED;
+            return $task->status === TaskStatus::COMPLETED->value;
         });
 
         return (int) round(($completedTasks->count() / $tasks->count()) * 100);
@@ -85,30 +76,29 @@ final class ProjectPhase extends Model
 
         if ($tasks->count() === 0) {
             // If no tasks, determine by dates
-            if ($this->end_date && $this->end_date->isPast() && $this->status !== self::STATUS_COMPLETED) {
-                return self::STATUS_ON_HOLD; // Phase is past due without tasks completed
+            if ($this->end_date && $this->end_date->isPast() && $this->status !== PhaseStatus::COMPLETED->value) {
+                return PhaseStatus::ON_HOLD->value;  // Phase is past due without tasks completed
             }
 
-            return $this->status; // Return current status if no tasks
+            return $this->status;  // Return current status if no tasks
         }
 
         $completedTasks = $tasks->filter(function ($task) {
-            return $task->status === Task::STATUS_COMPLETED;
+            return $task->status === TaskStatus::COMPLETED->value;
         });
 
         if ($completedTasks->count() === $tasks->count()) {
-            return self::STATUS_COMPLETED;
+            return PhaseStatus::COMPLETED->value;
         }
         if ($completedTasks->count() > 0) {
-            return self::STATUS_IN_PROGRESS;
+            return PhaseStatus::IN_PROGRESS->value;
         }
         // If tasks exist but none are completed, check if phase should be in progress based on dates
         if ($this->start_date && $this->start_date->isPast() && $this->end_date && $this->end_date->isFuture()) {
-            return self::STATUS_IN_PROGRESS;
+            return PhaseStatus::IN_PROGRESS->value;
         }
 
-        return self::STATUS_NOT_STARTED;
-
+        return PhaseStatus::NOT_STARTED->value;
     }
 
     /**

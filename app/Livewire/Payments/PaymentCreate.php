@@ -1,14 +1,18 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Livewire\Payments;
 
+use App\Enums\ExpenseStatus;
+use App\Enums\PaymentMethod;
+use App\Enums\PaymentStatus;
 use App\Models\Expense;
 use App\Models\Invoice;
 use App\Models\Payment;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 
+#[Layout('components.layouts.app')]
 final class PaymentCreate extends Component
 {
     public $invoice_id;
@@ -25,7 +29,7 @@ final class PaymentCreate extends Component
 
     public $notes;
 
-    public $status = Payment::STATUS_COMPLETED;
+    public $status = PaymentStatus::COMPLETED->value;
 
     public $currency = 'USD';
 
@@ -40,16 +44,7 @@ final class PaymentCreate extends Component
         $this->payment_date = now()->format('Y-m-d');
         $this->invoices = Invoice::orderBy('invoice_number')->get();
         $this->expenses = Expense::orderBy('title')->get();
-        $this->payment_methods = [
-            Payment::PAYMENT_CASH => 'Cash',
-            Payment::PAYMENT_CREDIT_CARD => 'Credit Card',
-            Payment::PAYMENT_DEBIT_CARD => 'Debit Card',
-            Payment::PAYMENT_BANK_TRANSFER => 'Bank Transfer',
-            Payment::PAYMENT_CHECK => 'Check',
-            Payment::PAYMENT_PAYPAL => 'PayPal',
-            Payment::PAYMENT_STRIPE => 'Stripe',
-            Payment::PAYMENT_OTHER => 'Other',
-        ];
+        $this->payment_methods = PaymentMethod::toArray();
     }
 
     public function save()
@@ -61,7 +56,7 @@ final class PaymentCreate extends Component
         ]);
 
         // Either invoice_id or expense_id must be provided
-        if (! $this->invoice_id && ! $this->expense_id) {
+        if (!$this->invoice_id && !$this->expense_id) {
             $this->addError('invoice_id', 'Either Invoice or Expense must be selected');
             $this->addError('expense_id', 'Either Invoice or Expense must be selected');
 
@@ -86,7 +81,7 @@ final class PaymentCreate extends Component
             if ($payment->isForInvoice() && $payment->invoice) {
                 $payment->invoice->updateStatusFromPayment();
             } elseif ($payment->isForExpense() && $payment->expense) {
-                $payment->expense->update(['status' => Expense::STATUS_PAID]);
+                $payment->expense->update(['status' => ExpenseStatus::PAID->value]);
             }
         }
 
@@ -95,6 +90,6 @@ final class PaymentCreate extends Component
 
     public function render()
     {
-        return view('livewire.payments.payment-create')->layout('components.layouts.app');
+        return view('livewire.payments.payment-create');
     }
 }

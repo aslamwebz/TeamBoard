@@ -1,17 +1,19 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Livewire\Payments;
 
+use App\Enums\PaymentMethod;
+use App\Enums\PaymentStatus;
 use App\Models\Expense;
 use App\Models\Invoice;
 use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+#[Layout('components.layouts.app')]
 final class PaymentIndex extends Component
 {
     use WithPagination;
@@ -47,8 +49,9 @@ final class PaymentIndex extends Component
     {
         $payments = Payment::with(['invoice', 'expense', 'user'])
             ->when($this->search, function (Builder $query) {
-                $query->where('transaction_reference', 'like', '%'.$this->search.'%')
-                    ->orWhere('notes', 'like', '%'.$this->search.'%');
+                $query
+                    ->where('transaction_reference', 'like', '%' . $this->search . '%')
+                    ->orWhere('notes', 'like', '%' . $this->search . '%');
             })
             ->when($this->invoiceId, function (Builder $query) {
                 $query->where('invoice_id', $this->invoiceId);
@@ -77,24 +80,8 @@ final class PaymentIndex extends Component
         $invoices = Invoice::orderBy('invoice_number')->get();
         $expenses = Expense::orderBy('title')->get();
         $users = User::orderBy('name')->get();
-        $statuses = [
-            Payment::STATUS_PENDING => 'Pending',
-            Payment::STATUS_PROCESSING => 'Processing',
-            Payment::STATUS_COMPLETED => 'Completed',
-            Payment::STATUS_FAILED => 'Failed',
-            Payment::STATUS_REFUNDED => 'Refunded',
-            Payment::STATUS_CANCELLED => 'Cancelled',
-        ];
-        $paymentMethods = [
-            Payment::PAYMENT_CASH => 'Cash',
-            Payment::PAYMENT_CREDIT_CARD => 'Credit Card',
-            Payment::PAYMENT_DEBIT_CARD => 'Debit Card',
-            Payment::PAYMENT_BANK_TRANSFER => 'Bank Transfer',
-            Payment::PAYMENT_CHECK => 'Check',
-            Payment::PAYMENT_PAYPAL => 'PayPal',
-            Payment::PAYMENT_STRIPE => 'Stripe',
-            Payment::PAYMENT_OTHER => 'Other',
-        ];
+        $statuses = PaymentStatus::toArray();
+        $paymentMethods = PaymentMethod::toArray();
 
         return view('livewire.payments.payment-index', [
             'payments' => $payments,

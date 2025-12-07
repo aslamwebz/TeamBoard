@@ -1,9 +1,8 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Enums\InvoiceStatus;
 use App\Models\Invoice;
 use App\Models\Notification;
 use Illuminate\Console\Command;
@@ -58,10 +57,11 @@ final class SendPaymentReminders extends Command
     {
         $query = Invoice::where('due_date', '<', now()->subDays($days))
             ->where(function ($query) {
-                $query->where('status', '!=', Invoice::STATUS_PAID)
-                    ->where('status', '!=', Invoice::STATUS_CANCELLED);
+                $query
+                    ->where('status', '!=', InvoiceStatus::PAID->value)
+                    ->where('status', '!=', InvoiceStatus::CANCELLED->value);
             })
-            ->where('status', '!=', Invoice::STATUS_CANCELLED);
+            ->where('status', '!=', InvoiceStatus::CANCELLED->value);
 
         $overdueInvoices = $query->get();
 
@@ -74,7 +74,7 @@ final class SendPaymentReminders extends Command
                 ->where('data->days_overdue', $days)
                 ->exists();
 
-            if (! $reminderExists) {
+            if (!$reminderExists) {
                 // Create notification
                 Notification::create([
                     'notifiable_type' => get_class($invoice->client),
@@ -82,8 +82,8 @@ final class SendPaymentReminders extends Command
                     'type' => 'payment_reminder',
                     'data' => [
                         'type' => 'payment_reminder',
-                        'title' => 'Payment Reminder - Invoice '.$invoice->invoice_number,
-                        'message' => "Invoice {$invoice->invoice_number} is {$days} days overdue. Amount: {$invoice->getDefaultCurrency()} ".number_format($invoice->getRemainingBalance(), 2),
+                        'title' => 'Payment Reminder - Invoice ' . $invoice->invoice_number,
+                        'message' => "Invoice {$invoice->invoice_number} is {$days} days overdue. Amount: {$invoice->getDefaultCurrency()} " . number_format($invoice->getRemainingBalance(), 2),
                         'invoice_id' => $invoice->id,
                         'invoice_number' => $invoice->invoice_number,
                         'amount' => $invoice->getRemainingBalance(),
@@ -105,8 +105,8 @@ final class SendPaymentReminders extends Command
     {
         $query = Invoice::where('due_date', now()->addDays($days))
             ->where('due_date', '>', now())
-            ->where('status', '!=', Invoice::STATUS_PAID)
-            ->where('status', '!=', Invoice::STATUS_CANCELLED);
+            ->where('status', '!=', InvoiceStatus::PAID->value)
+            ->where('status', '!=', InvoiceStatus::CANCELLED->value);
 
         $upcomingInvoices = $query->get();
 
@@ -119,7 +119,7 @@ final class SendPaymentReminders extends Command
                 ->where('data->days_until_due', $days)
                 ->exists();
 
-            if (! $reminderExists) {
+            if (!$reminderExists) {
                 // Create notification
                 Notification::create([
                     'notifiable_type' => get_class($invoice->client),
@@ -127,8 +127,8 @@ final class SendPaymentReminders extends Command
                     'type' => 'payment_reminder',
                     'data' => [
                         'type' => 'payment_reminder',
-                        'title' => 'Upcoming Payment - Invoice '.$invoice->invoice_number,
-                        'message' => "Invoice {$invoice->invoice_number} is due in {$days} days. Amount: {$invoice->getDefaultCurrency()} ".number_format($invoice->getRemainingBalance(), 2),
+                        'title' => 'Upcoming Payment - Invoice ' . $invoice->invoice_number,
+                        'message' => "Invoice {$invoice->invoice_number} is due in {$days} days. Amount: {$invoice->getDefaultCurrency()} " . number_format($invoice->getRemainingBalance(), 2),
                         'invoice_id' => $invoice->id,
                         'invoice_number' => $invoice->invoice_number,
                         'amount' => $invoice->getRemainingBalance(),

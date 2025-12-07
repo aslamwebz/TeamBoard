@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Enums;
 
@@ -46,5 +44,26 @@ enum TaskStatus: string
         return match ($this) {
             self::TODO => 'bg-white text-zinc-800 dark:text-zinc-300',
         };
+    }
+
+    public function getLabel(): string
+    {
+        return match ($this) {
+            self::TODO => 'To Do',
+            self::IN_PROGRESS => 'In Progress',
+            self::COMPLETED => 'Completed',
+            self::ON_HOLD => 'On Hold',
+        };
+    }
+
+    /**
+     * Get all statuses as array for form selects
+     */
+    public static function toArray(): array
+    {
+        return array_reduce(self::cases(), function ($carry, $case) {
+            $carry[$case->value] = $case->getLabel();
+            return $carry;
+        }, []);
     }
 }
