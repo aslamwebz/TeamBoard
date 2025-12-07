@@ -9,6 +9,7 @@ use App\Models\Project;
 use App\Models\Task;
 use App\Services\ActivityService;
 use App\Services\FileUploadService;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -40,7 +41,7 @@ final class DiscussionCreate extends Component
         'content' => 'required|string',
         'type' => 'required|in:project,task,client',
         'typeId' => 'required|integer',
-        'attachments.*' => 'nullable|file|max:10240', // Max 10MB
+        'attachments.*' => 'nullable|file|max:10240',  // Max 10MB
     ];
 
     public function mount()
@@ -89,18 +90,18 @@ final class DiscussionCreate extends Component
         return redirect()->route('discussions.show', $discussion);
     }
 
-    public function updatedAttachments()
+    public function updatedAttachments(): void
     {
         // Validate each attachment as it's added
         $this->validateOnly('attachments.*');
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.discussions.discussion-create');
     }
 
-    private function processAttachment($file, $discussionId, $commentId = null)
+    private function processAttachment($file, $discussionId, $commentId = null): void
     {
         $fileUploadService = new FileUploadService();
         $fileUploadService->upload($file, Auth::id(), $discussionId, $commentId);

@@ -6,10 +6,15 @@ namespace App\Livewire\Expenses;
 
 use App\Models\Expense;
 use App\Models\ExpenseAttachment;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Storage;
 
+#[Layout('components.layouts.app')]
+#[Title('Expense Attachments')]
 final class ExpenseAttachments extends Component
 {
     use WithFileUploads;
@@ -20,12 +25,12 @@ final class ExpenseAttachments extends Component
 
     public $newAttachment;
 
-    public function mount(Expense $expense)
+    public function mount(Expense $expense): void
     {
         $this->expense = $expense;
     }
 
-    public function addAttachment()
+    public function addAttachment(): void
     {
         $this->validate([
             'newAttachment' => 'required|file|max:10240', // Max 10MB
@@ -48,7 +53,7 @@ final class ExpenseAttachments extends Component
         $this->dispatch('attachment-added');
     }
 
-    public function deleteAttachment($attachmentId)
+    public function deleteAttachment($attachmentId): void
     {
         $attachment = ExpenseAttachment::find($attachmentId);
         if ($attachment && $attachment->expense_id === $this->expense->id) {
@@ -60,12 +65,15 @@ final class ExpenseAttachments extends Component
         }
     }
 
-    public function render()
+    public function render(): View
     {
-        $attachments = $this->expense->attachments()->orderBy('created_at', 'desc')->get();
+        $attachments = $this->expense
+            ->attachments()
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return view('livewire.expenses.expense-attachments', [
             'attachments' => $attachments,
-        ])->layout('components.layouts.app');
+        ]);
     }
 }

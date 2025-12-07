@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Livewire\Clients;
 
@@ -196,7 +198,7 @@ final class ClientShow extends Component
 
         return [
             'taskCount' => $taskCount,
-            'completedTaskCount' => $completedTaskCount
+            'completedTaskCount' => $completedTaskCount,
         ];
     }
 
@@ -225,7 +227,7 @@ final class ClientShow extends Component
             'completedProjects' => $completedProjects,
             'totalTasks' => $totalTasks,
             'completedTasks' => $completedTaskProjects,  // Note: This logic might be different based on requirement
-            'inProgressTasks' => $inProgressTaskProjects  // Note: This logic might be different based on requirement
+            'inProgressTasks' => $inProgressTaskProjects,  // Note: This logic might be different based on requirement
         ];
     }
 

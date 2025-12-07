@@ -1,10 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Livewire\Contacts;
 
 use App\Models\Contact;
 use Illuminate\Contracts\View\View;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 final class ContactEdit extends Component
@@ -34,14 +35,14 @@ final class ContactEdit extends Component
         $this->contact = Contact::find($contact->id);
 
         // Ensure communication_preferences is initialized as array
-        if (!isset($this->contact->communication_preferences) || is_null($this->contact->communication_preferences)) {
+        if (! isset($this->contact->communication_preferences) || is_null($this->contact->communication_preferences)) {
             $this->contact->communication_preferences = [];
         }
     }
 
     public function save(): void
     {
-        $this->rules['contact.email'] = 'required|email|max:255|unique:contacts,email,' . $this->contact->id;
+        $this->rules['contact.email'] = 'required|email|max:255|unique:contacts,email,'.$this->contact->id;
         $validated = $this->validate();
 
         // If setting as primary, unset the current primary contact for this client
@@ -54,7 +55,7 @@ final class ContactEdit extends Component
         // If this is the primary contact, update the client record
         if ($validated['contact']['is_primary']) {
             $this->contact->client->update(['primary_contact_id' => $this->contact->id]);
-        } elseif ($this->contact->is_primary && !$validated['contact']['is_primary']) {
+        } elseif ($this->contact->is_primary && ! $validated['contact']['is_primary']) {
             // If this was the primary contact and is no longer primary, clear the client's primary contact
             if ($this->contact->client->primary_contact_id === $this->contact->id) {
                 $this->contact->client->update(['primary_contact_id' => null]);

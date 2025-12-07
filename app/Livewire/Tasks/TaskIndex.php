@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Livewire\Tasks;
 
@@ -68,7 +70,7 @@ final class TaskIndex extends Component
         $query = Task::query();
 
         if ($this->search) {
-            $query->where('title', 'like', '%' . $this->search . '%');
+            $query->where('title', 'like', '%'.$this->search.'%');
         }
 
         if ($this->statusFilter) {
@@ -177,7 +179,7 @@ final class TaskIndex extends Component
         $query = Task::query();
 
         if ($this->search) {
-            $query->where('title', 'like', '%' . $this->search . '%');
+            $query->where('title', 'like', '%'.$this->search.'%');
         }
 
         if ($this->statusFilter) {

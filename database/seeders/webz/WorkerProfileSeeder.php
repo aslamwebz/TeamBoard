@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Database\Seeders\webz;
 
@@ -24,7 +26,7 @@ final class WorkerProfileSeeder extends Seeder
         foreach ($users as $user) {
             WorkerProfile::factory()->create([
                 'user_id' => $user->id,
-                'employee_id' => 'EMP000-' . $user->id,
+                'employee_id' => 'EMP000-'.$user->id,
             ]);
         }
     }

@@ -1,16 +1,18 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Livewire\Contacts;
 
 use App\Models\Client;
 use App\Models\Contact;
 use Illuminate\Contracts\View\View;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 final class ContactCreate extends Component
 {
     public Client $client;
+
     public Contact $contact;
 
     protected $rules = [

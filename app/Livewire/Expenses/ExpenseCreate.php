@@ -4,37 +4,24 @@ declare(strict_types=1);
 
 namespace App\Livewire\Expenses;
 
+use App\Enums\ExpenseStatus;
+use App\Enums\PaymentMethod;
 use App\Models\Expense;
 use App\Models\ExpenseCategory;
 use App\Models\Project;
 use App\Models\Vendor;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
+#[Layout('components.layouts.app')]
+#[Title('Expense Create')]
 final class ExpenseCreate extends Component
 {
-    public $title;
-
-    public $description;
-
-    public $amount;
-
-    public $currency = 'USD';
-
-    public $expense_date;
-
-    public $expense_category_id;
-
-    public $project_id;
-
-    public $vendor_id;
-
-    public $payment_method;
-
-    public $notes;
-
-    public $receipt_path;
-
-    public $status = Expense::STATUS_PENDING;
+    public Expense $expense;
 
     public $projects;
 
@@ -44,56 +31,49 @@ final class ExpenseCreate extends Component
 
     public $payment_methods;
 
-    public function mount()
+    public $statuses;
+
+    public function rules(): array
     {
-        $this->expense_date = now()->format('Y-m-d');
-        $this->projects = Project::orderBy('name')->get();
-        $this->categories = ExpenseCategory::active()->orderBy('name')->get();
-        $this->vendors = Vendor::orderBy('name')->get();
-        $this->payment_methods = [
-            Expense::PAYMENT_CASH => 'Cash',
-            Expense::PAYMENT_CREDIT_CARD => 'Credit Card',
-            Expense::PAYMENT_DEBIT_CARD => 'Debit Card',
-            Expense::PAYMENT_BANK_TRANSFER => 'Bank Transfer',
-            Expense::PAYMENT_CHECK => 'Check',
-            Expense::PAYMENT_PAYPAL => 'PayPal',
-            Expense::PAYMENT_OTHER => 'Other',
+        return [
+            'expense.title' => 'required|string|max:255',
+            'expense.amount' => 'required|numeric|min:0.01',
+            'expense.expense_date' => 'required|date',
+            'expense.expense_category_id' => 'nullable|exists:expense_categories,id',
+            'expense.project_id' => 'nullable|exists:projects,id',
+            'expense.vendor_id' => 'nullable|exists:vendors,id',
+            'expense.payment_method' => 'nullable|in:'.implode(',', array_keys(PaymentMethod::toArray())),
+            'expense.status' => 'required|in:'.implode(',', array_keys(ExpenseStatus::toArray())),
         ];
     }
 
-    public function save()
+    public function mount(): void
     {
-        $this->validate([
-            'title' => 'required|string|max:255',
-            'amount' => 'required|numeric|min:0.01',
-            'expense_date' => 'required|date',
-            'expense_category_id' => 'nullable|exists:expense_categories,id',
-            'project_id' => 'nullable|exists:projects,id',
-            'vendor_id' => 'nullable|exists:vendors,id',
-            'payment_method' => 'nullable|string|max:255',
+        $this->expense = new Expense([
+            'currency' => 'USD',
+            'expense_date' => now()->format('Y-m-d'),
+            'status' => ExpenseStatus::PENDING->value,
         ]);
 
-        $expense = Expense::create([
-            'title' => $this->title,
-            'description' => $this->description,
-            'amount' => $this->amount,
-            'currency' => $this->currency,
-            'expense_date' => $this->expense_date,
-            'expense_category_id' => $this->expense_category_id,
-            'project_id' => $this->project_id,
-            'vendor_id' => $this->vendor_id,
-            'payment_method' => $this->payment_method,
-            'notes' => $this->notes,
-            'receipt_path' => $this->receipt_path,
-            'status' => $this->status,
-            'user_id' => auth()->id(),
-        ]);
-
-        return redirect()->route('expenses.show', $expense);
+        $this->projects = Project::orderBy('name')->get();
+        $this->categories = ExpenseCategory::active()->orderBy('name')->get();
+        $this->vendors = Vendor::orderBy('name')->get();
+        $this->payment_methods = PaymentMethod::toArray();
+        $this->statuses = ExpenseStatus::toArray();
     }
 
-    public function render()
+    public function save(): RedirectResponse
     {
-        return view('livewire.expenses.expense-create')->layout('components.layouts.app');
+        $this->validate($this->rules());
+
+        $this->expense->user_id = Auth::id();
+        $this->expense->save();
+
+        return redirect()->route('expenses.show', $this->expense);
+    }
+
+    public function render(): View
+    {
+        return view('livewire.expenses.expense-create');
     }
 }

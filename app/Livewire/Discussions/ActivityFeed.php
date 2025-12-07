@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire\Discussions;
 
 use App\Models\ActivityLog;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -19,13 +20,13 @@ final class ActivityFeed extends Component
 
     public $typeId = null;
 
-    public function mount($type = null, $typeId = null)
+    public function mount($type = null, $typeId = null): void
     {
         $this->type = $type;
         $this->typeId = $typeId;
     }
 
-    public function render()
+    public function render(): View
     {
         $query = ActivityLog::with(['user']);
 

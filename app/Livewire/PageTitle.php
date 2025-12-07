@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire;
 
 use Livewire\Component;
 
-class PageTitle extends Component
+final class PageTitle extends Component
 {
     public string $title = '';
+
     public string $icon = '';
 
     protected $listeners = ['pageTitleUpdated' => 'updateTitle'];
@@ -115,7 +118,7 @@ class PageTitle extends Component
         }
 
         // Set default title if no match found
-        if (!$this->title) {
+        if (! $this->title) {
             $this->title = 'Dashboard';
             $this->icon = 'chart-bar';
         }

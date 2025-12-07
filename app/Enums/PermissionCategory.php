@@ -26,7 +26,7 @@ enum PermissionCategory: string
 
     public static function getCategoryForPermission(string $permissionName): self
     {
-        $permissionName = strtolower($permissionName);
+        $permissionName = mb_strtolower($permissionName);
 
         foreach (self::cases() as $category) {
             if ($category === self::OTHER) {

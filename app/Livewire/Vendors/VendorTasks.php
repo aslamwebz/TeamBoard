@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Livewire\Vendors;
 
@@ -37,9 +39,9 @@ final class VendorTasks extends Component
 
         if ($this->search) {
             $query
-                ->where('title', 'like', '%' . $this->search . '%')
+                ->where('title', 'like', '%'.$this->search.'%')
                 ->orWhereHas('project', function ($q) {
-                    $q->where('name', 'like', '%' . $this->search . '%');
+                    $q->where('name', 'like', '%'.$this->search.'%');
                 });
         }
 

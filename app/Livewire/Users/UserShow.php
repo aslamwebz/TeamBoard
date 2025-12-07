@@ -42,7 +42,7 @@ final class UserShow extends Component
         foreach ($userPermissions as $permission) {
             $category = \App\Enums\PermissionCategory::getCategoryForPermission($permission->name)->value;
 
-            if (!isset($groupedPermissions[$category])) {
+            if (! isset($groupedPermissions[$category])) {
                 $groupedPermissions[$category] = [];
             }
             $groupedPermissions[$category][] = $permission;

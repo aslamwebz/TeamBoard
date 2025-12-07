@@ -18,6 +18,7 @@ final class Attachments extends Component
     public Client $client;
 
     public $attachments;
+
     public $attachmentsCount = 0;
 
     public $uploadForm = false;

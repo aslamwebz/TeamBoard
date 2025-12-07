@@ -22,7 +22,9 @@ final class TeamShow extends Component
     use ModalTrait;
 
     public Team $team;
+
     public $recentTasks = [];
+
     public array $statusColors = [];
 
     public $showAssignMemberModal = false;

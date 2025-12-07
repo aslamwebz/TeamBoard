@@ -23,7 +23,7 @@ final class UserSeeder extends Seeder
         ]);
 
         $user->assignRole('admin');
-        
+
         // Create random users using factory
         User::factory()->count(10)->create();
     }

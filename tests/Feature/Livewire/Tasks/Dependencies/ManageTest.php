@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 use Livewire\Livewire;
 
 test('can instantiate task dependencies component', function () {
     $this->actingAs($this->user);
-    Livewire::test(\App\Livewire\Tasks\Dependencies\Manage::class)
+    Livewire::test(App\Livewire\Tasks\Dependencies\Manage::class)
         ->assertStatus(200);
 });

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Livewire\Vendors;
 
@@ -18,7 +20,7 @@ final class VendorShow extends Component
             'services',
             'invoices',
             'projects',
-            'tasks'
+            'tasks',
         ]);
     }
 

@@ -14,6 +14,7 @@ use Livewire\Component;
 final class PhaseShow extends Component
 {
     public ProjectPhase $phase;
+
     public array $statusColors = [];
 
     public function mount(ProjectPhase $phase)

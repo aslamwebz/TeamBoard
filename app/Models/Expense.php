@@ -4,41 +4,16 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\ExpenseStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Storage;
+use Illuminate\Support\Facades\Storage;
 
 final class Expense extends Model
 {
     use HasFactory;
-
-    // Expense statuses
-    public const STATUS_PENDING = 'pending';
-
-    public const STATUS_APPROVED = 'approved';
-
-    public const STATUS_REJECTED = 'rejected';
-
-    public const STATUS_PAID = 'paid';
-
-    public const STATUS_CANCELLED = 'cancelled';
-
-    // Payment methods
-    public const PAYMENT_CASH = 'cash';
-
-    public const PAYMENT_CREDIT_CARD = 'credit_card';
-
-    public const PAYMENT_DEBIT_CARD = 'debit_card';
-
-    public const PAYMENT_BANK_TRANSFER = 'bank_transfer';
-
-    public const PAYMENT_CHECK = 'check';
-
-    public const PAYMENT_PAYPAL = 'paypal';
-
-    public const PAYMENT_OTHER = 'other';
 
     protected $fillable = [
         'name',
@@ -126,7 +101,7 @@ final class Expense extends Model
      */
     public function isPendingApproval(): bool
     {
-        return $this->status === self::STATUS_PENDING;
+        return $this->status === ExpenseStatus::PENDING->value;
     }
 
     /**
@@ -134,7 +109,7 @@ final class Expense extends Model
      */
     public function isApproved(): bool
     {
-        return $this->status === self::STATUS_APPROVED || $this->status === self::STATUS_PAID;
+        return $this->status === ExpenseStatus::APPROVED->value || $this->status === ExpenseStatus::PAID->value;
     }
 
     /**

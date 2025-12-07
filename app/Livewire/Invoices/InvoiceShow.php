@@ -23,18 +23,6 @@ final class InvoiceShow extends Component
         $this->updateClientAddressString();
     }
 
-    protected function updateClientAddressString(): void
-    {
-        $address = $this->invoice->client->address;
-        $city = $this->invoice->client->city;
-        $state = $this->invoice->client->state;
-        $zipCode = $this->invoice->client->zip_code;
-        $country = $this->invoice->client->country;
-
-        $addressParts = array_filter([$address, $city, $state, $zipCode, $country]);
-        $this->clientAddressString = implode(', ', $addressParts);
-    }
-
     public function render(): \Illuminate\Contracts\View\View
     {
         return view('livewire.invoices.invoice-show');
@@ -48,5 +36,17 @@ final class InvoiceShow extends Component
         }
 
         return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
+    }
+
+    protected function updateClientAddressString(): void
+    {
+        $address = $this->invoice->client->address;
+        $city = $this->invoice->client->city;
+        $state = $this->invoice->client->state;
+        $zipCode = $this->invoice->client->zip_code;
+        $country = $this->invoice->client->country;
+
+        $addressParts = array_filter([$address, $city, $state, $zipCode, $country]);
+        $this->clientAddressString = implode(', ', $addressParts);
     }
 }

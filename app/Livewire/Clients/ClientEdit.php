@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Livewire\Clients;
 
@@ -15,6 +17,7 @@ use Livewire\Component;
 final class ClientEdit extends Component
 {
     public Client $client;
+
     public $clientId;
 
     #[Validate('required|string|max:255')]
@@ -108,8 +111,8 @@ final class ClientEdit extends Component
     public function updateClient(): RedirectResponse
     {
         $this->validate([
-            'company_name' => 'required|string|max:255|unique:clients,company_name,' . $this->clientId,
-            'email' => 'required|email|unique:clients,email,' . $this->clientId,
+            'company_name' => 'required|string|max:255|unique:clients,company_name,'.$this->clientId,
+            'email' => 'required|email|unique:clients,email,'.$this->clientId,
         ]);
 
         $this->client->update([

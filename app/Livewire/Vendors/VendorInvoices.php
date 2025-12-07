@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Livewire\Vendors;
 
@@ -38,7 +40,7 @@ final class VendorInvoices extends Component
         $query = VendorInvoice::where('vendor_id', $this->vendorId);
 
         if ($this->search) {
-            $query->where('invoice_number', 'like', '%' . $this->search . '%');
+            $query->where('invoice_number', 'like', '%'.$this->search.'%');
         }
 
         if ($this->status) {

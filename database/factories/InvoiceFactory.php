@@ -22,7 +22,7 @@ final class InvoiceFactory extends Factory
         return [
             'client_id' => Client::factory(),
             'project_id' => fake()->optional(0.7)->numberBetween(1, 10), // 70% chance of having a project
-            'invoice_number' => 'INV-'. mb_str_pad((string) fake()->unique()->numberBetween(1, 9999), 4, '0', STR_PAD_LEFT),
+            'invoice_number' => 'INV-'.mb_str_pad((string) fake()->unique()->numberBetween(1, 9999), 4, '0', STR_PAD_LEFT),
             'issue_date' => fake()->dateTimeBetween('-1 year', 'now')->format('Y-m-d'),
             'due_date' => fake()->dateTimeBetween('now', '+60 days')->format('Y-m-d'),
             'amount' => $amount,

@@ -51,11 +51,11 @@ final class FilePreview extends Component
 
     public function getFilePreviewData($file)
     {
-        if (!$file) {
+        if (! $file) {
             return [];
         }
 
-        $filePath = 'discussions/' . $file->filename;
+        $filePath = 'discussions/'.$file->filename;
         $fileUrl = $file->getUrl();
         $fileName = $file->original_name;
         $type = \Illuminate\Support\Facades\Storage::disk('public')->mimeType($filePath);
@@ -64,7 +64,7 @@ final class FilePreview extends Component
         $size = \Illuminate\Support\Facades\Storage::disk('public')->size($filePath);
         $base = log($size) / log(1024);
         $suffixes = [' bytes', ' KB', ' MB', ' GB', ' TB'];
-        $fileSizeFormatted = round(pow(1024, $base - floor($base)), 2) . $suffixes[floor($base)];
+        $fileSizeFormatted = round(pow(1024, $base - floor($base)), 2).$suffixes[floor($base)];
 
         // Set icon based on file type
         $iconClass = 'fa-solid fa-file';

@@ -29,24 +29,6 @@ final class ContactIndex extends Component
         $this->client = $client;
     }
 
-    public function render(): View
-    {
-        $contacts = $this->client->contacts()
-            ->where(function ($query) {
-                $query->where('first_name', 'like', '%'.$this->search.'%')
-                    ->orWhere('last_name', 'like', '%'.$this->search.'%')
-                    ->orWhere('email', 'like', '%'.$this->search.'%')
-                    ->orWhere('position', 'like', '%'.$this->search.'%');
-            })
-            ->orderBy('is_primary', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
-
-        return view('livewire.contacts.contact-index', [
-            'contacts' => $contacts,
-        ]);
-    }
-
     public function deleteContact($id): void
     {
         $this->contactToDeleteId = $id;
@@ -88,5 +70,23 @@ final class ContactIndex extends Component
 
         // Update client's primary contact
         $this->client->update(['primary_contact_id' => $contactId]);
+    }
+
+    public function render(): View
+    {
+        $contacts = $this->client->contacts()
+            ->where(function ($query) {
+                $query->where('first_name', 'like', '%'.$this->search.'%')
+                    ->orWhere('last_name', 'like', '%'.$this->search.'%')
+                    ->orWhere('email', 'like', '%'.$this->search.'%')
+                    ->orWhere('position', 'like', '%'.$this->search.'%');
+            })
+            ->orderBy('is_primary', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return view('livewire.contacts.contact-index', [
+            'contacts' => $contacts,
+        ]);
     }
 }

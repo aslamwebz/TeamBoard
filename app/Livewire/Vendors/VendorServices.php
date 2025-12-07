@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Livewire\Vendors;
 
@@ -37,8 +39,8 @@ final class VendorServices extends Component
 
         if ($this->search) {
             $query
-                ->where('name', 'like', '%' . $this->search . '%')
-                ->orWhere('category', 'like', '%' . $this->search . '%');
+                ->where('name', 'like', '%'.$this->search.'%')
+                ->orWhere('category', 'like', '%'.$this->search.'%');
         }
 
         $services = $query->orderBy('name')->paginate($this->perPage);

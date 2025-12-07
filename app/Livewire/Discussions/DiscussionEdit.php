@@ -8,6 +8,8 @@ use App\Models\Discussion;
 use App\Models\Project;
 use App\Models\ProjectPhase;
 use App\Models\User;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -49,7 +51,7 @@ final class DiscussionEdit extends Component
         'attachments.*' => 'nullable|file|max:10240', // Max 10MB
     ];
 
-    public function mount(Discussion $discussion)
+    public function mount(Discussion $discussion): void
     {
         $this->discussion = $discussion->load(['project', 'user', 'phase', 'attachments']);
         $this->title = $discussion->title;
@@ -68,9 +70,9 @@ final class DiscussionEdit extends Component
         $this->users = User::all();
     }
 
-    public function updateDiscussion()
+    public function updateDiscussion(): RedirectResponse
     {
-        $validatedData = $this->validate();
+        $this->validate();
 
         $this->discussion->update([
             'title' => $this->title,
@@ -91,7 +93,7 @@ final class DiscussionEdit extends Component
         return redirect()->route('discussions.show', $this->discussion);
     }
 
-    public function updatedTypeId()
+    public function updatedTypeId(): void
     {
         // When type ID changes (e.g., project changes), reload phases
         if ($this->type === 'project' && $this->typeId) {
@@ -100,7 +102,7 @@ final class DiscussionEdit extends Component
         }
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.discussions.discussion-edit');
     }

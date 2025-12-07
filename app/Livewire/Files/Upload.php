@@ -71,11 +71,25 @@ final class Upload extends Component
                 'projectId' => 'nullable|integer',
             ]);
 
-            // Validate files only if they exist to avoid temporary file issues
+            // Validate files with proper error handling for temporary files
             if (! empty($this->files)) {
-                $this->validate([
-                    'files.*' => 'file|max:10240|mimes:jpeg,png,gif,webp,svg,pdf,doc,docx,xls,xlsx,ppt,pptx,txt,csv,zip,rar,7z',
-                ]);
+                try {
+                    $this->validate([
+                        'files.*' => 'file|max:10240|mimes:jpeg,png,gif,webp,svg,pdf,doc,docx,xls,xlsx,ppt,pptx,txt,csv,zip,rar,7z',
+                    ]);
+                } catch (\Illuminate\Validation\ValidationException $e) {
+                    // Filter out any temporary file validation errors
+                    $filteredErrors = collect($e->errors())->filter(function ($error, $key) {
+                        return ! str_contains($key, 'files.') || ! str_contains(implode(' ', $error), 'tmp');
+                    });
+
+                    if ($filteredErrors->isNotEmpty()) {
+                        throw new \Illuminate\Validation\ValidationException(
+                            $e->validator,
+                            $filteredErrors->toArray()
+                        );
+                    }
+                }
             }
 
             if (empty($this->files)) {
@@ -234,8 +248,22 @@ final class Upload extends Component
 
     public function updatedFiles(): void
     {
-        // Don't validate files immediately to prevent temporary file metadata issues
-        // Validation will happen during upload
+        // Validate files only when they are fully uploaded, not during temporary state
+        if (! empty($this->files)) {
+            // Clear any previous file-related validation errors
+            $this->resetValidation(['files.*']);
+
+            // Only validate if files are not in temporary state
+            $validFiles = collect($this->files)->filter(function ($file) {
+                return ! str_contains($file->getRealPath(), 'tmp') && $file->isValid();
+            });
+
+            if ($validFiles->isNotEmpty()) {
+                $this->validate([
+                    'files.*' => 'file|max:10240|mimes:jpeg,png,gif,webp,svg,pdf,doc,docx,xls,xlsx,ppt,pptx,txt,csv,zip,rar,7z',
+                ]);
+            }
+        }
     }
 
     protected function loadData(): void

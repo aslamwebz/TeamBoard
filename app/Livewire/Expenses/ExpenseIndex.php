@@ -1,17 +1,22 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Livewire\Expenses;
 
+use App\Enums\ExpenseStatus;
 use App\Models\Expense;
 use App\Models\ExpenseCategory;
 use App\Models\Project;
 use App\Models\Vendor;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+#[Layout('components.layouts.app')]
+#[Title('Expense Index')]
 final class ExpenseIndex extends Component
 {
     use WithPagination;
@@ -40,12 +45,58 @@ final class ExpenseIndex extends Component
         'dateTo' => ['except' => ''],
     ];
 
-    public function render()
+    public function deleteExpense(int $expenseId): void
+    {
+        $expense = Expense::find($expenseId);
+        if ($expense) {
+            $expense->delete();
+            $this->dispatch('expense-deleted');
+        }
+    }
+
+    public function approveExpense(int $expenseId): void
+    {
+        $expense = Expense::find($expenseId);
+        if ($expense && Auth::user()->can('approve_expense', $expense)) {
+            $expense->update([
+                'status' => ExpenseStatus::APPROVED->value,
+                'approver_id' => Auth::id(),
+                'approved_at' => now(),
+            ]);
+            $this->dispatch('expense-approved');
+        }
+    }
+
+    public function rejectExpense(int $expenseId): void
+    {
+        $expense = Expense::find($expenseId);
+        if ($expense && Auth::user()->can('approve_expense', $expense)) {
+            $expense->update([
+                'status' => ExpenseStatus::REJECTED->value,
+                'approver_id' => Auth::id(),
+                'approved_at' => now(),
+            ]);
+            $this->dispatch('expense-rejected');
+        }
+    }
+
+    public function getStatusBadgeClass(string $status): string
+    {
+        $expenseStatus = ExpenseStatus::tryFrom($status);
+        if ($expenseStatus) {
+            return $expenseStatus->getColorClass();
+        }
+
+        return 'bg-gray-100 text-gray-800';
+    }
+
+    public function render(): View
     {
         $expenses = Expense::with(['category', 'project', 'vendor', 'user'])
             ->when($this->search, function (Builder $query) {
-                $query->where('title', 'like', '%'.$this->search.'%')
-                    ->orWhere('description', 'like', '%'.$this->search.'%');
+                $query
+                    ->where('title', 'like', '%' . $this->search . '%')
+                    ->orWhere('description', 'like', '%' . $this->search . '%');
             })
             ->when($this->projectId, function (Builder $query) {
                 $query->where('project_id', $this->projectId);
@@ -71,13 +122,7 @@ final class ExpenseIndex extends Component
         $projects = Project::orderBy('name')->get();
         $categories = ExpenseCategory::active()->orderBy('name')->get();
         $vendors = Vendor::orderBy('name')->get();
-        $statuses = [
-            Expense::STATUS_PENDING => 'Pending',
-            Expense::STATUS_APPROVED => 'Approved',
-            Expense::STATUS_REJECTED => 'Rejected',
-            Expense::STATUS_PAID => 'Paid',
-            Expense::STATUS_CANCELLED => 'Cancelled',
-        ];
+        $statuses = ExpenseStatus::toArray();
 
         return view('livewire.expenses.expense-index', [
             'expenses' => $expenses,
@@ -85,51 +130,6 @@ final class ExpenseIndex extends Component
             'categories' => $categories,
             'vendors' => $vendors,
             'statuses' => $statuses,
-        ])->layout('components.layouts.app');
-    }
-
-    public function deleteExpense($expenseId)
-    {
-        $expense = Expense::find($expenseId);
-        if ($expense) {
-            $expense->delete();
-            $this->dispatch('expense-deleted');
-        }
-    }
-
-    public function approveExpense($expenseId)
-    {
-        $expense = Expense::find($expenseId);
-        if ($expense && auth()->user()->can('approve_expense', $expense)) {
-            $expense->update([
-                'status' => Expense::STATUS_APPROVED,
-                'approver_id' => auth()->id(),
-                'approved_at' => now(),
-            ]);
-            $this->dispatch('expense-approved');
-        }
-    }
-
-    public function rejectExpense($expenseId)
-    {
-        $expense = Expense::find($expenseId);
-        if ($expense && auth()->user()->can('approve_expense', $expense)) {
-            $expense->update([
-                'status' => Expense::STATUS_REJECTED,
-                'approver_id' => auth()->id(),
-                'approved_at' => now(),
-            ]);
-            $this->dispatch('expense-rejected');
-        }
-    }
-
-    public function getStatusBadgeClass(string $status): string
-    {
-        $expenseStatus = \App\Enums\ExpenseStatus::tryFrom($status);
-        if ($expenseStatus) {
-            return $expenseStatus->getColorClass();
-        }
-
-        return 'bg-gray-100 text-gray-800';
+        ]);
     }
 }

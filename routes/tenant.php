@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 use App\Livewire\Auth\ResetPassword;
 use App\Livewire\Billing\BillingIndex;
@@ -7,6 +9,7 @@ use App\Livewire\Clients\ClientCreate;
 use App\Livewire\Clients\ClientEdit;
 use App\Livewire\Clients\ClientIndex;
 use App\Livewire\Clients\ClientShow;
+use App\Livewire\Dashboard;
 use App\Livewire\Expenses\ExpenseApprovals;
 use App\Livewire\Expenses\ExpenseAttachments;
 use App\Livewire\Expenses\ExpenseCreate;
@@ -64,7 +67,6 @@ use App\Livewire\Workers\WorkerEdit;
 use App\Livewire\Workers\WorkerIndex;
 use App\Livewire\Workers\WorkerShow;
 use App\Livewire\Workers\WorkerSkills;
-use App\Livewire\Dashboard;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -261,7 +263,7 @@ Route::middleware([
         ->name('notifications.index')
         ->middleware(['auth']);
 
-    require __DIR__ . '/auth.php';
+    require __DIR__.'/auth.php';
 });
 
 Route::get('reset-password/{token}', ResetPassword::class)->name('password.reset');

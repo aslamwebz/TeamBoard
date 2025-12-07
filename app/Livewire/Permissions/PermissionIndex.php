@@ -72,10 +72,10 @@ final class PermissionIndex extends Component
         // Group all permissions first
         $allGroupedPermissions = $allPermissions->groupBy(function ($permission) {
             // Standard CRUD permissions are typically in format: action model (e.g., 'view users', 'create projects')
-            $parts = explode(' ', $permission->name, 2); // Limit to 2 parts to avoid breaking on multi-word descriptions
+            $parts = explode(' ', $permission->name, 2);  // Limit to 2 parts to avoid breaking on multi-word descriptions
 
             if (count($parts) === 2) {
-                $action = $parts[0]; // First part is the action (view, create, edit, delete)
+                $action = $parts[0];  // First part is the action (view, create, edit, delete)
                 $model = $parts[1];  // Second part is the model
 
                 // Only group standard CRUD actions with known models
@@ -92,8 +92,8 @@ final class PermissionIndex extends Component
         });
 
         // Now implement manual pagination for groups, fitting as many complete groups as possible within $this->perPage limit
-        $currentPage = $this->page; // Use the public property
-        $maxItemsPerPage = $this->perPage; // This is now the maximum number of individual permissions per page
+        $currentPage = $this->page;  // Use the public property
+        $maxItemsPerPage = $this->perPage;  // This is now the maximum number of individual permissions per page
 
         $groupKeys = $allGroupedPermissions->keys()->values();
         $totalGroups = $groupKeys->count();
@@ -113,14 +113,14 @@ final class PermissionIndex extends Component
 
                 // If adding this group would exceed the limit and we've added some items already, start new page
                 if ($skippedCount > 0 && ($skippedCount + $groupSize) > $maxItemsPerPage) {
-                    break; // Start next page
+                    break;  // Start next page
                 }
 
                 $skippedCount += $groupSize;
                 $groupIndex++;
 
                 if ($skippedCount >= $maxItemsPerPage) {
-                    break; // Start next page
+                    break;  // Start next page
                 }
             }
         }
@@ -133,7 +133,7 @@ final class PermissionIndex extends Component
 
             // If adding this group would exceed the limit and we've already added some items, go to next page
             if ($itemCount > 0 && ($itemCount + $groupSize) > $maxItemsPerPage) {
-                break; // This group will go on the next page
+                break;  // This group will go on the next page
             }
 
             if ($itemCount + $groupSize <= $maxItemsPerPage) {
@@ -141,38 +141,36 @@ final class PermissionIndex extends Component
                 $itemCount += $groupSize;
                 $groupIndex++;
             } else {
-                break; // Cannot fit this group in current page
+                break;  // Cannot fit this group in current page
             }
         }
 
         // Calculate total pages based on grouped data
         $allGroupKeys = $allGroupedPermissions->keys()->values();
         $totalPages = 1;
-        $tempIndex = 0;
-        $calculatePage = 1;
-        $tempItemCount = 0;
+        $currentIndex = 0;
+        $currentPageItems = 0;
 
-        while ($tempIndex < $allGroupKeys->count()) {
-            $tempGroup = $allGroupedPermissions->get($allGroupKeys[$tempIndex]);
-            $tempGroupSize = $tempGroup->count();
+        while ($currentIndex < $allGroupKeys->count()) {
+            $group = $allGroupedPermissions->get($allGroupKeys[$currentIndex]);
+            $groupSize = $group->count();
 
-            if ($tempItemCount > 0 && ($tempItemCount + $tempGroupSize) > $maxItemsPerPage) {
+            if ($currentPageItems > 0 && ($currentPageItems + $groupSize) > $maxItemsPerPage) {
                 // Need to start a new page
-                $calculatePage++;
-                $tempItemCount = $tempGroupSize; // Start new page with current group
-                $tempIndex++;
-            } elseif ($tempItemCount + $tempGroupSize <= $maxItemsPerPage) {
+                $totalPages++;
+                $currentPageItems = $groupSize;  // Start new page with current group
+                $currentIndex++;
+            } elseif ($currentPageItems + $groupSize <= $maxItemsPerPage) {
                 // Can add this group to current page
-                $tempItemCount += $tempGroupSize;
-                $tempIndex++;
+                $currentPageItems += $groupSize;
+                $currentIndex++;
             } else {
                 // Current group is too big for the page, start new page
-                $calculatePage++;
-                $tempItemCount = $tempGroupSize; // Start new page with current group
-                $tempIndex++;
+                $totalPages++;
+                $currentPageItems = $groupSize;  // Start new page with current group
+                $currentIndex++;
             }
         }
-        $totalPages = $calculatePage;
 
         // Get the flat list of permissions for the current page to maintain pagination info
         $currentPermissions = collect();
@@ -185,15 +183,15 @@ final class PermissionIndex extends Component
         // Create a paginator for the current page
         $paginatedPermissions = new \Illuminate\Pagination\LengthAwarePaginator(
             $currentPermissions,
-            collect($allGroupedPermissions->flatten(1))->count(), // Total count of all permissions (flattened from groups)
-            $maxItemsPerPage, // Items per page
-            $currentPage, // Current page
+            collect($allGroupedPermissions->flatten(1))->count(),  // Total count of all permissions (flattened from groups)
+            $maxItemsPerPage,  // Items per page
+            $currentPage,  // Current page
             ['path' => request()->url(), 'pageName' => 'page']
         );
 
         // But update the paginator to reflect the actual pagination logic
         $paginatedPermissions->setCollection($currentPermissions);
-        $paginatedPermissions->total($allPermissions->count()); // This may not be accurate for grouped pagination
+        $paginatedPermissions->total($allPermissions->count());  // This may not be accurate for grouped pagination
         $paginatedPermissions->perPage($maxItemsPerPage);
         $paginatedPermissions->currentPage($currentPage);
         $paginatedPermissions->lastPage($totalPages);

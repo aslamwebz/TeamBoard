@@ -1,12 +1,14 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
 use App\Helpers\TenantHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Model;
 
 final class Task extends Model
 {
@@ -71,6 +73,7 @@ final class Task extends Model
     public function getDependentTasks()
     {
         $dependencies = is_string($this->dependencies) ? json_decode($this->dependencies, true) : $this->dependencies;
+
         return $this->whereIn('id', $dependencies ?? []);
     }
 
@@ -80,7 +83,8 @@ final class Task extends Model
     public function hasDependencies(): bool
     {
         $dependencies = is_string($this->dependencies) ? json_decode($this->dependencies, true) : $this->dependencies;
-        return !empty($dependencies) && count($dependencies) > 0;
+
+        return ! empty($dependencies) && count($dependencies) > 0;
     }
 
     /**
@@ -88,7 +92,7 @@ final class Task extends Model
      */
     public function areDependenciesCompleted(): bool
     {
-        if (!$this->hasDependencies()) {
+        if (! $this->hasDependencies()) {
             return true;  // No dependencies means it can be started
         }
 
@@ -118,7 +122,7 @@ final class Task extends Model
     public function addDependency($taskId)
     {
         $dependencies = $this->dependencies ?? [];
-        if (!in_array($taskId, $dependencies)) {
+        if (! in_array($taskId, $dependencies)) {
             $dependencies[] = $taskId;
             $this->update(['dependencies' => $dependencies]);
         }

@@ -11,25 +11,37 @@ use Livewire\Component;
 final class WorkerDashboard extends Component
 {
     public $myTasks;
+
     public $myProjects;
+
     public $upcomingDeadlines;
+
     public $teamActivity;
+
     public $importantAnnouncements;
+
     public $notifications;
+
     public $quickActions;
+
     public $myTasksCount = 0;
+
     public $completedTasksCount = 0;
+
     public $myProjectsCount = 0;
+
     public $avgProjectCompletion = 0;
+
     public $upcomingDeadlinesCount = 0;
+
     public $overdueDeadlinesCount = 0;
 
-    public function mount() : void
+    public function mount(): void
     {
         $this->loadDashboardData();
     }
 
-    public function loadDashboardData() : void
+    public function loadDashboardData(): void
     {
         // Get the authenticated user
         $user = auth()->user();
@@ -170,7 +182,7 @@ final class WorkerDashboard extends Component
         ];
     }
 
-    public function updateTaskStatus($taskId, $status) : void
+    public function updateTaskStatus($taskId, $status): void
     {
         /** @var \App\Models\User $user */
         $user = auth()->user();
@@ -196,18 +208,19 @@ final class WorkerDashboard extends Component
         return [
             'isOverdue' => $isOverdue,
             'dateClass' => $dateClass,
-            'bgClass' => $bgClass
+            'bgClass' => $bgClass,
         ];
     }
 
-    public function render() : View
+    public function render(): View
     {
         $this->loadDashboardData();
 
         // Precompute task deadline info for upcoming deadlines
-        $upcomingDeadlinesWithInfo = $this->upcomingDeadlines->map(function($task) {
+        $upcomingDeadlinesWithInfo = $this->upcomingDeadlines->map(function ($task) {
             $deadlineInfo = $this->getTaskDeadlineInfo($task);
             $task->deadlineInfo = $deadlineInfo;
+
             return $task;
         });
 

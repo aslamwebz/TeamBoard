@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Livewire\Projects;
 
@@ -18,18 +20,31 @@ final class ProjectShow extends Component
     use ModalTrait;
 
     public Project $project;
+
     public $projectDiscussions = [];
+
     public $showAssignUserModal = false;
+
     public $showAssignTeamModal = false;
+
     public $showAssignPhaseModal = false;
+
     public $showAssignMilestoneModal = false;
+
     public $selectedUsers = [];
+
     public $selectedTeams = [];
+
     public $selectedPhases = [];
+
     public $selectedMilestones = [];
+
     public $availableUsers = [];
+
     public $availableTeams = [];
+
     public $availablePhases = [];
+
     public $availableMilestones = [];
 
     public function mount(Project $project): void
@@ -108,14 +123,14 @@ final class ProjectShow extends Component
 
     public function updatedShowAssignUserModal($value): void
     {
-        if (!$value) {
+        if (! $value) {
             $this->selectedUsers = [];
         }
     }
 
     public function updatedShowAssignTeamModal($value): void
     {
-        if (!$value) {
+        if (! $value) {
             $this->selectedTeams = [];
         }
     }

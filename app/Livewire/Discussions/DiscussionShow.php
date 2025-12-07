@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace App\Livewire\Discussions;
 
+use App\Enums\DiscussionType;
 use App\Models\Comment;
 use App\Models\Discussion;
+use App\Models\User;
 use App\Services\ActivityService;
 use App\Services\FileUploadService;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -170,30 +173,30 @@ final class DiscussionShow extends Component
         $this->discussion->load(['user', 'comments.user', 'comments.replies.user', 'attachments']);
     }
 
-    public function render(): \Illuminate\Contracts\View\View
+    public function updatedAttachments(): void
+    {
+        // Validate each attachment as it's added
+        $this->validateOnly('attachments.*');
+    }
+
+    public function render(): View
     {
         $typeColors = [
-            'project' => \App\Enums\DiscussionType::PROJECT->getColorClass(),
-            'task' => \App\Enums\DiscussionType::TASK->getColorClass(),
-            'client' => \App\Enums\DiscussionType::CLIENT->getColorClass(),
+            'project' => DiscussionType::PROJECT->getColorClass(),
+            'task' => DiscussionType::TASK->getColorClass(),
+            'client' => DiscussionType::CLIENT->getColorClass(),
         ];
 
         $typeLabels = [
             'project' => 'Project',
             'task' => 'Task',
-            'client' => 'Client'
+            'client' => 'Client',
         ];
 
         return view('livewire.discussions.discussion-show', [
             'typeColors' => $typeColors,
             'typeLabels' => $typeLabels,
         ]);
-    }
-
-    public function updatedAttachments(): void
-    {
-        // Validate each attachment as it's added
-        $this->validateOnly('attachments.*');
     }
 
     /**
@@ -241,7 +244,7 @@ final class DiscussionShow extends Component
         }
 
         $mentionedUsernames = array_unique($matches[1]);
-        $mentionedUsers = \App\Models\User::whereIn('name', $mentionedUsernames)->get();
+        $mentionedUsers = User::whereIn('name', $mentionedUsernames)->get();
 
         return $mentionedUsers->toArray();
     }

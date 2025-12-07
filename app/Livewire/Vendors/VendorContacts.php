@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Livewire\Vendors;
 
@@ -37,9 +39,9 @@ final class VendorContacts extends Component
 
         if ($this->search) {
             $query
-                ->where('first_name', 'like', '%' . $this->search . '%')
-                ->orWhere('last_name', 'like', '%' . $this->search . '%')
-                ->orWhere('email', 'like', '%' . $this->search . '%');
+                ->where('first_name', 'like', '%'.$this->search.'%')
+                ->orWhere('last_name', 'like', '%'.$this->search.'%')
+                ->orWhere('email', 'like', '%'.$this->search.'%');
         }
 
         $contacts = $query->orderBy('is_primary', 'desc')->orderBy('first_name')->paginate($this->perPage);

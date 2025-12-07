@@ -7,6 +7,8 @@ namespace App\Livewire\Discussions;
 use App\Models\Discussion;
 use App\Models\Project;
 use App\Models\Task;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -28,9 +30,14 @@ final class DiscussionIndex extends Component
 
     protected $queryString = ['type', 'typeId', 'search', 'sortBy'];
 
-    public function render(): \Illuminate\Contracts\View\View
+    public function render(): View
     {
-        $query = Discussion::with(['user', 'comments', 'attachments'])
+        $query = Discussion::with(
+            [
+                'user',
+                'comments',
+                'attachments',
+            ])
             ->where('title', 'like', '%'.$this->search.'%')
             ->orWhere('content', 'like', '%'.$this->search.'%');
 
@@ -60,10 +67,14 @@ final class DiscussionIndex extends Component
         return view('livewire.discussions.discussion-index', compact('discussions'));
     }
 
-    public function createDiscussion($type = null, $typeId = null): \Illuminate\Http\RedirectResponse
+    public function createDiscussion($type = null, $typeId = null): RedirectResponse
     {
         if ($type && $typeId) {
-            return redirect()->route('discussions.create', ['type' => $type, 'type_id' => $typeId]);
+            return redirect()->route('discussions.create',
+                [
+                    'type' => $type,
+                    'type_id' => $typeId,
+                ]);
         }
 
         return redirect()->route('discussions.create');

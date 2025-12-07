@@ -41,11 +41,11 @@ final class FilePreviewModal extends Component
 
     public function getFilePreviewData($file)
     {
-        if (!$file) {
+        if (! $file) {
             return [];
         }
 
-        $filePath = 'discussions/' . $file->filename;
+        $filePath = 'discussions/'.$file->filename;
         $fileUrl = $file->getUrl();
         $fileName = $file->original_name;
         $type = \Illuminate\Support\Facades\Storage::disk('public')->mimeType($filePath);
