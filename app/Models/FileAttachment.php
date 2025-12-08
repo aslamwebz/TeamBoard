@@ -4,14 +4,30 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property string $filename
+ * @property string $original_name
+ * @property string|null $mime_type
+ * @property int $size
+ * @property string $attachable_type
+ * @property int $attachable_id
+ * @property int|null $user_id
+ * @property CarbonInterface $created_at
+ * @property CarbonInterface $updated_at
+ */
 final class FileAttachment extends Model
 {
     use HasFactory;
 
+    /**
+     * @var list<string>
+     */
     protected $fillable = [
         'filename',
         'original_name',
@@ -22,6 +38,9 @@ final class FileAttachment extends Model
         'user_id',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'size' => 'integer',
         'created_at' => 'datetime',
