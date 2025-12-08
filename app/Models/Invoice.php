@@ -1,19 +1,40 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
 use App\Enums\InvoiceStatus;
 use App\Enums\PaymentStatus;
 use App\Helpers\TenantHelper;
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property int|null $client_id
+ * @property int|null $project_id
+ * @property string $invoice_number
+ * @property CarbonInterface|null $issue_date
+ * @property CarbonInterface|null $due_date
+ * @property float $amount
+ * @property float $tax
+ * @property float $total
+ * @property string $status
+ * @property string|null $description
+ * @property CarbonInterface $created_at
+ * @property CarbonInterface $updated_at
+ */
 final class Invoice extends Model
 {
     use HasFactory;
 
+    /**
+     * @var list<string>
+     */
     protected $fillable = [
         'client_id',
         'project_id',
@@ -27,6 +48,9 @@ final class Invoice extends Model
         'description',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'issue_date' => 'date',
         'due_date' => 'date',
