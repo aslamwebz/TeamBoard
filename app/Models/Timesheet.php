@@ -4,14 +4,34 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property int|null $worker_profile_id
+ * @property int|null $project_id
+ * @property int|null $task_id
+ * @property CarbonInterface $date
+ * @property float $hours_worked
+ * @property string|null $activity_description
+ * @property string $entry_type
+ * @property string $status
+ * @property int|null $approved_by
+ * @property CarbonInterface|null $approved_at
+ * @property string|null $notes
+ * @property CarbonInterface $created_at
+ * @property CarbonInterface $updated_at
+ */
 final class Timesheet extends Model
 {
     use HasFactory;
 
+    /**
+     * @var list<string>
+     */
     protected $fillable = [
         'worker_profile_id',
         'project_id',
@@ -26,10 +46,15 @@ final class Timesheet extends Model
         'notes',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'date' => 'date',
         'hours_worked' => 'decimal:2',
         'approved_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     /**
