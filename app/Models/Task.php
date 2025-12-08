@@ -1,18 +1,37 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
 use App\Enums\TaskStatus;
 use App\Helpers\TenantHelper;
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property string $title
+ * @property string|null $description
+ * @property string $status
+ * @property CarbonInterface|null $due_date
+ * @property int|null $project_id
+ * @property int|null $project_phase_id
+ * @property array|null $dependencies
+ * @property int $order
+ * @property CarbonInterface $created_at
+ * @property CarbonInterface $updated_at
+ */
 final class Task extends Model
 {
     use HasFactory;
 
+    /**
+     * @var list<string>
+     */
     protected $fillable = [
         'title',
         'description',
@@ -24,6 +43,9 @@ final class Task extends Model
         'order',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'due_date' => 'date',
         'dependencies' => 'array',
