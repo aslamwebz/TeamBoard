@@ -4,10 +4,22 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property int|null $contact_id
+ * @property string $type
+ * @property string|null $description
+ * @property array|null $details
+ * @property CarbonInterface|null $activity_date
+ * @property int|null $created_by
+ * @property CarbonInterface $created_at
+ * @property CarbonInterface $updated_at
+ */
 final class ContactActivity extends Model
 {
     use HasFactory;
@@ -25,6 +37,9 @@ final class ContactActivity extends Model
 
     public const TYPE_TASK = 'task';
 
+    /**
+     * @var list<string>
+     */
     protected $fillable = [
         'contact_id',
         'type',
@@ -34,6 +49,9 @@ final class ContactActivity extends Model
         'created_by',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'details' => 'array',
         'activity_date' => 'datetime',
