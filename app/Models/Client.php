@@ -4,16 +4,50 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property int $id
+ * @property string|null $company_name
+ * @property string|null $name
+ * @property string|null $email
+ * @property string|null $phone
+ * @property string|null $address
+ * @property string|null $city
+ * @property string|null $state
+ * @property string|null $zip_code
+ * @property string|null $country
+ * @property string|null $vat_number
+ * @property string|null $logo
+ * @property string|null $registration_number
+ * @property string|null $tax_id
+ * @property string|null $website
+ * @property string|null $industry
+ * @property string|null $description
+ * @property string|null $billing_plan
+ * @property CarbonInterface|null $subscription_start_date
+ * @property CarbonInterface|null $subscription_end_date
+ * @property string|null $subscription_status
+ * @property string|null $notes
+ * @property string|null $billing_address
+ * @property string|null $shipping_address
+ * @property int|null $primary_contact_id
+ * @property array|null $custom_fields
+ * @property CarbonInterface $created_at
+ * @property CarbonInterface $updated_at
+ */
 final class Client extends Model
 {
     use HasFactory;
 
+    /**
+     * @var list<string>
+     */
     protected $fillable = [
         'company_name',
         'name',
@@ -42,6 +76,9 @@ final class Client extends Model
         'custom_fields',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
