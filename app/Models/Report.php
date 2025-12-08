@@ -1,13 +1,28 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
 use App\Enums\ReportStatus;
 use App\Helpers\TenantHelper;
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property int|null $user_id
+ * @property string $title
+ * @property string|null $description
+ * @property string $report_type
+ * @property array|null $data
+ * @property CarbonInterface|null $generated_at
+ * @property string $status
+ * @property CarbonInterface $created_at
+ * @property CarbonInterface $updated_at
+ */
 final class Report extends Model
 {
     use HasFactory;
@@ -20,6 +35,9 @@ final class Report extends Model
 
     public const TYPE_CLIENT = 'client';
 
+    /**
+     * @var list<string>
+     */
     protected $fillable = [
         'user_id',
         'title',
@@ -30,6 +48,9 @@ final class Report extends Model
         'status',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'data' => 'array',
         'generated_at' => 'datetime',
