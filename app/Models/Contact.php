@@ -4,15 +4,41 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property int $id
+ * @property string|null $first_name
+ * @property string|null $last_name
+ * @property string|null $email
+ * @property string|null $phone
+ * @property string|null $position
+ * @property string|null $job_title
+ * @property string|null $department
+ * @property string|null $work_phone
+ * @property string|null $mobile_phone
+ * @property string|null $linkedin_url
+ * @property string|null $twitter_handle
+ * @property string|null $notes
+ * @property bool $is_primary
+ * @property bool $is_billing_contact
+ * @property bool $is_technical_contact
+ * @property array|null $communication_preferences
+ * @property int|null $client_id
+ * @property CarbonInterface $created_at
+ * @property CarbonInterface $updated_at
+ */
 final class Contact extends Model
 {
     use HasFactory;
 
+    /**
+     * @var list<string>
+     */
     protected $fillable = [
         'first_name',
         'last_name',
@@ -33,6 +59,9 @@ final class Contact extends Model
         'client_id',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'is_primary' => 'boolean',
         'is_billing_contact' => 'boolean',
