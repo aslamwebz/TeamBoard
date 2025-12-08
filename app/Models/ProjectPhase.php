@@ -1,18 +1,36 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
 use App\Enums\PhaseStatus;
 use App\Enums\TaskStatus;
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string|null $description
+ * @property int|null $project_id
+ * @property CarbonInterface|null $start_date
+ * @property CarbonInterface|null $end_date
+ * @property string $status
+ * @property int $order
+ * @property CarbonInterface $created_at
+ * @property CarbonInterface $updated_at
+ */
 final class ProjectPhase extends Model
 {
     use HasFactory;
 
+    /**
+     * @var list<string>
+     */
     protected $fillable = [
         'name',
         'description',
@@ -23,6 +41,9 @@ final class ProjectPhase extends Model
         'order',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'start_date' => 'date',
         'end_date' => 'date',
