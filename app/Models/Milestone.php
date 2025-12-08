@@ -1,16 +1,34 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
 use App\Enums\PhaseStatus;
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string|null $description
+ * @property int|null $project_id
+ * @property int|null $project_phase_id
+ * @property CarbonInterface|null $due_date
+ * @property string $status
+ * @property int $order
+ * @property CarbonInterface $created_at
+ * @property CarbonInterface $updated_at
+ */
 final class Milestone extends Model
 {
     use HasFactory;
 
+    /**
+     * @var list<string>
+     */
     protected $fillable = [
         'name',
         'description',
@@ -21,6 +39,9 @@ final class Milestone extends Model
         'order',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'due_date' => 'date',
         'created_at' => 'datetime',
