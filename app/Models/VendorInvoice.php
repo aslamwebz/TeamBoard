@@ -4,14 +4,35 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property int|null $vendor_id
+ * @property string $invoice_number
+ * @property CarbonInterface $invoice_date
+ * @property CarbonInterface|null $due_date
+ * @property float $amount
+ * @property float $tax_amount
+ * @property float $total_amount
+ * @property string $status
+ * @property string|null $notes
+ * @property string|null $file_path
+ * @property CarbonInterface|null $paid_at
+ * @property string|null $payment_method
+ * @property CarbonInterface $created_at
+ * @property CarbonInterface $updated_at
+ */
 final class VendorInvoice extends Model
 {
     use HasFactory;
 
+    /**
+     * @var list<string>
+     */
     protected $fillable = [
         'vendor_id',
         'invoice_number',
@@ -27,6 +48,9 @@ final class VendorInvoice extends Model
         'payment_method',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'invoice_date' => 'date',
         'due_date' => 'date',
@@ -34,6 +58,8 @@ final class VendorInvoice extends Model
         'tax_amount' => 'decimal:2',
         'total_amount' => 'decimal:2',
         'paid_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     /**
