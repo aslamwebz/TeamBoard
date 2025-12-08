@@ -4,14 +4,30 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property int|null $user_id
+ * @property string $type
+ * @property string $message
+ * @property array|null $data
+ * @property CarbonInterface|null $read_at
+ * @property CarbonInterface|null $email_sent_at
+ * @property CarbonInterface|null $push_sent_at
+ * @property CarbonInterface $created_at
+ * @property CarbonInterface $updated_at
+ */
 final class Notification extends Model
 {
     use HasFactory;
 
+    /**
+     * @var list<string>
+     */
     protected $fillable = [
         'user_id',
         'type',
@@ -22,11 +38,16 @@ final class Notification extends Model
         'push_sent_at',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'data' => 'array',
         'read_at' => 'datetime',
         'email_sent_at' => 'datetime',
         'push_sent_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public function user(): BelongsTo
