@@ -4,15 +4,44 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property int $id
+ * @property int|null $vendor_id
+ * @property string $po_number
+ * @property CarbonInterface|null $order_date
+ * @property CarbonInterface|null $required_date
+ * @property CarbonInterface|null $expected_delivery_date
+ * @property float $subtotal
+ * @property float $tax_amount
+ * @property float $total_amount
+ * @property string $status
+ * @property string|null $notes
+ * @property string|null $delivery_address
+ * @property string|null $shipping_method
+ * @property string|null $payment_terms
+ * @property int|null $created_by
+ * @property int|null $approved_by
+ * @property CarbonInterface|null $approved_at
+ * @property CarbonInterface|null $sent_at
+ * @property CarbonInterface|null $received_at
+ * @property int|null $project_id
+ * @property int|null $task_id
+ * @property CarbonInterface $created_at
+ * @property CarbonInterface $updated_at
+ */
 final class PurchaseOrder extends Model
 {
     use HasFactory;
 
+    /**
+     * @var list<string>
+     */
     protected $fillable = [
         'vendor_id',
         'po_number',
@@ -36,6 +65,9 @@ final class PurchaseOrder extends Model
         'task_id',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'order_date' => 'date',
         'required_date' => 'date',
@@ -48,6 +80,8 @@ final class PurchaseOrder extends Model
         'approved_at' => 'datetime',
         'sent_at' => 'datetime',
         'received_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     /**
