@@ -4,14 +4,32 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property int|null $purchase_order_id
+ * @property string $name
+ * @property string|null $description
+ * @property float $unit_price
+ * @property int $quantity
+ * @property float $total_price
+ * @property string|null $unit_of_measure
+ * @property int $received_quantity
+ * @property string|null $service_code
+ * @property CarbonInterface $created_at
+ * @property CarbonInterface $updated_at
+ */
 final class PurchaseOrderItem extends Model
 {
     use HasFactory;
 
+    /**
+     * @var list<string>
+     */
     protected $fillable = [
         'purchase_order_id',
         'name',
@@ -24,11 +42,16 @@ final class PurchaseOrderItem extends Model
         'service_code',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'unit_price' => 'decimal:2',
         'total_price' => 'decimal:2',
         'quantity' => 'integer',
         'received_quantity' => 'integer',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     /**
