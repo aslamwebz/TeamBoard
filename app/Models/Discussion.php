@@ -5,15 +5,30 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Traits\HasMentions;
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property int $id
+ * @property string $title
+ * @property string $content
+ * @property string $type
+ * @property int|null $type_id
+ * @property int|null $user_id
+ * @property int|null $project_id
+ * @property CarbonInterface $created_at
+ * @property CarbonInterface $updated_at
+ */
 final class Discussion extends Model
 {
     use HasFactory, HasMentions;
 
+    /**
+     * @var list<string>
+     */
     protected $fillable = [
         'title',
         'content',
@@ -23,6 +38,9 @@ final class Discussion extends Model
         'project_id',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
