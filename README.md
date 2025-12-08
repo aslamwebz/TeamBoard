@@ -61,6 +61,9 @@ TeamBoard is a comprehensive multi-tenant business management platform that comb
    php artisan db:seed --class=DatabaseSeeder
    ```
 
+6. create separate subdomains for each tenant in Herd or use hosts file to
+   redirect the subdomain names for main site name (e.g., tenant1.example.com, tenant2.example.com).
+
 ## Usage
 
 1. **Vendor Management**: Navigate to the Vendors section to manage suppliers
