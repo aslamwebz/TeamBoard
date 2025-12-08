@@ -4,14 +4,32 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property int|null $client_id
+ * @property string $name
+ * @property string $path
+ * @property string|null $mime_type
+ * @property int $size
+ * @property string|null $type
+ * @property string|null $description
+ * @property int|null $uploaded_by
+ * @property CarbonInterface|null $uploaded_at
+ * @property CarbonInterface $created_at
+ * @property CarbonInterface $updated_at
+ */
 final class ClientAttachment extends Model
 {
     use HasFactory;
 
+    /**
+     * @var list<string>
+     */
     protected $fillable = [
         'client_id',
         'name',
@@ -24,6 +42,9 @@ final class ClientAttachment extends Model
         'uploaded_at',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'size' => 'integer',
         'uploaded_at' => 'datetime',
