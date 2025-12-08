@@ -1,17 +1,39 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
 use App\Enums\PaymentMethod;
 use App\Enums\PaymentStatus;
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property int|null $invoice_id
+ * @property int|null $expense_id
+ * @property int|null $user_id
+ * @property float $amount
+ * @property string $payment_method
+ * @property string|null $transaction_reference
+ * @property CarbonInterface|null $payment_date
+ * @property string|null $notes
+ * @property string $status
+ * @property string $currency
+ * @property array|null $custom_fields
+ * @property CarbonInterface $created_at
+ * @property CarbonInterface $updated_at
+ */
 final class Payment extends Model
 {
     use HasFactory;
 
+    /**
+     * @var list<string>
+     */
     protected $fillable = [
         'invoice_id',
         'expense_id',
@@ -26,6 +48,9 @@ final class Payment extends Model
         'custom_fields',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'payment_date' => 'date',
         'amount' => 'decimal:2',
