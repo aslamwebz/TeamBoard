@@ -1,8 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
-declare(strict_types=1);
+use App\Livewire\Worker\WorkerDashboard;
 
 test('worker dashboard component class exists', function () {
-    $componentClass = App\Livewire\Worker\WorkerDashboard::class;
+    $componentClass = WorkerDashboard::class;
     expect(class_exists($componentClass))->toBeTrue();
 });

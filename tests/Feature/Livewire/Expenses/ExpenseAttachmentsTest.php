@@ -1,8 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
-declare(strict_types=1);
+use App\Livewire\Expenses\ExpenseAttachments;
 
 test('expense attachments component class exists', function () {
-    $componentClass = App\Livewire\Expenses\ExpenseAttachments::class;
+    $componentClass = ExpenseAttachments::class;
     expect(class_exists($componentClass))->toBeTrue();
 });

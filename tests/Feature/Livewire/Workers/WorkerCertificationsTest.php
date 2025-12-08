@@ -1,8 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
-declare(strict_types=1);
+use App\Livewire\Workers\WorkerCertifications;
 
 test('worker certifications component class exists', function () {
-    $componentClass = App\Livewire\Workers\WorkerCertifications::class;
+    $componentClass = WorkerCertifications::class;
     expect(class_exists($componentClass))->toBeTrue();
 });

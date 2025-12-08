@@ -1,11 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
-declare(strict_types=1);
-
+use App\Livewire\Components\FilePreview;
 use Livewire\Livewire;
 
 test('can instantiate file preview component', function () {
     $this->actingAs($this->user);
-    Livewire::test(App\Livewire\Components\FilePreview::class)
+    Livewire::test(FilePreview::class)
         ->assertStatus(200);
 });

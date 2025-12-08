@@ -1,8 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
-declare(strict_types=1);
+use App\Livewire\Vendors\VendorShow;
 
 test('vendor show component class exists', function () {
-    $componentClass = App\Livewire\Vendors\VendorShow::class;
+    $componentClass = VendorShow::class;
     expect(class_exists($componentClass))->toBeTrue();
 });

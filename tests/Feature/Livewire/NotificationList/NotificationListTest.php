@@ -1,11 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
-declare(strict_types=1);
-
+use App\Livewire\NotificationList\NotificationList;
 use Livewire\Livewire;
 
 test('can instantiate notification list component', function () {
     $this->actingAs($this->user);
-    Livewire::test(App\Livewire\NotificationList\NotificationList::class)
+    Livewire::test(NotificationList::class)
         ->assertStatus(200);
 });

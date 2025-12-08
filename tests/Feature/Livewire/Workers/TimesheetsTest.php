@@ -1,8 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
-declare(strict_types=1);
+use App\Livewire\Workers\Timesheets;
 
 test('worker timesheets component class exists', function () {
-    $componentClass = App\Livewire\Workers\Timesheets::class;
+    $componentClass = Timesheets::class;
     expect(class_exists($componentClass))->toBeTrue();
 });

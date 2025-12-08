@@ -1,11 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
-declare(strict_types=1);
-
+use App\Livewire\Settings\CompanyProfile;
 use Livewire\Livewire;
 
 test('can instantiate company profile settings component', function () {
     $this->actingAs($this->user);
-    Livewire::test(App\Livewire\Settings\CompanyProfile::class)
+    Livewire::test(CompanyProfile::class)
         ->assertStatus(200);
 });

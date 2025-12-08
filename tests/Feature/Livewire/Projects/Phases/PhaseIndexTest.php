@@ -1,8 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
-declare(strict_types=1);
+use App\Livewire\Projects\Phases\PhaseIndex;
 
 test('phase index component class exists', function () {
-    $componentClass = App\Livewire\Projects\Phases\PhaseIndex::class;
+    $componentClass = PhaseIndex::class;
     expect(class_exists($componentClass))->toBeTrue();
 });

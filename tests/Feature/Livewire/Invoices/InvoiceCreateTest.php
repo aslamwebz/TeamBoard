@@ -1,8 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
-declare(strict_types=1);
+use App\Livewire\Invoices\InvoiceCreate;
 
 test('invoice create component class exists', function () {
-    $componentClass = App\Livewire\Invoices\InvoiceCreate::class;
+    $componentClass = InvoiceCreate::class;
     expect(class_exists($componentClass))->toBeTrue();
 });

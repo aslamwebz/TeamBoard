@@ -16,8 +16,8 @@ use Carbon\CarbonInterface;
  * @property string $name
  * @property string $email
  * @property string $password
- * @property CarbonInterface $email_verified_at
- * @property string $remember_token
+ * @property CarbonInterface|null $email_verified_at
+ * @property string|null $remember_token
  */ 
 final class Admin extends Authenticatable
 {
@@ -66,6 +66,7 @@ final class Admin extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'remember_token' => 'string',
         ];
     }
 }
