@@ -4,15 +4,43 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * @property int $id
+ * @property int|null $user_id
+ * @property string|null $employee_id
+ * @property string|null $job_title
+ * @property string|null $bio
+ * @property float $hourly_rate
+ * @property string|null $department
+ * @property int|null $manager_id
+ * @property CarbonInterface|null $hire_date
+ * @property string|null $employment_type
+ * @property string $status
+ * @property array|null $availability
+ * @property string|null $emergency_contact
+ * @property string|null $emergency_contact_phone
+ * @property string|null $address
+ * @property string|null $city
+ * @property string|null $state
+ * @property string|null $zip_code
+ * @property string|null $country
+ * @property string|null $phone
+ * @property CarbonInterface $created_at
+ * @property CarbonInterface $updated_at
+ */
 final class WorkerProfile extends Model
 {
     use HasFactory;
 
+    /**
+     * @var list<string>
+     */
     protected $fillable = [
         'user_id',
         'employee_id',
@@ -35,10 +63,15 @@ final class WorkerProfile extends Model
         'phone',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'hire_date' => 'date',
         'hourly_rate' => 'decimal:2',
         'availability' => 'array',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     /**
