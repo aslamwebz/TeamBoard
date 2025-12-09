@@ -29,9 +29,7 @@ final class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         // Bind the NotificationService
-        $this->app->singleton(NotificationService::class, function ($app) {
-            return new NotificationService();
-        });
+        $this->app->singleton(NotificationService::class, fn($app): \App\Services\NotificationService => new NotificationService());
     }
 
     /**
@@ -107,12 +105,12 @@ final class AppServiceProvider extends ServiceProvider
      */
     private function shareCompanySettings(): void
     {
-        View::composer('*', function ($view) {
+        View::composer('*', function ($view): void {
             try {
                 // Only share company settings in a tenant context
                 if (app()->bound('stancl.tenancy.currentTenant')) {
                     $tenant = Tenant::current();
-                    if ($tenant) {
+                    if ($tenant instanceof \App\Models\Tenant) {
                         $view->with([
                             'companyName' => $tenant->getCompanyName(),
                             'companyLogo' => $tenant->logo_url,
@@ -125,7 +123,7 @@ final class AppServiceProvider extends ServiceProvider
                         ]);
                     }
                 }
-            } catch (Exception $e) {
+            } catch (Exception) {
                 // Silently fail if tenant context isn't available
             }
         });

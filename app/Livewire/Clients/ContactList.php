@@ -22,7 +22,7 @@ final class ContactList extends Component
 
     public $contactToDeleteId;
 
-    protected $queryString = ['search'];
+    private array $queryString = ['search'];
 
     public function mount(Client $client): void
     {
@@ -32,7 +32,7 @@ final class ContactList extends Component
     public function render(): View
     {
         $contacts = $this->client->contacts()
-            ->where(function ($query) {
+            ->where(function ($query): void {
                 $query->where('first_name', 'like', '%'.$this->search.'%')
                     ->orWhere('last_name', 'like', '%'.$this->search.'%')
                     ->orWhere('email', 'like', '%'.$this->search.'%')

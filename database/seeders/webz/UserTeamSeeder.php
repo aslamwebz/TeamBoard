@@ -25,7 +25,7 @@ final class UserTeamSeeder extends Seeder
         }
 
         // Assign users to teams
-        foreach ($users as $index => $user) {
+        foreach ($users as $user) {
             // Each user can be in multiple teams
             $teamIds = $teams->random(min(3, $teams->count()))->pluck('id')->toArray();
             $user->teams()->attach($teamIds);

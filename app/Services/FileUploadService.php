@@ -12,7 +12,7 @@ use InvalidArgumentException;
 
 final class FileUploadService
 {
-    private $allowedMimeTypes = [
+    private array $allowedMimeTypes = [
         // Images
         'image/jpeg',
         'image/png',
@@ -39,7 +39,7 @@ final class FileUploadService
         'application/json',
     ];
 
-    private $maxFileSize = 10 * 1024 * 1024;  // 10MB in bytes
+    private int $maxFileSize = 10 * 1024 * 1024;  // 10MB in bytes
 
     public function upload($file, $userId, $discussionId = null, $commentId = null)
     {
@@ -79,13 +79,13 @@ final class FileUploadService
             ]);
 
             return $attachment;
-        } catch (Exception $e) {
-            \Log::error('File upload failed: '.$e->getMessage(), [
+        } catch (Exception $exception) {
+            \Log::error('File upload failed: '.$exception->getMessage(), [
                 'file' => $file->getClientOriginalName(),
                 'user_id' => $userId,
-                'exception' => $e,
+                'exception' => $exception,
             ]);
-            throw $e;
+            throw $exception;
         }
     }
 
@@ -99,13 +99,8 @@ final class FileUploadService
         if ($file->getSize() > $this->maxFileSize) {
             return false;
         }
-
         // Check MIME type
-        if (! in_array($file->getMimeType(), $this->allowedMimeTypes)) {
-            return false;
-        }
-
-        return true;
+        return in_array($file->getMimeType(), $this->allowedMimeTypes);
     }
 
     public function deleteAttachment(DiscussionAttachment $attachment): bool

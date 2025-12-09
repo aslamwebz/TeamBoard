@@ -29,7 +29,7 @@ final class DiscussionShow extends Component
 
     public $attachments = [];
 
-    public $replyingTo = null;
+    public $replyingTo;
 
     public $replyContent = '';
 
@@ -39,7 +39,7 @@ final class DiscussionShow extends Component
 
     public $limit = 20;
 
-    protected $rules = [
+    private array $rules = [
         'newComment' => 'required|string',
         'attachments.*' => 'nullable|file|max:10240',  // Max 10MB
         'replyContent' => 'required|string',
@@ -49,14 +49,12 @@ final class DiscussionShow extends Component
     {
         $this->discussion = $discussion->load([
             'user',
-            'comments' => function ($query) {
-                return $query->with([
-                    'user',
-                    'replies.user',
-                    'replies.attachments',
-                    'attachments',
-                ]);
-            },
+            'comments' => fn($query) => $query->with([
+                'user',
+                'replies.user',
+                'replies.attachments',
+                'attachments',
+            ]),
             'attachments',
             'project',
             'phase',
@@ -202,7 +200,7 @@ final class DiscussionShow extends Component
     /**
      * Load all attachments (from discussion and its comments)
      */
-    protected function loadAllAttachments(): void
+    private function loadAllAttachments(): void
     {
         // Get attachments for this discussion
         $discussionAttachments = $this->discussion->attachments;
@@ -221,7 +219,7 @@ final class DiscussionShow extends Component
     /**
      * Load related discussions
      */
-    protected function loadRelatedDiscussions(): void
+    private function loadRelatedDiscussions(): void
     {
         // Find related discussions based on the same project
         $this->relatedDiscussions = Discussion::where('project_id', $this->discussion->project_id)
@@ -234,7 +232,7 @@ final class DiscussionShow extends Component
     /**
      * Parse mentions from content and return the mentioned users
      */
-    protected function parseMentions(string $content): array
+    private function parseMentions(string $content): array
     {
         $pattern = '/@(\w+)/';
         preg_match_all($pattern, $content, $matches);
@@ -249,7 +247,7 @@ final class DiscussionShow extends Component
         return $mentionedUsers->toArray();
     }
 
-    private function processAttachment($file, $discussionId, $commentId = null): void
+    private function processAttachment(object|string $file, $discussionId, $commentId = null): void
     {
         $fileUploadService = new FileUploadService();
         $fileUploadService->upload($file, Auth::id(), $discussionId, $commentId);

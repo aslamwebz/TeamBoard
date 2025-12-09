@@ -23,12 +23,12 @@ final class ClientIndex extends Component
 
     public $clientToDeleteId;
 
-    protected $queryString = ['search'];
+    private array $queryString = ['search'];
 
     public function render(): View
     {
         $clientsQuery = Client::query()
-            ->where(function ($query) {
+            ->where(function ($query): void {
                 $query
                     ->where('name', 'like', '%'.$this->search.'%')
                     ->orWhere('email', 'like', '%'.$this->search.'%')
@@ -37,7 +37,7 @@ final class ClientIndex extends Component
 
         // Add subqueries for project counts
         $clients = $clientsQuery
-            ->withCount(['projects', 'projects as active_projects' => function ($query) {
+            ->withCount(['projects', 'projects as active_projects' => function ($query): void {
                 $query->whereIn('status', ['planning', 'in_progress']);
             }])
             ->selectRaw('clients.*,

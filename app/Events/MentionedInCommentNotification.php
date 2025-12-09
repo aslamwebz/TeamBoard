@@ -11,21 +11,12 @@ use Illuminate\Queue\SerializesModels;
 
 final class MentionedInCommentNotification
 {
-    use Dispatchable, SerializesModels;
-
-    public $comment;
-
-    public $mentionedUser;
-
-    public $mentioningUser;
-
+    use Dispatchable;
+    use SerializesModels;
     /**
      * Create a new event instance.
      */
-    public function __construct($comment, User $mentionedUser, User $mentioningUser)
+    public function __construct(public $comment, public User $mentionedUser, public User $mentioningUser)
     {
-        $this->comment = $comment; // Could be any model type (not just Comment)
-        $this->mentionedUser = $mentionedUser;
-        $this->mentioningUser = $mentioningUser;
     }
 }

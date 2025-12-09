@@ -27,7 +27,7 @@ final class PurchaseOrderSeeder extends Seeder
 
         foreach ($vendors as $vendor) {
             // Create 1-3 purchase orders per vendor
-            $poCount = rand(1, 3);
+            $poCount = random_int(1, 3);
 
             for ($i = 1; $i <= $poCount; $i++) {
                 $status = $statuses[array_rand($statuses)];

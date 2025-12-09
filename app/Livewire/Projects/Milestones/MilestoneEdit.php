@@ -27,16 +27,7 @@ final class MilestoneEdit extends Component
 
     public $order = 0;
 
-    protected $rules = [
-        'name' => 'required|string|max:255',
-        'description' => 'nullable|string',
-        'due_date' => 'nullable|date',
-        'project_phase_id' => 'nullable|exists:project_phases,id',
-        'status' => 'required|in:not_started,in_progress,completed,on_hold',
-        'order' => 'required|integer|min:0',
-    ];
-
-    public function mount(Milestone $milestone)
+    public function mount(Milestone $milestone): void
     {
         $this->milestone = $milestone;
         $this->name = $milestone->name;
@@ -75,10 +66,10 @@ final class MilestoneEdit extends Component
         return redirect()->route('projects.project-show', $project);
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         $phases = $this->milestone->project->phases;
 
-        return view('livewire.projects.milestones.milestone-edit', compact('phases'));
+        return view('livewire.projects.milestones.milestone-edit', ['phases' => $phases]);
     }
 }

@@ -12,16 +12,13 @@ use App\Events\ProjectUpdatedNotification;
 use App\Events\TaskAssignedNotification;
 use App\Services\NotificationService;
 
-final class SendNotificationListener
+final readonly class SendNotificationListener
 {
-    private $notificationService;
-
     /**
      * Create the event listener.
      */
-    public function __construct(NotificationService $notificationService)
+    public function __construct(private \App\Services\NotificationService $notificationService)
     {
-        $this->notificationService = $notificationService;
     }
 
     /**

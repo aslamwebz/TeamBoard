@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 final class FilePreviewController extends Controller
 {
-    public function preview(Request $request, $filename)
+    public function preview(Request $request, string $filename): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         // Check if the user is authenticated
         if (! Auth::check()) {
@@ -33,7 +33,7 @@ final class FilePreviewController extends Controller
         }
 
         // Get the file content and mime type
-        $fileContent = Storage::disk('public')->get($path);
+        Storage::disk('public')->get($path);
         $mimeType = Storage::disk('public')->mimeType($path);
 
         // Return a view that displays the file preview with download options

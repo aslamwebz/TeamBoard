@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('monthly_reports', function (Blueprint $table) {
+        Schema::create('monthly_reports', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('report_id')->constrained()->onDelete('cascade');
             $table->date('period_start');

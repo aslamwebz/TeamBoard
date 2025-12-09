@@ -21,7 +21,7 @@ final class DatabaseSeeder extends Seeder
         $tenant = Tenant::create(['id' => 'webz']);
         $tenant->domains()->create(['domain' => 'webz']);
 
-        $tenant->run(function () {
+        $tenant->run(function (): void {
             $this->call([
                 WebzSeeder::class,
             ]);

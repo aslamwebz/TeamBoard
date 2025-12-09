@@ -45,7 +45,7 @@ final class PurchaseOrderFactory extends Factory
 
     public function approved(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'approved',
             'approved_by' => 1,
             'approved_at' => fake()->dateTimeBetween($attributes['order_date'], 'now'),
@@ -54,7 +54,7 @@ final class PurchaseOrderFactory extends Factory
 
     public function sent(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'sent',
             'sent_at' => fake()->dateTimeBetween($attributes['approved_at'] ?? $attributes['order_date'], 'now'),
         ]);
@@ -62,7 +62,7 @@ final class PurchaseOrderFactory extends Factory
 
     public function received(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'received',
             'received_at' => fake()->dateTimeBetween($attributes['sent_at'] ?? $attributes['order_date'], 'now'),
         ]);

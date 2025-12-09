@@ -34,11 +34,9 @@ final class CommentFactory extends Factory
      */
     public function reply(): static
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'parent_id' => Comment::factory(),
-            ];
-        });
+        return $this->state(fn(array $attributes): array => [
+            'parent_id' => Comment::factory(),
+        ]);
     }
 
     /**
@@ -46,11 +44,9 @@ final class CommentFactory extends Factory
      */
     public function forDiscussion(Discussion $discussion): static
     {
-        return $this->state(function (array $attributes) use ($discussion) {
-            return [
-                'discussion_id' => $discussion->id,
-            ];
-        });
+        return $this->state(fn(array $attributes): array => [
+            'discussion_id' => $discussion->id,
+        ]);
     }
 
     /**
@@ -58,10 +54,8 @@ final class CommentFactory extends Factory
      */
     public function forUser(User $user): static
     {
-        return $this->state(function (array $attributes) use ($user) {
-            return [
-                'user_id' => $user->id,
-            ];
-        });
+        return $this->state(fn(array $attributes): array => [
+            'user_id' => $user->id,
+        ]);
     }
 }

@@ -34,7 +34,7 @@ final class PaymentIndex extends Component
 
     public $paymentMethod = '';
 
-    protected $queryString = [
+    private array $queryString = [
         'search' => ['except' => ''],
         'invoiceId' => ['except' => ''],
         'expenseId' => ['except' => ''],
@@ -48,30 +48,30 @@ final class PaymentIndex extends Component
     public function render()
     {
         $payments = Payment::with(['invoice', 'expense', 'user'])
-            ->when($this->search, function (Builder $query) {
+            ->when($this->search, function (Builder $query): void {
                 $query
                     ->where('transaction_reference', 'like', '%' . $this->search . '%')
                     ->orWhere('notes', 'like', '%' . $this->search . '%');
             })
-            ->when($this->invoiceId, function (Builder $query) {
+            ->when($this->invoiceId, function (Builder $query): void {
                 $query->where('invoice_id', $this->invoiceId);
             })
-            ->when($this->expenseId, function (Builder $query) {
+            ->when($this->expenseId, function (Builder $query): void {
                 $query->where('expense_id', $this->expenseId);
             })
-            ->when($this->userId, function (Builder $query) {
+            ->when($this->userId, function (Builder $query): void {
                 $query->where('user_id', $this->userId);
             })
-            ->when($this->status, function (Builder $query) {
+            ->when($this->status, function (Builder $query): void {
                 $query->where('status', $this->status);
             })
-            ->when($this->paymentMethod, function (Builder $query) {
+            ->when($this->paymentMethod, function (Builder $query): void {
                 $query->where('payment_method', $this->paymentMethod);
             })
-            ->when($this->dateFrom, function (Builder $query) {
+            ->when($this->dateFrom, function (Builder $query): void {
                 $query->whereDate('payment_date', '>=', $this->dateFrom);
             })
-            ->when($this->dateTo, function (Builder $query) {
+            ->when($this->dateTo, function (Builder $query): void {
                 $query->whereDate('payment_date', '<=', $this->dateTo);
             })
             ->orderBy('payment_date', 'desc')
@@ -93,7 +93,7 @@ final class PaymentIndex extends Component
         ])->layout('components.layouts.app');
     }
 
-    public function deletePayment($paymentId)
+    public function deletePayment($paymentId): void
     {
         $payment = Payment::find($paymentId);
         if ($payment) {

@@ -19,7 +19,7 @@ final class FileAttachmentFactory extends Factory
             'original_name' => fake()->word().'.pdf',
             'mime_type' => 'application/pdf',
             'size' => fake()->numberBetween(1000, 5000000),
-            'attachable_type' => fake()->randomElement(['App\Models\Project', 'App\Models\Task', 'App\Models\Invoice']),
+            'attachable_type' => fake()->randomElement([\App\Models\Project::class, \App\Models\Task::class, \App\Models\Invoice::class]),
             'attachable_id' => fake()->numberBetween(1, 100),
             'user_id' => User::factory(),
         ];

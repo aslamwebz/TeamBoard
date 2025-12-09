@@ -10,16 +10,16 @@ trait ModalTrait
 
     public $showAssignModal = false;
 
-    public $modalType = null;
+    public $modalType;
 
     public $modalData = [];
 
-    public $selectedItem = null;
+    public $selectedItem;
 
     /**
      * Show a modal by type
      */
-    public function showModal($type, $data = [], $itemId = null)
+    public function showModal($type, $data = [], $itemId = null): void
     {
         $this->modalType = $type;
         $this->modalData = $data;
@@ -41,7 +41,7 @@ trait ModalTrait
     /**
      * Hide all modals
      */
-    public function hideModal()
+    public function hideModal(): void
     {
         $this->showDeleteModal = false;
         $this->showAssignModal = false;

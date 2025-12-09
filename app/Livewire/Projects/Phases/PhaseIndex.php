@@ -28,7 +28,7 @@ final class PhaseIndex extends Component
     {
         $phases = $this->project->phases()->paginate(10);
 
-        return view('livewire.projects.phases.index', compact('phases'));
+        return view('livewire.projects.phases.index', ['phases' => $phases]);
     }
 
     public function getPhaseStatusBadgeClass(string $status): string

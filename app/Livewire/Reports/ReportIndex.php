@@ -27,16 +27,16 @@ final class ReportIndex extends Component
 
     public $reportToDeleteId;
 
-    protected $queryString = ['search', 'typeFilter', 'statusFilter'];
+    private array $queryString = ['search', 'typeFilter', 'statusFilter'];
 
     public function render(): View
     {
         $reports = Report::query()
             ->where('title', 'like', '%'.$this->search.'%')
-            ->when($this->typeFilter, function ($query) {
+            ->when($this->typeFilter, function ($query): void {
                 $query->where('report_type', $this->typeFilter);
             })
-            ->when($this->statusFilter, function ($query) {
+            ->when($this->statusFilter, function ($query): void {
                 $query->where('status', $this->statusFilter);
             })
             ->with(['user'])

@@ -21,7 +21,7 @@ final class LivewireUploadServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->app->booted(function () {
+        $this->app->booted(function (): void {
             // Configure the temporary file upload disk
             config([
                 'filesystems.disks.livewire-tmp' => [

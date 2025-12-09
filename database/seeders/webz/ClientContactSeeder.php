@@ -25,7 +25,7 @@ final class ClientContactSeeder extends Seeder
 
         foreach ($clients as $client) {
             // Create 2-4 contacts per client
-            $contactCount = rand(2, 4);
+            $contactCount = random_int(2, 4);
 
             for ($i = 0; $i < $contactCount; $i++) {
                 Contact::factory()->create([

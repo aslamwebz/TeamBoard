@@ -25,12 +25,12 @@ final class TeamIndex extends Component
 
     public $teamToDeleteId;
 
-    protected $queryString = ['search'];
+    private array $queryString = ['search'];
 
     public function render(): View
     {
         $teams = Team::query()
-            ->where(function ($query) {
+            ->where(function ($query): void {
                 $query
                     ->where('name', 'like', '%'.$this->search.'%')
                     ->orWhere('description', 'like', '%'.$this->search.'%');

@@ -41,7 +41,7 @@ final class VendorServiceSeeder extends Seeder
 
         foreach ($vendors as $vendor) {
             // Assign 2-5 random services to each vendor
-            $selectedServices = collect($services)->random(rand(2, 5));
+            $selectedServices = collect($services)->random(random_int(2, 5));
 
             foreach ($selectedServices as $service) {
                 VendorService::factory()->create([

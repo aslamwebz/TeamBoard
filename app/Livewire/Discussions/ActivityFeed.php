@@ -16,9 +16,9 @@ final class ActivityFeed extends Component
 {
     public $limit = 20;
 
-    public $type = null;
+    public $type;
 
-    public $typeId = null;
+    public $typeId;
 
     public function mount($type = null, $typeId = null): void
     {

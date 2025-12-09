@@ -30,7 +30,7 @@ final class ClientDashboard extends Component
 
     public $filesCount = 0;
 
-    public $latestFileDate = null;
+    public $latestFileDate;
 
     public $projectRequestsCount = 0;
 
@@ -48,7 +48,7 @@ final class ClientDashboard extends Component
         $user = Auth::user();
         $client = $this->getClientForUser($user);
 
-        if (! $client) {
+        if (!$client instanceof \App\Models\Client) {
             return;
         }
 
@@ -57,7 +57,7 @@ final class ClientDashboard extends Component
             ->projects()
             ->with(['tasks', 'phases', 'milestones'])
             ->get()
-            ->map(function ($project) {
+            ->map(function ($project): array {
                 $completedTasks = $project->tasks->where('status', 'completed')->count();
                 $totalTasks = $project->tasks->count();
 
@@ -72,11 +72,7 @@ final class ClientDashboard extends Component
         $this->projectProgress = $projectProgressCollection->toArray();
 
         // Calculate average project progress
-        if ($projectProgressCollection->count() > 0) {
-            $this->avgProjectProgress = $projectProgressCollection->avg('progress');
-        } else {
-            $this->avgProjectProgress = 0;
-        }
+        $this->avgProjectProgress = $projectProgressCollection->count() > 0 ? $projectProgressCollection->avg('progress') : 0;
 
         // Load invoices for the client and compute related statistics
         $invoicesCollection = $client
@@ -93,7 +89,7 @@ final class ClientDashboard extends Component
         $this->outstandingAmount = $outstandingInvoices->sum('amount');
 
         // Load files for the client (from attachments or discussions)
-        $clientFiles = collect();
+        collect();
 
         // Get files from client attachments
         $clientAttachments = \App\Models\ClientAttachment::where('client_id', $client->id)
@@ -103,7 +99,7 @@ final class ClientDashboard extends Component
 
         // Get files from project discussions and comments
         $projectDiscussionFiles = \App\Models\DiscussionAttachment::whereNull('comment_id')
-            ->whereHas('discussion.project', function ($query) use ($client) {
+            ->whereHas('discussion.project', function ($query) use ($client): void {
                 $query->where('client_id', $client->id);
             })
             ->with(['discussion.project', 'user'])
@@ -112,7 +108,7 @@ final class ClientDashboard extends Component
 
         // Get files from project comments
         $commentFiles = \App\Models\DiscussionAttachment::whereNotNull('comment_id')
-            ->whereHas('comment.discussion.project', function ($query) use ($client) {
+            ->whereHas('comment.discussion.project', function ($query) use ($client): void {
                 $query->where('client_id', $client->id);
             })
             ->with(['comment.discussion.project', 'user'])
@@ -123,7 +119,7 @@ final class ClientDashboard extends Component
         $allFiles = $clientAttachments->merge($projectDiscussionFiles)->merge($commentFiles);
 
         // Format files for display
-        $this->files = $allFiles->map(function ($file) {
+        $this->files = $allFiles->map(function ($file): array {
             $fileName = $file->file_name ?? $file->name ?? 'Unknown File';
             $fileSize = $file->file_size ?? 0;
             $createdAt = $file->created_at;
@@ -160,12 +156,12 @@ final class ClientDashboard extends Component
         })->sortByDesc('raw_created_at')->values()->all();
 
         $this->filesCount = count($this->files);
-        $this->latestFileDate = ! empty($this->files) ? $this->files[0]['created_at'] : null;
+        $this->latestFileDate = $this->files === [] ? null : $this->files[0]['created_at'];
 
         // Load project requests (discussions or requests related to client)
         $projectRequestsCollection = Discussion::query()
             ->where('user_id', $user->id)
-            ->orWhereHas('project', function ($query) use ($client) {
+            ->orWhereHas('project', function ($query) use ($client): void {
                 $query->where('client_id', $client->id);
             })
             ->latest()
@@ -177,7 +173,7 @@ final class ClientDashboard extends Component
         $this->pendingProjectRequestsCount = $projectRequestsCollection->where('status', 'pending')->count();
 
         // Load team activity related to client's projects
-        $teamActivities = \App\Models\ActivityLog::whereHas('project', function ($query) use ($client) {
+        $teamActivities = \App\Models\ActivityLog::whereHas('project', function ($query) use ($client): void {
             $query->where('client_id', $client->id);
         })
             ->with(['user', 'project'])
@@ -185,17 +181,15 @@ final class ClientDashboard extends Component
             ->limit(10)
             ->get();
 
-        $this->teamActivity = $teamActivities->map(function ($activity) {
-            return [
-                'id' => $activity->id,
-                'description' => $activity->description ?? 'Activity recorded',
-                'user' => $activity->user->name ?? 'System',
-                'project' => $activity->project->name ?? 'Unknown Project',
-                'type' => $activity->type ?? 'general',
-                'created_at' => $activity->created_at->format('M d, Y H:i'),
-                'time_ago' => $activity->created_at->diffForHumans(),
-            ];
-        })->all();
+        $this->teamActivity = $teamActivities->map(fn($activity): array => [
+            'id' => $activity->id,
+            'description' => $activity->description ?? 'Activity recorded',
+            'user' => $activity->user->name ?? 'System',
+            'project' => $activity->project->name ?? 'Unknown Project',
+            'type' => $activity->type ?? 'general',
+            'created_at' => $activity->created_at->format('M d, Y H:i'),
+            'time_ago' => $activity->created_at->diffForHumans(),
+        ])->all();
 
         $this->clientInfo = [
             'name' => $client->company_name ?? $client->name,
@@ -228,7 +222,7 @@ final class ClientDashboard extends Component
         $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
         $pow = min($pow, count($units) - 1);
 
-        $bytes /= pow(1024, $pow);
+        $bytes /= 1024 ** $pow;
 
         return round($bytes, 2).' '.$units[$pow];
     }

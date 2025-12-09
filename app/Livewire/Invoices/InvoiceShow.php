@@ -38,7 +38,7 @@ final class InvoiceShow extends Component
         return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
     }
 
-    protected function updateClientAddressString(): void
+    private function updateClientAddressString(): void
     {
         $address = $this->invoice->client->address;
         $city = $this->invoice->client->city;

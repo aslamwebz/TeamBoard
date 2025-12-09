@@ -81,7 +81,7 @@ final class UserEdit extends Component
         return view('livewire.users.user-edit');
     }
 
-    protected function rules()
+    private function rules(): array
     {
         return [
             'name' => ['required', 'string', 'max:255'],

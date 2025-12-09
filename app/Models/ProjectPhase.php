@@ -81,9 +81,7 @@ final class ProjectPhase extends Model
             return 0;
         }
 
-        $completedTasks = $tasks->filter(function ($task) {
-            return $task->status === TaskStatus::COMPLETED->value;
-        });
+        $completedTasks = $tasks->filter(fn($task): bool => $task->status === TaskStatus::COMPLETED->value);
 
         return (int) round(($completedTasks->count() / $tasks->count()) * 100);
     }
@@ -104,16 +102,16 @@ final class ProjectPhase extends Model
             return $this->status;  // Return current status if no tasks
         }
 
-        $completedTasks = $tasks->filter(function ($task) {
-            return $task->status === TaskStatus::COMPLETED->value;
-        });
+        $completedTasks = $tasks->filter(fn($task): bool => $task->status === TaskStatus::COMPLETED->value);
 
         if ($completedTasks->count() === $tasks->count()) {
             return PhaseStatus::COMPLETED->value;
         }
+
         if ($completedTasks->count() > 0) {
             return PhaseStatus::IN_PROGRESS->value;
         }
+
         // If tasks exist but none are completed, check if phase should be in progress based on dates
         if ($this->start_date && $this->start_date->isPast() && $this->end_date && $this->end_date->isFuture()) {
             return PhaseStatus::IN_PROGRESS->value;

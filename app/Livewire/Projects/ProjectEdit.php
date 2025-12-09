@@ -26,13 +26,6 @@ final class ProjectEdit extends Component
 
     public $due_date;
 
-    protected $rules = [
-        'name' => 'required|string|max:255',
-        'description' => 'nullable|string',
-        'status' => 'required|in:planning,in_progress,completed,on_hold',
-        'due_date' => 'nullable|date',
-    ];
-
     public function mount(Project $project): void
     {
         $this->project = $project;

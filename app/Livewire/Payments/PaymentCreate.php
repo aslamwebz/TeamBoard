@@ -39,7 +39,7 @@ final class PaymentCreate extends Component
 
     public $payment_methods;
 
-    public function mount()
+    public function mount(): void
     {
         $this->payment_date = now()->format('Y-m-d');
         $this->invoices = Invoice::orderBy('invoice_number')->get();
@@ -88,7 +88,7 @@ final class PaymentCreate extends Component
         return redirect()->route('payments.show', $payment);
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view('livewire.payments.payment-create');
     }

@@ -21,7 +21,7 @@ final class VendorInvoices extends Component
 
     public int $perPage = 10;
 
-    protected $queryString = ['search', 'status'];
+    private array $queryString = ['search', 'status'];
 
     public function mount($vendor): void
     {
@@ -39,11 +39,11 @@ final class VendorInvoices extends Component
 
         $query = VendorInvoice::where('vendor_id', $this->vendorId);
 
-        if ($this->search) {
+        if ($this->search !== '' && $this->search !== '0') {
             $query->where('invoice_number', 'like', '%'.$this->search.'%');
         }
 
-        if ($this->status) {
+        if ($this->status !== '' && $this->status !== '0') {
             $query->where('status', $this->status);
         }
 

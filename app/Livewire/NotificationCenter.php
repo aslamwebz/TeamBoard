@@ -10,7 +10,7 @@ final class NotificationCenter extends Component
 {
     public $showDropdown = false;
 
-    public $previewFileId = null;
+    public $previewFileId;
 
     public function mount(): void
     {

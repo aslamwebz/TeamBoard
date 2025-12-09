@@ -15,23 +15,6 @@ final class ContactCreate extends Component
 
     public Contact $contact;
 
-    protected $rules = [
-        'contact.first_name' => 'required|string|max:255',
-        'contact.last_name' => 'required|string|max:255',
-        'contact.email' => 'required|email|max:255',
-        'contact.position' => 'nullable|string|max:255',
-        'contact.job_title' => 'nullable|string|max:255',
-        'contact.department' => 'nullable|string|max:255',
-        'contact.phone' => 'nullable|string|max:20',
-        'contact.work_phone' => 'nullable|string|max:20',
-        'contact.mobile_phone' => 'nullable|string|max:20',
-        'contact.is_primary' => 'nullable|boolean',
-        'contact.is_billing_contact' => 'nullable|boolean',
-        'contact.is_technical_contact' => 'nullable|boolean',
-        'contact.notes' => 'nullable|string',
-        'contact.communication_preferences' => 'nullable|array',
-    ];
-
     public function mount(Client $client): void
     {
         $this->client = $client;

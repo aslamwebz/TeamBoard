@@ -19,7 +19,7 @@ final class VendorProjects extends Component
 
     public int $perPage = 10;
 
-    protected $queryString = ['search'];
+    private array $queryString = ['search'];
 
     public function mount($vendor): void
     {
@@ -37,10 +37,10 @@ final class VendorProjects extends Component
 
         $query = Project::where('vendor_id', $this->vendorId);
 
-        if ($this->search) {
+        if ($this->search !== '' && $this->search !== '0') {
             $query
                 ->where('name', 'like', '%'.$this->search.'%')
-                ->orWhereHas('client', function ($q) {
+                ->orWhereHas('client', function ($q): void {
                     $q->where('name', 'like', '%'.$this->search.'%');
                 });
         }

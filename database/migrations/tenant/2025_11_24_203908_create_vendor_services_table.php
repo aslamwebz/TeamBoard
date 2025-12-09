@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vendor_services', function (Blueprint $table) {
+        Schema::create('vendor_services', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('vendor_id')->constrained('vendors')->onDelete('cascade');
             $table->string('name'); // Service or material name

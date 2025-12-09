@@ -29,22 +29,22 @@ final class InvoiceIndex extends Component
 
     public $invoiceToDeleteId;
 
-    protected $queryString = ['search', 'status_filter', 'client_filter', 'per_page'];
+    private array $queryString = ['search', 'status_filter', 'client_filter', 'per_page'];
 
     public function render(): View
     {
         $invoices = Invoice::query()
-            ->where(function ($query) {
+            ->where(function ($query): void {
                 $query
                     ->where('invoice_number', 'like', '%'.$this->search.'%')
-                    ->orWhereHas('client', function ($query) {
+                    ->orWhereHas('client', function ($query): void {
                         $query->where('name', 'like', '%'.$this->search.'%');
                     });
             })
-            ->when($this->status_filter, function ($query) {
+            ->when($this->status_filter, function ($query): void {
                 $query->where('status', $this->status_filter);
             })
-            ->when($this->client_filter, function ($query) {
+            ->when($this->client_filter, function ($query): void {
                 $query->where('client_id', $this->client_filter);
             })
             ->with(['client', 'project'])

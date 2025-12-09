@@ -24,11 +24,11 @@ final class Upload extends Component
 
     public $files = [];
 
-    public $type = null;  // project, task, discussion, client
+    public $type;  // project, task, discussion, client
 
-    public $typeId = null;
+    public $typeId;
 
-    public $projectId = null;
+    public $projectId;
 
     public $projects = [];
 
@@ -38,7 +38,7 @@ final class Upload extends Component
 
     public $clients = [];
 
-    protected $rules = [
+    private array $rules = [
         'files.*' => 'required|file|max:10240|mimes:jpeg,png,gif,webp,svg,pdf,doc,docx,xls,xlsx,ppt,pptx,txt,csv,zip,rar,7z',
         'type' => 'required|in:project,task,discussion,client,general',
         'typeId' => 'nullable|integer',  // Make optional for general files
@@ -51,9 +51,11 @@ final class Upload extends Component
         if (request()->has('type')) {
             $this->type = request('type');
         }
+
         if (request()->has('type_id')) {
             $this->typeId = request('type_id');
         }
+
         if (request()->has('project_id')) {
             $this->projectId = request('project_id');
         }
@@ -79,9 +81,7 @@ final class Upload extends Component
                     ]);
                 } catch (\Illuminate\Validation\ValidationException $e) {
                     // Filter out any temporary file validation errors
-                    $filteredErrors = collect($e->errors())->filter(function ($error, $key) {
-                        return ! str_contains($key, 'files.') || ! str_contains(implode(' ', $error), 'tmp');
-                    });
+                    $filteredErrors = collect($e->errors())->filter(fn($error, $key): bool => ! str_contains((string) $key, 'files.') || ! str_contains(implode(' ', $error), 'tmp'));
 
                     if ($filteredErrors->isNotEmpty()) {
                         throw new \Illuminate\Validation\ValidationException(
@@ -107,6 +107,7 @@ final class Upload extends Component
                 if (! $discussion) {
                     throw new Exception('Discussion not found.');
                 }
+
                 $discussionId = $discussion->id;
             } elseif ($this->type === 'task' && $this->typeId) {
                 // Find the discussion related to this task
@@ -121,8 +122,8 @@ final class Upload extends Component
                     'type_id' => $task->id,
                     'project_id' => $task->project_id,
                 ], [
-                    'title' => "Discussions for task: {$task->title}",
-                    'content' => "General discussion thread for task: {$task->title}",
+                    'title' => 'Discussions for task: ' . $task->title,
+                    'content' => 'General discussion thread for task: ' . $task->title,
                     'user_id' => Auth::id(),
                 ]);
 
@@ -138,8 +139,8 @@ final class Upload extends Component
                     'type_id' => $project->id,
                     'project_id' => $project->id,
                 ], [
-                    'title' => "Files for project: {$project->name}",
-                    'content' => "File attachments for project: {$project->name}",
+                    'title' => 'Files for project: ' . $project->name,
+                    'content' => 'File attachments for project: ' . $project->name,
                     'user_id' => Auth::id(),
                 ]);
 
@@ -155,8 +156,8 @@ final class Upload extends Component
                     'type_id' => $client->id,
                     'project_id' => null,
                 ], [
-                    'title' => "Files for client: {$client->name}",
-                    'content' => "File attachments for client: {$client->name}",
+                    'title' => 'Files for client: ' . $client->name,
+                    'content' => 'File attachments for client: ' . $client->name,
                     'user_id' => Auth::id(),
                 ]);
 
@@ -173,7 +174,7 @@ final class Upload extends Component
                 foreach ($this->files as $file) {
                     if ($file && method_exists($file, 'getClientOriginalName')) {
                         try {
-                            $fileUploadService->upload($file, Auth::id(), $discussionId, null);
+                            $fileUploadService->upload($file, Auth::id(), $discussionId);
                             $successCount++;
                         } catch (Exception $e) {
                             $errorMessages[] = 'Failed to upload '.$file->getClientOriginalName().': '.$e->getMessage();
@@ -189,16 +190,16 @@ final class Upload extends Component
 
             // Set success/error messages
             if ($successCount > 0) {
-                session()->flash('success', "Successfully uploaded {$successCount} file(s).");
+                session()->flash('success', sprintf('Successfully uploaded %d file(s).', $successCount));
             }
 
-            if (! empty($errorMessages)) {
+            if ($errorMessages !== []) {
                 $this->addError('upload', implode(' ', $errorMessages));
                 session()->flash('error', 'Some files failed to upload. Please check the errors below.');
             }
 
             // Reset the form on successful upload
-            if (empty($errorMessages)) {
+            if ($errorMessages === []) {
                 $this->reset(['files']);
             }
 
@@ -206,22 +207,24 @@ final class Upload extends Component
             if ($this->type === 'discussion' && $this->typeId) {
                 return redirect()->route('discussions.show', $this->typeId);
             }
+
             if ($this->type === 'task' && $this->typeId) {
                 return redirect()->route('tasks.show', $this->typeId);
             }
+
             if ($this->type === 'project' && $this->typeId) {
                 return redirect()->route('projects.show', $this->typeId);
             }
 
             return redirect()->route('files.index');
-        } catch (Exception $e) {
-            Log::error('Upload error: '.$e->getMessage(), [
-                'exception' => $e,
-                'trace' => $e->getTraceAsString(),
+        } catch (Exception $exception) {
+            Log::error('Upload error: '.$exception->getMessage(), [
+                'exception' => $exception,
+                'trace' => $exception->getTraceAsString(),
             ]);
 
-            $this->addError('upload', 'An error occurred: '.$e->getMessage());
-            session()->flash('error', 'An error occurred while uploading files: '.$e->getMessage());
+            $this->addError('upload', 'An error occurred: '.$exception->getMessage());
+            session()->flash('error', 'An error occurred while uploading files: '.$exception->getMessage());
 
             return back()->withInput();
         }
@@ -254,9 +257,7 @@ final class Upload extends Component
             $this->resetValidation(['files.*']);
 
             // Only validate if files are not in temporary state
-            $validFiles = collect($this->files)->filter(function ($file) {
-                return ! str_contains($file->getRealPath(), 'tmp') && $file->isValid();
-            });
+            $validFiles = collect($this->files)->filter(fn($file): bool => ! str_contains((string) $file->getRealPath(), 'tmp') && $file->isValid());
 
             if ($validFiles->isNotEmpty()) {
                 $this->validate([
@@ -266,7 +267,7 @@ final class Upload extends Component
         }
     }
 
-    protected function loadData(): void
+    private function loadData(): void
     {
         $this->projects = [];
         $this->tasks = [];
@@ -276,11 +277,11 @@ final class Upload extends Component
         if ($this->type === 'project') {
             $this->projects = Project::orderBy('name')->get();
         } elseif ($this->type === 'task') {
-            $this->tasks = Task::when($this->projectId, function ($query) {
+            $this->tasks = Task::when($this->projectId, function ($query): void {
                 $query->where('project_id', $this->projectId);
             })->orderBy('title')->get();
         } elseif ($this->type === 'discussion') {
-            $this->discussions = Discussion::when($this->projectId, function ($query) {
+            $this->discussions = Discussion::when($this->projectId, function ($query): void {
                 $query->where('project_id', $this->projectId);
             })->orderBy('title')->get();
         } elseif ($this->type === 'client') {

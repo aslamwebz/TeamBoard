@@ -12,7 +12,7 @@ final class ContactEdit extends Component
 {
     public Contact $contact;
 
-    protected $rules = [
+    private array $rules = [
         'contact.first_name' => 'required|string|max:255',
         'contact.last_name' => 'required|string|max:255',
         'contact.email' => 'required|email|max:255|unique:contacts,email',

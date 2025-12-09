@@ -10,18 +10,12 @@ use Illuminate\Queue\SerializesModels;
 
 final class PaymentFailedNotification
 {
-    use Dispatchable, SerializesModels;
-
-    public $user;
-
-    public $paymentDetails;
-
+    use Dispatchable;
+    use SerializesModels;
     /**
      * Create a new event instance.
      */
-    public function __construct(User $user, $paymentDetails = null)
+    public function __construct(public User $user, public $paymentDetails = null)
     {
-        $this->user = $user;
-        $this->paymentDetails = $paymentDetails;
     }
 }

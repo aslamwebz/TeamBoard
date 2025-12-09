@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('tasks', function (Blueprint $table) {
+        Schema::table('tasks', function (Blueprint $table): void {
             $table->foreignId('project_phase_id')->nullable()->constrained('project_phases')->onDelete('set null');
             $table->json('dependencies')->nullable()->comment('List of task IDs this task depends on');
             $table->integer('order')->default(0)->after('project_id');
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('tasks', function (Blueprint $table) {
+        Schema::table('tasks', function (Blueprint $table): void {
             $table->dropForeign(['project_phase_id']);
             $table->dropColumn(['project_phase_id', 'dependencies', 'order']);
         });

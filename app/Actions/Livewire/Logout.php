@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Actions\Livewire;
 
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 final class Logout
 {
@@ -20,6 +20,6 @@ final class Logout
         Session::invalidate();
         Session::regenerateToken();
 
-        return redirect('/');
+        return redirect()->route('login');   
     }
 }

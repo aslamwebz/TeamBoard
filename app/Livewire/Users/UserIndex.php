@@ -19,7 +19,7 @@ final class UserIndex extends Component
 
     public $perPage = 10;
 
-    protected $queryString = [
+    private array $queryString = [
         'search' => ['except' => ''],
         'role' => ['except' => 'all'],
         'perPage' => ['except' => 10],
@@ -39,7 +39,7 @@ final class UserIndex extends Component
         $query = User::query();
 
         if ($this->search) {
-            $query->where(function ($q) {
+            $query->where(function ($q): void {
                 $q
                     ->where('name', 'like', '%'.$this->search.'%')
                     ->orWhere('email', 'like', '%'.$this->search.'%');

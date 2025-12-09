@@ -29,13 +29,6 @@ final class ReportEdit extends Component
 
     public $data = [];
 
-    protected $rules = [
-        'title' => 'required|string|max:255',
-        'description' => 'nullable|string|max:500',
-        'report_type' => 'required|in:financial,project,invoice,client',
-        'status' => 'required|in:draft,generated,archived',
-    ];
-
     public function mount(Report $report): void
     {
         $this->report = $report;

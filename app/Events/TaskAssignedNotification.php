@@ -11,21 +11,12 @@ use Illuminate\Queue\SerializesModels;
 
 final class TaskAssignedNotification
 {
-    use Dispatchable, SerializesModels;
-
-    public $task;
-
-    public $assignedUser;
-
-    public $assigner;
-
+    use Dispatchable;
+    use SerializesModels;
     /**
      * Create a new event instance.
      */
-    public function __construct(Task $task, User $assignedUser, User $assigner)
+    public function __construct(public Task $task, public User $assignedUser, public User $assigner)
     {
-        $this->task = $task;
-        $this->assignedUser = $assignedUser;
-        $this->assigner = $assigner;
     }
 }

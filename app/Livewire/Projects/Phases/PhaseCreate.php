@@ -27,15 +27,6 @@ final class PhaseCreate extends Component
 
     public $order = 0;
 
-    protected $rules = [
-        'name' => 'required|string|max:255',
-        'description' => 'nullable|string',
-        'start_date' => 'nullable|date',
-        'end_date' => 'nullable|date|after_or_equal:start_date',
-        'status' => 'required|in:not_started,in_progress,completed,on_hold',
-        'order' => 'required|integer|min:0',
-    ];
-
     public function mount(Project $project): void
     {
         $this->project = $project;

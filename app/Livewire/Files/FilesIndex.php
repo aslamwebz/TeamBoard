@@ -32,7 +32,7 @@ final class FilesIndex extends Component
         $query = DiscussionAttachment::with(['user', 'discussion', 'comment']);
 
         // Apply search filter
-        $query->where(function ($q) {
+        $query->where(function ($q): void {
             $q->where('original_name', 'like', '%'.$this->search.'%')
                 ->orWhere('mime_type', 'like', '%'.$this->search.'%');
         });
@@ -42,7 +42,7 @@ final class FilesIndex extends Component
             if ($this->type === 'image') {
                 $query->where('mime_type', 'like', 'image/%');
             } elseif ($this->type === 'document') {
-                $query->where(function ($q) {
+                $query->where(function ($q): void {
                     $q->where('mime_type', 'application/pdf')
                         ->orWhere('mime_type', 'application/msword')
                         ->orWhere('mime_type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')

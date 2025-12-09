@@ -29,21 +29,21 @@ final class TaskFactory extends Factory
 
     public function withProject(Project $project): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'project_id' => $project->id,
         ]);
     }
 
     public function withPhase(ProjectPhase $phase): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'project_phase_id' => $phase->id,
         ]);
     }
 
     public function withDependencies(array $dependencies): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'dependencies' => json_encode($dependencies),
         ]);
     }

@@ -23,7 +23,7 @@ final class UserShow extends Component
         $this->user = $user;
     }
 
-    public function changeTab($tab): void
+    public function changeTab(string $tab): void
     {
         $this->activeTab = $tab;
     }
@@ -45,6 +45,7 @@ final class UserShow extends Component
             if (! isset($groupedPermissions[$category])) {
                 $groupedPermissions[$category] = [];
             }
+
             $groupedPermissions[$category][] = $permission;
         }
 

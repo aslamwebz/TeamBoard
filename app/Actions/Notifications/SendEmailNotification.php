@@ -18,8 +18,8 @@ final class SendEmailNotification
         try {
             Mail::to($user)->send(new GenericNotification($notification));
             $notification->update(['email_sent_at' => now()]);
-        } catch (Exception $e) {
-            Log::error('Failed to send email notification: '.$e->getMessage());
+        } catch (Exception $exception) {
+            Log::error('Failed to send email notification: '.$exception->getMessage());
         }
     }
 }

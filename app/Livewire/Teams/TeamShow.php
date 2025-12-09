@@ -72,6 +72,7 @@ final class TeamShow extends Component
         foreach ($this->team->projects as $project) {
             $teamTasks = $teamTasks->merge($project->tasks);
         }
+
         $this->recentTasks = $teamTasks->take(10);
 
         // Define status colors for presentation using enum

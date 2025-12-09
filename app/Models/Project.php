@@ -102,16 +102,12 @@ final class Project extends Model
                 return 0;
             }
 
-            $completedTasks = $tasks->filter(function ($task) {
-                return $task->status === \App\Enums\TaskStatus::COMPLETED->value;
-            });
+            $completedTasks = $tasks->filter(fn($task): bool => $task->status === \App\Enums\TaskStatus::COMPLETED->value);
 
             return (int) round(($completedTasks->count() / $tasks->count()) * 100);
         }
 
-        $completedPhases = $phases->filter(function ($phase) {
-            return $phase->status === \App\Enums\PhaseStatus::COMPLETED->value;
-        });
+        $completedPhases = $phases->filter(fn($phase): bool => $phase->status === \App\Enums\PhaseStatus::COMPLETED->value);
 
         return (int) round(($completedPhases->count() / $phases->count()) * 100);
     }

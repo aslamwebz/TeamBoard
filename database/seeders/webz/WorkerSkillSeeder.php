@@ -26,7 +26,7 @@ final class WorkerSkillSeeder extends Seeder
 
         foreach ($workers as $worker) {
             // Assign 3-7 skills to each worker
-            $selectedSkills = $skills->random(rand(3, 7));
+            $selectedSkills = $skills->random(random_int(3, 7));
 
             foreach ($selectedSkills as $skill) {
                 $worker->skills()->attach($skill->id, [

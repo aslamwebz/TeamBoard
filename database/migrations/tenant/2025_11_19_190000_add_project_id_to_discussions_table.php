@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('discussions', function (Blueprint $table) {
+        Schema::table('discussions', function (Blueprint $table): void {
             $table->unsignedBigInteger('project_id')->nullable()->after('type_id');
 
             // Add foreign key constraint
@@ -29,7 +29,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('discussions', function (Blueprint $table) {
+        Schema::table('discussions', function (Blueprint $table): void {
             $table->dropForeign(['project_id']);
             $table->dropColumn('project_id');
         });

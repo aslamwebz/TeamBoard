@@ -39,7 +39,10 @@ final class FilePreviewModal extends Component
         return view('livewire.components.file-preview-modal');
     }
 
-    public function getFilePreviewData($file)
+    /**
+     * @return mixed[]
+     */
+    public function getFilePreviewData($file): array
     {
         if (! $file) {
             return [];

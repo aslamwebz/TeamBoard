@@ -22,30 +22,23 @@ final class PaymentReminders extends Component
             ->where('status', '!=', InvoiceStatus::PAID->value)
             ->where('status', '!=', InvoiceStatus::CANCELLED->value);
 
-        switch ($this->filter) {
-            case 'overdue':
-                $invoices = $invoices
-                    ->where('due_date', '<', now())
-                    ->where(function ($query) {
-                        $query
-                            ->where('status', '!=', InvoiceStatus::PAID->value)
-                            ->orWhere('status', InvoiceStatus::PARTIALLY_PAID->value);
-                    });
-                break;
-            case 'upcoming':
-                $invoices = $invoices->where('due_date', '>=', now());
-                break;
-            case 'all':
-            default:
-                $invoices = $invoices;
-                break;
-        }
+        $invoices = match ($this->filter) {
+            'overdue' => $invoices
+                ->where('due_date', '<', now())
+                ->where(function ($query): void {
+                    $query
+                        ->where('status', '!=', InvoiceStatus::PAID->value)
+                        ->orWhere('status', InvoiceStatus::PARTIALLY_PAID->value);
+                }),
+            'upcoming' => $invoices->where('due_date', '>=', now()),
+            default => $invoices,
+        };
 
         $invoices = $invoices->orderBy('due_date', 'asc')->paginate(10);
 
         // Get statistics
         $totalOverdue = Invoice::where('due_date', '<', now())
-            ->where(function ($query) {
+            ->where(function ($query): void {
                 $query
                     ->where('status', '!=', InvoiceStatus::PAID->value)
                     ->where('status', '!=', InvoiceStatus::CANCELLED->value);
@@ -58,7 +51,7 @@ final class PaymentReminders extends Component
             ->sum('total');
 
         $overdueCount = Invoice::where('due_date', '<', now())
-            ->where(function ($query) {
+            ->where(function ($query): void {
                 $query
                     ->where('status', '!=', InvoiceStatus::PAID->value)
                     ->where('status', '!=', InvoiceStatus::CANCELLED->value);
@@ -73,13 +66,13 @@ final class PaymentReminders extends Component
         ])->layout('components.layouts.app');
     }
 
-    public function sendReminder($invoiceId)
+    public function sendReminder($invoiceId): void
     {
         $invoice = Invoice::find($invoiceId);
         if ($invoice) {
             // In a real app, you would send an email notification here
             // For now, we'll just log it
-            Log::info("Payment reminder sent for invoice {$invoice->invoice_number}");
+            Log::info('Payment reminder sent for invoice ' . $invoice->invoice_number);
 
             $this->dispatch('reminder-sent', message: 'Reminder sent successfully');
         }

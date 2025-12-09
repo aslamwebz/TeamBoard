@@ -23,12 +23,6 @@ final class ReportCreate extends Component
 
     public $data = [];
 
-    protected $rules = [
-        'title' => 'required|string|max:255',
-        'description' => 'nullable|string|max:500',
-        'report_type' => 'required|in:financial,project,invoice,client',
-    ];
-
     public function createReport(): RedirectResponse
     {
         $validated = $this->validate();

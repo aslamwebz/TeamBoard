@@ -51,7 +51,7 @@ final class WorkerDashboard extends Component
 
         if ($workerProfile) {
             // Load "My Tasks" - tasks assigned to this user
-            $this->myTasks = Task::whereHas('users', function ($query) use ($user) {
+            $this->myTasks = Task::whereHas('users', function ($query) use ($user): void {
                 $query->where('user_id', $user->id);
             })
                 ->with(['project', 'users'])
@@ -65,8 +65,8 @@ final class WorkerDashboard extends Component
 
             // Load "My Projects" - projects this user is assigned to
             $this->myProjects = $user->projects()
-                ->with(['tasks' => function ($query) use ($user) {
-                    $query->whereHas('users', function ($q) use ($user) {
+                ->with(['tasks' => function ($query) use ($user): void {
+                    $query->whereHas('users', function ($q) use ($user): void {
                         $q->where('user_id', $user->id);
                     })->with('users');
                 }, 'milestones', 'phases'])
@@ -81,11 +81,12 @@ final class WorkerDashboard extends Component
                 foreach ($this->myProjects as $project) {
                     $totalCompletion += $project->getCompletionPercentage();
                 }
+
                 $this->avgProjectCompletion = $totalCompletion / $this->myProjectsCount;
             }
 
             // Load "Upcoming Deadlines" - tasks assigned to the user with due dates (including overdue)
-            $this->upcomingDeadlines = Task::whereHas('users', function ($query) use ($user) {
+            $this->upcomingDeadlines = Task::whereHas('users', function ($query) use ($user): void {
                 $query->where('user_id', $user->id);
             })
                 ->whereNotNull('due_date')
@@ -109,7 +110,7 @@ final class WorkerDashboard extends Component
         $this->teamActivity = collect();
 
         // Get recent activities related to user's tasks and projects
-        $userTasks = Task::whereHas('users', function ($query) use ($user) {
+        $userTasks = Task::whereHas('users', function ($query) use ($user): void {
             $query->where('user_id', $user->id);
         })->pluck('id');
 
@@ -121,7 +122,7 @@ final class WorkerDashboard extends Component
             $this->teamActivity = collect([
                 ['type' => 'task_assigned', 'message' => 'You were assigned to a new task', 'time' => now()->subHours(2), 'user' => 'John Doe'],
                 ['type' => 'comment', 'message' => 'Sarah Miller commented on your task', 'time' => now()->subHours(4), 'user' => 'Sarah Miller'],
-                ['type' => 'milestone', 'message' => 'A project you\'re working on reached a milestone', 'time' => now()->subDay(), 'user' => 'System'],
+                ['type' => 'milestone', 'message' => "A project you're working on reached a milestone", 'time' => now()->subDay(), 'user' => 'System'],
             ]);
         }
 
@@ -187,7 +188,7 @@ final class WorkerDashboard extends Component
         /** @var \App\Models\User $user */
         $user = auth()->user();
         $task = Task::where('id', $taskId)
-            ->whereHas('users', function ($query) use ($user) {
+            ->whereHas('users', function ($query) use ($user): void {
                 $query->where('user_id', $user->id);
             })
             ->first();
@@ -199,7 +200,7 @@ final class WorkerDashboard extends Component
         }
     }
 
-    public function getTaskDeadlineInfo($task)
+    public function getTaskDeadlineInfo($task): array
     {
         $isOverdue = $task->due_date->isBefore(now()->startOfDay());
         $dateClass = $isOverdue ? 'text-red-600 dark:text-red-400' : ($task->due_date->isToday() ? 'text-amber-600 dark:text-amber-400' : 'text-zinc-500 dark:text-zinc-400');

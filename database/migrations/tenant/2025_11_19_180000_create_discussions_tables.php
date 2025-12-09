@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('discussions', function (Blueprint $table) {
+        Schema::create('discussions', function (Blueprint $table): void {
             $table->id();
             $table->string('title');
             $table->text('content');
@@ -30,7 +30,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table): void {
             $table->id();
             $table->text('content');
             $table->unsignedBigInteger('discussion_id');
@@ -49,7 +49,7 @@ return new class extends Migration
             $table->foreign('parent_id')->references('id')->on('comments')->onDelete('cascade');
         });
 
-        Schema::create('discussion_attachments', function (Blueprint $table) {
+        Schema::create('discussion_attachments', function (Blueprint $table): void {
             $table->id();
             $table->string('filename');
             $table->string('original_name');
@@ -70,7 +70,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 
-        Schema::create('activity_log', function (Blueprint $table) {
+        Schema::create('activity_log', function (Blueprint $table): void {
             $table->id();
             $table->string('action'); // created_discussion, commented, uploaded_file, etc.
             $table->string('description')->nullable();

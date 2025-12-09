@@ -40,7 +40,7 @@ final class NotificationDropdown extends Component
             ->limit(10)
             ->get();
 
-        $this->unreadNotificationsCount = $this->notifications->filter(fn ($n) => ! $n->isRead())->count();
+        $this->unreadNotificationsCount = $this->notifications->filter(fn ($n): bool => ! $n->isRead())->count();
     }
 
     public function markAsRead($notificationId): void

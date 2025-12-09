@@ -19,7 +19,7 @@ final class PurchaseOrderIndex extends Component
 
     public int $perPage = 10;
 
-    protected $queryString = ['search', 'status'];
+    private array $queryString = ['search', 'status'];
 
     public function updatingSearch(): void
     {
@@ -30,14 +30,14 @@ final class PurchaseOrderIndex extends Component
     {
         $query = PurchaseOrder::with(['vendor', 'creator']);
 
-        if ($this->search) {
+        if ($this->search !== '' && $this->search !== '0') {
             $query->where('po_number', 'like', '%'.$this->search.'%')
-                ->orWhereHas('vendor', function ($q) {
+                ->orWhereHas('vendor', function ($q): void {
                     $q->where('name', 'like', '%'.$this->search.'%');
                 });
         }
 
-        if ($this->status) {
+        if ($this->status !== '' && $this->status !== '0') {
             $query->where('status', $this->status);
         }
 

@@ -20,15 +20,15 @@ final class DiscussionIndex extends Component
 {
     use WithPagination;
 
-    public $type = null; // project, task, etc.
+    public $type; // project, task, etc.
 
-    public $typeId = null;
+    public $typeId;
 
     public $search = '';
 
     public $sortBy = 'latest';
 
-    protected $queryString = ['type', 'typeId', 'search', 'sortBy'];
+    private array $queryString = ['type', 'typeId', 'search', 'sortBy'];
 
     public function render(): View
     {
@@ -47,24 +47,16 @@ final class DiscussionIndex extends Component
         }
 
         // Apply sorting
-        switch ($this->sortBy) {
-            case 'latest':
-                $query->latest();
-                break;
-            case 'oldest':
-                $query->oldest();
-                break;
-            case 'popular':
-                $query->withCount('comments')->orderBy('comments_count', 'desc');
-                break;
-            default:
-                $query->latest();
-                break;
-        }
+        match ($this->sortBy) {
+            'latest' => $query->latest(),
+            'oldest' => $query->oldest(),
+            'popular' => $query->withCount('comments')->orderBy('comments_count', 'desc'),
+            default => $query->latest(),
+        };
 
         $discussions = $query->paginate(10);
 
-        return view('livewire.discussions.discussion-index', compact('discussions'));
+        return view('livewire.discussions.discussion-index', ['discussions' => $discussions]);
     }
 
     public function createDiscussion($type = null, $typeId = null): RedirectResponse

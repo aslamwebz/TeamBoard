@@ -96,7 +96,7 @@ final class RolePermissionSeeder extends Seeder
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
         $managerRole = Role::firstOrCreate(['name' => 'manager']);
         $employeeRole = Role::firstOrCreate(['name' => 'employee']);
-        $clientRole = Role::firstOrCreate(['name' => 'client']);
+        Role::firstOrCreate(['name' => 'client']);
 
         // Assign permissions to roles
         $adminRole->givePermissionTo(Permission::all());

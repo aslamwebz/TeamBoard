@@ -27,15 +27,15 @@ final class ContactActivity extends Model
     /**
      * Activity types
      */
-    public const TYPE_EMAIL = 'email';
+    public const string TYPE_EMAIL = 'email';
 
-    public const TYPE_CALL = 'call';
+    public const string TYPE_CALL = 'call';
 
-    public const TYPE_MEETING = 'meeting';
+    public const string TYPE_MEETING = 'meeting';
 
-    public const TYPE_NOTE = 'note';
+    public const string TYPE_NOTE = 'note';
 
-    public const TYPE_TASK = 'task';
+    public const string TYPE_TASK = 'task';
 
     /**
      * @var list<string>

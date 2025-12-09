@@ -25,7 +25,7 @@ final class VendorContactSeeder extends Seeder
 
         foreach ($vendors as $vendor) {
             // Create 1-3 contacts per vendor
-            $contactCount = rand(1, 3);
+            $contactCount = random_int(1, 3);
 
             for ($i = 0; $i < $contactCount; $i++) {
                 VendorContact::factory()->create([

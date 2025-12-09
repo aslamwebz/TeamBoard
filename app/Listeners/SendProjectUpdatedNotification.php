@@ -7,13 +7,10 @@ namespace App\Listeners;
 use App\Events\ProjectUpdatedNotification as ProjectUpdatedEvent;
 use App\Services\NotificationService;
 
-final class SendProjectUpdatedNotification
+final readonly class SendProjectUpdatedNotification
 {
-    private $notificationService;
-
-    public function __construct(NotificationService $notificationService)
+    public function __construct(private \App\Services\NotificationService $notificationService)
     {
-        $this->notificationService = $notificationService;
     }
 
     public function handle(ProjectUpdatedEvent $event): void

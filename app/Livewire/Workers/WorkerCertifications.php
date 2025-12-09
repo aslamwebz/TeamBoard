@@ -29,7 +29,7 @@ final class WorkerCertifications extends Component
 
     public $certifications = [];
 
-    protected $rules = [
+    private array $rules = [
         'certification_id' => 'required|exists:certifications,id',
         'date_obtained' => 'required|date',
         'expiry_date' => 'nullable|date|after_or_equal:date_obtained',
@@ -49,7 +49,7 @@ final class WorkerCertifications extends Component
         $this->validate();
 
         $worker = WorkerProfile::find($this->workerId);
-        $certification = Certification::find($this->certification_id);
+        Certification::find($this->certification_id);
 
         // Handle file upload if provided
         $attachmentPath = null;

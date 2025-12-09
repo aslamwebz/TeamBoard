@@ -98,7 +98,7 @@ final class PurchaseOrderEdit extends Component
         ]);
     }
 
-    protected function rules(): array
+    private function rules(): array
     {
         return [
             'vendor_id' => 'required|exists:vendors,id',

@@ -22,8 +22,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 final class Comment extends Model
 {
-    use HasFactory, HasMentions;
-
+    use HasFactory;
+    use HasMentions;
     /**
      * @var list<string>
      */
@@ -94,16 +94,16 @@ final class Comment extends Model
     /**
      * Format content with mentions
      */
-    public function formatContentWithMentions()
+    public function formatContentWithMentions(): ?string
     {
         $pattern = '/@(\w+)/';
 
-        return preg_replace_callback($pattern, function ($matches) {
+        return preg_replace_callback($pattern, function ($matches): string {
             $username = $matches[1];
             $user = User::where('name', $username)->first();
 
             if ($user) {
-                return "<a href='/users/{$user->id}' class='text-blue-600 hover:underline'>@{$username}</a>";
+                return sprintf("<a href='/users/%s' class='text-blue-600 hover:underline'>@%s</a>", $user->id, $username);
             }
 
             return $matches[0]; // Return original if user not found

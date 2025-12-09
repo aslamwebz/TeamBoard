@@ -18,8 +18,8 @@ final class SendPushNotification
         try {
             Bus::dispatch(new SendPushJob($user, $notification));
             $notification->update(['push_sent_at' => now()]);
-        } catch (Exception $e) {
-            Log::error('Failed to send push notification: '.$e->getMessage());
+        } catch (Exception $exception) {
+            Log::error('Failed to send push notification: '.$exception->getMessage());
         }
     }
 }

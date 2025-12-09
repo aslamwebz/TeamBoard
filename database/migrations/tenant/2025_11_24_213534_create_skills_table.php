@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('skills', function (Blueprint $table) {
+        Schema::create('skills', function (Blueprint $table): void {
             $table->id();
             $table->string('name'); // Name of the skill
             $table->string('category')->nullable(); // Category for the skill (technical, soft, etc.)

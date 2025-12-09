@@ -39,12 +39,12 @@ final class PurchaseOrderItemSeeder extends Seeder
 
         foreach ($purchaseOrders as $purchaseOrder) {
             // Add 2-5 items to each purchase order
-            $itemCount = rand(2, 5);
+            $itemCount = random_int(2, 5);
 
             for ($i = 0; $i < $itemCount; $i++) {
                 $item = $items[array_rand($items)];
 
-                $quantity = rand(1, 10);
+                $quantity = random_int(1, 10);
                 $unitPrice = $item[3];
                 $totalPrice = $quantity * $unitPrice;
 
@@ -56,7 +56,7 @@ final class PurchaseOrderItemSeeder extends Seeder
                     'quantity' => $quantity,
                     'total_price' => $totalPrice,
                     'unit_of_measure' => $item[2],
-                    'received_quantity' => $purchaseOrder->status === 'received' ? $quantity : ($purchaseOrder->status === 'partially_received' ? rand(1, $quantity) : 0),
+                    'received_quantity' => $purchaseOrder->status === 'received' ? $quantity : ($purchaseOrder->status === 'partially_received' ? random_int(1, $quantity) : 0),
                     'service_code' => 'CODE-'.mb_strtoupper(mb_substr(md5($item[0]), 0, 6)),
                 ]);
             }

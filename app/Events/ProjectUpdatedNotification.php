@@ -11,18 +11,12 @@ use Illuminate\Queue\SerializesModels;
 
 final class ProjectUpdatedNotification
 {
-    use Dispatchable, SerializesModels;
-
-    public $project;
-
-    public $user;
-
+    use Dispatchable;
+    use SerializesModels;
     /**
      * Create a new event instance.
      */
-    public function __construct(Project $project, User $user)
+    public function __construct(public Project $project, public User $user)
     {
-        $this->project = $project;
-        $this->user = $user;
     }
 }

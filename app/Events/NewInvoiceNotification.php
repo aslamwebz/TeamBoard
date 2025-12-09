@@ -11,18 +11,13 @@ use Illuminate\Queue\SerializesModels;
 
 final class NewInvoiceNotification
 {
-    use Dispatchable, SerializesModels;
-
-    public $invoice;
-
-    public $user;
-
+    use Dispatchable;
+    use SerializesModels;
     /**
      * Create a new event instance.
      */
-    public function __construct(Invoice $invoice, User $user)
+    public function __construct(public Invoice $invoice, public User $user)
     {
-        $this->invoice = $invoice;
-        $this->user = $user; // This should be the user receiving the notification
+        // This should be the user receiving the notification
     }
 }

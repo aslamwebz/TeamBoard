@@ -42,7 +42,7 @@ final class DiscussionEdit extends Component
 
     public $users = [];
 
-    protected $rules = [
+    private array $rules = [
         'title' => 'required|string|max:255',
         'content' => 'required|string',
         'type' => 'required|in:project,task,client',
@@ -85,7 +85,7 @@ final class DiscussionEdit extends Component
         // Process attachments if any
         foreach ($this->attachments as $attachment) {
             $fileUploadService = new \App\Services\FileUploadService();
-            $fileUploadService->upload($attachment, Auth::id(), $this->discussion->id, null);
+            $fileUploadService->upload($attachment, Auth::id(), $this->discussion->id);
         }
 
         session()->flash('message', 'Discussion updated successfully.');

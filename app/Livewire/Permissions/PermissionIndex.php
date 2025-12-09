@@ -19,7 +19,7 @@ final class PermissionIndex extends Component
 
     public $page = 1;
 
-    protected $paginationTheme = 'tailwind';
+    private string $paginationTheme = 'tailwind';
 
     public function updatingSearch(): void
     {
@@ -70,9 +70,9 @@ final class PermissionIndex extends Component
             ->get();
 
         // Group all permissions first
-        $allGroupedPermissions = $allPermissions->groupBy(function ($permission) {
+        $allGroupedPermissions = $allPermissions->groupBy(function ($permission): string {
             // Standard CRUD permissions are typically in format: action model (e.g., 'view users', 'create projects')
-            $parts = explode(' ', $permission->name, 2);  // Limit to 2 parts to avoid breaking on multi-word descriptions
+            $parts = explode(' ', (string) $permission->name, 2);  // Limit to 2 parts to avoid breaking on multi-word descriptions
 
             if (count($parts) === 2) {
                 $action = $parts[0];  // First part is the action (view, create, edit, delete)
@@ -102,7 +102,6 @@ final class PermissionIndex extends Component
         $currentGroups = collect();
         $itemCount = 0;
         $groupIndex = 0;
-        $startIndex = 0;
 
         // Skip groups for previous pages
         for ($page = 1; $page < $currentPage; $page++) {
@@ -174,7 +173,7 @@ final class PermissionIndex extends Component
 
         // Get the flat list of permissions for the current page to maintain pagination info
         $currentPermissions = collect();
-        foreach ($currentGroups as $model => $modelPermissions) {
+        foreach ($currentGroups as $modelPermissions) {
             foreach ($modelPermissions as $permission) {
                 $currentPermissions->push($permission);
             }
@@ -191,10 +190,10 @@ final class PermissionIndex extends Component
 
         // But update the paginator to reflect the actual pagination logic
         $paginatedPermissions->setCollection($currentPermissions);
-        $paginatedPermissions->total($allPermissions->count());  // This may not be accurate for grouped pagination
-        $paginatedPermissions->perPage($maxItemsPerPage);
-        $paginatedPermissions->currentPage($currentPage);
-        $paginatedPermissions->lastPage($totalPages);
+        $paginatedPermissions->total();  // This may not be accurate for grouped pagination
+        $paginatedPermissions->perPage();
+        $paginatedPermissions->currentPage();
+        $paginatedPermissions->lastPage();
 
         return view('livewire.permissions.permission-index', [
             'permissions' => $paginatedPermissions,

@@ -37,11 +37,11 @@ final class CompanyProfile extends Component
 
     public $branding = [];
 
-    public $currentLogoUrl = null;
+    public $currentLogoUrl;
 
-    public $logoPreview = null;
+    public $logoPreview;
 
-    protected $rules = [
+    private array $rules = [
         'legal_name' => 'required|string|max:255',
         'address' => 'nullable|string',
         'phone' => 'nullable|string|max:20',
@@ -56,7 +56,7 @@ final class CompanyProfile extends Component
     public function mount(): void
     {
         $tenant = Tenant::current();
-        if ($tenant) {
+        if ($tenant instanceof \App\Models\Tenant) {
             $this->legal_name = $tenant->legal_name;
             $this->address = $tenant->address;
             $this->phone = $tenant->phone;
@@ -85,7 +85,7 @@ final class CompanyProfile extends Component
         $validatedData = $this->validate();
 
         $tenant = Tenant::current();
-        if (! $tenant) {
+        if (!$tenant instanceof \App\Models\Tenant) {
             $this->addError('general', 'No active tenant found.');
 
             return;

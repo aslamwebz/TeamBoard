@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payment_methods', function (Blueprint $table) {
+        Schema::create('payment_methods', function (Blueprint $table): void {
             $table->id();
             $table->string('name'); // Name of the payment method (e.g., Credit Card, Bank Transfer)
             $table->string('type'); // Type of payment method (e.g., card, transfer, digital_wallet)

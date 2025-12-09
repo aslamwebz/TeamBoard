@@ -34,12 +34,12 @@ trait HasMentions
     {
         $pattern = '/@(\w+)/';
 
-        return preg_replace_callback($pattern, function ($matches) {
+        return preg_replace_callback($pattern, function ($matches): string {
             $username = $matches[1];
             $user = User::where('name', $username)->first();
 
             if ($user) {
-                return "<a href='/users/{$user->id}' class='text-blue-600 hover:underline'>@{$username}</a>";
+                return sprintf("<a href='/users/%s' class='text-blue-600 hover:underline'>@%s</a>", $user->id, $username);
             }
 
             return $matches[0]; // Return original if user not found
@@ -49,13 +49,12 @@ trait HasMentions
     /**
      * Notify mentioned users
      */
-    public function notifyMentionedUsers(string $content, User $author, string $type = 'comment', $relatedModel = null)
+    public function notifyMentionedUsers(string $content, User $author, string $type = 'comment', $relatedModel = null): void
     {
         $mentionedUsers = collect($this->parseMentions($content));
-        $mentionedUsers = $mentionedUsers->filter(function ($user) use ($author) {
+        $mentionedUsers = $mentionedUsers->filter(fn(array $user): bool =>
             // Don't notify the author of the comment if they mentioned themselves
-            return $user['id'] !== $author->id;
-        });
+            $user['id'] !== $author->id);
 
         foreach ($mentionedUsers as $user) {
             $userModel = User::find($user['id']);
@@ -69,13 +68,13 @@ trait HasMentions
     /**
      * Create notification for mentions
      */
-    private function createMentionNotification(User $mentionedUser, User $author, string $content, string $type, $relatedModel = null)
+    private function createMentionNotification(User $mentionedUser, User $author, string $content, string $type, $relatedModel = null): void
     {
         // Create a notification for the mentioned user
         $notification = new \App\Models\Notification();
         $notification->user_id = $mentionedUser->id;
         $notification->type = 'mentioned_in_comment';
-        $notification->message = "You were mentioned by {$author->name} in a {$type}";
+        $notification->message = sprintf('You were mentioned by %s in a %s', $author->name, $type);
         $notification->data = [
             'mentioned_by' => $author->id,
             'mentioned_by_name' => $author->name,
@@ -108,6 +107,7 @@ trait HasMentions
                 if (isset($relatedModel->discussion_id)) {
                     return route('discussions.show', ['discussion' => $relatedModel->discussion_id]);
                 }
+
                 break;
             case 'Task':
                 return route('tasks.show', ['task' => $relatedModel->id]);

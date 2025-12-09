@@ -75,16 +75,16 @@ final class NotificationService
         bool $sendEmail = true,
         bool $sendPush = false
     ): Notification {
-        $notification = (new CreateNotification())->execute($user, $type, $message, $data);
+        $notification = new CreateNotification()->execute($user, $type, $message, $data);
 
         // Optionally send email notification
         if ($sendEmail) {
-            (new SendEmailNotification())->execute($user, $notification);
+            new SendEmailNotification()->execute($user, $notification);
         }
 
         // Optionally send push notification
         if ($sendPush) {
-            (new SendPushNotification())->execute($user, $notification);
+            new SendPushNotification()->execute($user, $notification);
         }
 
         return $notification;
@@ -93,12 +93,12 @@ final class NotificationService
     /**
      * Send task assigned notification
      */
-    public function notifyTaskAssigned($task, $assignedUser, $assigner): void
+    public function notifyTaskAssigned($task, \App\Models\User $assignedUser, $assigner): void
     {
         $this->createNotification(
             $assignedUser,
             'task_assigned',
-            "You have been assigned to task: {$task->title}",
+            'You have been assigned to task: ' . $task->title,
             [
                 'task_id' => $task->id,
                 'task_title' => $task->title,
@@ -113,12 +113,12 @@ final class NotificationService
     /**
      * Send new invoice notification
      */
-    public function notifyNewInvoice($invoice, $user): void
+    public function notifyNewInvoice($invoice, \App\Models\User $user): void
     {
         $this->createNotification(
             $user,
             'new_invoice',
-            "New invoice #{$invoice->id} has been created",
+            sprintf('New invoice #%s has been created', $invoice->id),
             [
                 'invoice_id' => $invoice->id,
                 'invoice_number' => $invoice->invoice_number ?? $invoice->id,
@@ -132,12 +132,12 @@ final class NotificationService
     /**
      * Send project updated notification
      */
-    public function notifyProjectUpdated($project, $user): void
+    public function notifyProjectUpdated($project, \App\Models\User $user): void
     {
         $this->createNotification(
             $user,
             'project_updated',
-            "Project '{$project->name}' has been updated",
+            sprintf("Project '%s' has been updated", $project->name),
             [
                 'project_id' => $project->id,
                 'project_name' => $project->name,
@@ -149,12 +149,12 @@ final class NotificationService
     /**
      * Send mentioned in comment notification
      */
-    public function notifyMentionedInComment($comment, $mentionedUser, $mentioningUser): void
+    public function notifyMentionedInComment($comment, \App\Models\User $mentionedUser, $mentioningUser): void
     {
         $this->createNotification(
             $mentionedUser,
             'mentioned_in_comment',
-            "{$mentioningUser->name} mentioned you in a comment",
+            $mentioningUser->name . ' mentioned you in a comment',
             [
                 'comment_id' => $comment->id,
                 'comment_content' => $comment->content,
@@ -168,12 +168,12 @@ final class NotificationService
     /**
      * Send client added notification
      */
-    public function notifyClientAdded($client, $user): void
+    public function notifyClientAdded($client, \App\Models\User $user): void
     {
         $this->createNotification(
             $user,
             'client_added',
-            "New client '{$client->name}' has been added",
+            sprintf("New client '%s' has been added", $client->name),
             [
                 'client_id' => $client->id,
                 'client_name' => $client->name,
@@ -185,7 +185,7 @@ final class NotificationService
     /**
      * Send payment failed notification
      */
-    public function notifyPaymentFailed($user, $details = null): void
+    public function notifyPaymentFailed(\App\Models\User $user, $details = null): void
     {
         $this->createNotification(
             $user,

@@ -44,7 +44,7 @@ final class UserCreate extends Component
         return view('livewire.users.user-create');
     }
 
-    protected function rules()
+    private function rules(): array
     {
         return [
             'name' => ['required', 'string', 'max:255'],

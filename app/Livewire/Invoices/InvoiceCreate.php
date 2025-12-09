@@ -37,19 +37,6 @@ final class InvoiceCreate extends Component
 
     public $description = '';
 
-    protected $rules = [
-        'client_id' => 'required|exists:clients,id',
-        'project_id' => 'nullable|exists:projects,id',
-        'invoice_number' => 'required|string|unique:invoices,invoice_number',
-        'issue_date' => 'required|date',
-        'due_date' => 'required|date|after_or_equal:issue_date',
-        'amount' => 'required|numeric|min:0',
-        'tax' => 'required|numeric|min:0',
-        'total' => 'required|numeric|min:0',
-        'status' => 'required|in:draft,sent,paid,overdue,cancelled',
-        'description' => 'nullable|string|max:500',
-    ];
-
     public function mount(): void
     {
         $this->invoice_number = 'INV-'.date('Y').'-'.mb_str_pad(mt_rand(1, 9999), 4, '0', STR_PAD_LEFT);

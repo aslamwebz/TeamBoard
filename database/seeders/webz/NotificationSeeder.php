@@ -26,7 +26,7 @@ final class NotificationSeeder extends Seeder
         // Create notifications for users
         foreach ($users as $user) {
             // Create 3-6 notifications per user
-            $notificationCount = rand(3, 6);
+            $notificationCount = random_int(3, 6);
             Notification::factory()->count($notificationCount)->create([
                 'user_id' => $user->id,
             ]);

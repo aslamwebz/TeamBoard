@@ -36,7 +36,7 @@ final class DiscussionCreate extends Component
 
     public $tasks = [];
 
-    protected $rules = [
+    private array $rules = [
         'title' => 'required|string|max:255',
         'content' => 'required|string',
         'type' => 'required|in:project,task,client',
@@ -44,7 +44,7 @@ final class DiscussionCreate extends Component
         'attachments.*' => 'nullable|file|max:10240',  // Max 10MB
     ];
 
-    public function mount()
+    public function mount(): void
     {
         $this->projects = Project::all();
         $this->tasks = Task::all();
@@ -53,6 +53,7 @@ final class DiscussionCreate extends Component
         if (request()->has('type')) {
             $this->type = request('type');
         }
+
         if (request()->has('type_id')) {
             $this->typeId = request('type_id');
         }
@@ -76,7 +77,7 @@ final class DiscussionCreate extends Component
         if (! empty($this->attachments) && is_array($this->attachments)) {
             foreach ($this->attachments as $attachment) {
                 if ($attachment && method_exists($attachment, 'getClientOriginalName')) {
-                    $this->processAttachment($attachment, $discussion->id, null);
+                    $this->processAttachment($attachment, $discussion->id);
                 }
             }
         }
@@ -101,7 +102,7 @@ final class DiscussionCreate extends Component
         return view('livewire.discussions.discussion-create');
     }
 
-    private function processAttachment($file, $discussionId, $commentId = null): void
+    private function processAttachment(object|string $file, $discussionId, $commentId = null): void
     {
         $fileUploadService = new FileUploadService();
         $fileUploadService->upload($file, Auth::id(), $discussionId, $commentId);

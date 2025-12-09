@@ -14,8 +14,8 @@ use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
 
 final class Tenant extends BaseTenant implements TenantWithDatabase
 {
-    use HasDatabase, HasDomains;
-
+    use HasDatabase;
+    use HasDomains;
     protected $fillable = [
         'legal_name', // This is the legal name
         'logo',
@@ -42,7 +42,7 @@ final class Tenant extends BaseTenant implements TenantWithDatabase
     {
         try {
             return tenant();
-        } catch (Exception $e) {
+        } catch (Exception) {
             // If no tenant is set, return null
             return null;
         }
@@ -55,7 +55,7 @@ final class Tenant extends BaseTenant implements TenantWithDatabase
     {
         return Attribute::make(
             get: fn ($value, $attributes) => $attributes['legal_name'] ?? $attributes['name'] ?? null,
-            set: fn ($value) => ['legal_name' => $value],
+            set: fn ($value): array => ['legal_name' => $value],
         );
     }
 
@@ -75,7 +75,7 @@ final class Tenant extends BaseTenant implements TenantWithDatabase
     public function brandingSettings(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => json_decode($value ?? '{}', true) ?: [],
+            get: fn ($value): mixed => json_decode($value ?? '{}', true) ?: [],
         );
     }
 

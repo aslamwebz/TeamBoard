@@ -38,11 +38,9 @@ final class InvoiceFactory extends Factory
      */
     public function withProject(): static
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'project_id' => Project::factory(),
-            ];
-        });
+        return $this->state(fn(array $attributes): array => [
+            'project_id' => Project::factory(),
+        ]);
     }
 
     /**
@@ -50,10 +48,8 @@ final class InvoiceFactory extends Factory
      */
     public function withClient(): static
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'client_id' => Client::factory(),
-            ];
-        });
+        return $this->state(fn(array $attributes): array => [
+            'client_id' => Client::factory(),
+        ]);
     }
 }

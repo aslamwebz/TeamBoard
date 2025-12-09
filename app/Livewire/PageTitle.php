@@ -109,7 +109,7 @@ final class PageTitle extends Component
         } else {
             // Handle dynamic routes with wildcards
             foreach ($titles as $pattern => [$title, $icon]) {
-                if (str_contains($pattern, '*') && str_starts_with($routeName, str_replace('*', '', $pattern))) {
+                if (str_contains($pattern, '*') && str_starts_with((string) $routeName, str_replace('*', '', $pattern))) {
                     $this->title = $title;
                     $this->icon = $icon;
                     break;
@@ -118,7 +118,7 @@ final class PageTitle extends Component
         }
 
         // Set default title if no match found
-        if (! $this->title) {
+        if ($this->title === '' || $this->title === '0') {
             $this->title = 'Dashboard';
             $this->icon = 'chart-bar';
         }

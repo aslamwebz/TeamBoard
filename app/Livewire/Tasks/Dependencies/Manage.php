@@ -40,9 +40,7 @@ final class Manage extends Component
 
     public function removeDependency($taskId): void
     {
-        $this->selectedDependencies = array_filter($this->selectedDependencies, function ($id) use ($taskId) {
-            return $id !== $taskId;
-        });
+        $this->selectedDependencies = array_filter($this->selectedDependencies, fn($id): bool => $id !== $taskId);
         $this->updateDependencies();
     }
 
@@ -51,6 +49,6 @@ final class Manage extends Component
         $availableTasks = $this->availableTasks;
         $selectedDependencies = $this->selectedDependencies;
 
-        return view('livewire.tasks.dependencies.manage', compact('availableTasks', 'selectedDependencies'));
+        return view('livewire.tasks.dependencies.manage', ['availableTasks' => $availableTasks, 'selectedDependencies' => $selectedDependencies]);
     }
 }

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('invoice_line_items', function (Blueprint $table) {
+        Schema::create('invoice_line_items', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('invoice_id')->constrained('invoices')->onDelete('cascade');
             $table->string('description'); // Brief description of the item/service

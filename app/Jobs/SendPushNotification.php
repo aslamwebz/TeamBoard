@@ -15,9 +15,10 @@ use Illuminate\Support\Facades\Log;
 
 final class SendPushNotification implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
     /**
      * Execute the job.
      */
@@ -29,7 +30,7 @@ final class SendPushNotification implements ShouldQueue
         // - Web push notifications using Laravel Web Push package
 
         // For now, we'll just log that a push notification would be sent
-        Log::info("Push notification would be sent to user {$user->id} for notification {$notification->id}");
+        Log::info(sprintf('Push notification would be sent to user %s for notification %d', $user->id, $notification->id));
 
         // Mark the push as sent in the database
         $notification->update(['push_sent_at' => now()]);

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('notes', function (Blueprint $table) {
+        Schema::create('notes', function (Blueprint $table): void {
             $table->id();
             $table->string('noteable_type'); // Polymorphic relation type (e.g., 'App\Models\Client', 'App\Models\Project')
             $table->unsignedBigInteger('noteable_id'); // Polymorphic relation ID

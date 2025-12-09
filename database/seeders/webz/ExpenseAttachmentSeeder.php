@@ -24,7 +24,7 @@ final class ExpenseAttachmentSeeder extends Seeder
 
         foreach ($expenses as $expense) {
             // Create 1-2 attachments per expense
-            for ($i = 0; $i < rand(1, 2); $i++) {
+            for ($i = 0; $i < random_int(1, 2); $i++) {
                 $expense->attachments()->create([
                     'filename' => fake()->word().'_'.fake()->fileExtension,
                     'original_name' => fake()->word().'_'.fake()->fileExtension,

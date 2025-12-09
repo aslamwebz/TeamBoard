@@ -32,9 +32,9 @@ final class TaskIndex extends Component
 
     public $showTaskModal = false;
 
-    public $selectedTaskId = null;
+    public $selectedTaskId;
 
-    public $selectedTask = null;
+    public $selectedTask;
 
     public $tasksByStatus;
 
@@ -42,7 +42,7 @@ final class TaskIndex extends Component
 
     public $projects = [];
 
-    protected $queryString = ['search', 'statusFilter', 'projectFilter', 'viewMode'];
+    private array $queryString = ['search', 'statusFilter', 'projectFilter', 'viewMode'];
 
     public function mount(): void
     {
@@ -151,6 +151,7 @@ final class TaskIndex extends Component
         if ($task) {
             $task->update(['status' => $newStatus]);
         }
+
         $this->refreshTasksByStatus();
     }
 
@@ -161,7 +162,7 @@ final class TaskIndex extends Component
         $this->selectedTask = null;
     }
 
-    public function getStatusColumns()
+    public function getStatusColumns(): array
     {
         return [
             'todo' => ['title' => __('To Do'), 'color' => 'bg-zinc-100 dark:bg-zinc-700'],

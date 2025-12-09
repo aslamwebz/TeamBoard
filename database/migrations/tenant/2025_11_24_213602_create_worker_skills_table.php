@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('worker_skills', function (Blueprint $table) {
+        Schema::create('worker_skills', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('worker_profile_id')->constrained('worker_profiles')->onDelete('cascade');
             $table->foreignId('skill_id')->constrained('skills')->onDelete('cascade');

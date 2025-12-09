@@ -26,7 +26,7 @@ final class WorkerCertificationSeeder extends Seeder
 
         foreach ($workers as $worker) {
             // Assign 1-4 certifications to each worker
-            $selectedCertifications = $certifications->random(rand(1, 4));
+            $selectedCertifications = $certifications->random(random_int(1, 4));
 
             foreach ($selectedCertifications as $certification) {
                 $worker->certifications()->attach($certification->id, [

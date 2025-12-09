@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contact_activities', function (Blueprint $table) {
+        Schema::create('contact_activities', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('contact_id')->constrained()->onDelete('cascade');
             $table->string('type')->comment('Type of activity (email, call, meeting, etc.)');

@@ -12,14 +12,11 @@ final class GenericNotification extends Notification
 {
     use Queueable;
 
-    protected $dbNotification;
-
     /**
      * Create a new notification instance.
      */
-    public function __construct($dbNotification)
+    public function __construct(private $dbNotification)
     {
-        $this->dbNotification = $dbNotification;
     }
 
     /**

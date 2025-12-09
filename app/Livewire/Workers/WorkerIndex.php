@@ -20,7 +20,7 @@ final class WorkerIndex extends Component
 
     public int $perPage = 10;
 
-    protected $queryString = ['search', 'status', 'department'];
+    private array $queryString = ['search', 'status', 'department'];
 
     public function updatingSearch(): void
     {
@@ -31,19 +31,19 @@ final class WorkerIndex extends Component
     {
         $query = WorkerProfile::with(['user']);
 
-        if ($this->search) {
-            $query->whereHas('user', function ($q) {
+        if ($this->search !== '' && $this->search !== '0') {
+            $query->whereHas('user', function ($q): void {
                 $q->where('name', 'like', '%'.$this->search.'%')
                     ->orWhere('email', 'like', '%'.$this->search.'%');
             })->orWhere('job_title', 'like', '%'.$this->search.'%')
                 ->orWhere('department', 'like', '%'.$this->search.'%');
         }
 
-        if ($this->status) {
+        if ($this->status !== '' && $this->status !== '0') {
             $query->where('status', $this->status);
         }
 
-        if ($this->department) {
+        if ($this->department !== '' && $this->department !== '0') {
             $query->where('department', $this->department);
         }
 

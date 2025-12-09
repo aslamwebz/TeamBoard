@@ -61,7 +61,7 @@ enum TaskStatus: string
      */
     public static function toArray(): array
     {
-        return array_reduce(self::cases(), function ($carry, $case) {
+        return array_reduce(self::cases(), function (array $carry, \App\Enums\TaskStatus $case): array {
             $carry[$case->value] = $case->getLabel();
             return $carry;
         }, []);

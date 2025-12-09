@@ -27,7 +27,7 @@ final class InvoicePaymentSeeder extends Seeder
             $remaining = $invoice->total;
 
             // Create 1-3 payments for paid invoices
-            $paymentCount = $invoice->status === 'paid' ? rand(1, 3) : 1;
+            $paymentCount = $invoice->status === 'paid' ? random_int(1, 3) : 1;
 
             for ($i = 0; $i < $paymentCount; $i++) {
                 if ($remaining <= 0) {

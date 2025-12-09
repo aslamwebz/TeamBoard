@@ -31,7 +31,7 @@ final class Attachments extends Component
 
     public string $description = '';
 
-    protected $rules = [
+    private array $rules = [
         'files.*' => 'required|file|max:10240', // 10MB max
         'attachment_type' => 'required|string|max:50',
         'description' => 'nullable|string|max:1000',

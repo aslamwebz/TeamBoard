@@ -23,11 +23,6 @@ final class TeamEdit extends Component
 
     public $description = '';
 
-    protected $rules = [
-        'name' => 'required|string|max:255',
-        'description' => 'nullable|string|max:1000',
-    ];
-
     public function mount(Team $team): void
     {
         $this->team = $team;

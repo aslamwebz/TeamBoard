@@ -12,7 +12,7 @@ use Vish4395\LaravelFileViewer\LaravelFileViewer;
 
 final class FilePreviewPageController extends Controller
 {
-    public function show(Request $request, $filename)
+    public function show(Request $request, string $filename)
     {
         // Get the file from the database
         $attachment = DiscussionAttachment::where('filename', $filename)->firstOrFail();

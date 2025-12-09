@@ -44,9 +44,9 @@ final class Timesheets extends Component
 
     public string $endDate = '';
 
-    protected $queryString = ['search', 'entryTypeFilter', 'statusFilter', 'startDate', 'endDate'];
+    private array $queryString = ['search', 'entryTypeFilter', 'statusFilter', 'startDate', 'endDate'];
 
-    protected $rules = [
+    private array $rules = [
         'date' => 'required|date',
         'hours_worked' => 'required|numeric|min:0.01|max:24',
         'activity_description' => 'required|string|max:1000',
@@ -117,23 +117,23 @@ final class Timesheets extends Component
             ->with(['project', 'task']);
 
         // Apply filters
-        if ($this->search) {
+        if ($this->search !== '' && $this->search !== '0') {
             $query->where('activity_description', 'like', '%'.$this->search.'%');
         }
 
-        if ($this->entryTypeFilter) {
+        if ($this->entryTypeFilter !== '' && $this->entryTypeFilter !== '0') {
             $query->where('entry_type', $this->entryTypeFilter);
         }
 
-        if ($this->statusFilter) {
+        if ($this->statusFilter !== '' && $this->statusFilter !== '0') {
             $query->where('status', $this->statusFilter);
         }
 
-        if ($this->startDate) {
+        if ($this->startDate !== '' && $this->startDate !== '0') {
             $query->where('date', '>=', $this->startDate);
         }
 
-        if ($this->endDate) {
+        if ($this->endDate !== '' && $this->endDate !== '0') {
             $query->where('date', '<=', $this->endDate);
         }
 

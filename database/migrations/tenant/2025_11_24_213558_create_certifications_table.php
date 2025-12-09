@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('certifications', function (Blueprint $table) {
+        Schema::create('certifications', function (Blueprint $table): void {
             $table->id();
             $table->string('name'); // Name of the certification
             $table->string('issuing_organization')->nullable(); // Organization that issued the certification

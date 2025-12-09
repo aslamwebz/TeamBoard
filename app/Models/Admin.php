@@ -21,8 +21,8 @@ use Carbon\CarbonInterface;
  */ 
 final class Admin extends Authenticatable
 {
-    use HasFactory, Notifiable;
-
+    use HasFactory;
+    use Notifiable;
     /**
      * The attributes that are mass assignable.
      *

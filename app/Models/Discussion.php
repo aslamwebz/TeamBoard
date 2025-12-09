@@ -24,8 +24,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 final class Discussion extends Model
 {
-    use HasFactory, HasMentions;
-
+    use HasFactory;
+    use HasMentions;
     /**
      * @var list<string>
      */
@@ -56,7 +56,7 @@ final class Discussion extends Model
         return $this
             ->hasMany(Comment::class, 'discussion_id')
             ->whereNull('parent_id')
-            ->with(['user', 'attachments', 'replies' => function ($query) {
+            ->with(['user', 'attachments', 'replies' => function ($query): void {
                 $query->with(['user', 'attachments']);
             }])
             ->orderBy('created_at', 'asc');
@@ -66,7 +66,7 @@ final class Discussion extends Model
     {
         return $this
             ->hasMany(Comment::class)
-            ->with(['user', 'attachments', 'replies' => function ($query) {
+            ->with(['user', 'attachments', 'replies' => function ($query): void {
                 $query->with(['user', 'attachments']);
             }])
             ->orderBy('created_at', 'asc');
@@ -167,30 +167,30 @@ final class Discussion extends Model
     /**
      * Format content with mentions
      */
-    public function formatContentWithMentions($content = null)
+    public function formatContentWithMentions($content = null): ?string
     {
-        $content = $content ?? $this->content;
+        $content ??= $this->content;
 
         $pattern = '/@(\w+)/';
 
-        return preg_replace_callback($pattern, function ($matches) {
+        return preg_replace_callback($pattern, function (array $matches): string {
             $username = $matches[1];
             $user = User::where('name', $username)->first();
 
             if ($user) {
-                return "<a href='/users/{$user->id}' class='text-blue-600 hover:underline'>@{$username}</a>";
+                return sprintf("<a href='/users/%s' class='text-blue-600 hover:underline'>@%s</a>", $user->id, $username);
             }
 
             return $matches[0];  // Return original if user not found
-        }, $content);
+        }, (string) $content);
     }
 
     /**
      * Boot the model and set up event listeners
      */
-    protected static function booted()
+    protected static function booted(): void
     {
-        self::creating(function ($discussion) {
+        self::creating(function ($discussion): void {
             // If type is project, set the project_id to the type_id
             if ($discussion->type === 'project') {
                 $discussion->project_id = $discussion->type_id;
@@ -208,7 +208,7 @@ final class Discussion extends Model
             }
         });
 
-        self::updating(function ($discussion) {
+        self::updating(function ($discussion): void {
             // Handle updates if needed
         });
     }

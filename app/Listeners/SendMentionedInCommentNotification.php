@@ -7,13 +7,10 @@ namespace App\Listeners;
 use App\Events\MentionedInCommentNotification as MentionedInCommentEvent;
 use App\Services\NotificationService;
 
-final class SendMentionedInCommentNotification
+final readonly class SendMentionedInCommentNotification
 {
-    private $notificationService;
-
-    public function __construct(NotificationService $notificationService)
+    public function __construct(private \App\Services\NotificationService $notificationService)
     {
-        $this->notificationService = $notificationService;
     }
 
     public function handle(MentionedInCommentEvent $event): void

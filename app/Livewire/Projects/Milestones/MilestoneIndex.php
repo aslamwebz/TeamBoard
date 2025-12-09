@@ -18,16 +18,16 @@ final class MilestoneIndex extends Component
 
     public Project $project;
 
-    public function mount(Project $project)
+    public function mount(Project $project): void
     {
         $this->project = $project;
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         $milestones = $this->project->milestones()->paginate(10);
 
-        return view('livewire.projects.milestones.milestone-index', compact('milestones'));
+        return view('livewire.projects.milestones.milestone-index', ['milestones' => $milestones]);
     }
 
     public function getMilestoneStatusBadgeClass(string $status): string

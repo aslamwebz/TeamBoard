@@ -19,11 +19,6 @@ final class TeamCreate extends Component
 
     public $description = '';
 
-    protected $rules = [
-        'name' => 'required|string|max:255',
-        'description' => 'nullable|string|max:1000',
-    ];
-
     public function createTeam(): RedirectResponse
     {
         $validated = $this->validate();

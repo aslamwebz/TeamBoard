@@ -52,13 +52,13 @@ final class ProjectShow extends Component
         $this->project = $project->load([
             'client',
             'invoices',
-            'tasks' => function ($query) {
+            'tasks' => function ($query): void {
                 $query->with('phase', 'users');
             },
-            'users' => function ($query) {
+            'users' => function ($query): void {
                 $query->with('tasks');
             },
-            'teams' => function ($query) {
+            'teams' => function ($query): void {
                 $query->with('users');
             },
             'phases',

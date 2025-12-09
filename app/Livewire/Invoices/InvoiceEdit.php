@@ -41,7 +41,7 @@ final class InvoiceEdit extends Component
 
     public $description = '';
 
-    protected $rules = [
+    private array $rules = [
         'client_id' => 'required|exists:clients,id',
         'project_id' => 'nullable|exists:projects,id',
         'invoice_number' => 'required|string|unique:invoices,invoice_number',

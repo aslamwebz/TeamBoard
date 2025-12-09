@@ -19,7 +19,7 @@ final class VendorIndex extends Component
 
     public int $perPage = 10;
 
-    protected $queryString = ['search', 'status'];
+    private array $queryString = ['search', 'status'];
 
     public function updatingSearch(): void
     {
@@ -30,13 +30,13 @@ final class VendorIndex extends Component
     {
         $query = Vendor::query();
 
-        if ($this->search) {
+        if ($this->search !== '' && $this->search !== '0') {
             $query->where('name', 'like', '%'.$this->search.'%')
                 ->orWhere('email', 'like', '%'.$this->search.'%')
                 ->orWhere('phone', 'like', '%'.$this->search.'%');
         }
 
-        if ($this->status) {
+        if ($this->status !== '' && $this->status !== '0') {
             $query->where('status', $this->status);
         }
 

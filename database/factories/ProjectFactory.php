@@ -28,10 +28,8 @@ final class ProjectFactory extends Factory
      */
     public function withClient(): static
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'client_id' => Client::factory(),
-            ];
-        });
+        return $this->state(fn(array $attributes): array => [
+            'client_id' => Client::factory(),
+        ]);
     }
 }

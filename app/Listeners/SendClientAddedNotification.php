@@ -7,13 +7,10 @@ namespace App\Listeners;
 use App\Events\ClientAddedNotification as ClientAddedEvent;
 use App\Services\NotificationService;
 
-final class SendClientAddedNotification
+final readonly class SendClientAddedNotification
 {
-    private $notificationService;
-
-    public function __construct(NotificationService $notificationService)
+    public function __construct(private \App\Services\NotificationService $notificationService)
     {
-        $this->notificationService = $notificationService;
     }
 
     public function handle(ClientAddedEvent $event): void

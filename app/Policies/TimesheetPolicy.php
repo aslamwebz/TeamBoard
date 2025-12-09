@@ -15,7 +15,10 @@ class TimesheetPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasRole(['admin', 'manager']) || $user->hasWorkerProfile();
+        if ($user->hasRole(['admin', 'manager'])) {
+            return true;
+        }
+        return $user->hasWorkerProfile();
     }
 
     /**
@@ -35,7 +38,10 @@ class TimesheetPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasRole(['admin', 'manager']) || $user->hasWorkerProfile();
+        if ($user->hasRole(['admin', 'manager'])) {
+            return true;
+        }
+        return $user->hasWorkerProfile();
     }
 
     /**

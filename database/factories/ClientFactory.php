@@ -20,7 +20,7 @@ final class ClientFactory extends Factory
         return [
             'company_name' => $companyName,
             'name' => fake()->name(),  // Changed from company() to name() for the contact person
-            'email' => fake()->unique()->safeEmail($companyName),
+            'email' => fake()->unique()->safeEmail(),
             'phone' => fake()->phoneNumber(),
             'address' => fake()->streetAddress(),
             'city' => fake()->city(),

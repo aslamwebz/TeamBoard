@@ -34,7 +34,7 @@ final class ActivityService
     {
         return $this->logActivity(
             'created_discussion',
-            "Created discussion: {$discussion->title}",
+            'Created discussion: ' . $discussion->title,
             $discussion,
             [
                 'title' => $discussion->title,
@@ -49,7 +49,7 @@ final class ActivityService
 
         return $this->logActivity(
             'commented',
-            "Added a comment to discussion: {$discussion->title}",
+            'Added a comment to discussion: ' . $discussion->title,
             $comment->discussion,
             [
                 'comment_content' => $comment->content,
@@ -63,7 +63,7 @@ final class ActivityService
     {
         return $this->logActivity(
             'updated_task',
-            "Updated task: {$task->title}",
+            'Updated task: ' . $task->title,
             $task,
             [
                 'task_title' => $task->title,
@@ -76,7 +76,7 @@ final class ActivityService
     {
         return $this->logActivity(
             'completed_task',
-            "Completed task: {$task->title}",
+            'Completed task: ' . $task->title,
             $task,
             [
                 'task_title' => $task->title,
@@ -106,22 +106,22 @@ final class ActivityService
     {
         // Get activities related to the project itself plus related discussions and tasks
         return ActivityLog::with('user')
-            ->where(function ($query) use ($project) {
-                $query->where(function ($q) use ($project) {
+            ->where(function ($query) use ($project): void {
+                $query->where(function ($q) use ($project): void {
                     $q->where('type', 'Project')
                         ->where('type_id', $project->id);
                 })
-                    ->orWhere(function ($q) use ($project) {
+                    ->orWhere(function ($q) use ($project): void {
                         $q->where('type', 'Discussion')
                             ->whereIn('type_id', $project->discussions()->pluck('id'));
                     })
-                    ->orWhere(function ($q) use ($project) {
+                    ->orWhere(function ($q) use ($project): void {
                         $q->where('type', 'Task')
                             ->whereIn('type_id', $project->tasks()->pluck('id'));
                     })
-                    ->orWhere(function ($q) use ($project) {
+                    ->orWhere(function ($q) use ($project): void {
                         $q->where('type', 'Comment')
-                            ->whereIn('type_id', function ($subQuery) use ($project) {
+                            ->whereIn('type_id', function ($subQuery) use ($project): void {
                                 $subQuery->select('id')
                                     ->from('comments')
                                     ->whereIn('discussion_id', $project->discussions()->pluck('id'));

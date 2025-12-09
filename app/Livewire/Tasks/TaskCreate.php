@@ -39,16 +39,6 @@ final class TaskCreate extends Component
 
     public $users = [];
 
-    protected $rules = [
-        'title' => 'required|string|max:255',
-        'description' => 'nullable|string',
-        'status' => 'required|in:todo,in_progress,completed,on_hold',
-        'due_date' => 'nullable|date',
-        'project_id' => 'nullable|exists:projects,id',
-        'project_phase_id' => 'nullable|exists:project_phases,id',
-        'user_id' => 'nullable|exists:users,id',
-    ];
-
     public function mount(): void
     {
         $this->projects = Project::all();

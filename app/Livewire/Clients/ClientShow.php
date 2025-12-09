@@ -22,7 +22,7 @@ final class ClientShow extends Component
 
     public $showAssignProjectModal = false;
 
-    public $selectedProjectId = null;
+    public $selectedProjectId;
 
     public $availableProjects = [];
 
@@ -74,7 +74,7 @@ final class ClientShow extends Component
             ->client
             ->projects()
             ->with([
-                'tasks' => function ($query) {
+                'tasks' => function ($query): void {
                     $query->latest()->take(5);
                 },
             ])
@@ -88,7 +88,7 @@ final class ClientShow extends Component
     public function loadAvailableProjects(): void
     {
         // Load projects that are not already assigned to this client
-        $projects = Project::where(function ($query) {
+        $projects = Project::where(function ($query): void {
             $query
                 ->whereNull('client_id')
                 ->orWhere('client_id', '!=', $this->client->id);
@@ -96,12 +96,10 @@ final class ClientShow extends Component
             ->orderBy('name')
             ->get();
 
-        $this->availableProjects = $projects->map(function ($project) {
-            return [
-                'id' => $project->id,
-                'name' => $project->name,
-            ];
-        })->toArray();
+        $this->availableProjects = $projects->map(fn($project): array => [
+            'id' => $project->id,
+            'name' => $project->name,
+        ])->toArray();
     }
 
     public function assignProject(): void
@@ -166,7 +164,7 @@ final class ClientShow extends Component
         return 'bg-zinc-500/10 text-zinc-700 dark:text-zinc-400';
     }
 
-    public function getProjectTaskCounts(Project $project)
+    public function getProjectTaskCounts(Project $project): array
     {
         $taskCount = $project->tasks()->count();
         $completedTaskCount = $project
@@ -180,13 +178,13 @@ final class ClientShow extends Component
         ];
     }
 
-    public function getClientStats(Client $client)
+    public function getClientStats(Client $client): array
     {
         // Execute all related queries efficiently in one go
         $projects = $client->projects()
-            ->withCount(['tasks', 'tasks as completed_tasks_count' => function ($query) {
+            ->withCount(['tasks', 'tasks as completed_tasks_count' => function ($query): void {
                 $query->where('status', 'completed');
-            }, 'tasks as in_progress_tasks_count' => function ($query) {
+            }, 'tasks as in_progress_tasks_count' => function ($query): void {
                 $query->where('status', 'in_progress');
             }])
             ->get();
@@ -199,8 +197,8 @@ final class ClientShow extends Component
         $completedProjects = $projects->where('status', ProjectStatus::COMPLETED->value)->count();
         $totalTasks = $projects->sum('tasks_count');
         
-        $completedTaskProjects = $projects->filter(fn($p) => $p->completed_tasks_count > 0)->count();
-        $inProgressTaskProjects = $projects->filter(fn($p) => $p->in_progress_tasks_count > 0)->count();
+        $completedTaskProjects = $projects->filter(fn($p): bool => $p->completed_tasks_count > 0)->count();
+        $inProgressTaskProjects = $projects->filter(fn($p): bool => $p->in_progress_tasks_count > 0)->count();
 
         return [
             'projectCount' => $projectCount,
@@ -239,7 +237,7 @@ final class ClientShow extends Component
     {
         return $client
             ->projects()
-            ->whereHas('tasks', function ($query) {
+            ->whereHas('tasks', function ($query): void {
                 $query->where('status', 'completed');
             })
             ->count();
@@ -249,7 +247,7 @@ final class ClientShow extends Component
     {
         return $client
             ->projects()
-            ->whereHas('tasks', function ($query) {
+            ->whereHas('tasks', function ($query): void {
                 $query->where('status', 'in_progress');
             })
             ->count();
@@ -273,7 +271,7 @@ final class ClientShow extends Component
             ->client
             ->projects()
             ->with([
-                'tasks' => function ($query) {
+                'tasks' => function ($query): void {
                     $query->latest()->take(5);
                 },
             ])

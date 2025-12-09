@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('expenses', function (Blueprint $table) {
+        Schema::create('expenses', function (Blueprint $table): void {
             $table->id();
             $table->string('name')->nullable();
             $table->foreignId('expense_category_id')->nullable()->constrained('expense_categories')->onDelete('set null');

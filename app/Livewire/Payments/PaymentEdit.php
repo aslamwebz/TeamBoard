@@ -39,7 +39,7 @@ final class PaymentEdit extends Component
 
     public $payment_methods;
 
-    public function mount(Payment $payment)
+    public function mount(Payment $payment): void
     {
         $this->payment = $payment;
 

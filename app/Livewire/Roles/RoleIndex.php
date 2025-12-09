@@ -17,7 +17,7 @@ final class RoleIndex extends Component
 
     public $perPage = 10;
 
-    protected $paginationTheme = 'tailwind';
+    private string $paginationTheme = 'tailwind';
 
     public function updatingSearch(): void
     {

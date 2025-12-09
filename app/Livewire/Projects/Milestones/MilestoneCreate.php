@@ -27,15 +27,6 @@ final class MilestoneCreate extends Component
 
     public $order = 0;
 
-    protected $rules = [
-        'name' => 'required|string|max:255',
-        'description' => 'nullable|string',
-        'due_date' => 'nullable|date',
-        'project_phase_id' => 'nullable|exists:project_phases,id',
-        'status' => 'required|in:not_started,in_progress,completed,on_hold',
-        'order' => 'required|integer|min:0',
-    ];
-
     public function mount(Project $project): void
     {
         $this->project = $project;
@@ -63,6 +54,6 @@ final class MilestoneCreate extends Component
     {
         $phases = $this->project->phases;
 
-        return view('livewire.projects.milestones.milestone-create', compact('phases'));
+        return view('livewire.projects.milestones.milestone-create', ['phases' => $phases]);
     }
 }

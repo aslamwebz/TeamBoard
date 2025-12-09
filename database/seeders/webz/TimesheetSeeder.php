@@ -27,7 +27,7 @@ final class TimesheetSeeder extends Seeder
 
         foreach ($workers as $worker) {
             // Create 10-20 timesheet entries per worker
-            for ($i = 0; $i < rand(10, 20); $i++) {
+            for ($i = 0; $i < random_int(10, 20); $i++) {
                 $randomDate = fake()->dateTimeBetween('-2 months', 'now');
 
                 $project = $projects->random();

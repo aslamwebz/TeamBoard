@@ -59,8 +59,6 @@ final class ActivityLog extends Model
 
     /**
      * Get the related model instance (project, task, etc.)
-     *
-     * @return Model|null
      */
     public function getRelatedModel(): ?Model
     {
@@ -68,7 +66,7 @@ final class ActivityLog extends Model
             return null;
         }
 
-        $modelClass = "App\\Models\\{$this->type}";
+        $modelClass = 'App\Models\\' . $this->type;
 
         if (class_exists($modelClass)) {
             return $modelClass::find($this->type_id);
@@ -79,8 +77,6 @@ final class ActivityLog extends Model
 
     /**
      * Get a human-readable description of the action
-     *
-     * @return string
      */
     public function getHumanDescription(): string
     {

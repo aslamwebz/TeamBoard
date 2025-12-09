@@ -13,7 +13,7 @@ use Stancl\Tenancy\Facades\Tenant;
 
 final class TenantFileController extends Controller
 {
-    public function download(Request $request, $filename)
+    public function download(Request $request, string $filename)
     {
         // Check if the user is authenticated
         if (! Auth::check()) {

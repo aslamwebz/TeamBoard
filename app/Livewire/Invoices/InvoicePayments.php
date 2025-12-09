@@ -27,7 +27,7 @@ final class InvoicePayments extends Component
 
     public $paymentMethods;
 
-    public function mount(Invoice $invoice)
+    public function mount(Invoice $invoice): void
     {
         $this->invoice = $invoice;
         $this->paymentAmount = $invoice->getRemainingBalance();
@@ -35,7 +35,7 @@ final class InvoicePayments extends Component
         $this->paymentMethods = PaymentMethod::toArray();
     }
 
-    public function addPayment()
+    public function addPayment(): void
     {
         $this->validate([
             'paymentAmount' => 'required|numeric|min:0.01|max:' . $this->invoice->getRemainingBalance(),
@@ -66,7 +66,7 @@ final class InvoicePayments extends Component
         $this->dispatch('payment-added');
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         $payments = $this->invoice->payments()->orderBy('payment_date', 'desc')->get();
 

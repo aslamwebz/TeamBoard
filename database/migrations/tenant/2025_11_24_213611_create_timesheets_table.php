@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('timesheets', function (Blueprint $table) {
+        Schema::create('timesheets', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('worker_profile_id')->constrained('worker_profiles')->onDelete('cascade');
             $table->foreignId('project_id')->nullable()->constrained('projects')->onDelete('set null'); // Project worked on

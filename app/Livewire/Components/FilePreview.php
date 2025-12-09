@@ -49,7 +49,10 @@ final class FilePreview extends Component
         return in_array($this->file->mime_type, $previewableTypes);
     }
 
-    public function getFilePreviewData($file)
+    /**
+     * @return mixed[]
+     */
+    public function getFilePreviewData($file): array
     {
         if (! $file) {
             return [];
@@ -64,11 +67,11 @@ final class FilePreview extends Component
         $size = \Illuminate\Support\Facades\Storage::disk('public')->size($filePath);
         $base = log($size) / log(1024);
         $suffixes = [' bytes', ' KB', ' MB', ' GB', ' TB'];
-        $fileSizeFormatted = round(pow(1024, $base - floor($base)), 2).$suffixes[floor($base)];
+        $fileSizeFormatted = round(1024 ** ($base - floor($base)), 2).$suffixes[floor($base)];
 
         // Set icon based on file type
         $iconClass = 'fa-solid fa-file';
-        $fileType = explode('/', $type)[0];
+        $fileType = explode('/', (string) $type)[0];
         switch ($fileType) {
             case 'image':
                 $iconClass = 'fa-solid fa-file-image';
@@ -80,26 +83,14 @@ final class FilePreview extends Component
                 $iconClass = 'fa-solid fa-file-video';
                 break;
             case 'application':
-                switch ($type) {
-                    case 'application/pdf':
-                        $iconClass = 'fa-solid fa-file-pdf';
-                        break;
-                    case 'application/msword':
-                    case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-                        $iconClass = 'fa-solid fa-file-word';
-                        break;
-                    case 'application/vnd.ms-excel':
-                    case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-                        $iconClass = 'fa-solid fa-file-excel';
-                        break;
-                    case 'application/vnd.ms-powerpoint':
-                    case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
-                        $iconClass = 'fa-solid fa-file-powerpoint';
-                        break;
-                    default:
-                        $iconClass = 'fa-solid fa-file';
-                        break;
-                }
+                $iconClass = match ($type) {
+                    'application/pdf' => 'fa-solid fa-file-pdf',
+                    'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'fa-solid fa-file-word',
+                    'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'fa-solid fa-file-excel',
+                    'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'fa-solid fa-file-powerpoint',
+                    default => 'fa-solid fa-file',
+                };
+
                 break;
             case 'text':
                 $iconClass = 'fa-solid fa-file-alt';

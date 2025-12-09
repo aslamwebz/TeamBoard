@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('file_attachments', function (Blueprint $table) {
+        Schema::create('file_attachments', function (Blueprint $table): void {
             $table->id();
             $table->string('filename');
             $table->string('original_name');

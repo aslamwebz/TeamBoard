@@ -25,8 +25,10 @@ class ProjectPolicy
         if ($user->hasRole(['admin', 'manager'])) {
             return true;
         }
-
-        return $project->users->contains($user) || $project->teams->intersect($user->teams)->isNotEmpty();
+        if ($project->users->contains($user)) {
+            return true;
+        }
+        return (bool) $project->teams->intersect($user->teams)->isNotEmpty();
     }
 
     /**

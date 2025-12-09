@@ -131,7 +131,7 @@ final class Task extends Model
     /**
      * Add a dependency to this task
      */
-    public function addDependency($taskId)
+    public function addDependency($taskId): void
     {
         $dependencies = $this->dependencies ?? [];
         if (!in_array($taskId, $dependencies)) {
@@ -143,12 +143,10 @@ final class Task extends Model
     /**
      * Remove a dependency from this task
      */
-    public function removeDependency($taskId)
+    public function removeDependency($taskId): void
     {
         $dependencies = $this->dependencies ?? [];
-        $dependencies = array_filter($dependencies, function ($id) use ($taskId) {
-            return $id !== $taskId;
-        });
+        $dependencies = array_filter($dependencies, fn($id): bool => $id !== $taskId);
         $this->update(['dependencies' => array_values($dependencies)]);
     }
 

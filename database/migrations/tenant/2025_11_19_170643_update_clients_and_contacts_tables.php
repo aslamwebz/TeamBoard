@@ -14,7 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         // Add new fields to clients table
-        Schema::table('clients', function (Blueprint $table) {
+        Schema::table('clients', function (Blueprint $table): void {
             $table->text('notes')->after('subscription_status')->nullable()->comment('Additional notes about the client');
             $table->string('billing_address')->after('notes')->nullable()->comment('Billing address for the client');
             $table->string('shipping_address')->after('billing_address')->nullable()->comment('Shipping address for the client');
@@ -23,7 +23,7 @@ return new class extends Migration
         });
 
         // Add new fields to contacts table
-        Schema::table('contacts', function (Blueprint $table) {
+        Schema::table('contacts', function (Blueprint $table): void {
             $table->string('job_title')->after('position')->nullable()->comment('Job title of the contact');
             $table->string('work_phone')->after('department')->nullable()->comment('Work phone number');
             $table->string('mobile_phone')->after('work_phone')->nullable()->comment('Mobile phone number');
@@ -38,7 +38,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('clients', function (Blueprint $table) {
+        Schema::table('clients', function (Blueprint $table): void {
             $table->dropColumn([
                 'notes',
                 'billing_address',
@@ -48,7 +48,7 @@ return new class extends Migration
             ]);
         });
 
-        Schema::table('contacts', function (Blueprint $table) {
+        Schema::table('contacts', function (Blueprint $table): void {
             $table->dropColumn([
                 'job_title',
                 'work_phone',

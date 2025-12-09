@@ -8,12 +8,15 @@ use Illuminate\Notifications\Notification;
 
 final class DatabaseNotificationChannel extends Notification
 {
-    public function via($notifiable)
+    public $type;
+    public $message;
+    public $data;
+    public function via($notifiable): array
     {
         return ['database'];
     }
 
-    public function toDatabase($notifiable)
+    public function toDatabase($notifiable): array
     {
         return [
             'type' => $this->type,

@@ -25,14 +25,14 @@ final class ProjectIndex extends Component
 
     public $projectToDeleteId;
 
-    protected $queryString = ['search', 'statusFilter'];
+    private array $queryString = ['search', 'statusFilter'];
 
     public function render(): View
     {
         $projects = Project::query()
             ->with(['client', 'tasks', 'users'])
             ->where('name', 'like', '%'.$this->search.'%')
-            ->when($this->statusFilter, function ($query) {
+            ->when($this->statusFilter, function ($query): void {
                 $query->where('status', $this->statusFilter);
             })
             ->paginate(9);

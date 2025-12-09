@@ -27,13 +27,13 @@ final class Report extends Model
 {
     use HasFactory;
 
-    public const TYPE_FINANCIAL = 'financial';
+    public const string TYPE_FINANCIAL = 'financial';
 
-    public const TYPE_PROJECT = 'project';
+    public const string TYPE_PROJECT = 'project';
 
-    public const TYPE_INVOICE = 'invoice';
+    public const string TYPE_INVOICE = 'invoice';
 
-    public const TYPE_CLIENT = 'client';
+    public const string TYPE_CLIENT = 'client';
 
     /**
      * @var list<string>

@@ -17,7 +17,7 @@ final class PhaseShow extends Component
 
     public array $statusColors = [];
 
-    public function mount(ProjectPhase $phase)
+    public function mount(ProjectPhase $phase): void
     {
         $this->phase = $phase;
 
@@ -30,7 +30,7 @@ final class PhaseShow extends Component
         ];
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view('livewire.projects.phases.show');
     }

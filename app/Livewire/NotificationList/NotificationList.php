@@ -57,7 +57,7 @@ final class NotificationList extends Component
         $this->dispatch('notificationRead');
     }
 
-    public function switchTab($tab): void
+    public function switchTab(string $tab): void
     {
         $this->activeTab = $tab;
     }

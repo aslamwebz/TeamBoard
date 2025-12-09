@@ -15,12 +15,12 @@ final class MilestoneShow extends Component
 {
     public Milestone $milestone;
 
-    public function mount(Milestone $milestone)
+    public function mount(Milestone $milestone): void
     {
         $this->milestone = $milestone;
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view('livewire.projects.milestones.milestone-show');
     }

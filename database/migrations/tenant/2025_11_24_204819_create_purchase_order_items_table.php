@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('purchase_order_items', function (Blueprint $table) {
+        Schema::create('purchase_order_items', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('purchase_order_id')->constrained('purchase_orders')->onDelete('cascade');
             $table->string('name'); // Item name or description

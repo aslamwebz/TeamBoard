@@ -26,7 +26,7 @@ final class ExpensePaymentSeeder extends Seeder
             $remaining = $expense->amount;
 
             // Create 1-2 payments for paid expenses
-            $paymentCount = $expense->status === 'paid' ? rand(1, 2) : 1;
+            $paymentCount = $expense->status === 'paid' ? random_int(1, 2) : 1;
 
             for ($i = 0; $i < $paymentCount; $i++) {
                 if ($remaining <= 0) {

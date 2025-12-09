@@ -36,8 +36,11 @@ final class AuthServiceProvider extends ServiceProvider
             // Check if user has permission to view roles or is admin
             // Safely check if the permission exists before checking if the user has it
             try {
-                return $user->hasPermissionTo('view roles') || $user->hasRole('admin');
-            } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
+                if ($user->hasPermissionTo('view roles')) {
+                    return true;
+                }
+                return (bool) $user->hasRole('admin');
+            } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist) {
                 // If the permission doesn't exist, only allow admin access
                 return $user->hasRole('admin');
             }
@@ -48,8 +51,11 @@ final class AuthServiceProvider extends ServiceProvider
             // Check if user has permission to view permissions or is admin
             // Safely check if the permission exists before checking if the user has it
             try {
-                return $user->hasPermissionTo('view permissions') || $user->hasRole('admin');
-            } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist $e) {
+                if ($user->hasPermissionTo('view permissions')) {
+                    return true;
+                }
+                return (bool) $user->hasRole('admin');
+            } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist) {
                 // If the permission doesn't exist, only allow admin access
                 return $user->hasRole('admin');
             }

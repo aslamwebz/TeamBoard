@@ -11,7 +11,7 @@ final class PaymentShow extends Component
 {
     public Payment $payment;
 
-    public function mount(Payment $payment)
+    public function mount(Payment $payment): void
     {
         $this->payment = $payment->load(['invoice', 'expense', 'user']);
     }

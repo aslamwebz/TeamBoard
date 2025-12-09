@@ -35,7 +35,7 @@ final class ExpenseApprovals extends Component
 
     public $dateTo = '';
 
-    protected $queryString = [
+    private array $queryString = [
         'search' => ['except' => ''],
         'projectId' => ['except' => ''],
         'categoryId' => ['except' => ''],
@@ -85,28 +85,28 @@ final class ExpenseApprovals extends Component
         // Only show expenses that are pending approval and the current user has permission to approve
         $expenses = Expense::with(['category', 'project', 'vendor', 'user'])
             ->where('status', ExpenseStatus::PENDING->value)
-            ->where(function ($query) {
+            ->where(function ($query): void {
                 // This is a simplified check - in a real app, you might have specific approval permissions
                 $query->where('user_id', '!=', Auth::id());  // Don't show expenses created by current user
             })
-            ->when($this->search, function (Builder $query) {
+            ->when($this->search, function (Builder $query): void {
                 $query
                     ->where('title', 'like', '%'.$this->search.'%')
                     ->orWhere('description', 'like', '%'.$this->search.'%');
             })
-            ->when($this->projectId, function (Builder $query) {
+            ->when($this->projectId, function (Builder $query): void {
                 $query->where('project_id', $this->projectId);
             })
-            ->when($this->categoryId, function (Builder $query) {
+            ->when($this->categoryId, function (Builder $query): void {
                 $query->where('expense_category_id', $this->categoryId);
             })
-            ->when($this->vendorId, function (Builder $query) {
+            ->when($this->vendorId, function (Builder $query): void {
                 $query->where('vendor_id', $this->vendorId);
             })
-            ->when($this->dateFrom, function (Builder $query) {
+            ->when($this->dateFrom, function (Builder $query): void {
                 $query->whereDate('expense_date', '>=', $this->dateFrom);
             })
-            ->when($this->dateTo, function (Builder $query) {
+            ->when($this->dateTo, function (Builder $query): void {
                 $query->whereDate('expense_date', '<=', $this->dateTo);
             })
             ->orderBy('expense_date', 'desc')

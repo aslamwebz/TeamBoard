@@ -35,7 +35,7 @@ final class InvoiceLineItemSeeder extends Seeder
 
         foreach ($invoices as $invoice) {
             // Add 1-4 line items per invoice
-            $itemCount = rand(1, 4);
+            $itemCount = random_int(1, 4);
 
             for ($i = 0; $i < $itemCount; $i++) {
                 $item = $items[array_rand($items)];
