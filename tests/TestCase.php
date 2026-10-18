@@ -62,9 +62,11 @@ abstract class TestCase extends BaseTestCase
     {
         $user = User::factory()->create();
 
-        // if ($isAdmin) {
+        if ($isAdmin) {
             $user->assignRole('admin');
-        // }
+        } else {
+            $user->assignRole('employee');
+        }
 
         return $user;
     }
