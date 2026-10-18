@@ -41,21 +41,26 @@ final class InvoiceEdit extends Component
 
     public $description = '';
 
-    private array $rules = [
-        'client_id' => 'required|exists:clients,id',
-        'project_id' => 'nullable|exists:projects,id',
-        'invoice_number' => 'required|string|unique:invoices,invoice_number',
-        'issue_date' => 'required|date',
-        'due_date' => 'required|date|after_or_equal:issue_date',
-        'amount' => 'required|numeric|min:0',
-        'tax' => 'required|numeric|min:0',
-        'total' => 'required|numeric|min:0',
-        'status' => 'required|in:draft,sent,paid,overdue,cancelled',
-        'description' => 'nullable|string|max:500',
-    ];
+    protected function rules(): array
+    {
+        return [
+            'client_id' => 'required|exists:clients,id',
+            'project_id' => 'nullable|exists:projects,id',
+            'invoice_number' => 'required|string|unique:invoices,invoice_number,'.$this->invoiceId,
+            'issue_date' => 'required|date',
+            'due_date' => 'required|date|after_or_equal:issue_date',
+            'amount' => 'required|numeric|min:0',
+            'tax' => 'required|numeric|min:0',
+            'total' => 'required|numeric|min:0',
+            'status' => 'required|in:draft,sent,paid,partially_paid,overdue,cancelled',
+            'description' => 'nullable|string|max:500',
+        ];
+    }
 
     public function mount(Invoice $invoice): void
     {
+        $this->authorize('update', $invoice);
+
         $this->invoice = $invoice;
         $this->invoiceId = $invoice->id;
         $this->client_id = $invoice->client_id;
@@ -72,21 +77,20 @@ final class InvoiceEdit extends Component
 
     public function updateInvoice(): RedirectResponse
     {
-        $this->rules['invoice_number'] = 'required|string|unique:invoices,invoice_number,'.$this->invoiceId;
+        $invoice = Invoice::findOrFail($this->invoiceId);
+        $this->authorize('update', $invoice);
+
         $validated = $this->validate();
 
         // Calculate total
-        $validated['total'] = $validated['amount'] + $validated['tax'];
+        $validated['total'] = (float) $validated['amount'] + (float) $validated['tax'];
 
-        $invoice = Invoice::find($this->invoiceId);
-        if ($invoice) {
-            $oldStatus = $invoice->status;
-            $invoice->update($validated);
+        $oldStatus = $invoice->status;
+        $invoice->update($validated);
 
-            // If invoice status changed to 'sent', notify the user who updated it
-            if ($oldStatus !== $validated['status'] && $validated['status'] === 'sent') {
-                \App\Events\NewInvoiceNotification::dispatch($invoice, auth()->user());
-            }
+        // If invoice status changed to 'sent', notify the user who updated it
+        if ($oldStatus !== $validated['status'] && $validated['status'] === 'sent') {
+            \App\Events\NewInvoiceNotification::dispatch($invoice, auth()->user());
         }
 
         return $this->redirectRoute('invoices.index', navigate: true);

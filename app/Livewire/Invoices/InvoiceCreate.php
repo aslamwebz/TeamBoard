@@ -39,6 +39,8 @@ final class InvoiceCreate extends Component
 
     public function mount(): void
     {
+        $this->authorize('create', Invoice::class);
+
         $this->invoice_number = 'INV-'.date('Y').'-'.mb_str_pad(mt_rand(1, 9999), 4, '0', STR_PAD_LEFT);
         $this->issue_date = now()->format('Y-m-d');
         $this->due_date = now()->addDays(30)->format('Y-m-d');
@@ -46,10 +48,22 @@ final class InvoiceCreate extends Component
 
     public function createInvoice(): RedirectResponse
     {
-        $validated = $this->validate();
+        $this->authorize('create', Invoice::class);
 
-        // Calculate total
-        $validated['total'] = $validated['amount'] + $validated['tax'];
+        $validated = $this->validate([
+            'client_id' => 'required|exists:clients,id',
+            'project_id' => 'nullable|exists:projects,id',
+            'invoice_number' => 'required|string|max:255|unique:invoices,invoice_number',
+            'issue_date' => 'required|date',
+            'due_date' => 'required|date|after_or_equal:issue_date',
+            'amount' => 'required|numeric|min:0',
+            'tax' => 'nullable|numeric|min:0',
+            'status' => 'required|string|in:draft,sent,paid,partially_paid,overdue,cancelled',
+            'description' => 'nullable|string',
+        ]);
+
+        $validated['tax'] = (float) ($validated['tax'] ?? 0);
+        $validated['total'] = (float) $validated['amount'] + $validated['tax'];
 
         $invoice = Invoice::create($validated);
 

@@ -29,6 +29,8 @@ final class InvoicePayments extends Component
 
     public function mount(Invoice $invoice): void
     {
+        $this->authorize('update', $invoice);
+
         $this->invoice = $invoice;
         $this->paymentAmount = $invoice->getRemainingBalance();
         $this->paymentDate = now()->format('Y-m-d');
@@ -37,26 +39,43 @@ final class InvoicePayments extends Component
 
     public function addPayment(): void
     {
+        $this->authorize('update', $this->invoice);
+
+        $remaining = $this->invoice->getRemainingBalance();
+
         $this->validate([
-            'paymentAmount' => 'required|numeric|min:0.01|max:' . $this->invoice->getRemainingBalance(),
+            'paymentAmount' => 'required|numeric|min:0.01|max:' . max(0.01, $remaining),
             'paymentDate' => 'required|date',
             'paymentMethod' => 'required|string|max:255',
         ]);
 
-        Payment::create([
-            'invoice_id' => $this->invoice->id,
-            'amount' => $this->paymentAmount,
-            'payment_method' => $this->paymentMethod,
-            'transaction_reference' => $this->transactionReference,
-            'payment_date' => $this->paymentDate,
-            'notes' => $this->notes,
-            'status' => PaymentStatus::COMPLETED->value,
-            'currency' => $this->invoice->getDefaultCurrency(),
-            'user_id' => auth()->id(),
-        ]);
+        \Illuminate\Support\Facades\DB::transaction(function (): void {
+            $lockedInvoice = Invoice::where('id', $this->invoice->id)->lockForUpdate()->firstOrFail();
+            $lockedRemaining = $lockedInvoice->getRemainingBalance();
 
-        // Update invoice status based on payments
-        $this->invoice->updateStatusFromPayment();
+            if ((float) $this->paymentAmount > $lockedRemaining) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'paymentAmount' => 'Payment amount exceeds remaining balance of ' . number_format($lockedRemaining, 2),
+                ]);
+            }
+
+            Payment::create([
+                'invoice_id' => $lockedInvoice->id,
+                'amount' => $this->paymentAmount,
+                'payment_method' => $this->paymentMethod,
+                'transaction_reference' => $this->transactionReference,
+                'payment_date' => $this->paymentDate,
+                'notes' => $this->notes,
+                'status' => PaymentStatus::COMPLETED->value,
+                'currency' => $lockedInvoice->getDefaultCurrency(),
+                'user_id' => auth()->id(),
+            ]);
+
+            // Update invoice status based on payments
+            $lockedInvoice->updateStatusFromPayment();
+
+            $this->invoice = $lockedInvoice->fresh();
+        });
 
         // Reset form
         $this->paymentAmount = $this->invoice->getRemainingBalance();
