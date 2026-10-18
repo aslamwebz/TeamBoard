@@ -81,7 +81,7 @@ final class User extends Authenticatable
 
     public function invoices(): BelongsToMany
     {
-        return $this->belongsToMany(Invoice::class);
+        return $this->belongsToMany(Invoice::class, 'user_invoices', 'user_id', 'invoice_id');
     }
 
     public function teams(): BelongsToMany

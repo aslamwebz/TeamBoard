@@ -73,7 +73,7 @@ final class Invoice extends Model
 
     public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'user_invoices', 'invoice_id', 'user_id');
     }
 
     public function task(): BelongsTo
