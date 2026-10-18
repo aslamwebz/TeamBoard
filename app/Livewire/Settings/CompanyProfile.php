@@ -41,20 +41,25 @@ final class CompanyProfile extends Component
 
     public $logoPreview;
 
-    private array $rules = [
-        'legal_name' => 'required|string|max:255',
-        'address' => 'nullable|string',
-        'phone' => 'nullable|string|max:20',
-        'email' => 'nullable|email|max:255',
-        'tax_vat_number' => 'nullable|string|max:50',
-        'industry' => 'nullable|string|max:100',
-        'currency' => 'required|string|size:3',
-        'timezone' => 'required|string|max:50',
-        'logo' => 'nullable|image|max:2048', // 2MB Max
-    ];
+    protected function rules(): array
+    {
+        return [
+            'legal_name' => 'required|string|max:255',
+            'address' => 'nullable|string',
+            'phone' => 'nullable|string|max:20',
+            'email' => 'nullable|email|max:255',
+            'tax_vat_number' => 'nullable|string|max:50',
+            'industry' => 'nullable|string|max:100',
+            'currency' => 'required|string|size:3',
+            'timezone' => 'required|string|max:50',
+            'logo' => 'nullable|image|max:2048', // 2MB Max
+        ];
+    }
 
     public function mount(): void
     {
+        abort_unless(auth()->user()?->hasRole(['admin', 'manager']), 403);
+
         $tenant = Tenant::current();
         if ($tenant instanceof \App\Models\Tenant) {
             $this->legal_name = $tenant->legal_name;
@@ -82,6 +87,8 @@ final class CompanyProfile extends Component
 
     public function save(): void
     {
+        abort_unless(auth()->user()?->hasRole(['admin', 'manager']), 403);
+
         $validatedData = $this->validate();
 
         $tenant = Tenant::current();
@@ -113,6 +120,8 @@ final class CompanyProfile extends Component
 
     public function removeLogo(): void
     {
+        abort_unless(auth()->user()?->hasRole(['admin', 'manager']), 403);
+
         $tenant = Tenant::current();
         if ($tenant && $tenant->logo) {
             Storage::delete($tenant->logo);

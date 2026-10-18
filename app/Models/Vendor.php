@@ -120,6 +120,6 @@ final class Vendor extends Model
      */
     public function projectInvoices(): HasMany
     {
-        return $this->hasMany(VendorInvoice::class);
+        return $this->hasMany(VendorInvoice::class)->whereNotNull('project_id');
     }
 }

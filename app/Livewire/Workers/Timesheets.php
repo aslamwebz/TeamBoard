@@ -46,16 +46,19 @@ final class Timesheets extends Component
 
     private array $queryString = ['search', 'entryTypeFilter', 'statusFilter', 'startDate', 'endDate'];
 
-    private array $rules = [
-        'date' => 'required|date',
-        'hours_worked' => 'required|numeric|min:0.01|max:24',
-        'activity_description' => 'required|string|max:1000',
-        'entry_type' => 'required|in:regular,overtime,vacation,sick_leave,holiday',
-        'project_id' => 'nullable|exists:projects,id',
-        'task_id' => 'nullable|exists:tasks,id',
-        'status' => 'required|in:pending,approved,rejected',
-        'notes' => 'nullable|string',
-    ];
+    protected function rules(): array
+    {
+        return [
+            'date' => 'required|date',
+            'hours_worked' => 'required|numeric|min:0.01|max:24',
+            'activity_description' => 'required|string|max:1000',
+            'entry_type' => 'required|in:regular,overtime,vacation,sick_leave,holiday',
+            'project_id' => 'nullable|exists:projects,id',
+            'task_id' => 'nullable|exists:tasks,id',
+            'status' => 'required|in:pending,approved,rejected',
+            'notes' => 'nullable|string',
+        ];
+    }
 
     public function mount(int $workerId): void
     {
@@ -71,6 +74,14 @@ final class Timesheets extends Component
 
     public function addTimesheet(): void
     {
+        if (Auth::user()->workerProfile?->id != $this->workerId && ! Auth::user()->hasRole(['admin', 'manager'])) {
+            abort(403, 'Unauthorized access to timesheets.');
+        }
+
+        if (! Auth::user()->hasRole(['admin', 'manager'])) {
+            $this->status = 'pending';
+        }
+
         $this->validate();
 
         $timesheet = new Timesheet();
@@ -142,10 +153,10 @@ final class Timesheets extends Component
         $projects = Project::select('id', 'name')->orderBy('name')->limit(100)->get();
         $tasks = Task::select('id', 'title')->orderBy('title')->limit(100)->get();
 
-        // Calculate totals
-        $totalRegularHours = $query->where('entry_type', 'regular')->sum('hours_worked');
-        $totalOvertimeHours = $query->where('entry_type', 'overtime')->sum('hours_worked');
-        $totalLeaveHours = $query->whereIn('entry_type', ['vacation', 'sick_leave', 'holiday'])->sum('hours_worked');
+        // Calculate totals with cloned queries
+        $totalRegularHours = (clone $query)->where('entry_type', 'regular')->sum('hours_worked');
+        $totalOvertimeHours = (clone $query)->where('entry_type', 'overtime')->sum('hours_worked');
+        $totalLeaveHours = (clone $query)->whereIn('entry_type', ['vacation', 'sick_leave', 'holiday'])->sum('hours_worked');
         $totalHours = $totalRegularHours + $totalOvertimeHours + $totalLeaveHours;
 
         return view('livewire.workers.worker-timesheets', [
