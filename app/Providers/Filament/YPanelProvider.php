@@ -29,6 +29,7 @@ final class YPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->domains(config('tenancy.central_domains', ['teamboard.test', 'localhost', '127.0.0.1']))
             ->authGuard('admins')
             ->authPasswordBroker('admins')
             ->login()
