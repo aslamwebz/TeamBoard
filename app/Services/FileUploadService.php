@@ -18,7 +18,6 @@ final class FileUploadService
         'image/png',
         'image/gif',
         'image/webp',
-        'image/svg+xml',
         // Documents
         'application/pdf',
         'application/msword',

@@ -38,13 +38,7 @@ final class TenantFileController extends Controller
             abort(404, 'File not found in storage');
         }
 
-        // Get the file content
-        $fileContent = Storage::disk('public')->get($path);
-        $mimeType = Storage::disk('public')->mimeType($path);
-
-        // Return the file content with appropriate headers
-        return response($fileContent)
-            ->header('Content-Type', $mimeType)
-            ->header('Content-Disposition', 'inline; filename="'.basename($path).'"');
+        // Stream the file with appropriate filename and headers to prevent memory exhaustion
+        return Storage::disk('public')->response($path, $attachment->original_name);
     }
 }
