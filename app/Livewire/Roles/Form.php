@@ -20,6 +20,8 @@ final class Form extends Component
 
     public function mount($role = null): void
     {
+        abort_unless(auth()->user()?->hasRole('admin'), 403, 'Unauthorized.');
+
         $this->allPermissions = Permission::all();
 
         if ($role) {
@@ -97,6 +99,8 @@ final class Form extends Component
 
     public function save(): \Illuminate\Http\RedirectResponse
     {
+        abort_unless(auth()->user()?->hasRole('admin'), 403, 'Unauthorized.');
+
         $this->validate([
             'name' => $this->role ? 'required|string|max:255|unique:roles,name,'.$this->role->id : 'required|string|max:255|unique:roles,name',
             'permissions' => 'array',

@@ -35,6 +35,8 @@ final class UserEdit extends Component
 
     public function mount(User $user): void
     {
+        $this->authorize('update', $user);
+
         $this->user = $user;
         $this->name = $user->name;
         $this->email = $user->email;
@@ -52,6 +54,8 @@ final class UserEdit extends Component
 
     public function updateUser(): \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
     {
+        $this->authorize('update', $this->user);
+
         $this->processing = true;
 
         $this->validate();

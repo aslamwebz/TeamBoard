@@ -27,11 +27,11 @@ final class UserIndex extends Component
 
     public function deleteUser($userId): void
     {
-        $user = User::find($userId);
-        if ($user) {
-            $user->delete();
-            session()->flash('message', 'User deleted successfully.');
-        }
+        $user = User::findOrFail($userId);
+        $this->authorize('delete', $user);
+
+        $user->delete();
+        session()->flash('message', 'User deleted successfully.');
     }
 
     public function render(): View
@@ -69,9 +69,9 @@ final class UserIndex extends Component
             ->orderBy('name', 'asc')
             ->paginate($this->perPage);
 
-        // Pre-calculate permissions count for each user
+        // Pre-calculate permissions count from eager-loaded relations to avoid N+1 queries
         foreach ($users as $user) {
-            $user->setAttribute('permissions_count', $user->getAllPermissions()->count());
+            $user->setAttribute('permissions_count', $user->roles->flatMap->permissions->merge($user->permissions)->unique('id')->count());
         }
 
         return view('livewire.users.user-index', [

@@ -26,6 +26,8 @@ final class RoleIndex extends Component
 
     public function deleteRole($roleId): void
     {
+        abort_unless(auth()->user()?->hasRole('admin'), 403, 'Unauthorized.');
+
         $role = Role::findOrFail($roleId);
 
         // Only allow deleting roles that are not assigned to users
