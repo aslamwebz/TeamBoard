@@ -174,6 +174,21 @@
             @endcan
         </flux:sidebar.group>
 
+        <flux:sidebar.group expandable :expanded="request()->routeIs(['settings*', 'billing'])" icon="cog-6-tooth" heading="SETTINGS"
+            class="grid">
+            <flux:sidebar.item icon="building-office-2" href="{{ route('settings.company-profile') }}"
+                :current="request()->routeIs('settings.company-profile')" wire:navigate.hover
+                @mouseenter="preloadLink('{{ route('settings.company-profile') }}')">
+                {{ __('Company Profile') }}
+            </flux:sidebar.item>
+            
+            <flux:sidebar.item icon="credit-card" href="{{ route('billing') }}"
+                :current="request()->routeIs('billing')" wire:navigate.hover
+                @mouseenter="preloadLink('{{ route('billing') }}')">
+                {{ __('Billing') }}
+            </flux:sidebar.item>
+        </flux:sidebar.group>
+
     </flux:sidebar.nav>
 
     <flux:sidebar.spacer />

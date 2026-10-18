@@ -38,6 +38,7 @@ final class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureCommands();
+        \Laravel\Cashier\Cashier::useCustomerModel(Tenant::class);
         $this->configureModels();
         $this->configureDates();
         $this->configureUrls();
