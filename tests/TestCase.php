@@ -18,6 +18,8 @@ abstract class TestCase extends BaseTestCase
 
     public User $admin;
 
+    public User $employee;
+
     public User $unverifiedUser;
 
     public Tenant $tenant;
@@ -41,6 +43,7 @@ abstract class TestCase extends BaseTestCase
 
         $this->user = $this->createUser();
         $this->admin = $this->createUser(isAdmin: true);
+        $this->employee = $this->createUser(isAdmin: false);
         $this->unverifiedUser = $this->createUnverifiedUser();
     }
 
@@ -58,7 +61,7 @@ abstract class TestCase extends BaseTestCase
         tenancy()->initialize($tenant);
     }
 
-    private function createUser(bool $isAdmin = false): User
+    private function createUser(bool $isAdmin = true): User
     {
         $user = User::factory()->create();
 

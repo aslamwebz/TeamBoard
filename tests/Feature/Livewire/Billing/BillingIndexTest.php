@@ -15,7 +15,7 @@ test('admin user can view billing page', function () {
 });
 
 test('non-admin cannot view billing page', function () {
-    $this->actingAs($this->user);
+    $this->actingAs($this->employee);
 
     $this->get(route('billing'))
         ->assertStatus(403);
