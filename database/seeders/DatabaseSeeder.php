@@ -16,6 +16,10 @@ final class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
+        $this->call([
+            AdminSeeder::class,
+        ]);
+
         \DB::statement('DROP DATABASE IF EXISTS tenantwebz');
 
         $tenant = Tenant::create(['id' => 'webz']);

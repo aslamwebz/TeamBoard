@@ -79,8 +79,8 @@
 
                 <div class="h-6 w-px bg-zinc-200 dark:bg-zinc-800 mx-2"></div>
 
-                <a href="/login" class="text-sm font-semibold leading-6 text-zinc-900 dark:text-white my-auto px-2 hover:text-indigo-600 dark:hover:text-indigo-400 transition">Log in</a>
-                <a href="/register" class="rounded-full bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 hover:bg-indigo-500 hover:shadow-indigo-500/40 hover:-translate-y-0.5 transition-all duration-300">Get started</a>
+                <a href="/admin" class="text-sm font-semibold leading-6 text-zinc-900 dark:text-white my-auto px-2 hover:text-indigo-600 dark:hover:text-indigo-400 transition">Admin Portal</a>
+                <a href="#pricing" class="rounded-full bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 hover:bg-indigo-500 hover:shadow-indigo-500/40 hover:-translate-y-0.5 transition-all duration-300">Get started</a>
             </div>
         </nav>
     </header>
@@ -97,7 +97,7 @@
                 <!-- Badge -->
                 <div class="inline-flex items-center rounded-full border border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-950/30 px-3 py-1 text-sm font-medium text-indigo-600 dark:text-indigo-300 mb-8 backdrop-blur-sm animate-fade-in-up">
                     <span class="flex h-2 w-2 rounded-full bg-indigo-600 mr-2 animate-pulse"></span>
-                    Now with AI-Powered Insights
+                    Enterprise Multi-Tenant SaaS Platform
                 </div>
                 
                 <h1 class="mx-auto max-w-5xl text-5xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-7xl animate-fade-in-up delay-100 leading-[1.1]">
@@ -110,7 +110,7 @@
                 </p>
 
                 <div class="mt-10 flex items-center justify-center gap-x-6 animate-fade-in-up delay-300">
-                    <a href="/register" class="rounded-full bg-zinc-900 dark:bg-white px-8 py-3.5 text-sm font-semibold text-white dark:text-zinc-900 shadow-xl hover:bg-zinc-800 dark:hover:bg-zinc-200 hover:-translate-y-1 transition-all duration-300">Start free trial</a>
+                    <a href="#pricing" class="rounded-full bg-zinc-900 dark:bg-white px-8 py-3.5 text-sm font-semibold text-white dark:text-zinc-900 shadow-xl hover:bg-zinc-800 dark:hover:bg-zinc-200 hover:-translate-y-1 transition-all duration-300">Start free trial</a>
                     <a href="#" class="text-sm font-semibold leading-6 text-zinc-900 dark:text-white hover:text-indigo-600 transition flex items-center gap-2">
                         <svg class="w-5 h-5 text-indigo-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" /></svg>
                         Watch the film <span class="text-zinc-400 ml-1">2:14</span>

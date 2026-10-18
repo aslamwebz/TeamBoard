@@ -2,6 +2,7 @@
 
 namespace Database\Seeders\webz;
 
+use App\Enums\PaymentStatus;
 use App\Models\Expense;
 use App\Models\Payment;
 use Illuminate\Database\Seeder;
