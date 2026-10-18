@@ -144,14 +144,16 @@ Route::middleware([
         Route::get('/teams/{team}', TeamShow::class)->name('teams.show');
 
         // Roles management routes
-        Route::get('/roles', App\Livewire\Roles\RoleIndex::class)->name('roles.index');
-        Route::get('/roles/create', App\Livewire\Roles\Form::class)->name('roles.create');
-        Route::get('/roles/{role}/edit', App\Livewire\Roles\Form::class)->name('roles.edit')->where('role', '[0-9]+');
+        Route::middleware('can:view roles')->group(function () {
+            Route::get('/roles', App\Livewire\Roles\RoleIndex::class)->name('roles.index');
+            Route::get('/roles/create', App\Livewire\Roles\Form::class)->name('roles.create');
+            Route::get('/roles/{role}/edit', App\Livewire\Roles\Form::class)->name('roles.edit')->where('role', '[0-9]+');
 
-        // Permissions management routes
-        Route::get('/permissions', App\Livewire\Permissions\PermissionIndex::class)->name('permissions.index');
-        Route::get('/permissions/create', App\Livewire\Permissions\PermissionCreate::class)->name('permissions.create');
-        Route::get('/permissions/{permission}/edit', App\Livewire\Permissions\PermissionEdit::class)->name('permissions.edit');
+            // Permissions management routes
+            Route::get('/permissions', App\Livewire\Permissions\PermissionIndex::class)->name('permissions.index');
+            Route::get('/permissions/create', App\Livewire\Permissions\PermissionCreate::class)->name('permissions.create');
+            Route::get('/permissions/{permission}/edit', App\Livewire\Permissions\PermissionEdit::class)->name('permissions.edit');
+        });
 
         // Phases routes
         Route::get('/projects/{project}/phases', App\Livewire\Projects\Phases\PhaseIndex::class)->name('phases.index');

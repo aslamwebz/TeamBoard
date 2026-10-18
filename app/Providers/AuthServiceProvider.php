@@ -25,8 +25,29 @@ final class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        // Grant all abilities to admin
+        Gate::before(function ($user, $ability) {
+            try {
+                if ($user instanceof \App\Models\User && $user->hasRole('admin')) {
+                    return true;
+                }
+            } catch (\Throwable) {
+                // Ignore if roles table not initialized yet
+            }
+            return null;
+        });
+
         // Define gates for roles and permissions
         $this->gateRolesAndPermissions();
+
+        // Gate for approving expenses
+        Gate::define('approve_expense', function ($user, $expense = null) {
+            try {
+                return $user->hasRole(['admin', 'manager']);
+            } catch (\Throwable) {
+                return false;
+            }
+        });
     }
 
     private function gateRolesAndPermissions(): void
