@@ -44,6 +44,8 @@ final class PurchaseOrderEdit extends Component
 
     public function mount(PurchaseOrder $purchaseOrder): void
     {
+        $this->authorize('update', $purchaseOrder);
+
         $this->purchaseOrder = $purchaseOrder;
         $this->fill([
             'vendor_id' => $purchaseOrder->vendor_id,
@@ -64,6 +66,8 @@ final class PurchaseOrderEdit extends Component
 
     public function update(): RedirectResponse
     {
+        $this->authorize('update', $this->purchaseOrder);
+
         $this->validate();
 
         $this->purchaseOrder->update([
@@ -98,7 +102,7 @@ final class PurchaseOrderEdit extends Component
         ]);
     }
 
-    private function rules(): array
+    protected function rules(): array
     {
         return [
             'vendor_id' => 'required|exists:vendors,id',

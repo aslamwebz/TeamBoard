@@ -21,11 +21,20 @@ final class ReportCreate extends Component
 
     public $report_type = 'financial';
 
-    public $data = [];
+    public function mount(): void
+    {
+        $this->authorize('create', Report::class);
+    }
 
     public function createReport(): RedirectResponse
     {
-        $validated = $this->validate();
+        $this->authorize('create', Report::class);
+
+        $validated = $this->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'report_type' => 'required|string|in:financial,project,invoice,client',
+        ]);
 
         $validated['user_id'] = auth()->id();
         $validated['status'] = ReportStatus::GENERATED->value;

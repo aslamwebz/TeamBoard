@@ -67,6 +67,9 @@ final class ReportIndex extends Component
 
     public function deleteReport($id): void
     {
+        $report = Report::findOrFail($id);
+        $this->authorize('delete', $report);
+
         $this->reportToDeleteId = $id;
         $this->showDeleteModal = true;
     }
@@ -75,6 +78,7 @@ final class ReportIndex extends Component
     {
         $report = Report::find($this->reportToDeleteId);
         if ($report) {
+            $this->authorize('delete', $report);
             $report->delete();
         }
 

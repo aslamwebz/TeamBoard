@@ -47,37 +47,37 @@ final class ExpenseIndex extends Component
 
     public function deleteExpense(int $expenseId): void
     {
-        $expense = Expense::find($expenseId);
-        if ($expense) {
-            $expense->delete();
-            $this->dispatch('expense-deleted');
-        }
+        $expense = Expense::findOrFail($expenseId);
+        $this->authorize('delete', $expense);
+
+        $expense->delete();
+        $this->dispatch('expense-deleted');
     }
 
     public function approveExpense(int $expenseId): void
     {
-        $expense = Expense::find($expenseId);
-        if ($expense && Auth::user()->can('approve_expense', $expense)) {
-            $expense->update([
-                'status' => ExpenseStatus::APPROVED->value,
-                'approver_id' => Auth::id(),
-                'approved_at' => now(),
-            ]);
-            $this->dispatch('expense-approved');
-        }
+        $expense = Expense::findOrFail($expenseId);
+        $this->authorize('approve', $expense);
+
+        $expense->update([
+            'status' => ExpenseStatus::APPROVED->value,
+            'approver_id' => Auth::id(),
+            'approved_at' => now(),
+        ]);
+        $this->dispatch('expense-approved');
     }
 
     public function rejectExpense(int $expenseId): void
     {
-        $expense = Expense::find($expenseId);
-        if ($expense && Auth::user()->can('approve_expense', $expense)) {
-            $expense->update([
-                'status' => ExpenseStatus::REJECTED->value,
-                'approver_id' => Auth::id(),
-                'approved_at' => now(),
-            ]);
-            $this->dispatch('expense-rejected');
-        }
+        $expense = Expense::findOrFail($expenseId);
+        $this->authorize('approve', $expense);
+
+        $expense->update([
+            'status' => ExpenseStatus::REJECTED->value,
+            'approver_id' => Auth::id(),
+            'approved_at' => now(),
+        ]);
+        $this->dispatch('expense-rejected');
     }
 
     public function getStatusBadgeClass(string $status): string
