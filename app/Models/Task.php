@@ -8,9 +8,9 @@ use App\Enums\TaskStatus;
 use App\Helpers\TenantHelper;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int $id
@@ -98,7 +98,7 @@ final class Task extends Model
     {
         $dependencies = is_string($this->dependencies) ? json_decode($this->dependencies, true) : $this->dependencies;
 
-        return !empty($dependencies) && count($dependencies) > 0;
+        return ! empty($dependencies) && count($dependencies) > 0;
     }
 
     /**
@@ -106,7 +106,7 @@ final class Task extends Model
      */
     public function areDependenciesCompleted(): bool
     {
-        if (!$this->hasDependencies()) {
+        if (! $this->hasDependencies()) {
             return true;  // No dependencies means it can be started
         }
 
@@ -136,7 +136,7 @@ final class Task extends Model
     public function addDependency($taskId): void
     {
         $dependencies = $this->dependencies ?? [];
-        if (!in_array($taskId, $dependencies)) {
+        if (! in_array($taskId, $dependencies)) {
             $dependencies[] = $taskId;
             $this->update(['dependencies' => $dependencies]);
         }
@@ -148,7 +148,7 @@ final class Task extends Model
     public function removeDependency($taskId): void
     {
         $dependencies = $this->dependencies ?? [];
-        $dependencies = array_filter($dependencies, fn($id): bool => $id !== $taskId);
+        $dependencies = array_filter($dependencies, fn ($id): bool => $id !== $taskId);
         $this->update(['dependencies' => array_values($dependencies)]);
     }
 

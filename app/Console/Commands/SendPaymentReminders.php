@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Console\Commands;
 
@@ -74,7 +76,7 @@ final class SendPaymentReminders extends Command
                 ->where('data->days_overdue', $days)
                 ->exists();
 
-            if (!$reminderExists) {
+            if (! $reminderExists) {
                 // Create notification
                 Notification::create([
                     'notifiable_type' => $invoice->client::class,
@@ -82,8 +84,8 @@ final class SendPaymentReminders extends Command
                     'type' => 'payment_reminder',
                     'data' => [
                         'type' => 'payment_reminder',
-                        'title' => 'Payment Reminder - Invoice ' . $invoice->invoice_number,
-                        'message' => sprintf('Invoice %s is %d days overdue. Amount: %s ', $invoice->invoice_number, $days, $invoice->getDefaultCurrency()) . number_format($invoice->getRemainingBalance(), 2),
+                        'title' => 'Payment Reminder - Invoice '.$invoice->invoice_number,
+                        'message' => sprintf('Invoice %s is %d days overdue. Amount: %s ', $invoice->invoice_number, $days, $invoice->getDefaultCurrency()).number_format($invoice->getRemainingBalance(), 2),
                         'invoice_id' => $invoice->id,
                         'invoice_number' => $invoice->invoice_number,
                         'amount' => $invoice->getRemainingBalance(),
@@ -119,7 +121,7 @@ final class SendPaymentReminders extends Command
                 ->where('data->days_until_due', $days)
                 ->exists();
 
-            if (!$reminderExists) {
+            if (! $reminderExists) {
                 // Create notification
                 Notification::create([
                     'notifiable_type' => $invoice->client::class,
@@ -127,8 +129,8 @@ final class SendPaymentReminders extends Command
                     'type' => 'payment_reminder',
                     'data' => [
                         'type' => 'payment_reminder',
-                        'title' => 'Upcoming Payment - Invoice ' . $invoice->invoice_number,
-                        'message' => sprintf('Invoice %s is due in %d days. Amount: %s ', $invoice->invoice_number, $days, $invoice->getDefaultCurrency()) . number_format($invoice->getRemainingBalance(), 2),
+                        'title' => 'Upcoming Payment - Invoice '.$invoice->invoice_number,
+                        'message' => sprintf('Invoice %s is due in %d days. Amount: %s ', $invoice->invoice_number, $days, $invoice->getDefaultCurrency()).number_format($invoice->getRemainingBalance(), 2),
                         'invoice_id' => $invoice->id,
                         'invoice_number' => $invoice->invoice_number,
                         'amount' => $invoice->getRemainingBalance(),

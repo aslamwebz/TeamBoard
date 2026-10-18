@@ -46,26 +46,12 @@ final class Timesheets extends Component
 
     private array $queryString = ['search', 'entryTypeFilter', 'statusFilter', 'startDate', 'endDate'];
 
-    protected function rules(): array
-    {
-        return [
-            'date' => 'required|date',
-            'hours_worked' => 'required|numeric|min:0.01|max:24',
-            'activity_description' => 'required|string|max:1000',
-            'entry_type' => 'required|in:regular,overtime,vacation,sick_leave,holiday',
-            'project_id' => 'nullable|exists:projects,id',
-            'task_id' => 'nullable|exists:tasks,id',
-            'status' => 'required|in:pending,approved,rejected',
-            'notes' => 'nullable|string',
-        ];
-    }
-
     public function mount(int $workerId): void
     {
         $this->workerId = $workerId;
 
         // Authorization check
-        if (Auth::user()->workerProfile?->id != $workerId && ! Auth::user()->hasRole(['admin', 'manager'])) {
+        if (Auth::user()->workerProfile?->id !== $workerId && ! Auth::user()->hasRole(['admin', 'manager'])) {
             abort(403, 'Unauthorized access to timesheets.');
         }
 
@@ -74,7 +60,7 @@ final class Timesheets extends Component
 
     public function addTimesheet(): void
     {
-        if (Auth::user()->workerProfile?->id != $this->workerId && ! Auth::user()->hasRole(['admin', 'manager'])) {
+        if (Auth::user()->workerProfile?->id !== $this->workerId && ! Auth::user()->hasRole(['admin', 'manager'])) {
             abort(403, 'Unauthorized access to timesheets.');
         }
 
@@ -97,13 +83,13 @@ final class Timesheets extends Component
         $timesheet->save();
 
         $this->reset([
-            'date', 
-            'hours_worked', 
-            'activity_description', 
-            'entry_type', 
-            'project_id', 
-            'task_id', 
-            'notes'
+            'date',
+            'hours_worked',
+            'activity_description',
+            'entry_type',
+            'project_id',
+            'task_id',
+            'notes',
         ]);
         $this->date = now()->format('Y-m-d');
 
@@ -113,7 +99,7 @@ final class Timesheets extends Component
     public function deleteTimesheet(int $timesheetId): void
     {
         $timesheet = Timesheet::findOrFail($timesheetId);
-        
+
         $this->authorize('delete', $timesheet);
 
         if ($timesheet->worker_profile_id === $this->workerId) {
@@ -168,5 +154,19 @@ final class Timesheets extends Component
             'totalLeaveHours' => $totalLeaveHours,
             'totalHours' => $totalHours,
         ]);
+    }
+
+    protected function rules(): array
+    {
+        return [
+            'date' => 'required|date',
+            'hours_worked' => 'required|numeric|min:0.01|max:24',
+            'activity_description' => 'required|string|max:1000',
+            'entry_type' => 'required|in:regular,overtime,vacation,sick_leave,holiday',
+            'project_id' => 'nullable|exists:projects,id',
+            'task_id' => 'nullable|exists:tasks,id',
+            'status' => 'required|in:pending,approved,rejected',
+            'notes' => 'nullable|string',
+        ];
     }
 }

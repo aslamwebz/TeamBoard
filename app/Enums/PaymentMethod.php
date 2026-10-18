@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Enums;
 
@@ -18,7 +20,7 @@ enum PaymentMethod: string
      */
     public static function toArray(): array
     {
-        return array_reduce(self::cases(), function (array $carry, \App\Enums\PaymentMethod $case): array {
+        return array_reduce(self::cases(), function (array $carry, PaymentMethod $case): array {
             $carry[$case->value] = $case->getLabel();
 
             return $carry;

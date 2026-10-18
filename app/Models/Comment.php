@@ -24,6 +24,7 @@ final class Comment extends Model
 {
     use HasFactory;
     use HasMentions;
+
     /**
      * @var list<string>
      */

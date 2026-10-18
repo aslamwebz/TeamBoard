@@ -17,9 +17,7 @@ final readonly class SendNotificationListener
     /**
      * Create the event listener.
      */
-    public function __construct(private \App\Services\NotificationService $notificationService)
-    {
-    }
+    public function __construct(private NotificationService $notificationService) {}
 
     /**
      * Handle the event.

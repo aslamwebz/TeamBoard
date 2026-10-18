@@ -41,22 +41,6 @@ final class InvoiceEdit extends Component
 
     public $description = '';
 
-    protected function rules(): array
-    {
-        return [
-            'client_id' => 'required|exists:clients,id',
-            'project_id' => 'nullable|exists:projects,id',
-            'invoice_number' => 'required|string|unique:invoices,invoice_number,'.$this->invoiceId,
-            'issue_date' => 'required|date',
-            'due_date' => 'required|date|after_or_equal:issue_date',
-            'amount' => 'required|numeric|min:0',
-            'tax' => 'required|numeric|min:0',
-            'total' => 'required|numeric|min:0',
-            'status' => 'required|in:draft,sent,paid,partially_paid,overdue,cancelled',
-            'description' => 'nullable|string|max:500',
-        ];
-    }
-
     public function mount(Invoice $invoice): void
     {
         $this->authorize('update', $invoice);
@@ -110,5 +94,21 @@ final class InvoiceEdit extends Component
             'clients' => $clients,
             'projects' => $projects,
         ]);
+    }
+
+    protected function rules(): array
+    {
+        return [
+            'client_id' => 'required|exists:clients,id',
+            'project_id' => 'nullable|exists:projects,id',
+            'invoice_number' => 'required|string|unique:invoices,invoice_number,'.$this->invoiceId,
+            'issue_date' => 'required|date',
+            'due_date' => 'required|date|after_or_equal:issue_date',
+            'amount' => 'required|numeric|min:0',
+            'tax' => 'required|numeric|min:0',
+            'total' => 'required|numeric|min:0',
+            'status' => 'required|in:draft,sent,paid,partially_paid,overdue,cancelled',
+            'description' => 'nullable|string|max:500',
+        ];
     }
 }

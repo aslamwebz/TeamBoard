@@ -17,7 +17,7 @@ enum ExpenseStatus: string
      */
     public static function toArray(): array
     {
-        return array_reduce(self::cases(), function (array $carry, \App\Enums\ExpenseStatus $case): array {
+        return array_reduce(self::cases(), function (array $carry, ExpenseStatus $case): array {
             $carry[$case->value] = $case->getLabel();
 
             return $carry;

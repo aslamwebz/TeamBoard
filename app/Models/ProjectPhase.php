@@ -8,9 +8,9 @@ use App\Enums\PhaseStatus;
 use App\Enums\TaskStatus;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int $id
@@ -81,7 +81,7 @@ final class ProjectPhase extends Model
             return 0;
         }
 
-        $completedTasks = $tasks->filter(fn($task): bool => $task->status === TaskStatus::COMPLETED->value);
+        $completedTasks = $tasks->filter(fn ($task): bool => $task->status === TaskStatus::COMPLETED->value);
 
         return (int) round(($completedTasks->count() / $tasks->count()) * 100);
     }
@@ -102,7 +102,7 @@ final class ProjectPhase extends Model
             return $this->status;  // Return current status if no tasks
         }
 
-        $completedTasks = $tasks->filter(fn($task): bool => $task->status === TaskStatus::COMPLETED->value);
+        $completedTasks = $tasks->filter(fn ($task): bool => $task->status === TaskStatus::COMPLETED->value);
 
         if ($completedTasks->count() === $tasks->count()) {
             return PhaseStatus::COMPLETED->value;

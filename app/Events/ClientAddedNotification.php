@@ -13,10 +13,9 @@ final class ClientAddedNotification
 {
     use Dispatchable;
     use SerializesModels;
+
     /**
      * Create a new event instance.
      */
-    public function __construct(public Client $client, public User $user)
-    {
-    }
+    public function __construct(public Client $client, public User $user) {}
 }

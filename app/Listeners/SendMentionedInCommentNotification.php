@@ -9,9 +9,7 @@ use App\Services\NotificationService;
 
 final readonly class SendMentionedInCommentNotification
 {
-    public function __construct(private \App\Services\NotificationService $notificationService)
-    {
-    }
+    public function __construct(private NotificationService $notificationService) {}
 
     public function handle(MentionedInCommentEvent $event): void
     {

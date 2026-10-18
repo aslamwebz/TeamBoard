@@ -9,9 +9,7 @@ use App\Services\NotificationService;
 
 final readonly class SendTaskAssignedNotification
 {
-    public function __construct(private \App\Services\NotificationService $notificationService)
-    {
-    }
+    public function __construct(private NotificationService $notificationService) {}
 
     public function handle(TaskAssignedEvent $event): void
     {

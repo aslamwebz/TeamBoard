@@ -9,7 +9,6 @@ use App\Models\User;
 use App\Notifications\GenericNotification;
 use Exception;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 
 final class SendEmailNotification
 {

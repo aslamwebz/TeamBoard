@@ -34,7 +34,7 @@ final class ActivityService
     {
         return $this->logActivity(
             'created_discussion',
-            'Created discussion: ' . $discussion->title,
+            'Created discussion: '.$discussion->title,
             $discussion,
             [
                 'title' => $discussion->title,
@@ -49,7 +49,7 @@ final class ActivityService
 
         return $this->logActivity(
             'commented',
-            'Added a comment to discussion: ' . $discussion->title,
+            'Added a comment to discussion: '.$discussion->title,
             $comment->discussion,
             [
                 'comment_content' => $comment->content,
@@ -63,7 +63,7 @@ final class ActivityService
     {
         return $this->logActivity(
             'updated_task',
-            'Updated task: ' . $task->title,
+            'Updated task: '.$task->title,
             $task,
             [
                 'task_title' => $task->title,
@@ -76,7 +76,7 @@ final class ActivityService
     {
         return $this->logActivity(
             'completed_task',
-            'Completed task: ' . $task->title,
+            'Completed task: '.$task->title,
             $task,
             [
                 'task_title' => $task->title,

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Livewire\Invoices;
 
@@ -6,7 +8,6 @@ use App\Enums\PaymentMethod;
 use App\Enums\PaymentStatus;
 use App\Models\Invoice;
 use App\Models\Payment;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -44,7 +45,7 @@ final class InvoicePayments extends Component
         $remaining = $this->invoice->getRemainingBalance();
 
         $this->validate([
-            'paymentAmount' => 'required|numeric|min:0.01|max:' . max(0.01, $remaining),
+            'paymentAmount' => 'required|numeric|min:0.01|max:'.max(0.01, $remaining),
             'paymentDate' => 'required|date',
             'paymentMethod' => 'required|string|max:255',
         ]);
@@ -55,7 +56,7 @@ final class InvoicePayments extends Component
 
             if ((float) $this->paymentAmount > $lockedRemaining) {
                 throw \Illuminate\Validation\ValidationException::withMessages([
-                    'paymentAmount' => 'Payment amount exceeds remaining balance of ' . number_format($lockedRemaining, 2),
+                    'paymentAmount' => 'Payment amount exceeds remaining balance of '.number_format($lockedRemaining, 2),
                 ]);
             }
 
@@ -96,7 +97,7 @@ final class InvoicePayments extends Component
 
     public function getPaymentStatusBadgeClass(string $status): string
     {
-        $paymentStatus = \App\Enums\PaymentStatus::tryFrom($status);
+        $paymentStatus = PaymentStatus::tryFrom($status);
         if ($paymentStatus) {
             return $paymentStatus->getColorClass();
         }

@@ -1,13 +1,15 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
 use App\Helpers\TenantHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Model;
 
 final class Project extends Model
 {
@@ -103,12 +105,12 @@ final class Project extends Model
                 return 0;
             }
 
-            $completedTasks = $tasks->filter(fn($task): bool => $task->status === \App\Enums\TaskStatus::COMPLETED->value);
+            $completedTasks = $tasks->filter(fn ($task): bool => $task->status === \App\Enums\TaskStatus::COMPLETED->value);
 
             return (int) round(($completedTasks->count() / $tasks->count()) * 100);
         }
 
-        $completedPhases = $phases->filter(fn($phase): bool => $phase->status === \App\Enums\PhaseStatus::COMPLETED->value);
+        $completedPhases = $phases->filter(fn ($phase): bool => $phase->status === \App\Enums\PhaseStatus::COMPLETED->value);
 
         return (int) round(($completedPhases->count() / $phases->count()) * 100);
     }

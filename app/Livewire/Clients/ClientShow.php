@@ -96,7 +96,7 @@ final class ClientShow extends Component
             ->orderBy('name')
             ->get();
 
-        $this->availableProjects = $projects->map(fn($project): array => [
+        $this->availableProjects = $projects->map(fn ($project): array => [
             'id' => $project->id,
             'name' => $project->name,
         ])->toArray();
@@ -192,13 +192,13 @@ final class ClientShow extends Component
         $projectCount = $projects->count();
         $activeProjects = $projects->whereIn('status', [
             ProjectStatus::PLANNING->value,
-            ProjectStatus::IN_PROGRESS->value
+            ProjectStatus::IN_PROGRESS->value,
         ])->count();
         $completedProjects = $projects->where('status', ProjectStatus::COMPLETED->value)->count();
         $totalTasks = $projects->sum('tasks_count');
-        
-        $completedTaskProjects = $projects->filter(fn($p): bool => $p->completed_tasks_count > 0)->count();
-        $inProgressTaskProjects = $projects->filter(fn($p): bool => $p->in_progress_tasks_count > 0)->count();
+
+        $completedTaskProjects = $projects->filter(fn ($p): bool => $p->completed_tasks_count > 0)->count();
+        $inProgressTaskProjects = $projects->filter(fn ($p): bool => $p->in_progress_tasks_count > 0)->count();
 
         return [
             'projectCount' => $projectCount,
@@ -219,7 +219,7 @@ final class ClientShow extends Component
     {
         return $client->projects()->whereIn('status', [
             ProjectStatus::PLANNING->value,
-            ProjectStatus::IN_PROGRESS->value
+            ProjectStatus::IN_PROGRESS->value,
         ])->count();
     }
 

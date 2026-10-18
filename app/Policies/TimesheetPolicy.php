@@ -6,9 +6,8 @@ namespace App\Policies;
 
 use App\Models\Timesheet;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
-class TimesheetPolicy
+final class TimesheetPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -18,6 +17,7 @@ class TimesheetPolicy
         if ($user->hasRole(['admin', 'manager'])) {
             return true;
         }
+
         return $user->hasWorkerProfile();
     }
 
@@ -41,6 +41,7 @@ class TimesheetPolicy
         if ($user->hasRole(['admin', 'manager'])) {
             return true;
         }
+
         return $user->hasWorkerProfile();
     }
 
@@ -54,7 +55,7 @@ class TimesheetPolicy
         }
 
         // Users can only edit their own timesheets if they are not approved yet
-        return $user->workerProfile?->id === $timesheet->worker_profile_id 
+        return $user->workerProfile?->id === $timesheet->worker_profile_id
             && $timesheet->status !== 'approved';
     }
 

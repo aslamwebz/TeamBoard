@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
-use Carbon\CarbonInterface;
 
 /**
  * @property int $id
@@ -18,11 +18,12 @@ use Carbon\CarbonInterface;
  * @property string $password
  * @property CarbonInterface|null $email_verified_at
  * @property string|null $remember_token
- */ 
+ */
 final class Admin extends Authenticatable
 {
     use HasFactory;
     use Notifiable;
+
     /**
      * The attributes that are mass assignable.
      *

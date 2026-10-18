@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Livewire\Payments;
 
@@ -8,7 +10,6 @@ use App\Enums\PaymentStatus;
 use App\Models\Expense;
 use App\Models\Invoice;
 use App\Models\Payment;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -60,7 +61,7 @@ final class PaymentCreate extends Component
         ]);
 
         // Either invoice_id or expense_id must be provided
-        if (!$this->invoice_id && !$this->expense_id) {
+        if (! $this->invoice_id && ! $this->expense_id) {
             $this->addError('invoice_id', 'Either Invoice or Expense must be selected');
             $this->addError('expense_id', 'Either Invoice or Expense must be selected');
 
@@ -73,7 +74,7 @@ final class PaymentCreate extends Component
                 $remaining = $invoice->getRemainingBalance();
                 if ((float) $this->amount > $remaining) {
                     throw \Illuminate\Validation\ValidationException::withMessages([
-                        'amount' => 'Payment amount exceeds invoice remaining balance of ' . number_format($remaining, 2),
+                        'amount' => 'Payment amount exceeds invoice remaining balance of '.number_format($remaining, 2),
                     ]);
                 }
             }

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Enums;
 
@@ -8,6 +10,18 @@ enum PhaseStatus: string
     case IN_PROGRESS = 'in_progress';
     case COMPLETED = 'completed';
     case ON_HOLD = 'on_hold';
+
+    /**
+     * Get all statuses as array for form selects
+     */
+    public static function toArray(): array
+    {
+        return array_reduce(self::cases(), function (array $carry, PhaseStatus $case): array {
+            $carry[$case->value] = $case->getLabel();
+
+            return $carry;
+        }, []);
+    }
 
     public function getColorClass(): string
     {
@@ -37,16 +51,5 @@ enum PhaseStatus: string
             self::COMPLETED => 'Completed',
             self::ON_HOLD => 'On Hold',
         };
-    }
-
-    /**
-     * Get all statuses as array for form selects
-     */
-    public static function toArray(): array
-    {
-        return array_reduce(self::cases(), function (array $carry, \App\Enums\PhaseStatus $case): array {
-            $carry[$case->value] = $case->getLabel();
-            return $carry;
-        }, []);
     }
 }

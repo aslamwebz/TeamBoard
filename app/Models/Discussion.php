@@ -26,6 +26,7 @@ final class Discussion extends Model
 {
     use HasFactory;
     use HasMentions;
+
     /**
      * @var list<string>
      */

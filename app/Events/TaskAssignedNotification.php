@@ -13,10 +13,9 @@ final class TaskAssignedNotification
 {
     use Dispatchable;
     use SerializesModels;
+
     /**
      * Create a new event instance.
      */
-    public function __construct(public Task $task, public User $assignedUser, public User $assigner)
-    {
-    }
+    public function __construct(public Task $task, public User $assignedUser, public User $assigner) {}
 }

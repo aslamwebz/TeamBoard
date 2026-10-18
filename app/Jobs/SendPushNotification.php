@@ -19,11 +19,11 @@ final class SendPushNotification implements ShouldQueue
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
+
     public function __construct(
         public ?User $user = null,
         public ?Notification $notification = null
-    ) {
-    }
+    ) {}
 
     /**
      * Execute the job when dispatched to queue.

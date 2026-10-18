@@ -40,7 +40,7 @@ final class Manage extends Component
 
     public function removeDependency($taskId): void
     {
-        $this->selectedDependencies = array_filter($this->selectedDependencies, fn($id): bool => $id !== $taskId);
+        $this->selectedDependencies = array_filter($this->selectedDependencies, fn ($id): bool => $id !== $taskId);
         $this->updateDependencies();
     }
 

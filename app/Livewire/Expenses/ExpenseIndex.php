@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Livewire\Expenses;
 
@@ -95,8 +97,8 @@ final class ExpenseIndex extends Component
         $expenses = Expense::with(['category', 'project', 'vendor', 'user'])
             ->when($this->search, function (Builder $query): void {
                 $query
-                    ->where('title', 'like', '%' . $this->search . '%')
-                    ->orWhere('description', 'like', '%' . $this->search . '%');
+                    ->where('title', 'like', '%'.$this->search.'%')
+                    ->orWhere('description', 'like', '%'.$this->search.'%');
             })
             ->when($this->projectId, function (Builder $query): void {
                 $query->where('project_id', $this->projectId);

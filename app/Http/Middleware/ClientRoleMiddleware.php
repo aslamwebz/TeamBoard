@@ -59,6 +59,7 @@ final class ClientRoleMiddleware
         if ($user->clients && $user->clients->count() > 0) {
             return true;
         }
+
         // If user is assigned to tasks for clients or projects for clients
         return $user->projects && $user->projects->pluck('client_id')->filter()->count() > 0;
     }

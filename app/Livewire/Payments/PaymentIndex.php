@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Livewire\Payments;
 
@@ -50,8 +52,8 @@ final class PaymentIndex extends Component
         $payments = Payment::with(['invoice', 'expense', 'user'])
             ->when($this->search, function (Builder $query): void {
                 $query
-                    ->where('transaction_reference', 'like', '%' . $this->search . '%')
-                    ->orWhere('notes', 'like', '%' . $this->search . '%');
+                    ->where('transaction_reference', 'like', '%'.$this->search.'%')
+                    ->orWhere('notes', 'like', '%'.$this->search.'%');
             })
             ->when($this->invoiceId, function (Builder $query): void {
                 $query->where('invoice_id', $this->invoiceId);
@@ -104,7 +106,7 @@ final class PaymentIndex extends Component
 
     public function getStatusBadgeClass(string $status): string
     {
-        $paymentStatus = \App\Enums\PaymentStatus::tryFrom($status);
+        $paymentStatus = PaymentStatus::tryFrom($status);
         if ($paymentStatus) {
             return $paymentStatus->getColorClass();
         }

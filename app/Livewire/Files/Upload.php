@@ -110,8 +110,8 @@ final class Upload extends Component
                     'type_id' => $task->id,
                     'project_id' => $task->project_id,
                 ], [
-                    'title' => 'Discussions for task: ' . $task->title,
-                    'content' => 'General discussion thread for task: ' . $task->title,
+                    'title' => 'Discussions for task: '.$task->title,
+                    'content' => 'General discussion thread for task: '.$task->title,
                     'user_id' => Auth::id(),
                 ]);
 
@@ -127,8 +127,8 @@ final class Upload extends Component
                     'type_id' => $project->id,
                     'project_id' => $project->id,
                 ], [
-                    'title' => 'Files for project: ' . $project->name,
-                    'content' => 'File attachments for project: ' . $project->name,
+                    'title' => 'Files for project: '.$project->name,
+                    'content' => 'File attachments for project: '.$project->name,
                     'user_id' => Auth::id(),
                 ]);
 
@@ -144,8 +144,8 @@ final class Upload extends Component
                     'type_id' => $client->id,
                     'project_id' => null,
                 ], [
-                    'title' => 'Files for client: ' . $client->name,
-                    'content' => 'File attachments for client: ' . $client->name,
+                    'title' => 'Files for client: '.$client->name,
+                    'content' => 'File attachments for client: '.$client->name,
                     'user_id' => Auth::id(),
                 ]);
 

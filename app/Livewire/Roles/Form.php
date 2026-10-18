@@ -31,7 +31,7 @@ final class Form extends Component
             $this->name = $this->role->name;
 
             // Get the current permissions for the role and ensure they're integers
-            $permissionIds = $this->role->permissions->pluck('id')->map(fn($id): int => (int) $id)->toArray();
+            $permissionIds = $this->role->permissions->pluck('id')->map(fn ($id): int => (int) $id)->toArray();
             $this->permissions = $permissionIds;
         } else {
             $this->permissions = [];

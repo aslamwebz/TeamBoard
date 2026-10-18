@@ -38,25 +38,6 @@ final class PurchaseOrderCreate extends Component
 
     public string $payment_terms = '';
 
-    protected function rules(): array
-    {
-        return [
-            'vendor_id' => 'required|exists:vendors,id',
-            'po_number' => 'required|string|max:255|unique:purchase_orders,po_number',
-            'order_date' => 'required|date',
-            'required_date' => 'nullable|date',
-            'expected_delivery_date' => 'nullable|date',
-            'subtotal' => 'required|numeric|min:0',
-            'tax_amount' => 'required|numeric|min:0',
-            'total_amount' => 'required|numeric|min:0',
-            'status' => 'required|in:draft,pending,approved,sent,partially_received,received,closed,cancelled',
-            'notes' => 'nullable|string',
-            'delivery_address' => 'nullable|string',
-            'shipping_method' => 'nullable|string|max:100',
-            'payment_terms' => 'nullable|string|max:100',
-        ];
-    }
-
     public function mount(): void
     {
         $this->authorize('create', PurchaseOrder::class);
@@ -98,5 +79,24 @@ final class PurchaseOrderCreate extends Component
         return view('livewire.purchase-orders.purchase-order-create', [
             'vendors' => $vendors,
         ]);
+    }
+
+    protected function rules(): array
+    {
+        return [
+            'vendor_id' => 'required|exists:vendors,id',
+            'po_number' => 'required|string|max:255|unique:purchase_orders,po_number',
+            'order_date' => 'required|date',
+            'required_date' => 'nullable|date',
+            'expected_delivery_date' => 'nullable|date',
+            'subtotal' => 'required|numeric|min:0',
+            'tax_amount' => 'required|numeric|min:0',
+            'total_amount' => 'required|numeric|min:0',
+            'status' => 'required|in:draft,pending,approved,sent,partially_received,received,closed,cancelled',
+            'notes' => 'nullable|string',
+            'delivery_address' => 'nullable|string',
+            'shipping_method' => 'nullable|string|max:100',
+            'payment_terms' => 'nullable|string|max:100',
+        ];
     }
 }

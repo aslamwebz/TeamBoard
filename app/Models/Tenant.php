@@ -7,10 +7,10 @@ namespace App\Models;
 use Exception;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Cashier\Billable;
 use Stancl\Tenancy\Contracts\TenantWithDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDomains;
-use Laravel\Cashier\Billable;
 use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
 
 final class Tenant extends BaseTenant implements TenantWithDatabase
@@ -18,6 +18,7 @@ final class Tenant extends BaseTenant implements TenantWithDatabase
     use Billable;
     use HasDatabase;
     use HasDomains;
+
     protected $fillable = [
         'legal_name', // This is the legal name
         'logo',

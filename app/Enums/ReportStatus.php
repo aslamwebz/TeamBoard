@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Enums;
 
@@ -7,6 +9,18 @@ enum ReportStatus: string
     case DRAFT = 'draft';
     case GENERATED = 'generated';
     case ARCHIVED = 'archived';
+
+    /**
+     * Get all statuses as array for form selects
+     */
+    public static function toArray(): array
+    {
+        return array_reduce(self::cases(), function (array $carry, ReportStatus $case): array {
+            $carry[$case->value] = $case->getLabel();
+
+            return $carry;
+        }, []);
+    }
 
     public function getColorClass(): string
     {
@@ -24,16 +38,5 @@ enum ReportStatus: string
             self::GENERATED => 'Generated',
             self::ARCHIVED => 'Archived',
         };
-    }
-
-    /**
-     * Get all statuses as array for form selects
-     */
-    public static function toArray(): array
-    {
-        return array_reduce(self::cases(), function (array $carry, \App\Enums\ReportStatus $case): array {
-            $carry[$case->value] = $case->getLabel();
-            return $carry;
-        }, []);
     }
 }

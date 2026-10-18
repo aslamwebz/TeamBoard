@@ -49,7 +49,7 @@ final class DiscussionShow extends Component
     {
         $this->discussion = $discussion->load([
             'user',
-            'comments' => fn($query) => $query->with([
+            'comments' => fn ($query) => $query->with([
                 'user',
                 'replies.user',
                 'replies.attachments',

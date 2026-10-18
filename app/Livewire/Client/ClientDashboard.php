@@ -48,7 +48,7 @@ final class ClientDashboard extends Component
         $user = Auth::user();
         $client = $this->getClientForUser($user);
 
-        if (!$client instanceof \App\Models\Client) {
+        if (! $client instanceof Client) {
             return;
         }
 
@@ -181,7 +181,7 @@ final class ClientDashboard extends Component
             ->limit(10)
             ->get();
 
-        $this->teamActivity = $teamActivities->map(fn($activity): array => [
+        $this->teamActivity = $teamActivities->map(fn ($activity): array => [
             'id' => $activity->id,
             'description' => $activity->description ?? 'Activity recorded',
             'user' => $activity->user->name ?? 'System',

@@ -9,8 +9,11 @@ use Illuminate\Notifications\Notification;
 final class DatabaseNotificationChannel extends Notification
 {
     public $type;
+
     public $message;
+
     public $data;
+
     public function via($notifiable): array
     {
         return ['database'];

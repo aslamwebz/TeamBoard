@@ -14,10 +14,10 @@ final class BillingIndex extends Component
     public function mount()
     {
         // Simple check for admin execution context or role
-        // Assuming 'admin' role or permissions setup. 
+        // Assuming 'admin' role or permissions setup.
         // If strict 'admin' role is needed:
         if (! auth()->user()->hasRole('admin')) {
-             abort(403, 'Only administrators can manage billing.');
+            abort(403, 'Only administrators can manage billing.');
         }
 
         // Check if user has no valid subscription (active or grace), show plans by default
@@ -40,28 +40,28 @@ final class BillingIndex extends Component
     {
         return [
             [
-                'id' => 'price_1ScLikDGxuDnCtkqZtudfCDq', 
+                'id' => 'price_1ScLikDGxuDnCtkqZtudfCDq',
                 'name' => 'Basic',
                 'price' => '$29',
                 'description' => 'Essential tools for small teams',
                 'features' => ['Up to 5 Projects', '5 Team Members', 'Basic Reporting'],
             ],
             [
-                'id' => 'price_1ScLikDGxuDnCtkqS1ss5e2D', 
+                'id' => 'price_1ScLikDGxuDnCtkqS1ss5e2D',
                 'name' => 'Starter',
                 'price' => '$49',
                 'description' => 'Great for growing businesses',
                 'features' => ['Up to 15 Projects', '15 Team Members', 'Standard Reporting', 'Email Support'],
             ],
             [
-                'id' => 'price_1ScLilDGxuDnCtkqr3wi8YRH', 
+                'id' => 'price_1ScLilDGxuDnCtkqr3wi8YRH',
                 'name' => 'Pro',
                 'price' => '$99',
                 'description' => 'Advanced features for scaling',
                 'features' => ['Unlimited Projects', 'Unlimited Team Members', 'Advanced Reporting', 'Priority Support', 'API Access'],
             ],
             [
-                'id' => 'price_1ScLilDGxuDnCtkqSKz5mswz', 
+                'id' => 'price_1ScLilDGxuDnCtkqSKz5mswz',
                 'name' => 'Enterprise',
                 'price' => '$199',
                 'description' => 'Maximum power and control',
@@ -79,14 +79,14 @@ final class BillingIndex extends Component
                 'success_url' => route('billing'),
                 'cancel_url' => route('billing'),
             ]);
-            
+
         return redirect($checkout->url);
     }
 
     public function swap(string $priceId)
     {
         $tenant = \App\Models\Tenant::current();
-        
+
         $tenant->subscription('default')->swap($priceId);
 
         $this->dispatch('notify', message: 'Plan updated successfully!');
@@ -109,7 +109,7 @@ final class BillingIndex extends Component
     public function render(): View
     {
         $tenant = \App\Models\Tenant::current();
-        
+
         return view('livewire.billing.billing-index', [
             'tenant' => $tenant,
             'currentSubscription' => $tenant->subscription('default'),

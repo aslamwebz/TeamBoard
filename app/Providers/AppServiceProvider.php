@@ -29,7 +29,7 @@ final class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         // Bind the NotificationService
-        $this->app->singleton(NotificationService::class, fn($app): \App\Services\NotificationService => new NotificationService());
+        $this->app->singleton(NotificationService::class, fn ($app): NotificationService => new NotificationService());
     }
 
     /**
@@ -111,7 +111,7 @@ final class AppServiceProvider extends ServiceProvider
                 // Only share company settings in a tenant context
                 if (app()->bound('stancl.tenancy.currentTenant')) {
                     $tenant = Tenant::current();
-                    if ($tenant instanceof \App\Models\Tenant) {
+                    if ($tenant instanceof Tenant) {
                         $view->with([
                             'companyName' => $tenant->getCompanyName(),
                             'companyLogo' => $tenant->logo_url,

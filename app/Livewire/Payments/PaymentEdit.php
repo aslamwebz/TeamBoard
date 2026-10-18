@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Livewire\Payments;
 
@@ -67,7 +69,7 @@ final class PaymentEdit extends Component
         ]);
 
         // Either invoice_id or expense_id must be provided
-        if (!$this->invoice_id && !$this->expense_id) {
+        if (! $this->invoice_id && ! $this->expense_id) {
             $this->addError('invoice_id', 'Either Invoice or Expense must be selected');
             $this->addError('expense_id', 'Either Invoice or Expense must be selected');
 

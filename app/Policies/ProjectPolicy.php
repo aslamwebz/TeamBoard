@@ -7,7 +7,7 @@ namespace App\Policies;
 use App\Models\Project;
 use App\Models\User;
 
-class ProjectPolicy
+final class ProjectPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -28,6 +28,7 @@ class ProjectPolicy
         if ($project->users->contains($user)) {
             return true;
         }
+
         return (bool) $project->teams->intersect($user->teams)->isNotEmpty();
     }
 

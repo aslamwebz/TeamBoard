@@ -66,7 +66,7 @@ final class ActivityLog extends Model
             return null;
         }
 
-        $modelClass = 'App\Models\\' . $this->type;
+        $modelClass = 'App\Models\\'.$this->type;
 
         if (class_exists($modelClass)) {
             return $modelClass::find($this->type_id);

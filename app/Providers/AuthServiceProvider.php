@@ -6,6 +6,7 @@ namespace App\Providers;
 
 use Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Throwable;
 
 final class AuthServiceProvider extends ServiceProvider
 {
@@ -31,9 +32,10 @@ final class AuthServiceProvider extends ServiceProvider
                 if ($user instanceof \App\Models\User && $user->hasRole('admin')) {
                     return true;
                 }
-            } catch (\Throwable) {
+            } catch (Throwable) {
                 // Ignore if roles table not initialized yet
             }
+
             return null;
         });
 
@@ -44,7 +46,7 @@ final class AuthServiceProvider extends ServiceProvider
         Gate::define('approve_expense', function ($user, $expense = null) {
             try {
                 return $user->hasRole(['admin', 'manager']);
-            } catch (\Throwable) {
+            } catch (Throwable) {
                 return false;
             }
         });
@@ -60,6 +62,7 @@ final class AuthServiceProvider extends ServiceProvider
                 if ($user->hasPermissionTo('view roles')) {
                     return true;
                 }
+
                 return (bool) $user->hasRole('admin');
             } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist) {
                 // If the permission doesn't exist, only allow admin access
@@ -75,6 +78,7 @@ final class AuthServiceProvider extends ServiceProvider
                 if ($user->hasPermissionTo('view permissions')) {
                     return true;
                 }
+
                 return (bool) $user->hasRole('admin');
             } catch (\Spatie\Permission\Exceptions\PermissionDoesNotExist) {
                 // If the permission doesn't exist, only allow admin access

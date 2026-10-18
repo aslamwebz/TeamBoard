@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use InvalidArgumentException;
+use Log;
 
 final class FileUploadService
 {
@@ -79,7 +80,7 @@ final class FileUploadService
 
             return $attachment;
         } catch (Exception $exception) {
-            \Log::error('File upload failed: '.$exception->getMessage(), [
+            Log::error('File upload failed: '.$exception->getMessage(), [
                 'file' => $file->getClientOriginalName(),
                 'user_id' => $userId,
                 'exception' => $exception,
@@ -98,6 +99,7 @@ final class FileUploadService
         if ($file->getSize() > $this->maxFileSize) {
             return false;
         }
+
         // Check MIME type
         return in_array($file->getMimeType(), $this->allowedMimeTypes);
     }

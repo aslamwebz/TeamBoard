@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Livewire\Payments;
 
@@ -72,7 +74,7 @@ final class PaymentReminders extends Component
         if ($invoice) {
             // In a real app, you would send an email notification here
             // For now, we'll just log it
-            Log::info('Payment reminder sent for invoice ' . $invoice->invoice_number);
+            Log::info('Payment reminder sent for invoice '.$invoice->invoice_number);
 
             $this->dispatch('reminder-sent', message: 'Reminder sent successfully');
         }

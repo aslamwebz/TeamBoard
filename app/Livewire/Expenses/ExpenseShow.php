@@ -20,7 +20,7 @@ final class ExpenseShow extends Component
     public function mount(Expense $expense): void
     {
         $this->expense = $expense->load([
-            'category', 'project', 'vendor', 'user', 'approver', 'attachments'
+            'category', 'project', 'vendor', 'user', 'approver', 'attachments',
         ]);
     }
 

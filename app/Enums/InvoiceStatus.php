@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Enums;
 
@@ -10,6 +12,18 @@ enum InvoiceStatus: string
     case PAID = 'paid';
     case OVERDUE = 'overdue';
     case CANCELLED = 'cancelled';
+
+    /**
+     * Get all statuses as array for form selects
+     */
+    public static function toArray(): array
+    {
+        return array_reduce(self::cases(), function (array $carry, InvoiceStatus $case): array {
+            $carry[$case->value] = $case->getLabel();
+
+            return $carry;
+        }, []);
+    }
 
     public function getColorClass(): string
     {
@@ -33,16 +47,5 @@ enum InvoiceStatus: string
             self::OVERDUE => 'Overdue',
             self::CANCELLED => 'Cancelled',
         };
-    }
-
-    /**
-     * Get all statuses as array for form selects
-     */
-    public static function toArray(): array
-    {
-        return array_reduce(self::cases(), function (array $carry, \App\Enums\InvoiceStatus $case): array {
-            $carry[$case->value] = $case->getLabel();
-            return $carry;
-        }, []);
     }
 }

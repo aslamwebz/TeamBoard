@@ -15,9 +15,7 @@ final class GenericNotification extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct(private $dbNotification)
-    {
-    }
+    public function __construct(private $dbNotification) {}
 
     /**
      * Get the notification's delivery channels.

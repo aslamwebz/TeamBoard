@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
+use Exception;
 use Illuminate\Console\Command;
 
-class SetupStripePlans extends Command
+final class SetupStripePlans extends Command
 {
     /**
      * The name and signature of the console command.
@@ -12,14 +15,16 @@ class SetupStripePlans extends Command
      * @var string
      */
     protected $signature = 'stripe:setup-plans';
+
     protected $description = 'Create standard plans in Stripe and output their IDs';
 
     public function handle()
     {
         $stripeKey = config('cashier.secret');
-        
-        if (!$stripeKey) {
+
+        if (! $stripeKey) {
             $this->error('Stripe Secret Key not found in config/env!');
+
             return;
         }
 
@@ -48,7 +53,7 @@ class SetupStripePlans extends Command
 
         foreach ($plans as $plan) {
             $this->info("Creating {$plan['name']}...");
-            
+
             try {
                 // Create Product
                 $product = $stripe->products->create([
@@ -66,8 +71,8 @@ class SetupStripePlans extends Command
                 $this->info("Created! Product ID: {$product->id} | Price ID: {$price->id}");
                 $this->line("PRICE_ID: {$price->id} ({$plan['name']})");
 
-            } catch (\Exception $e) {
-                $this->error("Error creating {$plan['name']}: " . $e->getMessage());
+            } catch (Exception $e) {
+                $this->error("Error creating {$plan['name']}: ".$e->getMessage());
             }
         }
     }

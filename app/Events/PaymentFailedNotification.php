@@ -12,10 +12,9 @@ final class PaymentFailedNotification
 {
     use Dispatchable;
     use SerializesModels;
+
     /**
      * Create a new event instance.
      */
-    public function __construct(public User $user, public $paymentDetails = null)
-    {
-    }
+    public function __construct(public User $user, public $paymentDetails = null) {}
 }
