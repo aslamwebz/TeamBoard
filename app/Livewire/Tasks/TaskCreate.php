@@ -41,6 +41,8 @@ final class TaskCreate extends Component
 
     public function mount(): void
     {
+        $this->authorize('create', Task::class);
+
         $this->projects = Project::all();
         $this->phases = collect(); // Empty initially
         $this->users = User::all();
@@ -48,8 +50,17 @@ final class TaskCreate extends Component
 
     public function createTask(): RedirectResponse
     {
-        $validatedData = $this->validate();
-        $validatedData['user_id'] = Auth::id();
+        $this->authorize('create', Task::class);
+
+        $validatedData = $this->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'status' => 'required|string|in:todo,in_progress,completed,on_hold',
+            'due_date' => 'nullable|date',
+            'project_id' => 'required|exists:projects,id',
+            'project_phase_id' => 'nullable|exists:project_phases,id',
+            'user_id' => 'nullable|exists:users,id',
+        ]);
 
         $task = Task::create($validatedData);
 

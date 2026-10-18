@@ -19,6 +19,7 @@ final class Project extends Model
         'status',
         'due_date',
         'client_id',
+        'vendor_id',
     ];
 
     protected $casts = [

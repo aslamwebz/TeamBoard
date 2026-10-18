@@ -50,9 +50,11 @@ final class ProjectIndex extends Component
 
     public function confirmDelete(): void
     {
-        $project = Project::find($this->projectToDeleteId);
-        if ($project) {
+        if ($this->projectToDeleteId) {
+            $project = Project::findOrFail($this->projectToDeleteId);
+            $this->authorize('delete', $project);
             $project->delete();
+            session()->flash('message', 'Project deleted successfully.');
         }
 
         $this->showDeleteModal = false;

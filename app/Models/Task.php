@@ -39,6 +39,8 @@ final class Task extends Model
         'due_date',
         'project_id',
         'project_phase_id',
+        'vendor_id',
+        'user_id',
         'dependencies',
         'order',
     ];

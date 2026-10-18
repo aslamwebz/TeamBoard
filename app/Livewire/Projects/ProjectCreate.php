@@ -23,9 +23,21 @@ final class ProjectCreate extends Component
 
     public $due_date;
 
+    public function mount(): void
+    {
+        $this->authorize('create', Project::class);
+    }
+
     public function createProject(): RedirectResponse
     {
-        $validatedData = $this->validate();
+        $this->authorize('create', Project::class);
+
+        $validatedData = $this->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'status' => 'required|string|in:planning,in_progress,completed,on_hold',
+            'due_date' => 'nullable|date',
+        ]);
 
         Project::create($validatedData);
 

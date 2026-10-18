@@ -28,16 +28,25 @@ final class ProjectEdit extends Component
 
     public function mount(Project $project): void
     {
+        $this->authorize('update', $project);
+
         $this->project = $project;
         $this->name = $project->name;
         $this->description = $project->description;
         $this->status = $project->status;
-        $this->due_date = $project->due_date;
+        $this->due_date = $project->due_date ? $project->due_date->format('Y-m-d') : null;
     }
 
     public function updateProject(): RedirectResponse
     {
-        $validatedData = $this->validate();
+        $this->authorize('update', $this->project);
+
+        $validatedData = $this->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'status' => 'required|string|in:planning,in_progress,completed,on_hold',
+            'due_date' => 'nullable|date',
+        ]);
 
         $this->project->update($validatedData);
 

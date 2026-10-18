@@ -104,6 +104,9 @@ final class TaskIndex extends Component
 
     public function deleteTask($id): void
     {
+        $task = Task::findOrFail($id);
+        $this->authorize('delete', $task);
+
         $this->taskToDeleteId = $id;
         $this->showDeleteModal = true;
     }
@@ -112,6 +115,7 @@ final class TaskIndex extends Component
     {
         $task = Task::find($this->taskToDeleteId);
         if ($task) {
+            $this->authorize('delete', $task);
             $task->delete();
         }
 
@@ -147,8 +151,10 @@ final class TaskIndex extends Component
 
     public function updateTaskStatus($taskId, $newStatus): void
     {
-        $task = Task::find($taskId);
-        if ($task) {
+        $task = Task::findOrFail($taskId);
+        $this->authorize('update', $task);
+
+        if (in_array($newStatus, ['todo', 'in_progress', 'completed', 'on_hold'], true)) {
             $task->update(['status' => $newStatus]);
         }
 

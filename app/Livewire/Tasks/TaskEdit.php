@@ -43,11 +43,13 @@ final class TaskEdit extends Component
 
     public function mount(Task $task): void
     {
+        $this->authorize('update', $task);
+
         $this->task = $task->load('project');
         $this->title = $task->title;
         $this->description = $task->description;
         $this->status = $task->status;
-        $this->due_date = $task->due_date;
+        $this->due_date = $task->due_date ? $task->due_date->format('Y-m-d') : null;
         $this->project_id = $task->project_id;
         $this->project_phase_id = $task->project_phase_id;
         $this->user_id = $task->user_id;
@@ -66,13 +68,23 @@ final class TaskEdit extends Component
 
     public function updateTask(): RedirectResponse
     {
+        $this->authorize('update', $this->task);
+
         $oldUserId = $this->task->user_id;
-        $validatedData = $this->validate();
+        $validatedData = $this->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'status' => 'required|string|in:todo,in_progress,completed,on_hold',
+            'due_date' => 'nullable|date',
+            'project_id' => 'required|exists:projects,id',
+            'project_phase_id' => 'nullable|exists:project_phases,id',
+            'user_id' => 'nullable|exists:users,id',
+        ]);
 
         $this->task->update($validatedData);
 
         // If the task assignment changed (different user from before), send a notification
-        if ($this->user_id && $this->user_id !== $oldUserId) {
+        if ($this->user_id && (int) $this->user_id !== (int) $oldUserId) {
             $assignedUser = User::find($this->user_id);
             $assigner = Auth::user();
 
