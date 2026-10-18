@@ -19,17 +19,27 @@ final class SendPushNotification implements ShouldQueue
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
+    public function __construct(
+        public ?User $user = null,
+        public ?Notification $notification = null
+    ) {
+    }
+
     /**
-     * Execute the job.
+     * Execute the job when dispatched to queue.
+     */
+    public function handle(): void
+    {
+        if ($this->user && $this->notification) {
+            $this->execute($this->user, $this->notification);
+        }
+    }
+
+    /**
+     * Execute the push notification logic.
      */
     public function execute(User $user, Notification $notification): void
     {
-        // In a real implementation, you would use a push notification service like:
-        // - Pusher Beams
-        // - Firebase Cloud Messaging
-        // - Web push notifications using Laravel Web Push package
-
-        // For now, we'll just log that a push notification would be sent
         Log::info(sprintf('Push notification would be sent to user %s for notification %d', $user->id, $notification->id));
 
         // Mark the push as sent in the database

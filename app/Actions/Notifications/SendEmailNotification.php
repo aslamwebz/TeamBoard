@@ -16,7 +16,7 @@ final class SendEmailNotification
     public function execute(User $user, Notification $notification): void
     {
         try {
-            Mail::to($user)->send(new GenericNotification($notification));
+            $user->notify(new GenericNotification($notification));
             $notification->update(['email_sent_at' => now()]);
         } catch (Exception $exception) {
             Log::error('Failed to send email notification: '.$exception->getMessage());
