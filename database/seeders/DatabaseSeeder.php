@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Tenant;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use DB;
 use Illuminate\Database\Seeder;
 
 final class DatabaseSeeder extends Seeder
@@ -20,7 +21,7 @@ final class DatabaseSeeder extends Seeder
             AdminSeeder::class,
         ]);
 
-        \DB::statement('DROP DATABASE IF EXISTS tenantwebz');
+        DB::statement('DROP DATABASE IF EXISTS tenantwebz');
 
         $tenant = Tenant::create(['id' => 'webz']);
         $tenant->domains()->create(['domain' => 'webz']);

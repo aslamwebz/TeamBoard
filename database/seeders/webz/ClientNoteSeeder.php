@@ -25,7 +25,7 @@ final class ClientNoteSeeder extends Seeder
 
         foreach ($clients as $client) {
             Note::factory()->create([
-                'noteable_type' => \App\Models\Client::class,
+                'noteable_type' => Client::class,
                 'noteable_id' => $client->id,
                 'title' => fake()->sentence(3),
                 'content' => fake()->paragraph(3),

@@ -52,7 +52,7 @@ trait HasMentions
     public function notifyMentionedUsers(string $content, User $author, string $type = 'comment', $relatedModel = null): void
     {
         $mentionedUsers = collect($this->parseMentions($content));
-        $mentionedUsers = $mentionedUsers->filter(fn(array $user): bool =>
+        $mentionedUsers = $mentionedUsers->filter(fn (array $user): bool =>
             // Don't notify the author of the comment if they mentioned themselves
             $user['id'] !== $author->id);
 

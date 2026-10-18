@@ -93,12 +93,12 @@ final class NotificationService
     /**
      * Send task assigned notification
      */
-    public function notifyTaskAssigned($task, \App\Models\User $assignedUser, $assigner): void
+    public function notifyTaskAssigned($task, User $assignedUser, $assigner): void
     {
         $this->createNotification(
             $assignedUser,
             'task_assigned',
-            'You have been assigned to task: ' . $task->title,
+            'You have been assigned to task: '.$task->title,
             [
                 'task_id' => $task->id,
                 'task_title' => $task->title,
@@ -113,7 +113,7 @@ final class NotificationService
     /**
      * Send new invoice notification
      */
-    public function notifyNewInvoice($invoice, \App\Models\User $user): void
+    public function notifyNewInvoice($invoice, User $user): void
     {
         $this->createNotification(
             $user,
@@ -132,7 +132,7 @@ final class NotificationService
     /**
      * Send project updated notification
      */
-    public function notifyProjectUpdated($project, \App\Models\User $user): void
+    public function notifyProjectUpdated($project, User $user): void
     {
         $this->createNotification(
             $user,
@@ -149,12 +149,12 @@ final class NotificationService
     /**
      * Send mentioned in comment notification
      */
-    public function notifyMentionedInComment($comment, \App\Models\User $mentionedUser, $mentioningUser): void
+    public function notifyMentionedInComment($comment, User $mentionedUser, $mentioningUser): void
     {
         $this->createNotification(
             $mentionedUser,
             'mentioned_in_comment',
-            $mentioningUser->name . ' mentioned you in a comment',
+            $mentioningUser->name.' mentioned you in a comment',
             [
                 'comment_id' => $comment->id,
                 'comment_content' => $comment->content,
@@ -168,7 +168,7 @@ final class NotificationService
     /**
      * Send client added notification
      */
-    public function notifyClientAdded($client, \App\Models\User $user): void
+    public function notifyClientAdded($client, User $user): void
     {
         $this->createNotification(
             $user,
@@ -185,7 +185,7 @@ final class NotificationService
     /**
      * Send payment failed notification
      */
-    public function notifyPaymentFailed(\App\Models\User $user, $details = null): void
+    public function notifyPaymentFailed(User $user, $details = null): void
     {
         $this->createNotification(
             $user,
@@ -197,5 +197,3 @@ final class NotificationService
         );
     }
 }
-
-

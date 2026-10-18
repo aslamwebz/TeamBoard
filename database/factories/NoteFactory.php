@@ -16,8 +16,8 @@ final class NoteFactory extends Factory
 
     public function definition(): array
     {
-        $noteableType = fake()->randomElement([\App\Models\Client::class, \App\Models\Project::class]);
-        $noteableId = $noteableType === \App\Models\Client::class ? Client::factory() : Project::factory();
+        $noteableType = fake()->randomElement([Client::class, Project::class]);
+        $noteableId = $noteableType === Client::class ? Client::factory() : Project::factory();
 
         return [
             'noteable_type' => $noteableType,

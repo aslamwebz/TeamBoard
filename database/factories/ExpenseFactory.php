@@ -44,7 +44,7 @@ final class ExpenseFactory extends Factory
      */
     public function withCategory(): static
     {
-        return $this->state(fn(array $attributes): array => [
+        return $this->state(fn (array $attributes): array => [
             'expense_category_id' => ExpenseCategory::factory(),
         ]);
     }
@@ -54,7 +54,7 @@ final class ExpenseFactory extends Factory
      */
     public function withProject(): static
     {
-        return $this->state(fn(array $attributes): array => [
+        return $this->state(fn (array $attributes): array => [
             'project_id' => Project::factory(),
         ]);
     }
@@ -64,7 +64,7 @@ final class ExpenseFactory extends Factory
      */
     public function withVendor(): static
     {
-        return $this->state(fn(array $attributes): array => [
+        return $this->state(fn (array $attributes): array => [
             'vendor_id' => Vendor::factory(),
         ]);
     }
@@ -74,7 +74,7 @@ final class ExpenseFactory extends Factory
      */
     public function withUser(): static
     {
-        return $this->state(fn(array $attributes): array => [
+        return $this->state(fn (array $attributes): array => [
             'user_id' => User::factory(),
         ]);
     }
@@ -84,7 +84,7 @@ final class ExpenseFactory extends Factory
      */
     public function withApprover(): static
     {
-        return $this->state(fn(array $attributes): array => [
+        return $this->state(fn (array $attributes): array => [
             'approver_id' => User::factory(),
         ]);
     }

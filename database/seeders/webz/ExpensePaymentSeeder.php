@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Database\Seeders\webz;
 
@@ -44,7 +46,7 @@ final class ExpensePaymentSeeder extends Seeder
                     'amount' => $paymentAmount,
                     'payment_method' => fake()->randomElement(['credit_card', 'bank_transfer', 'check', 'paypal', 'cash', 'debit_card']),
                     'payment_date' => fake()->dateTimeBetween($expense->expense_date, now()),
-                    'transaction_reference' => 'EXP-PAY-' . mb_strtoupper(fake()->bothify('?????-#####')),
+                    'transaction_reference' => 'EXP-PAY-'.mb_strtoupper(fake()->bothify('?????-#####')),
                     'notes' => fake()->sentence(),
                     'status' => PaymentStatus::COMPLETED->value,
                     'currency' => $expense->currency ?? 'USD',
