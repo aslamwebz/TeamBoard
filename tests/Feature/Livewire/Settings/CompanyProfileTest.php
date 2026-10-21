@@ -6,7 +6,7 @@ use App\Livewire\Settings\CompanyProfile;
 use Livewire\Livewire;
 
 test('can instantiate company profile settings component', function () {
-    $this->actingAs($this->user);
+    $this->actingAsAdmin();
     Livewire::test(CompanyProfile::class)
         ->assertStatus(200);
 });

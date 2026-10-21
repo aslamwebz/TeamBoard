@@ -43,7 +43,10 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function actingAsAdmin(): Tests\TestCase
 {
-    // ..
+    /** @var Tests\TestCase $test */
+    $test = test();
+
+    return $test->actingAsAdmin();
 }

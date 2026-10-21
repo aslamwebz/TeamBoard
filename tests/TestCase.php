@@ -41,10 +41,15 @@ abstract class TestCase extends BaseTestCase
 
         $this->seed(RolePermissionSeeder::class);
 
-        $this->user = $this->createUser();
+        $this->user = $this->createUser(isAdmin: false);
         $this->admin = $this->createUser(isAdmin: true);
-        $this->employee = $this->createUser(isAdmin: false);
+        $this->employee = $this->user;
         $this->unverifiedUser = $this->createUnverifiedUser();
+    }
+
+    final public function actingAsAdmin(): static
+    {
+        return $this->actingAs($this->admin);
     }
 
     final public function initializeTenancy()
@@ -61,7 +66,7 @@ abstract class TestCase extends BaseTestCase
         tenancy()->initialize($tenant);
     }
 
-    private function createUser(bool $isAdmin = true): User
+    private function createUser(bool $isAdmin = false): User
     {
         $user = User::factory()->create();
 

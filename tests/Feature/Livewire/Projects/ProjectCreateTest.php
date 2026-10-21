@@ -3,6 +3,6 @@
 declare(strict_types=1);
 
 test('authenticated user can access project create', function () {
-    $this->actingAs($this->user);
+    $this->actingAsAdmin();
     $this->get('/projects/create')->assertStatus(200);
 });
