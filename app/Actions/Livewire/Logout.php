@@ -6,7 +6,6 @@ namespace App\Actions\Livewire;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 final class Logout
 {
